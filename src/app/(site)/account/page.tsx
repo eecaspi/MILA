@@ -3,6 +3,7 @@ import Link from "next/link";
 import { PointsSummary } from "@/components/rewards/PointsSummary";
 import { TransactionList } from "@/components/rewards/TransactionList";
 import { Alert } from "@/components/ui/Alert";
+import { toneClasses } from "@/components/ui/tones";
 import { requireSession } from "@/lib/auth/session";
 import { formatDate } from "@/lib/format";
 import { getMemberRewards } from "@/lib/rewards/queries";
@@ -15,9 +16,24 @@ export const metadata: Metadata = {
 };
 
 const ways = [
-  { icon: "🛍️", title: "קונות דרך MILA", text: "נקודות על קניות מאומתות דרך הקישורים שלנו." },
-  { icon: "💜", title: "משתתפות בפעילויות הקהילה", text: "השלמת פרופיל, סקרים ואתגרים." },
-  { icon: "🎁", title: "צוברות נקודות ופותחות הטבות", text: "חנות ההטבות של MILA בדרך." },
+  {
+    icon: "🛍️",
+    title: "קונות דרך MILA",
+    text: "נקודות על קניות מאומתות דרך הקישורים שלנו.",
+    tone: "rose" as const,
+  },
+  {
+    icon: "💜",
+    title: "משתתפות בפעילויות הקהילה",
+    text: "השלמת פרופיל, סקרים ואתגרים.",
+    tone: "lilac" as const,
+  },
+  {
+    icon: "🎁",
+    title: "צוברות נקודות ופותחות הטבות",
+    text: "חנות ההטבות של MILA בדרך.",
+    tone: "mint" as const,
+  },
 ];
 
 type SearchParams = Promise<{ notice?: string }>;
@@ -36,7 +52,7 @@ export default async function AccountPage({ searchParams }: { searchParams: Sear
       <header className="flex flex-wrap items-end justify-between gap-4">
         <div>
           <p className="eyebrow">MILA CLUB 💜</p>
-          <h1 className="mt-1 text-3xl font-medium text-ink">
+          <h1 className="mt-1 text-3xl font-extrabold text-ink">
             שלום{name ? ` ${name}` : ""}, ברוכה הבאה למועדון!
           </h1>
           <p className="mt-1 text-sm text-ink-soft">
@@ -44,7 +60,7 @@ export default async function AccountPage({ searchParams }: { searchParams: Sear
           </p>
         </div>
         <form action={signOut}>
-          <button type="submit" className="text-sm font-semibold text-ink-soft hover:text-gold">
+          <button type="submit" className="text-sm font-semibold text-ink-soft hover:text-accent">
             התנתקות
           </button>
         </form>
@@ -57,7 +73,7 @@ export default async function AccountPage({ searchParams }: { searchParams: Sear
       {!profileComplete && (
         <Link
           href="/account/profile"
-          className="flex items-center justify-between gap-4 rounded-[var(--radius-card)] border border-gold/40 bg-gold-soft p-5 transition-colors hover:border-gold"
+          className="flex items-center justify-between gap-4 rounded-[var(--radius-card)] border border-accent/40 bg-accent-soft p-5 transition-colors hover:border-accent"
         >
           <div>
             <p className="font-bold text-ink">השלימי את הפרופיל שלך</p>
@@ -67,37 +83,37 @@ export default async function AccountPage({ searchParams }: { searchParams: Sear
                 : "כדי שנוכל להתאים לך הטבות."}
             </p>
           </div>
-          <span aria-hidden className="text-xl text-gold">
+          <span aria-hidden className="text-xl text-accent">
             ←
           </span>
         </Link>
       )}
 
       <section aria-labelledby="how" className="space-y-4">
-        <h2 id="how" className="text-xl font-medium text-ink">
+        <h2 id="how" className="text-xl font-extrabold text-ink">
           איך צוברים נקודות?
         </h2>
         <ul className="grid gap-3 sm:grid-cols-3">
           {ways.map((w) => (
-            <li key={w.title} className="rounded-2xl border border-line bg-surface p-4">
+            <li
+              key={w.title}
+              className={`rounded-[var(--radius-card)] p-5 ${toneClasses[w.tone].solid}`}
+            >
               <span aria-hidden className="text-2xl">
                 {w.icon}
               </span>
-              <p className="mt-2 font-semibold text-ink">{w.title}</p>
-              <p className="mt-1 text-sm text-ink-soft">{w.text}</p>
+              <p className="mt-2 text-lg font-extrabold">{w.title}</p>
+              <p className="mt-1 text-sm font-medium opacity-80">{w.text}</p>
             </li>
           ))}
         </ul>
-        <p className="rounded-2xl border border-dashed border-gold/30 bg-gold-soft px-4 py-3 text-center text-sm font-semibold text-gold">
+        <p className="rounded-2xl border border-dashed border-accent/30 bg-accent-soft px-4 py-3 text-center text-sm font-semibold text-accent">
           בקרוב: חנות ההטבות של MILA
         </p>
       </section>
 
-      <section
-        aria-labelledby="history"
-        className="rounded-[var(--radius-card)] border border-line bg-surface p-5"
-      >
-        <h2 id="history" className="text-lg font-medium text-ink">
+      <section aria-labelledby="history" className="rounded-[var(--radius-card)] bg-surface p-5">
+        <h2 id="history" className="text-lg font-extrabold text-ink">
           הפעילות שלי
         </h2>
         <TransactionList transactions={rewards.transactions} />
@@ -106,7 +122,7 @@ export default async function AccountPage({ searchParams }: { searchParams: Sear
         </p>
       </section>
 
-      <section className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-line bg-surface p-5">
+      <section className="flex flex-wrap items-center justify-between gap-3 rounded-2xl bg-surface p-5">
         <div>
           <p className="font-semibold text-ink">הפרטים שלי</p>
           <p className="text-sm text-ink-soft">
@@ -116,7 +132,7 @@ export default async function AccountPage({ searchParams }: { searchParams: Sear
         </div>
         <Link
           href="/account/profile"
-          className="rounded-full border border-gold px-4 py-2 text-sm font-semibold text-gold hover:bg-gold-soft"
+          className="rounded-full border border-accent px-4 py-2 text-sm font-semibold text-accent hover:bg-accent-soft"
         >
           עריכת פרופיל
         </Link>

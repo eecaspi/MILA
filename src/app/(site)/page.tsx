@@ -3,9 +3,26 @@ import { BusinessCard } from "@/components/business/BusinessCard";
 import { DealCard } from "@/components/deals/DealCard";
 import { DemoNotice } from "@/components/ui/DemoNotice";
 import { SectionHeading } from "@/components/ui/SectionHeading";
+import { toneClasses } from "@/components/ui/tones";
 import { siteConfig } from "@/config/site";
 import { categories } from "@/data/categories";
 import { getBusinesses, getFeaturedOffers } from "@/lib/data/repository";
+
+const clubSteps = [
+  {
+    title: "קונות דרך MILA",
+    text: "צוברות נקודות על קניות מאומתות",
+    tone: "rose" as const,
+    icon: "🛍️",
+  },
+  {
+    title: "משתתפות בקהילה",
+    text: "נקודות על פעילויות והמלצות",
+    tone: "lilac" as const,
+    icon: "💜",
+  },
+  { title: "פותחות הטבות", text: "חנות ההטבות של MILA — בקרוב", tone: "mint" as const, icon: "🎁" },
+];
 
 export default async function HomePage() {
   const [offers, businesses] = await Promise.all([getFeaturedOffers(3), getBusinesses()]);
@@ -13,73 +30,55 @@ export default async function HomePage() {
   return (
     <>
       {/* Hero */}
-      <section className="relative overflow-hidden border-b border-line">
+      <section className="relative overflow-hidden">
         <div
           aria-hidden
-          className="pointer-events-none absolute inset-0 bg-[radial-gradient(60%_80%_at_85%_0%,rgba(201,164,92,0.18),transparent_70%),radial-gradient(40%_60%_at_0%_100%,rgba(201,164,92,0.08),transparent_70%)]"
+          className="pointer-events-none absolute inset-0 bg-[radial-gradient(55%_70%_at_90%_0%,rgba(246,169,189,0.28),transparent_70%),radial-gradient(45%_60%_at_0%_100%,rgba(205,184,245,0.18),transparent_70%)]"
         />
-        <div className="relative mx-auto max-w-6xl px-4 py-20 md:py-28">
+        <div className="relative mx-auto max-w-6xl px-4 pt-16 pb-12 md:pt-24 md:pb-16">
           <p className="eyebrow">
             <span className="ltr">{siteConfig.brand.name}</span> · מועדון הקניות של הקהילה
           </p>
-          <h1 className="mt-6 max-w-3xl text-4xl leading-[1.15] font-medium text-ink md:text-6xl">
+          <h1 className="mt-5 max-w-3xl text-4xl font-extrabold text-ink md:text-6xl">
             {siteConfig.brand.tagline}
           </h1>
-          <div className="gold-rule mt-8" />
-          <p className="mt-6 max-w-xl text-lg text-ink-soft">{siteConfig.brand.description}</p>
-          <div className="mt-10 flex flex-wrap gap-3">
+          <p className="mt-5 max-w-xl text-lg text-ink-soft md:text-xl">
+            {siteConfig.brand.description}
+          </p>
+          <div className="mt-8 flex flex-wrap gap-3">
             <Link
               href="/deals"
-              className="rounded-full bg-gold px-7 py-3.5 font-semibold text-on-gold transition-colors hover:bg-gold-bright"
+              className="rounded-full bg-accent px-7 py-3.5 text-base font-bold text-on-accent transition-colors hover:bg-accent-bright"
             >
               למבצעים ולקופונים
             </Link>
             <Link
               href="/businesses"
-              className="rounded-full border border-gold/50 px-7 py-3.5 font-semibold text-gold transition-colors hover:border-gold hover:bg-gold-soft"
+              className="rounded-full bg-surface px-7 py-3.5 text-base font-bold text-ink transition-colors hover:bg-raised"
             >
               למדריך העסקים
             </Link>
           </div>
-          <dl className="mt-14 flex flex-wrap gap-x-10 gap-y-4 border-t border-line pt-6 text-sm">
-            <div>
-              <dt className="text-ink-soft">קטגוריות</dt>
-              <dd className="font-display text-2xl text-ink">{categories.length}</dd>
-            </div>
-            <div>
-              <dt className="text-ink-soft">עסקים במדריך</dt>
-              <dd className="font-display text-2xl text-ink">{businesses.length}</dd>
-            </div>
-            <div>
-              <dt className="text-ink-soft">הצטרפות למועדון</dt>
-              <dd className="font-display text-2xl text-gold">ללא עלות</dd>
-            </div>
-          </dl>
         </div>
       </section>
 
-      <div className="mx-auto max-w-6xl space-y-20 px-4 pt-14">
-        {/* Categories */}
+      <div className="mx-auto max-w-6xl space-y-16 px-4">
+        {/* Categories: colorful tiles */}
         <section aria-labelledby="cats">
-          <h2 id="cats" className="sr-only">
-            קטגוריות
+          <h2 id="cats" className="mb-5 text-2xl text-ink md:text-3xl">
+            מה מחפשות היום?
           </h2>
           <ul className="grid grid-cols-2 gap-3 sm:grid-cols-4">
             {categories.map((c) => (
               <li key={c.slug}>
                 <Link
                   href={`/businesses?category=${c.slug}`}
-                  className="group flex items-center justify-between gap-3 rounded-2xl border border-line bg-surface px-5 py-4 transition-colors hover:border-gold/60"
+                  className={`flex h-28 flex-col justify-between rounded-[var(--radius-card)] p-4 transition-transform hover:-translate-y-0.5 ${toneClasses[c.tone].solid}`}
                 >
-                  <span className="font-display text-base text-ink group-hover:text-gold">
-                    {c.name}
+                  <span aria-hidden className="text-2xl">
+                    {c.icon}
                   </span>
-                  <span
-                    aria-hidden
-                    className="text-gold/60 transition-colors group-hover:text-gold"
-                  >
-                    ←
-                  </span>
+                  <span className="text-base leading-tight font-extrabold">{c.name}</span>
                 </Link>
               </li>
             ))}
@@ -100,11 +99,39 @@ export default async function HomePage() {
               אמיתיות יסומנו בתג &quot;הצעה מאומתת&quot; לאחר אישור ישיר מול העסק.
             </DemoNotice>
           </div>
-          <div className="grid gap-5 md:grid-cols-3">
+          <div className="grid gap-4 md:grid-cols-3">
             {offers.map((offer) => (
               <DealCard key={offer.id} offer={offer} />
             ))}
           </div>
+        </section>
+
+        {/* MILA CLUB */}
+        <section className="accent-frame overflow-hidden rounded-[var(--radius-card)] p-6 md:p-10">
+          <p className="eyebrow">MILA CLUB</p>
+          <h2 className="mt-3 max-w-xl text-3xl text-ink md:text-4xl">
+            מועדון שמתגמל אותך על כל קנייה חכמה
+          </h2>
+          <ul className="mt-8 grid gap-3 sm:grid-cols-3">
+            {clubSteps.map((step) => (
+              <li
+                key={step.title}
+                className={`rounded-[var(--radius-card)] p-5 ${toneClasses[step.tone].solid}`}
+              >
+                <span aria-hidden className="text-2xl">
+                  {step.icon}
+                </span>
+                <p className="mt-3 text-lg font-extrabold">{step.title}</p>
+                <p className="mt-1 text-sm font-medium opacity-80">{step.text}</p>
+              </li>
+            ))}
+          </ul>
+          <Link
+            href="/login?mode=signup"
+            className="mt-8 inline-block rounded-full bg-accent px-7 py-3.5 text-base font-bold text-on-accent transition-colors hover:bg-accent-bright"
+          >
+            הצטרפות למועדון — ללא עלות
+          </Link>
         </section>
 
         {/* Directory preview */}
@@ -114,45 +141,27 @@ export default async function HomePage() {
             subtitle="עסקים וארגונים שכדאי להכיר"
             href="/businesses"
           />
-          <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
             {businesses.slice(0, 6).map((b) => (
               <BusinessCard key={b.id} business={b} />
             ))}
           </div>
         </section>
 
-        {/* MILA CLUB */}
-        <section className="gold-frame relative overflow-hidden rounded-[var(--radius-card)] p-8 md:p-12">
-          <p className="eyebrow">MILA CLUB</p>
-          <h2 className="mt-4 max-w-xl text-3xl font-medium text-ink md:text-4xl">
-            מועדון שמתגמל אותך על כל קנייה חכמה
-          </h2>
-          <div className="gold-rule mt-6" />
-          <ul className="mt-8 grid gap-6 sm:grid-cols-3">
-            <li>
-              <p className="font-display text-lg text-gold">קונות דרך MILA</p>
-              <p className="mt-1 text-sm text-ink-soft">צוברות נקודות על קניות מאומתות.</p>
-            </li>
-            <li>
-              <p className="font-display text-lg text-gold">משתתפות בקהילה</p>
-              <p className="mt-1 text-sm text-ink-soft">נקודות על פעילויות והמלצות.</p>
-            </li>
-            <li>
-              <p className="font-display text-lg text-gold">פותחות הטבות</p>
-              <p className="mt-1 text-sm text-ink-soft">חנות ההטבות של MILA — בקרוב.</p>
-            </li>
-          </ul>
-          <div className="mt-10 flex flex-wrap items-center gap-4">
-            <Link
-              href="/login?mode=signup"
-              className="rounded-full bg-gold px-7 py-3.5 font-semibold text-on-gold transition-colors hover:bg-gold-bright"
-            >
-              הצטרפות למועדון
-            </Link>
-            <Link href="/community" className="text-sm font-semibold text-ink-soft hover:text-gold">
-              המלצות הקהילה — בקרוב
-            </Link>
+        {/* Community teaser */}
+        <section className="flex flex-wrap items-center justify-between gap-4 rounded-[var(--radius-card)] bg-surface p-6 md:p-8">
+          <div>
+            <h2 className="text-2xl text-ink">המלצות מהקהילה</h2>
+            <p className="mt-1 text-ink-soft">
+              בקרוב: המלצות אמיתיות מנשים בקהילה על עסקים ואנשי מקצוע.
+            </p>
           </div>
+          <Link
+            href="/community"
+            className="rounded-full bg-raised px-5 py-2.5 font-bold text-ink transition-colors hover:bg-line"
+          >
+            לפרטים
+          </Link>
         </section>
       </div>
     </>

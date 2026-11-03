@@ -1,6 +1,6 @@
 const tones = {
   success: "border-sage/30 bg-sage-soft text-sage",
-  info: "border-gold/30 bg-gold-soft text-gold",
+  info: "border-accent/30 bg-accent-soft text-accent",
   error: "border-danger/40 bg-danger-soft text-danger",
 } as const;
 

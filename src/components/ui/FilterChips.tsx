@@ -46,8 +46,8 @@ export function FilterChips({
                 className={[
                   "inline-block rounded-full border px-4 py-1.5 text-sm font-medium transition-colors",
                   active
-                    ? "border-gold bg-gold text-on-gold"
-                    : "border-line bg-surface text-ink-soft hover:border-gold/40 hover:text-gold",
+                    ? "border-accent bg-accent text-on-accent"
+                    : "border-line bg-surface text-ink-soft hover:border-accent/40 hover:text-accent",
                 ].join(" ")}
               >
                 {option.label}

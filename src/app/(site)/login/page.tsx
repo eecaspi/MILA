@@ -31,7 +31,7 @@ export default async function LoginPage({ searchParams }: { searchParams: Search
       aria-current={mode === value ? "page" : undefined}
       className={[
         "flex-1 rounded-full py-2 text-center text-sm font-semibold transition-colors",
-        mode === value ? "bg-surface text-gold shadow-sm" : "text-ink-soft hover:text-gold",
+        mode === value ? "bg-surface text-accent shadow-sm" : "text-ink-soft hover:text-accent",
       ].join(" ")}
     >
       {label}
@@ -42,7 +42,7 @@ export default async function LoginPage({ searchParams }: { searchParams: Search
     <div className="mx-auto max-w-md px-4 py-12">
       <div className="mb-8 text-center">
         <p className="eyebrow">MILA CLUB 💜</p>
-        <h1 className="mt-2 text-3xl font-medium text-ink">
+        <h1 className="mt-2 text-3xl font-extrabold text-ink">
           {mode === "signup" ? "הצטרפות למועדון" : "כניסה למועדון"}
         </h1>
         <p className="mt-2 text-ink-soft">
@@ -52,7 +52,7 @@ export default async function LoginPage({ searchParams }: { searchParams: Search
         </p>
       </div>
 
-      <div className="space-y-4 rounded-[var(--radius-card)] border border-line bg-surface p-6">
+      <div className="space-y-4 rounded-[var(--radius-card)] bg-surface p-6">
         <nav aria-label="סוג כניסה" className="flex gap-1 rounded-full bg-canvas p-1">
           {tab("login", "כניסה")}
           {tab("signup", "הרשמה")}

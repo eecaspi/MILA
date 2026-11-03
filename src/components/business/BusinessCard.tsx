@@ -2,22 +2,23 @@ import { getCategory } from "@/data/categories";
 import { hostname } from "@/lib/format";
 import type { Business } from "@/lib/types";
 import { StatusBadge } from "@/components/ui/StatusBadge";
+import { toneClasses } from "@/components/ui/tones";
 
 export function BusinessCard({ business }: { business: Business }) {
   const category = getCategory(business.category);
 
   return (
-    <article className="flex h-full flex-col rounded-[var(--radius-card)] border border-line bg-surface p-5 transition-colors hover:border-gold/60">
+    <article className="flex h-full flex-col rounded-[var(--radius-card)] bg-surface p-5 transition-transform hover:-translate-y-0.5">
       <div className="flex items-start justify-between gap-3">
         <div className="flex items-center gap-3">
           <span
             aria-hidden
-            className="flex size-12 shrink-0 items-center justify-center rounded-full border border-gold/50 font-display text-xl text-gold"
+            className={`flex size-12 shrink-0 items-center justify-center rounded-2xl text-xl font-extrabold ${toneClasses[category.tone].solid}`}
           >
             {business.name.trim().charAt(0)}
           </span>
           <div>
-            <h3 className="text-lg font-medium leading-tight text-ink">{business.name}</h3>
+            <h3 className="text-lg font-extrabold leading-tight text-ink">{business.name}</h3>
             <p className="text-sm text-ink-soft">
               {category.name} · {business.area}
             </p>
@@ -33,7 +34,7 @@ export function BusinessCard({ business }: { business: Business }) {
           {business.tags.map((tag) => (
             <li
               key={tag}
-              className="rounded-full border border-line px-2.5 py-0.5 text-xs text-ink-soft"
+              className="rounded-full bg-raised px-2.5 py-0.5 text-xs font-medium text-ink-soft"
             >
               {tag}
             </li>
@@ -47,7 +48,7 @@ export function BusinessCard({ business }: { business: Business }) {
             href={business.website}
             target="_blank"
             rel="noopener noreferrer nofollow"
-            className="font-semibold text-gold hover:underline"
+            className={`font-bold hover:underline ${toneClasses[category.tone].text}`}
           >
             לאתר העסק <span className="ltr text-ink-soft">({hostname(business.website)})</span>
           </a>

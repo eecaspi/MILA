@@ -22,14 +22,14 @@ export async function SiteHeader() {
           {session?.profile.role === "admin" && (
             <Link
               href="/admin"
-              className="hidden text-sm font-semibold text-ink-soft hover:text-gold sm:inline-block"
+              className="hidden text-sm font-semibold text-ink-soft hover:text-accent sm:inline-block"
             >
               ניהול
             </Link>
           )}
           <Link
             href={session ? "/account" : "/login?mode=signup"}
-            className="rounded-full bg-gold px-4 py-2 text-sm font-semibold text-on-gold transition-colors hover:bg-gold-bright"
+            className="rounded-full bg-accent px-4 py-2 text-sm font-semibold text-on-accent transition-colors hover:bg-accent-bright"
           >
             {session ? "האזור שלי" : "הצטרפות למועדון"}
           </Link>

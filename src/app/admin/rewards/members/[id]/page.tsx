@@ -61,11 +61,11 @@ export default async function AdminMemberPage({
 
   return (
     <div className="space-y-6">
-      <Link href="/admin/rewards" className="text-sm font-semibold text-plum hover:underline">
+      <Link href="/admin/rewards" className="text-sm font-semibold text-gold hover:underline">
         → חזרה לרשימה
       </Link>
       <header>
-        <h1 className="text-2xl font-extrabold text-ink">{member.display_name ?? "ללא שם"}</h1>
+        <h1 className="text-2xl font-medium text-ink">{member.display_name ?? "ללא שם"}</h1>
         <p className="text-sm text-ink-soft">
           <span className="ltr">{member.email}</span>
           {member.city ? ` · ${member.city}` : ""} · הצטרפה {formatDate(member.created_at)}
@@ -79,8 +79,8 @@ export default async function AdminMemberPage({
         programEnabled={Boolean((program.data as { is_enabled?: boolean } | null)?.is_enabled)}
       />
 
-      <section className="space-y-4 rounded-[var(--radius-card)] border border-line bg-paper p-5">
-        <h2 className="text-lg font-bold text-ink">עדכון נקודות ידני</h2>
+      <section className="space-y-4 rounded-[var(--radius-card)] border border-line bg-surface p-5">
+        <h2 className="text-lg font-medium text-ink">עדכון נקודות ידני</h2>
         <form
           action={adjustPoints}
           className="grid gap-3 sm:grid-cols-[8rem_1fr_auto] sm:items-end"
@@ -118,7 +118,7 @@ export default async function AdminMemberPage({
           </div>
           <button
             type="submit"
-            className="rounded-full bg-plum px-5 py-2.5 font-semibold text-white"
+            className="rounded-full bg-gold px-5 py-2.5 font-semibold text-on-gold"
           >
             עדכון
           </button>
@@ -128,19 +128,19 @@ export default async function AdminMemberPage({
         </p>
       </section>
 
-      <section className="rounded-[var(--radius-card)] border border-line bg-paper p-5">
-        <h2 className="text-lg font-bold text-ink">היסטוריית תנועות</h2>
+      <section className="rounded-[var(--radius-card)] border border-line bg-surface p-5">
+        <h2 className="text-lg font-medium text-ink">היסטוריית תנועות</h2>
         <TransactionList
           transactions={transactions}
           renderAction={(tx) =>
             tx.type !== "reversal" && tx.status !== "cancelled" && !reversedIds.has(tx.id) ? (
               <details className="relative">
-                <summary className="cursor-pointer list-none text-xs font-semibold text-plum hover:underline [&::-webkit-details-marker]:hidden">
+                <summary className="cursor-pointer list-none text-xs font-semibold text-gold hover:underline [&::-webkit-details-marker]:hidden">
                   {tx.status === "pending" ? "ביטול" : "ביטול תנועה"}
                 </summary>
                 <form
                   action={reverseTransaction}
-                  className="absolute end-0 z-10 mt-2 flex w-64 flex-col gap-2 rounded-xl border border-line bg-paper p-3 shadow-lg"
+                  className="absolute end-0 z-10 mt-2 flex w-64 flex-col gap-2 rounded-xl border border-line bg-surface p-3 shadow-lg"
                 >
                   <input type="hidden" name="transaction_id" value={tx.id} />
                   <input type="hidden" name="return_to" value={returnTo} />
@@ -156,7 +156,7 @@ export default async function AdminMemberPage({
                   />
                   <button
                     type="submit"
-                    className="rounded-full bg-plum px-3 py-1.5 text-sm font-semibold text-white"
+                    className="rounded-full bg-gold px-3 py-1.5 text-sm font-semibold text-on-gold"
                   >
                     אישור ביטול
                   </button>

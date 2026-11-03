@@ -19,11 +19,11 @@ export default async function AdminLayout({ children }: { children: React.ReactN
   const session = await requireAdmin();
 
   return (
-    <div className="min-h-dvh bg-cream">
-      <header className="border-b border-line bg-paper">
+    <div className="min-h-dvh bg-canvas">
+      <header className="border-b border-line bg-surface">
         <div className="mx-auto flex min-h-14 max-w-6xl flex-wrap items-center justify-between gap-3 px-4 py-2">
           <div className="flex items-center gap-6">
-            <p className="font-bold text-plum">
+            <p className="font-bold text-gold">
               <span className="ltr">{siteConfig.brand.name}</span> · ניהול
             </p>
             <nav aria-label="ניווט ניהול">
@@ -32,7 +32,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
                   <li key={item.href}>
                     <Link
                       href={item.href}
-                      className="rounded-full px-3 py-1.5 text-sm font-medium text-ink-soft hover:bg-plum-soft hover:text-plum"
+                      className="rounded-full px-3 py-1.5 text-sm font-medium text-ink-soft hover:bg-gold-soft hover:text-gold"
                     >
                       {item.label}
                     </Link>
@@ -43,7 +43,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
           </div>
           <div className="flex items-center gap-4 text-sm text-ink-soft">
             <span>{session.profile.display_name ?? session.email}</span>
-            <Link href="/" className="hover:text-plum">
+            <Link href="/" className="hover:text-gold">
               לאתר ←
             </Link>
           </div>

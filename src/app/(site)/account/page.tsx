@@ -35,8 +35,8 @@ export default async function AccountPage({ searchParams }: { searchParams: Sear
     <div className="mx-auto max-w-3xl space-y-8 px-4 py-10">
       <header className="flex flex-wrap items-end justify-between gap-4">
         <div>
-          <p className="text-sm font-semibold tracking-wide text-gold">MILA CLUB 💜</p>
-          <h1 className="mt-1 text-3xl font-extrabold text-ink">
+          <p className="eyebrow">MILA CLUB 💜</p>
+          <h1 className="mt-1 text-3xl font-medium text-ink">
             שלום{name ? ` ${name}` : ""}, ברוכה הבאה למועדון!
           </h1>
           <p className="mt-1 text-sm text-ink-soft">
@@ -44,7 +44,7 @@ export default async function AccountPage({ searchParams }: { searchParams: Sear
           </p>
         </div>
         <form action={signOut}>
-          <button type="submit" className="text-sm font-semibold text-ink-soft hover:text-plum">
+          <button type="submit" className="text-sm font-semibold text-ink-soft hover:text-gold">
             התנתקות
           </button>
         </form>
@@ -74,12 +74,12 @@ export default async function AccountPage({ searchParams }: { searchParams: Sear
       )}
 
       <section aria-labelledby="how" className="space-y-4">
-        <h2 id="how" className="text-xl font-bold text-ink">
+        <h2 id="how" className="text-xl font-medium text-ink">
           איך צוברים נקודות?
         </h2>
         <ul className="grid gap-3 sm:grid-cols-3">
           {ways.map((w) => (
-            <li key={w.title} className="rounded-2xl border border-line bg-paper p-4">
+            <li key={w.title} className="rounded-2xl border border-line bg-surface p-4">
               <span aria-hidden className="text-2xl">
                 {w.icon}
               </span>
@@ -88,16 +88,16 @@ export default async function AccountPage({ searchParams }: { searchParams: Sear
             </li>
           ))}
         </ul>
-        <p className="rounded-2xl border border-dashed border-plum/30 bg-plum-soft px-4 py-3 text-center text-sm font-semibold text-plum">
+        <p className="rounded-2xl border border-dashed border-gold/30 bg-gold-soft px-4 py-3 text-center text-sm font-semibold text-gold">
           בקרוב: חנות ההטבות של MILA
         </p>
       </section>
 
       <section
         aria-labelledby="history"
-        className="rounded-[var(--radius-card)] border border-line bg-paper p-5"
+        className="rounded-[var(--radius-card)] border border-line bg-surface p-5"
       >
-        <h2 id="history" className="text-lg font-bold text-ink">
+        <h2 id="history" className="text-lg font-medium text-ink">
           הפעילות שלי
         </h2>
         <TransactionList transactions={rewards.transactions} />
@@ -106,7 +106,7 @@ export default async function AccountPage({ searchParams }: { searchParams: Sear
         </p>
       </section>
 
-      <section className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-line bg-paper p-5">
+      <section className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-line bg-surface p-5">
         <div>
           <p className="font-semibold text-ink">הפרטים שלי</p>
           <p className="text-sm text-ink-soft">
@@ -116,7 +116,7 @@ export default async function AccountPage({ searchParams }: { searchParams: Sear
         </div>
         <Link
           href="/account/profile"
-          className="rounded-full border border-plum px-4 py-2 text-sm font-semibold text-plum hover:bg-plum-soft"
+          className="rounded-full border border-gold px-4 py-2 text-sm font-semibold text-gold hover:bg-gold-soft"
         >
           עריכת פרופיל
         </Link>

@@ -7,17 +7,17 @@ export function BusinessCard({ business }: { business: Business }) {
   const category = getCategory(business.category);
 
   return (
-    <article className="flex h-full flex-col rounded-[var(--radius-card)] border border-line bg-paper p-5 shadow-sm transition-shadow hover:shadow-md">
+    <article className="flex h-full flex-col rounded-[var(--radius-card)] border border-line bg-surface p-5 transition-colors hover:border-gold/60">
       <div className="flex items-start justify-between gap-3">
         <div className="flex items-center gap-3">
           <span
             aria-hidden
-            className="flex size-12 shrink-0 items-center justify-center rounded-2xl bg-plum-soft text-2xl"
+            className="flex size-12 shrink-0 items-center justify-center rounded-full border border-gold/50 font-display text-xl text-gold"
           >
-            {category.icon}
+            {business.name.trim().charAt(0)}
           </span>
           <div>
-            <h3 className="text-lg font-bold leading-tight text-ink">{business.name}</h3>
+            <h3 className="text-lg font-medium leading-tight text-ink">{business.name}</h3>
             <p className="text-sm text-ink-soft">
               {category.name} · {business.area}
             </p>
@@ -31,7 +31,10 @@ export function BusinessCard({ business }: { business: Business }) {
       {business.tags.length > 0 && (
         <ul className="mt-4 flex flex-wrap gap-1.5" aria-label="תגיות">
           {business.tags.map((tag) => (
-            <li key={tag} className="rounded-full bg-cream px-2.5 py-0.5 text-xs text-ink-soft">
+            <li
+              key={tag}
+              className="rounded-full border border-line px-2.5 py-0.5 text-xs text-ink-soft"
+            >
               {tag}
             </li>
           ))}
@@ -44,7 +47,7 @@ export function BusinessCard({ business }: { business: Business }) {
             href={business.website}
             target="_blank"
             rel="noopener noreferrer nofollow"
-            className="font-semibold text-plum hover:underline"
+            className="font-semibold text-gold hover:underline"
           >
             לאתר העסק <span className="ltr text-ink-soft">({hostname(business.website)})</span>
           </a>

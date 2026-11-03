@@ -20,7 +20,7 @@ export default async function BusinessesPage({ searchParams }: { searchParams: S
   return (
     <div className="mx-auto max-w-6xl px-4 py-10">
       <header className="mb-8">
-        <h1 className="text-3xl font-extrabold text-ink md:text-4xl">מדריך עסקים</h1>
+        <h1 className="text-3xl font-medium text-ink md:text-4xl">מדריך עסקים</h1>
         <p className="mt-2 text-ink-soft">עסקים, חנויות וארגונים שכדאי להכיר.</p>
       </header>
 
@@ -39,7 +39,7 @@ export default async function BusinessesPage({ searchParams }: { searchParams: S
           current={category}
           options={[
             { value: undefined, label: "הכול" },
-            ...categories.map((c) => ({ value: c.slug, label: `${c.icon} ${c.name}` })),
+            ...categories.map((c) => ({ value: c.slug, label: c.name })),
           ]}
         />
       </div>
@@ -51,7 +51,7 @@ export default async function BusinessesPage({ searchParams }: { searchParams: S
           ))}
         </div>
       ) : (
-        <p className="rounded-2xl border border-line bg-paper p-8 text-center text-ink-soft">
+        <p className="rounded-2xl border border-line bg-surface p-8 text-center text-ink-soft">
           עדיין אין עסקים בקטגוריה הזו. בקרוב נוסיף עוד.
         </p>
       )}

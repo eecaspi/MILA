@@ -1,27 +1,38 @@
 @import "tailwindcss";
 
 /*
- * Design tokens. Use logical utilities (ms-/me-, ps-/pe-, start-/end-, text-start)
+ * MILA — black & champagne gold.
+ * Deep warm black canvas, ivory text, one accent: champagne gold.
+ * Display type is a Hebrew serif (Frank Ruhl Libre); body is Heebo.
+ *
+ * Use logical utilities (ms-/me-, ps-/pe-, start-/end-, text-start)
  * rather than left/right so every component is correct in RTL.
  */
 @theme {
   --font-sans: var(--font-heebo), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-frank), "Times New Roman", serif;
 
-  --color-cream: #fbf7f2;
-  --color-paper: #ffffff;
-  --color-ink: #2a1f27;
-  --color-ink-soft: #6b5c66;
-  --color-line: #eadfd6;
+  /* surfaces, darkest to lightest */
+  --color-canvas: #0b0a09;
+  --color-surface: #141210;
+  --color-raised: #1c1916;
+  --color-line: #2c2723;
 
-  --color-plum: #5b2a4e;
-  --color-plum-dark: #43203a;
-  --color-plum-soft: #f3e8ef;
+  /* text */
+  --color-ink: #f2ece1;
+  --color-ink-soft: #a59c90;
 
-  --color-gold: #b9852f;
-  --color-gold-soft: #faf0dc;
+  /* accent */
+  --color-gold: #c9a45c;
+  --color-gold-bright: #e0c283;
+  --color-gold-soft: #211b12;
+  --color-on-gold: #0b0a09;
 
-  --color-sage: #3f6b55;
-  --color-sage-soft: #e6f0ea;
+  /* states */
+  --color-sage: #9cc7a8;
+  --color-sage-soft: #13201a;
+  --color-danger: #eb9a92;
+  --color-danger-soft: #2a1513;
 
   --radius-card: 1.25rem;
 }
@@ -29,13 +40,27 @@
 @layer base {
   html {
     -webkit-text-size-adjust: 100%;
+    color-scheme: dark;
   }
 
   body {
-    background-color: var(--color-cream);
+    background-color: var(--color-canvas);
     color: var(--color-ink);
     font-family: var(--font-sans);
-    line-height: 1.6;
+    line-height: 1.65;
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display);
+    letter-spacing: -0.01em;
+    text-wrap: balance;
+  }
+
+  ::selection {
+    background: var(--color-gold);
+    color: var(--color-on-gold);
   }
 
   /* Codes, URLs and other Latin strings keep LTR order inside RTL text. */
@@ -47,5 +72,42 @@
   :focus-visible {
     outline: 2px solid var(--color-gold);
     outline-offset: 2px;
+  }
+}
+
+@layer components {
+  /* Thin gold hairline used to frame premium surfaces. */
+  .gold-frame {
+    border: 1px solid color-mix(in srgb, var(--color-gold) 35%, transparent);
+    background:
+      radial-gradient(
+        120% 80% at 100% 0%,
+        color-mix(in srgb, var(--color-gold) 14%, transparent),
+        transparent 60%
+      ),
+      var(--color-surface);
+  }
+
+  /* Letter-spaced small caps label ("MILA CLUB", section eyebrows). */
+  .eyebrow {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--color-gold);
+  }
+
+  .wordmark {
+    font-family: var(--font-display);
+    font-weight: 500;
+    letter-spacing: 0.32em;
+    color: var(--color-gold);
+  }
+
+  /* Short ornamental gold rule. */
+  .gold-rule {
+    height: 1px;
+    width: 4rem;
+    background: linear-gradient(to left, transparent, var(--color-gold), transparent);
   }
 }

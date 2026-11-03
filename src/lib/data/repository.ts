@@ -1,13 +1,70 @@
 /**
- * Data access layer.
+ * Data access layer. Pages call these functions only — never Supabase or the demo arrays directly.
  *
- * Pages call these functions only — never the demo arrays or Supabase directly.
- * Today they read the bundled demo data. When Supabase is configured, swap the
- * implementations here (see supabase/migrations) without touching any page.
+ * Source of content:
+ * - Supabase connected → published businesses/offers managed in the back office.
+ * - Supabase not connected, or nothing published yet → the bundled demo content, so the
+ *   showcase site never looks empty. Demo offers only ever belong to fictional businesses.
  */
+import "server-only";
+
+import { cache } from "react";
+import { siteConfig } from "@/config/site";
 import { demoBusinesses } from "@/data/demo-businesses";
 import { demoOffers } from "@/data/demo-offers";
-import type { Business, CategorySlug, OfferKind, OfferWithBusiness } from "@/lib/types";
+import { createPublicClient } from "@/lib/supabase/public";
+import type { Business, CategorySlug, Offer, OfferKind, OfferWithBusiness } from "@/lib/types";
+import {
+  BUSINESS_COLUMNS,
+  OFFER_COLUMNS,
+  mapBusinessRow,
+  mapOfferRow,
+  withoutCouponCode,
+  type BusinessRow,
+  type OfferRow,
+} from "./mappers";
+
+interface Content {
+  businesses: Business[];
+  offers: Offer[];
+  source: "database" | "demo";
+}
+
+/** Loads all published content once per request. */
+const loadContent = cache(async (): Promise<Content> => {
+  const demo: Content = { businesses: demoBusinesses, offers: demoOffers, source: "demo" };
+  const supabase = createPublicClient();
+  if (!supabase) return demo;
+
+  const [b, o] = await Promise.all([
+    supabase.from("businesses").select(BUSINESS_COLUMNS).order("sort_order").order("name"),
+    supabase.from("offers").select(OFFER_COLUMNS).order("created_at", { ascending: false }),
+  ]);
+  if (b.error || o.error) {
+    console.error("content load failed, showing demo content", b.error ?? o.error);
+    return demo;
+  }
+
+  const businesses = ((b.data ?? []) as BusinessRow[])
+    .map(mapBusinessRow)
+    .filter((x): x is Business => x !== null);
+  const offers = ((o.data ?? []) as OfferRow[]).map(mapOfferRow);
+
+  // Nothing published yet: keep the showcase alive with demo content.
+  if (businesses.length === 0) return demo;
+  if (offers.length === 0) {
+    return {
+      businesses: [...businesses, ...demoBusinesses.filter((x) => !x.isRealBusiness)],
+      offers: demoOffers,
+      source: "database",
+    };
+  }
+  return { businesses, offers, source: "database" };
+});
+
+export async function getContentSource(): Promise<Content["source"]> {
+  return (await loadContent()).source;
+}
 
 export interface BusinessFilter {
   category?: CategorySlug;
@@ -16,7 +73,8 @@ export interface BusinessFilter {
 }
 
 export async function getBusinesses(filter: BusinessFilter = {}): Promise<Business[]> {
-  return demoBusinesses.filter(
+  const { businesses } = await loadContent();
+  return businesses.filter(
     (b) =>
       (filter.includeSamples || b.isRealBusiness) &&
       (!filter.category || b.category === filter.category),
@@ -24,7 +82,7 @@ export async function getBusinesses(filter: BusinessFilter = {}): Promise<Busine
 }
 
 export async function getBusinessBySlug(slug: string): Promise<Business | undefined> {
-  return demoBusinesses.find((b) => b.slug === slug);
+  return (await loadContent()).businesses.find((b) => b.slug === slug);
 }
 
 export interface OfferFilter {
@@ -37,23 +95,26 @@ export interface OfferFilter {
 
 export async function getOffers(filter: OfferFilter = {}): Promise<OfferWithBusiness[]> {
   const { activeOnly = true, now = new Date() } = filter;
-  const businesses = new Map(demoBusinesses.map((b) => [b.id, b]));
+  const content = await loadContent();
+  const businesses = new Map(content.businesses.map((b) => [b.id, b]));
 
   const result: OfferWithBusiness[] = [];
-  for (const offer of demoOffers) {
+  for (const offer of content.offers) {
     const business = businesses.get(offer.businessId);
     if (!business) continue;
     if (filter.kind && offer.kind !== filter.kind) continue;
     if (filter.category && business.category !== filter.category) continue;
     if (activeOnly && offer.validUntil && new Date(offer.validUntil) < now) continue;
-    result.push({ ...offer, business });
+    result.push(withoutCouponCode({ ...offer, business }, siteConfig.features.showCouponCodes));
   }
   return result;
 }
 
-/** "המבצעים הכי שווים" */
+/** "המבצעים הכי שווים" — highlighted first, then the newest, so the section is never empty. */
 export async function getHighlightedOffers(limit = 4): Promise<OfferWithBusiness[]> {
-  return (await getOffers()).filter((o) => o.highlight).slice(0, limit);
+  const all = await getOffers();
+  const picked = all.filter((o) => o.highlight);
+  return [...picked, ...all.filter((o) => !o.highlight)].slice(0, limit);
 }
 
 /** "מה חדש אצל לייקי?" — most recently added first. */

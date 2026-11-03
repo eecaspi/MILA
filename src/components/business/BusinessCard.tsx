@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { getCategory } from "@/data/categories";
 import { hostname } from "@/lib/format";
 import type { Business } from "@/lib/types";
@@ -12,12 +13,18 @@ export function BusinessCard({ business }: { business: Business }) {
     <article className="lift flex h-full flex-col rounded-[var(--radius-card)] bg-surface p-5 shadow-[var(--shadow-card)]">
       <div className="flex items-start justify-between gap-3">
         <div className="flex items-center gap-3">
-          <span
-            aria-hidden
-            className={`flex size-12 shrink-0 items-center justify-center rounded-2xl ${toneClasses[category.tone]}`}
-          >
-            <CategoryIcon slug={category.slug} className="size-6 text-ink/75" />
-          </span>
+          {business.logoUrl ? (
+            <span className="relative size-12 shrink-0 overflow-hidden rounded-2xl bg-raised">
+              <Image src={business.logoUrl} alt="" fill sizes="48px" className="object-cover" />
+            </span>
+          ) : (
+            <span
+              aria-hidden
+              className={`flex size-12 shrink-0 items-center justify-center rounded-2xl ${toneClasses[category.tone]}`}
+            >
+              <CategoryIcon slug={category.slug} className="size-6 text-ink/75" />
+            </span>
+          )}
           <div>
             <h3 className="text-lg leading-tight text-ink">{business.name}</h3>
             <p className="text-sm text-ink-soft">
@@ -47,6 +54,7 @@ export function BusinessCard({ business }: { business: Business }) {
         {business.website ? (
           <a
             href={business.website}
+            data-track-business={business.id}
             target="_blank"
             rel="noopener noreferrer nofollow"
             className="font-bold text-accent hover:underline"

@@ -38,6 +38,12 @@ export const siteConfig = {
     whatsappUrl: null as string | null,
   },
   features: {
+    /**
+     * Showcase stage: offers show their benefit (e.g. "20% הנחה") but never the
+     * coupon code. Codes stay in the database for later and are stripped from
+     * page data while this is false.
+     */
+    showCouponCodes: false as boolean,
     /** Flip on as they are built. */
     communityRecommendations: false,
     affiliateProgram: false,

@@ -10,7 +10,10 @@ export const metadata: Metadata = {
 
 const nav = [
   { href: "/admin", label: "סקירה" },
+  { href: "/admin/businesses", label: "עסקים" },
+  { href: "/admin/offers", label: "הטבות" },
   { href: "/admin/rewards", label: "מועדון ונקודות" },
+  { href: "/admin/team", label: "צוות" },
 ];
 
 // Server-side gate for the whole segment. Every admin action and every admin
@@ -27,7 +30,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
               <span className="ltr">{siteConfig.brand.name}</span> · ניהול
             </p>
             <nav aria-label="ניווט ניהול">
-              <ul className="flex gap-1">
+              <ul className="flex flex-wrap gap-1">
                 {nav.map((item) => (
                   <li key={item.href}>
                     <Link

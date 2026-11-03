@@ -2,10 +2,12 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { TagMark } from "@/components/brand/TagMark";
+import { TrackView } from "@/components/analytics/Tracker";
 import { CopyCouponButton } from "@/components/deals/CopyCouponButton";
 import { OfferImage } from "@/components/deals/OfferImage";
 import { DemoNotice } from "@/components/ui/DemoNotice";
 import { StatusBadge } from "@/components/ui/StatusBadge";
+import { siteConfig } from "@/config/site";
 import { getCategory } from "@/data/categories";
 import { getOfferById } from "@/lib/data/repository";
 import { formatDate, hostname } from "@/lib/format";
@@ -29,6 +31,7 @@ export default async function OfferPage({ params }: { params: Params }) {
 
   return (
     <div className="mx-auto max-w-5xl px-4 py-8 md:py-12">
+      <TrackView type="offer_view" offerId={offer.id} businessId={offer.business.id} />
       <Link href="/deals" className="text-sm font-semibold text-accent hover:underline">
         → לכל מה שלייקי מצאה
       </Link>
@@ -76,7 +79,7 @@ export default async function OfferPage({ params }: { params: Params }) {
             </DemoNotice>
           )}
 
-          {offer.couponCode && !expired && (
+          {siteConfig.features.showCouponCodes && offer.couponCode && !expired && (
             <div className="rounded-[var(--radius-card)] bg-surface p-5 shadow-[var(--shadow-card)]">
               <p className="mb-3 font-display font-bold text-ink">קוד הקופון</p>
               <CopyCouponButton code={offer.couponCode} />
@@ -103,6 +106,8 @@ export default async function OfferPage({ params }: { params: Params }) {
                 <dd>
                   <a
                     href={offer.business.website}
+                    data-track-business={offer.business.id}
+                    data-track-offer={offer.id}
                     target="_blank"
                     rel="noopener noreferrer nofollow"
                     className="ltr font-semibold text-accent hover:underline"

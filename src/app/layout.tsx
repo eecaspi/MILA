@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Great_Vibes, Heebo } from "next/font/google";
+import { Heebo } from "next/font/google";
 import { siteConfig } from "@/config/site";
 import "./globals.css";
 
@@ -7,14 +7,6 @@ import "./globals.css";
 const heebo = Heebo({
   subsets: ["hebrew", "latin"],
   variable: "--font-heebo",
-  display: "swap",
-});
-
-// Script face for the "Likey" wordmark (matches the official logo artwork).
-const script = Great_Vibes({
-  subsets: ["latin"],
-  weight: "400",
-  variable: "--font-script",
   display: "swap",
 });
 
@@ -44,11 +36,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html
-      lang={siteConfig.locale.lang}
-      dir={siteConfig.locale.dir}
-      className={`${heebo.variable} ${script.variable}`}
-    >
+    <html lang={siteConfig.locale.lang} dir={siteConfig.locale.dir} className={`${heebo.variable}`}>
       <body className="min-h-dvh antialiased">{children}</body>
     </html>
   );

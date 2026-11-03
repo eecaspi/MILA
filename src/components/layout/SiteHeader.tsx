@@ -11,7 +11,7 @@ export async function SiteHeader() {
     <header className="sticky top-0 z-40 border-b border-line/70 bg-canvas/90 backdrop-blur">
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-4 px-4">
         <Link href="/" aria-label={`${siteConfig.brand.name} – לדף הבית`} className="shrink-0">
-          <Logo variant="compact" />
+          <Logo variant="wordmark" height={44} priority />
         </Link>
 
         <nav aria-label="ניווט ראשי" className="hidden md:block">
@@ -29,9 +29,16 @@ export async function SiteHeader() {
           )}
           <Link
             href={session ? "/account" : "/login?mode=signup"}
-            className="btn-primary px-4 py-2 text-sm shadow-none"
+            className="btn-primary px-4 py-2 text-sm whitespace-nowrap shadow-none"
           >
-            {session ? "האזור שלי" : "בואי להיות חברה שלנו"}
+            {session ? (
+              "האזור שלי"
+            ) : (
+              <>
+                <span className="sm:hidden">הצטרפי</span>
+                <span className="hidden sm:inline">בואי להיות חברה שלנו</span>
+              </>
+            )}
           </Link>
 
           {/* Mobile menu: native <details>, no JS needed. */}

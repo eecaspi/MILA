@@ -7,7 +7,7 @@ export function SiteFooter() {
     <footer className="mt-24 bg-ink text-white">
       <div className="mx-auto grid max-w-6xl gap-10 px-4 py-12 md:grid-cols-3">
         <div>
-          <Logo variant="framed" onDark className="mt-8 scale-90 origin-top-right" />
+          <Logo variant="full" onDark height={96} />
           <p className="mt-4 max-w-xs text-sm text-white/70">{siteConfig.brand.tagline}</p>
         </div>
 

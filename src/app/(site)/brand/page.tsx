@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import { HeartMark } from "@/components/brand/HeartMark";
+import Image from "next/image";
+import { TagMark } from "@/components/brand/TagMark";
 import { LikeyCharacter } from "@/components/brand/LikeyCharacter";
 import { Logo } from "@/components/brand/Logo";
 import { siteConfig } from "@/config/site";
@@ -10,13 +11,13 @@ export const metadata: Metadata = {
 };
 
 const palette = [
-  { name: "סגול מלכותי", role: "כפתורים, קישורים, לוגו", hex: "#5C2A7E", text: "#FFFDF9" },
-  { name: "סגול עמוק", role: "מעבר עכבר ולחיצה", hex: "#47205F", text: "#FFFDF9" },
-  { name: "ערפל לילך", role: "הדגשות עדינות, תגיות", hex: "#ECE2F3", text: "#2B1D33" },
-  { name: "שמנת", role: "רקע האתר", hex: "#FAF6EF", text: "#2B1D33" },
-  { name: "שנהב", role: "כרטיסים", hex: "#FFFDF9", text: "#2B1D33" },
-  { name: "זהב שמפניה", role: "פרטים עדינים בלבד", hex: "#C4A062", text: "#2B1D33" },
-  { name: "חציל עמוק", role: "טקסט, פוטר, קהילה", hex: "#2B1D33", text: "#FFFDF9" },
+  { name: "רוז גולד עמוק", role: "כפתורים וקישורים", hex: "#9A5E57", text: "#FFFDFA" },
+  { name: "רוז גולד מתכתי", role: "הלוגו וכותרות גדולות", hex: "#C48B7C", text: "#FFFDFA" },
+  { name: "סומק", role: "התווית, הדגשות עדינות", hex: "#F5E4DE", text: "#4B3631" },
+  { name: "שמנת", role: "רקע האתר", hex: "#FCF7F1", text: "#4B3631" },
+  { name: "שנהב", role: "כרטיסים", hex: "#FFFDFA", text: "#4B3631" },
+  { name: "זהב שמפניה", role: "המסגרת ופרטים עדינים", hex: "#BFA585", text: "#4B3631" },
+  { name: "קקאו", role: "טקסט, פוטר, קהילה", hex: "#4B3631", text: "#FFFDFA" },
 ];
 
 const tones = ["rose", "peach", "lilac", "mint", "sky", "sand", "coral", "pearl"] as const;
@@ -59,8 +60,8 @@ export default function BrandPage() {
           {siteConfig.brand.name} – {siteConfig.brand.slogan}
         </h1>
         <p className="mt-3 max-w-2xl text-ink-soft">
-          לייקי בהשראת המילה לב. הסמל הוא לב רך עם חור עגול קטן, כמו בתווית מחיר: אכפתיות ומציאה
-          ששווה לשתף, בסימן אחד. הצבעים – סגול מלכותי ושמנת, עם נגיעות זהב.
+          הלוגו הרשמי: שתי תוויות מחיר שתלויות יחד – מציאה ששווה לשתף בין חברות – מעל מסגרת בזהב
+          שמפניה, עם Likey בכתב יד ברוז גולד. כל האתר בנוי מהצבעים של הלוגו.
         </p>
       </header>
 
@@ -73,11 +74,20 @@ export default function BrandPage() {
           <Panel title="ראשי – על רקע כהה" dark>
             <Logo variant="primary" onDark />
           </Panel>
-          <Panel title="עם הסלוגן – על רקע בהיר">
-            <Logo variant="slogan" />
+          <Panel title="הלוגו המלא – על רקע בהיר">
+            <Logo variant="framed" className="mx-auto mt-6" />
           </Panel>
-          <Panel title="עם הסלוגן – על רקע כהה" dark>
-            <Logo variant="slogan" onDark />
+          <Panel title="הלוגו המלא – על רקע כהה" dark>
+            <Logo variant="framed" onDark className="mx-auto mt-6" />
+          </Panel>
+          <Panel title="הקובץ המקורי (לעיון)">
+            <Image
+              src="/brand/likey-logo-reference.png"
+              alt="הלוגו המקורי של Likey"
+              width={1748}
+              height={1118}
+              className="h-auto w-full max-w-xs rounded-xl"
+            />
           </Panel>
           <Panel title="קומפקטי (כותרת האתר)">
             <Logo variant="compact" />
@@ -85,11 +95,11 @@ export default function BrandPage() {
           <Panel title="סמל בלבד">
             <div className="flex items-center gap-6">
               <Logo variant="icon" />
-              <span className="flex size-16 items-center justify-center rounded-2xl bg-accent">
-                <HeartMark size={36} color="#ffffff" />
+              <span className="flex size-16 items-center justify-center rounded-2xl bg-ink">
+                <TagMark size={42} onDark />
               </span>
               <span className="flex size-16 items-center justify-center rounded-full bg-accent-soft">
-                <HeartMark size={34} />
+                <TagMark size={40} />
               </span>
             </div>
           </Panel>
@@ -128,6 +138,7 @@ export default function BrandPage() {
       <section className="grid gap-8 md:grid-cols-2">
         <div className="space-y-3">
           <h2 className="text-2xl text-ink">טיפוגרפיה</h2>
+          <p className="font-script text-5xl rose-gold-text">Likey</p>
           <p className="font-display text-4xl font-bold text-ink">פרנק רוהל לכותרות</p>
           <p className="text-lg text-ink">
             היבו לטקסט רץ – קריא, נקי ונעים בעברית, גם בטלפון וגם בגדלים קטנים.

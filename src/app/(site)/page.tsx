@@ -32,16 +32,15 @@ export default async function HomePage() {
       <section className="relative overflow-hidden">
         <div
           aria-hidden
-          className="pointer-events-none absolute inset-0 bg-[radial-gradient(50%_60%_at_15%_10%,#ece2f3_0%,transparent_70%),radial-gradient(40%_50%_at_95%_90%,#f1e7d3_0%,transparent_70%)]"
+          className="pointer-events-none absolute inset-0 bg-[radial-gradient(50%_60%_at_15%_10%,#f5e4de_0%,transparent_70%),radial-gradient(40%_50%_at_95%_90%,#f2e7d6_0%,transparent_70%)]"
         />
         <div className="relative mx-auto grid max-w-6xl items-center gap-10 px-4 pt-10 pb-14 md:grid-cols-[1.25fr_1fr] md:pt-16 md:pb-20">
           <div>
             <h1 className="sr-only">
               {siteConfig.brand.name} – {siteConfig.brand.slogan}
             </h1>
-            <Logo variant="slogan" />
-            <div aria-hidden className="gold-rule mt-6" />
-            <p className="mt-6 max-w-lg text-lg text-ink-soft md:text-xl">
+            <Logo variant="framed" className="mt-6" />
+            <p className="mt-8 max-w-lg text-lg text-ink-soft md:text-xl">
               {siteConfig.brand.tagline}
             </p>
             <div className="mt-8 flex flex-wrap gap-3">

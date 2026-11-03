@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { siteConfig } from "@/config/site";
-import { HeartMark } from "./HeartMark";
+import { TagMark } from "./TagMark";
 
 /**
  * Reserved slot for the לייקי AI character.
@@ -24,7 +24,7 @@ export function LikeyCharacter({
   return (
     <figure
       data-character-slot="likey"
-      className={`relative aspect-[4/5] w-full max-w-sm overflow-hidden rounded-[2rem] bg-[radial-gradient(80%_70%_at_70%_20%,#fffdf9_0%,#ece2f3_55%,#dccbea_100%)] shadow-[var(--shadow-soft)] ${className}`}
+      className={`relative aspect-[4/5] w-full max-w-sm overflow-hidden rounded-[2rem] bg-[radial-gradient(80%_70%_at_70%_20%,#fffdfa_0%,#f5e4de_55%,#ecc9bd_100%)] shadow-[var(--shadow-soft)] ${className}`}
     >
       {src && siteConfig.features.aiCharacter ? (
         <Image
@@ -38,7 +38,7 @@ export function LikeyCharacter({
       ) : (
         <div className="absolute inset-0 flex flex-col items-center justify-center gap-4 p-8 text-center">
           <div className="float-soft">
-            <HeartMark size={120} color="var(--color-accent)" />
+            <TagMark size={130} />
           </div>
           <p className="font-display text-lg font-bold text-accent">לייקי בדרך אלייך</p>
           <p className="max-w-[14rem] text-sm text-ink-soft">

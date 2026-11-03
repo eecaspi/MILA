@@ -9,9 +9,9 @@ name and deployment are unchanged.)
 
 - **Logo:** `src/components/brand/Logo.tsx` — variants `primary`, `slogan`, `compact`, `icon`, each with
   `onDark`. The symbol (`HeartMark`) is a soft heart with a round tag-hole cut-out. All variants are shown at `/brand`.
-- **Colors / tokens:** `src/app/globals.css` — ivory canvas, white cards, deep berry `#A63D68` for actions,
-  blush, coral and muted gold as small accents, pastel tone per category.
-- **Type:** Rubik (headings, wordmark) + Heebo (body).
+- **Colors / tokens:** `src/app/globals.css` — warm cream canvas, ivory cards, royal amethyst `#5C2A7E` for
+  actions and the logo, lilac mist highlights, champagne gold for fine details, muted tone per category.
+- **Type:** Frank Ruhl Libre (headings, wordmark) + Heebo (body).
 - **AI character:** `src/components/brand/LikeyCharacter.tsx` reserves a fixed 4:5 slot with a branded
   placeholder. Add the final art via `src` and set `siteConfig.features.aiCharacter = true`.
 - **WhatsApp:** set `siteConfig.community.whatsappUrl` to the invite link; until then the site shows "coming soon".

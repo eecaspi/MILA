@@ -46,9 +46,7 @@ export function Logo({
     <span className={`inline-flex flex-col items-start ${className}`}>
       <span className="inline-flex items-center gap-2">
         <HeartMark size={s.heart} color={heartColor} />
-        <span
-          className={`font-display leading-none font-extrabold tracking-[-0.03em] ${s.word} ${wordColor}`}
-        >
+        <span className={`font-display leading-none font-black ${s.word} ${wordColor}`}>
           {siteConfig.brand.name}
         </span>
       </span>

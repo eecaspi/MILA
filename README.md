@@ -1,8 +1,20 @@
-# MILA
+# לייקי · LIKEY
 
-Community commerce and affiliate platform for Haredi women in Israel.
-Hebrew-first, full RTL. **MILA is a temporary brand name** — change it in
-[`src/config/site.ts`](src/config/site.ts).
+**יש לי משהו בשבילך!** — community shopping, deals and benefits platform for Haredi women in Israel.
+Hebrew-first, full RTL, mobile-first. Brand name, slogan, nav and feature flags live in
+[`src/config/site.ts`](src/config/site.ts). (The project was previously called MILA; the repository
+name and deployment are unchanged.)
+
+## Brand
+
+- **Logo:** `src/components/brand/Logo.tsx` — variants `primary`, `slogan`, `compact`, `icon`, each with
+  `onDark`. The symbol (`HeartMark`) is a soft heart with a round tag-hole cut-out. All variants are shown at `/brand`.
+- **Colors / tokens:** `src/app/globals.css` — ivory canvas, white cards, deep berry `#A63D68` for actions,
+  blush, coral and muted gold as small accents, pastel tone per category.
+- **Type:** Rubik (headings, wordmark) + Heebo (body).
+- **AI character:** `src/components/brand/LikeyCharacter.tsx` reserves a fixed 4:5 slot with a branded
+  placeholder. Add the final art via `src` and set `siteConfig.features.aiCharacter = true`.
+- **WhatsApp:** set `siteConfig.community.whatsappUrl` to the invite link; until then the site shows "coming soon".
 
 ## Stack
 
@@ -19,7 +31,7 @@ npm run dev                  # http://localhost:3000
 Without Supabase keys the site runs on the bundled demo data in `src/data/`;
 sign-up, the personal area and admin show a "coming soon" state.
 
-### Setting up Supabase (accounts + MILA CLUB)
+### Setting up Supabase (accounts + מועדון לייקי)
 
 1. Create a Supabase project and put its URL and anon key in `.env.local` (and in Vercel → Environment Variables).
 2. Run the migrations in order (`supabase/migrations/*.sql`, then `supabase/seed.sql`) in the SQL editor
@@ -44,7 +56,7 @@ npm run format:check
 src/
   app/
     (site)/            Consumer site: home, /businesses, /deals, /community,
-                       /login, /account (MILA CLUB), /account/profile
+                       /login, /account (מועדון לייקי), /account/profile
     admin/             Admin (admins only): overview, /admin/rewards, member detail
     api/affiliate/     Affiliate conversion webhook (501 until a network is connected)
     auth/callback      Email-confirmation handler
@@ -94,7 +106,7 @@ Rules (enforced by `npm run check:data` and a DB trigger):
 ## Roadmap
 
 1. **Phase 1 (done):** setup, RTL layout, homepage, navigation, business directory, deals catalog.
-2. **Phase 2 (this branch):** accounts, personal area, MILA CLUB points ledger, earning rules,
+2. **Phase 2 (this branch):** accounts, personal area, מועדון לייקי points ledger, earning rules,
    minimal rewards admin. See [docs/REWARDS.md](docs/REWARDS.md).
 3. **Next:** admin CRUD for businesses and offers, move directory data to the DB.
 4. **Later:** community recommendations; affiliate network integration and verified purchase points;

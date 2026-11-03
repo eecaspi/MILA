@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Logo } from "@/components/brand/Logo";
 import { siteConfig } from "@/config/site";
 import { getSession } from "@/lib/auth/session";
 import { NavLinks } from "./NavLinks";
@@ -7,11 +8,10 @@ export async function SiteHeader() {
   const session = await getSession();
 
   return (
-    <header className="sticky top-0 z-40 border-b border-line bg-canvas/90 backdrop-blur">
+    <header className="sticky top-0 z-40 border-b border-line/70 bg-canvas/90 backdrop-blur">
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-4 px-4">
-        <Link href="/" className="flex items-baseline gap-2" aria-label={siteConfig.brand.name}>
-          <span className="ltr wordmark text-2xl">{siteConfig.brand.name}</span>
-          <span className="hidden text-sm text-ink-soft sm:inline">{siteConfig.brand.nameHe}</span>
+        <Link href="/" aria-label={`${siteConfig.brand.name} – לדף הבית`} className="shrink-0">
+          <Logo variant="compact" />
         </Link>
 
         <nav aria-label="ניווט ראשי" className="hidden md:block">
@@ -29,14 +29,14 @@ export async function SiteHeader() {
           )}
           <Link
             href={session ? "/account" : "/login?mode=signup"}
-            className="rounded-full bg-accent px-4 py-2 text-sm font-semibold text-on-accent transition-colors hover:bg-accent-bright"
+            className="btn-primary px-4 py-2 text-sm shadow-none"
           >
-            {session ? "האזור שלי" : "הצטרפות למועדון"}
+            {session ? "האזור שלי" : "בואי להיות חברה שלנו"}
           </Link>
 
           {/* Mobile menu: native <details>, no JS needed. */}
           <details className="group relative md:hidden">
-            <summary className="flex size-10 cursor-pointer list-none items-center justify-center rounded-full border border-line bg-surface [&::-webkit-details-marker]:hidden">
+            <summary className="flex size-10 cursor-pointer list-none items-center justify-center rounded-full bg-surface shadow-[var(--shadow-card)] [&::-webkit-details-marker]:hidden">
               <span className="sr-only">תפריט</span>
               <svg aria-hidden viewBox="0 0 24 24" className="size-5 text-ink">
                 <path
@@ -49,7 +49,7 @@ export async function SiteHeader() {
             </summary>
             <nav
               aria-label="ניווט ראשי"
-              className="absolute end-0 mt-2 w-56 rounded-2xl border border-line bg-surface shadow-lg"
+              className="absolute end-0 mt-2 w-60 rounded-2xl bg-surface shadow-[var(--shadow-soft)]"
             >
               <NavLinks variant="mobile" />
             </nav>

@@ -41,19 +41,19 @@ export default async function LoginPage({ searchParams }: { searchParams: Search
   return (
     <div className="mx-auto max-w-md px-4 py-12">
       <div className="mb-8 text-center">
-        <p className="eyebrow">MILA CLUB 💜</p>
-        <h1 className="mt-2 text-3xl font-extrabold text-ink">
-          {mode === "signup" ? "הצטרפות למועדון" : "כניסה למועדון"}
+        <p className="eyebrow">מועדון לייקי</p>
+        <h1 className="mt-2 text-3xl text-ink">
+          {mode === "signup" ? "בואי להיות חברה שלנו" : "איזה כיף שחזרת!"}
         </h1>
         <p className="mt-2 text-ink-soft">
           {mode === "signup"
-            ? "חשבון אישי אחד להטבות, לנקודות ולהמלצות מהקהילה."
-            : "שמחות לראות אותך שוב."}
+            ? "חשבון אחד להטבות, להמלצות ולמועדון לייקי. בלי עלות."
+            : "התחברי ואני אראה לך מה חדש."}
         </p>
       </div>
 
-      <div className="space-y-4 rounded-[var(--radius-card)] bg-surface p-6">
-        <nav aria-label="סוג כניסה" className="flex gap-1 rounded-full bg-canvas p-1">
+      <div className="space-y-4 rounded-[var(--radius-card)] bg-surface p-6 shadow-[var(--shadow-card)]">
+        <nav aria-label="סוג כניסה" className="flex gap-1 rounded-full bg-raised p-1">
           {tab("login", "כניסה")}
           {tab("signup", "הרשמה")}
         </nav>
@@ -93,7 +93,9 @@ export default async function LoginPage({ searchParams }: { searchParams: Search
             required
             disabled={disabled}
           />
-          <SubmitButton disabled={disabled}>{mode === "signup" ? "הצטרפות" : "כניסה"}</SubmitButton>
+          <SubmitButton disabled={disabled}>
+            {mode === "signup" ? "אני מצטרפת" : "כניסה"}
+          </SubmitButton>
         </form>
       </div>
 

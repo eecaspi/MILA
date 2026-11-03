@@ -1,14 +1,16 @@
 import type { Category, CategorySlug } from "@/lib/types";
 
 export const categories: Category[] = [
-  { slug: "food", name: "מזון וסופרמרקטים", icon: "🛒", tone: "mint" },
-  { slug: "fashion", name: "אופנה צנועה", icon: "👗", tone: "rose" },
-  { slug: "baby-kids", name: "תינוקות וילדים", icon: "🍼", tone: "sky" },
-  { slug: "home", name: "בית ומטבח", icon: "🏠", tone: "peach" },
-  { slug: "books-judaica", name: "ספרים ויודאיקה", icon: "📚", tone: "sand" },
-  { slug: "health-community", name: "בריאות וחסד", icon: "🤝", tone: "lilac" },
-  { slug: "beauty", name: "טיפוח ופאות", icon: "💇‍♀️", tone: "coral" },
-  { slug: "events", name: "שמחות ואירועים", icon: "🎉", tone: "pearl" },
+  { slug: "fashion", name: "אופנה", tone: "rose" },
+  { slug: "baby-kids", name: "ילדים ותינוקות", tone: "sky" },
+  { slug: "home", name: "בית ועיצוב", tone: "peach" },
+  { slug: "beauty", name: "טיפוח ויופי", tone: "coral" },
+  { slug: "food", name: "אוכל ומטבח", tone: "mint" },
+  { slug: "gifts", name: "מתנות", tone: "lilac" },
+  { slug: "leisure", name: "פנאי וחוויות", tone: "sand" },
+  { slug: "events", name: "שמחות ואירועים", tone: "pearl" },
+  { slug: "books-judaica", name: "ספרים ויודאיקה", tone: "sand" },
+  { slug: "health-community", name: "בריאות וחסד", tone: "mint" },
 ];
 
 const bySlug = new Map(categories.map((c) => [c.slug, c]));

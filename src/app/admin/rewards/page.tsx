@@ -93,7 +93,7 @@ export default async function AdminRewardsPage({ searchParams }: { searchParams:
     <div className="space-y-8">
       <header className="flex flex-wrap items-end justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-extrabold text-ink">מועדון ונקודות</h1>
+          <h1 className="text-2xl text-ink">מועדון ונקודות</h1>
           <p className="text-sm text-ink-soft">כל פעולה כאן נבדקת בשרת ונרשמת ביומן הפעולות.</p>
         </div>
         {s && (
@@ -130,7 +130,7 @@ export default async function AdminRewardsPage({ searchParams }: { searchParams:
 
       {/* Rules */}
       <section className={section} aria-labelledby="rules">
-        <h2 id="rules" className="text-lg font-extrabold text-ink">
+        <h2 id="rules" className="text-lg text-ink">
           כללי צבירה
         </h2>
         <div className="overflow-x-auto">
@@ -199,7 +199,7 @@ export default async function AdminRewardsPage({ searchParams }: { searchParams:
       {/* Members */}
       <section className={section} aria-labelledby="members">
         <div className="flex flex-wrap items-center justify-between gap-3">
-          <h2 id="members" className="text-lg font-extrabold text-ink">
+          <h2 id="members" className="text-lg text-ink">
             חברות ויתרות
           </h2>
           <form className="flex gap-2" role="search">
@@ -265,7 +265,7 @@ export default async function AdminRewardsPage({ searchParams }: { searchParams:
 
       {/* Pending purchases */}
       <section className={section} aria-labelledby="pending">
-        <h2 id="pending" className="text-lg font-extrabold text-ink">
+        <h2 id="pending" className="text-lg text-ink">
           קניות ממתינות לאימות
         </h2>
         {(conversions.data ?? []).length === 0 ? (
@@ -322,7 +322,7 @@ export default async function AdminRewardsPage({ searchParams }: { searchParams:
 
       {/* Audit log */}
       <section className={section} aria-labelledby="audit">
-        <h2 id="audit" className="text-lg font-extrabold text-ink">
+        <h2 id="audit" className="text-lg text-ink">
           יומן פעולות
         </h2>
         {(audit.data ?? []).length === 0 ? (

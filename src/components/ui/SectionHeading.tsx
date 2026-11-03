@@ -1,11 +1,13 @@
 import Link from "next/link";
 
 export function SectionHeading({
+  id,
   title,
   subtitle,
   href,
   linkLabel = "לכל הרשימה",
 }: {
+  id?: string;
   title: string;
   subtitle?: string;
   href?: string;
@@ -14,7 +16,9 @@ export function SectionHeading({
   return (
     <div className="mb-6 flex items-end justify-between gap-4">
       <div>
-        <h2 className="text-2xl font-extrabold text-ink md:text-3xl">{title}</h2>
+        <h2 id={id} className="text-2xl text-ink md:text-3xl">
+          {title}
+        </h2>
         {subtitle && <p className="mt-1 text-ink-soft">{subtitle}</p>}
       </div>
       {href && (

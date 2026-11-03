@@ -51,6 +51,21 @@ export async function getOffers(filter: OfferFilter = {}): Promise<OfferWithBusi
   return result;
 }
 
-export async function getFeaturedOffers(limit = 3): Promise<OfferWithBusiness[]> {
-  return (await getOffers()).slice(0, limit);
+/** "המבצעים הכי שווים" */
+export async function getHighlightedOffers(limit = 4): Promise<OfferWithBusiness[]> {
+  return (await getOffers()).filter((o) => o.highlight).slice(0, limit);
+}
+
+/** "מה חדש אצל לייקי?" — most recently added first. */
+export async function getNewestOffers(limit = 3): Promise<OfferWithBusiness[]> {
+  return (await getOffers()).sort((a, b) => b.addedAt.localeCompare(a.addedAt)).slice(0, limit);
+}
+
+/** "לייקי ממליצה" — hand-picked offers with a note. */
+export async function getLikeyPicks(limit = 3): Promise<OfferWithBusiness[]> {
+  return (await getOffers()).filter((o) => o.likeyPick).slice(0, limit);
+}
+
+export async function getOfferById(id: string): Promise<OfferWithBusiness | undefined> {
+  return (await getOffers({ activeOnly: false })).find((o) => o.id === id);
 }

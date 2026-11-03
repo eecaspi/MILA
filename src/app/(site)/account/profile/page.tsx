@@ -42,7 +42,7 @@ export default async function ProfilePage({ searchParams }: { searchParams: Sear
       <Link href="/account" className="text-sm font-semibold text-accent hover:underline">
         → חזרה לאזור האישי
       </Link>
-      <h1 className="mt-4 text-3xl font-extrabold text-ink">הפרופיל שלי</h1>
+      <h1 className="mt-4 text-3xl text-ink">הפרופיל שלי</h1>
       <p className="mt-1 text-ink-soft">הפרטים עוזרים לנו להתאים לך עסקים והטבות באזור שלך.</p>
 
       <div className="mt-6 space-y-4">

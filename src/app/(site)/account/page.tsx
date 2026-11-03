@@ -18,7 +18,7 @@ export const metadata: Metadata = {
 const ways = [
   {
     icon: "🛍️",
-    title: "קונות דרך MILA",
+    title: "קונות דרך לייקי",
     text: "נקודות על קניות מאומתות דרך הקישורים שלנו.",
     tone: "rose" as const,
   },
@@ -31,7 +31,7 @@ const ways = [
   {
     icon: "🎁",
     title: "צוברות נקודות ופותחות הטבות",
-    text: "חנות ההטבות של MILA בדרך.",
+    text: "חנות ההטבות של לייקי בדרך.",
     tone: "mint" as const,
   },
 ];
@@ -51,8 +51,8 @@ export default async function AccountPage({ searchParams }: { searchParams: Sear
     <div className="mx-auto max-w-3xl space-y-8 px-4 py-10">
       <header className="flex flex-wrap items-end justify-between gap-4">
         <div>
-          <p className="eyebrow">MILA CLUB 💜</p>
-          <h1 className="mt-1 text-3xl font-extrabold text-ink">
+          <p className="eyebrow">מועדון לייקי</p>
+          <h1 className="mt-1 text-3xl text-ink">
             שלום{name ? ` ${name}` : ""}, ברוכה הבאה למועדון!
           </h1>
           <p className="mt-1 text-sm text-ink-soft">
@@ -90,30 +90,27 @@ export default async function AccountPage({ searchParams }: { searchParams: Sear
       )}
 
       <section aria-labelledby="how" className="space-y-4">
-        <h2 id="how" className="text-xl font-extrabold text-ink">
+        <h2 id="how" className="text-xl text-ink">
           איך צוברים נקודות?
         </h2>
         <ul className="grid gap-3 sm:grid-cols-3">
           {ways.map((w) => (
-            <li
-              key={w.title}
-              className={`rounded-[var(--radius-card)] p-5 ${toneClasses[w.tone].solid}`}
-            >
+            <li key={w.title} className={`rounded-[var(--radius-card)] p-5 ${toneClasses[w.tone]}`}>
               <span aria-hidden className="text-2xl">
                 {w.icon}
               </span>
-              <p className="mt-2 text-lg font-extrabold">{w.title}</p>
+              <p className="mt-2 font-display text-lg font-bold">{w.title}</p>
               <p className="mt-1 text-sm font-medium opacity-80">{w.text}</p>
             </li>
           ))}
         </ul>
         <p className="rounded-2xl border border-dashed border-accent/30 bg-accent-soft px-4 py-3 text-center text-sm font-semibold text-accent">
-          בקרוב: חנות ההטבות של MILA
+          בקרוב: חנות ההטבות של לייקי
         </p>
       </section>
 
       <section aria-labelledby="history" className="rounded-[var(--radius-card)] bg-surface p-5">
-        <h2 id="history" className="text-lg font-extrabold text-ink">
+        <h2 id="history" className="text-lg text-ink">
           הפעילות שלי
         </h2>
         <TransactionList transactions={rewards.transactions} />

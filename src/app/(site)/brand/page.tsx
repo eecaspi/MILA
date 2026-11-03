@@ -139,9 +139,9 @@ export default function BrandPage() {
         <div className="space-y-3">
           <h2 className="text-2xl text-ink">טיפוגרפיה</h2>
           <p className="font-script text-5xl rose-gold-text">Likey</p>
-          <p className="font-display text-4xl font-bold text-ink">פרנק רוהל לכותרות</p>
+          <p className="text-4xl font-extrabold text-ink">היבו – גופן אחד לכל האתר</p>
           <p className="text-lg text-ink">
-            היבו לטקסט רץ – קריא, נקי ונעים בעברית, גם בטלפון וגם בגדלים קטנים.
+            כותרות בהדגשה, טקסט רץ במשקל רגיל – קריא, נקי ונעים בעברית, גם בטלפון.
           </p>
           <h3 className="pt-4 text-xl text-ink">קול המותג</h3>
           <ul className="space-y-1 text-ink-soft">

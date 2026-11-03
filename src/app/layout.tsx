@@ -1,8 +1,9 @@
 import type { Metadata, Viewport } from "next";
-import { Frank_Ruhl_Libre, Great_Vibes, Heebo } from "next/font/google";
+import { Great_Vibes, Heebo } from "next/font/google";
 import { siteConfig } from "@/config/site";
 import "./globals.css";
 
+// The one typeface for all site text (headings and body).
 const heebo = Heebo({
   subsets: ["hebrew", "latin"],
   variable: "--font-heebo",
@@ -14,14 +15,6 @@ const script = Great_Vibes({
   subsets: ["latin"],
   weight: "400",
   variable: "--font-script",
-  display: "swap",
-});
-
-// Elegant Hebrew serif for headings.
-const frank = Frank_Ruhl_Libre({
-  subsets: ["hebrew", "latin"],
-  weight: ["500", "700", "900"],
-  variable: "--font-frank",
   display: "swap",
 });
 
@@ -54,7 +47,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html
       lang={siteConfig.locale.lang}
       dir={siteConfig.locale.dir}
-      className={`${heebo.variable} ${frank.variable} ${script.variable}`}
+      className={`${heebo.variable} ${script.variable}`}
     >
       <body className="min-h-dvh antialiased">{children}</body>
     </html>

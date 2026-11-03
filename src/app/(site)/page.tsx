@@ -103,7 +103,7 @@ export default async function HomePage() {
 
         {/* 2. מה חדש + 3. לייקי ממליצה */}
         <div className="grid gap-10 lg:grid-cols-[1fr_1.6fr]">
-          <section aria-labelledby="new">
+          <section aria-labelledby="new" className="min-w-0">
             <SectionHeading id="new" title="מה חדש אצל לייקי?" subtitle="נכנס השבוע" />
             <div className="space-y-3">
               {newest.map((offer) => (
@@ -112,7 +112,7 @@ export default async function HomePage() {
             </div>
           </section>
 
-          <section aria-labelledby="picks">
+          <section aria-labelledby="picks" className="min-w-0">
             <SectionHeading
               id="picks"
               title="לייקי ממליצה"

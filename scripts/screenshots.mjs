@@ -33,7 +33,34 @@ for (const vp of viewports) {
     const overflow = await page.evaluate(
       () => document.documentElement.scrollWidth - document.documentElement.clientWidth,
     );
-    if (overflow > 1) problems.push(`${vp.name} ${path}: scrolls sideways by ${overflow}px`);
+    if (overflow > 1) {
+      // Name the elements that stick out, so the fix is obvious.
+      const culprits = await page.evaluate(() => {
+        const w = document.documentElement.clientWidth;
+        const out = [];
+        const flagged = new Set();
+        for (const el of document.querySelectorAll("body *")) {
+          const r = el.getBoundingClientRect();
+          if (r.width === 0 || (r.left >= -1 && r.right <= w + 1)) continue;
+          let clipped = false;
+          for (let p = el.parentElement; p && p !== document.body; p = p.parentElement) {
+            const ox = getComputedStyle(p).overflowX;
+            if (ox !== "visible") { clipped = true; break; }
+          }
+          if (clipped) continue;
+          flagged.add(el);
+        }
+        // Report the innermost offenders (no flagged descendants): those are the real cause.
+        for (const el of flagged) {
+          if ([...flagged].some((o) => o !== el && el.contains(o))) continue;
+          const r = el.getBoundingClientRect();
+          const cls = typeof el.className === "string" ? el.className.slice(0, 90) : String(el.className?.baseVal ?? "");
+          out.push(`<${el.tagName.toLowerCase()} class="${cls}"> "${(el.textContent || "").trim().slice(0, 40)}" left=${Math.round(r.left)} right=${Math.round(r.right)} width=${Math.round(r.width)}`);
+        }
+        return out.slice(0, 8);
+      });
+      problems.push(`${vp.name} ${path}: scrolls sideways by ${overflow}px\n      ${culprits.join("\n      ")}`);
+    }
     for (const e of errors) problems.push(`${vp.name} ${path}: console error: ${e}`);
 
     const file = `screenshots/${vp.name}${path === "/" ? "-home" : path.replaceAll("/", "-")}.png`;

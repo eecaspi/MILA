@@ -12,7 +12,7 @@ name and deployment are unchanged.)
   The symbol (`TagMark`) is two price tags hanging together. All variants are shown at `/brand`.
 - **Colors / tokens:** `src/app/globals.css` — taken from the logo: cream canvas, ivory cards, deep rose gold
   `#9A5E57` for actions, metallic rose-gold gradient for the wordmark, blush `#F5E4DE`, champagne gold `#BFA585`.
-- **Type:** Great Vibes (the "Likey" script), Frank Ruhl Libre (headings), Heebo (body).
+- **Type:** Heebo for all site text (headings and body). The "Likey" script inside the logo uses Great Vibes.
 - **AI character:** `src/components/brand/LikeyCharacter.tsx` reserves a fixed 4:5 slot with a branded
   placeholder. Add the final art via `src` and set `siteConfig.features.aiCharacter = true`.
 - **WhatsApp:** set `siteConfig.community.whatsappUrl` to the invite link; until then the site shows "coming soon".

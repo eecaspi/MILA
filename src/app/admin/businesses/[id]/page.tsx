@@ -41,7 +41,7 @@ export default async function EditBusiness({
       <BusinessForm business={business} />
       <DangerZone
         action={deleteBusiness}
-        id={business.id}
+        id={id}
         label="מחיקת העסק"
         warning="המחיקה תמחק גם את כל ההטבות של העסק ואי אפשר לבטל אותה. כדי רק להוריד מהאתר, הסירי את הסימון 'מפורסם באתר'."
       />

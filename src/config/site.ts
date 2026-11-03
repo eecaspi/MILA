@@ -30,11 +30,18 @@ export const siteConfig = {
     { href: "/community", label: "המלצות הקהילה" },
   ],
   features: {
-    /** Phase 2+ — flip on as they are built. */
+    /** Flip on as they are built. */
     communityRecommendations: false,
-    adminDashboard: false,
     affiliateProgram: false,
-    auth: false,
+    /**
+     * Whether points are actually earned is NOT set here: it is the
+     * rewards_program switch in the database, controlled from /admin/rewards.
+     */
+    rewardsMarketplace: false,
+    membershipTiers: false,
+    challenges: false,
+    /** Raffles, prize wheels, surprise draws. Must stay false until legal review. */
+    gamesOfChance: false,
   },
 } as const;
 

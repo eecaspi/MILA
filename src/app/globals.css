@@ -16,7 +16,6 @@
 @theme {
   --font-sans: var(--font-heebo), ui-sans-serif, system-ui, sans-serif;
   --font-display: var(--font-heebo), ui-sans-serif, system-ui, sans-serif;
-  --font-script: var(--font-script), "Brush Script MT", cursive;
 
   /* surfaces: warm cream, taken from the logo artwork */
   --color-canvas: #fcf7f1;
@@ -183,29 +182,6 @@
   }
   .btn-secondary:active {
     transform: scale(0.98);
-  }
-
-  /* Metallic rose-gold text for the wordmark and large display moments only. */
-  .rose-gold-text {
-    color: #a8746a;
-    background: linear-gradient(
-      100deg,
-      #9a5e57 0%,
-      #c48b7c 28%,
-      #e3b8a8 46%,
-      #b77a6e 64%,
-      #a8746a 100%
-    );
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-  }
-  .rose-gold-text-light {
-    color: #f0d2c6;
-    background: linear-gradient(100deg, #e9c2b4 0%, #f8e1d7 40%, #d9a596 70%, #f0d2c6 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
   }
 
   /* Thin champagne-gold divider with a small diamond in the middle. */

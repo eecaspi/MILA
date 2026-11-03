@@ -1,78 +1,63 @@
+import Image from "next/image";
 import { siteConfig } from "@/config/site";
-import { TagMark } from "./TagMark";
 
-export type LogoVariant = "framed" | "primary" | "compact" | "icon";
+export type LogoVariant = "full" | "wordmark" | "icon";
+
+const files = {
+  full: "/brand/likey-logo.png",
+  fullLight: "/brand/likey-logo-light.png",
+  wordmark: "/brand/likey-logo-wordmark.png",
+  icon: "/brand/likey-tags.png",
+} as const;
 
 /**
- * Likey logo, rebuilt in code from the official artwork
- * (public/brand/likey-logo-reference.png) so it stays sharp and works on any background.
- * - framed:  tags on a champagne-gold frame, "Likey" script, slogan — the full logo
- * - primary: tags + "Likey" script
- * - compact: smaller lockup for the header
- * - icon:    the tags alone
- * `onDark` lightens the script and slogan for dark backgrounds.
+ * The official Likey logo (artwork supplied by the brand, background removed).
+ * - full:     tags + "likey" + slogan "יש לי משהו בשבילך"
+ * - wordmark: tags + "likey", no slogan — for small sizes such as the header
+ * - icon:     the two tags alone
+ * `onDark` uses the light version, for dark backgrounds (full only).
+ * `height` is the rendered height in px; width follows the artwork's proportions.
  */
 export function Logo({
-  variant = "primary",
+  variant = "full",
   onDark = false,
+  height = 80,
+  priority = false,
   className = "",
 }: {
   variant?: LogoVariant;
   onDark?: boolean;
+  height?: number;
+  priority?: boolean;
   className?: string;
 }) {
-  const script = onDark ? "rose-gold-text-light" : "rose-gold-text";
-  const label = `${siteConfig.brand.nameEn} – ${siteConfig.brand.name}`;
+  const alt = `${siteConfig.brand.nameEn} ${siteConfig.brand.name} – ${siteConfig.brand.slogan}`;
 
   if (variant === "icon") {
-    return <TagMark size={44} onDark={onDark} title={label} className={className} />;
-  }
-
-  if (variant === "framed") {
     return (
-      <span
-        role="img"
-        aria-label={`${label}. ${siteConfig.brand.slogan}`}
-        className={`relative inline-flex flex-col items-center border-[1.5px] border-t-0 border-gold px-8 pt-10 pb-5 sm:px-14 ${className}`}
-      >
-        {/* top edge in two parts, leaving a gap where the tags hang */}
-        <span
-          aria-hidden
-          className="absolute -start-[1.5px] top-0 h-[1.5px] w-[calc(50%-46px)] bg-gold"
-        />
-        <span
-          aria-hidden
-          className="absolute -end-[1.5px] top-0 h-[1.5px] w-[calc(50%-46px)] bg-gold"
-        />
-        <span aria-hidden className="absolute -top-[32px] left-1/2 -translate-x-1/2">
-          <TagMark size={70} onDark={onDark} />
-        </span>
-        <span
-          aria-hidden
-          className={`font-script text-[4.5rem] leading-[1.05] sm:text-[6rem] ${script}`}
-        >
-          {siteConfig.brand.nameEn.charAt(0) + siteConfig.brand.nameEn.slice(1).toLowerCase()}
-        </span>
-        <span
-          aria-hidden
-          className={`-mt-1 text-lg font-light tracking-wide sm:text-xl ${onDark ? "text-[#f0d9cf]" : "text-[#9a7a70]"}`}
-        >
-          {siteConfig.brand.slogan}
-        </span>
-      </span>
+      <Image
+        src={files.icon}
+        alt={`${siteConfig.brand.nameEn} ${siteConfig.brand.name}`}
+        width={height}
+        height={height}
+        priority={priority}
+        className={className}
+      />
     );
   }
 
-  const big = variant === "primary";
+  // Artwork is 906 × 304.
+  const width = Math.round((height * 906) / 304);
+  const src = variant === "wordmark" ? files.wordmark : onDark ? files.fullLight : files.full;
   return (
-    <span className={`inline-flex items-center gap-1.5 ${className}`} aria-label={label} role="img">
-      <TagMark size={big ? 42 : 34} onDark={onDark} />
-      <span
-        aria-hidden
-        className={`font-script leading-none ${big ? "text-[3rem]" : "text-[2.5rem]"} ${script}`}
-      >
-        {siteConfig.brand.nameEn.charAt(0) + siteConfig.brand.nameEn.slice(1).toLowerCase()}
-      </span>
-    </span>
+    <Image
+      src={src}
+      alt={variant === "wordmark" ? `${siteConfig.brand.nameEn} ${siteConfig.brand.name}` : alt}
+      width={width}
+      height={height}
+      priority={priority}
+      sizes={`${width}px`}
+      className={`h-auto max-w-full ${className}`}
+    />
   );
 }

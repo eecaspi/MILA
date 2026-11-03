@@ -39,7 +39,7 @@ export default async function HomePage() {
             <h1 className="sr-only">
               {siteConfig.brand.name} – {siteConfig.brand.slogan}
             </h1>
-            <Logo variant="framed" className="mt-6" />
+            <Logo variant="full" height={150} priority />
             <p className="mt-8 max-w-lg text-lg text-ink-soft md:text-xl">
               {siteConfig.brand.tagline}
             </p>

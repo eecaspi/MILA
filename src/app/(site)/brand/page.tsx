@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import { TagMark } from "@/components/brand/TagMark";
 import { LikeyCharacter } from "@/components/brand/LikeyCharacter";
 import { Logo } from "@/components/brand/Logo";
@@ -60,43 +59,28 @@ export default function BrandPage() {
           {siteConfig.brand.name} – {siteConfig.brand.slogan}
         </h1>
         <p className="mt-3 max-w-2xl text-ink-soft">
-          הלוגו הרשמי: שתי תוויות מחיר שתלויות יחד – מציאה ששווה לשתף בין חברות – מעל מסגרת בזהב
-          שמפניה, עם Likey בכתב יד ברוז גולד. כל האתר בנוי מהצבעים של הלוגו.
+          הלוגו הרשמי: שתי תוויות מחיר עם סימן וי – מצאתי משהו ששווה – לצד likey בכתב יד מעוגל,
+          והסלוגן "יש לי משהו בשבילך". כל האתר בנוי מהצבעים של הלוגו: רוז גולד, סומק ושמנת.
         </p>
       </header>
 
       <section className="space-y-4">
         <h2 className="text-2xl text-ink">גרסאות הלוגו</h2>
         <div className="grid gap-4 md:grid-cols-2">
-          <Panel title="ראשי – על רקע בהיר">
-            <Logo variant="primary" />
-          </Panel>
-          <Panel title="ראשי – על רקע כהה" dark>
-            <Logo variant="primary" onDark />
-          </Panel>
           <Panel title="הלוגו המלא – על רקע בהיר">
-            <Logo variant="framed" className="mx-auto mt-6" />
+            <Logo variant="full" height={110} />
           </Panel>
           <Panel title="הלוגו המלא – על רקע כהה" dark>
-            <Logo variant="framed" onDark className="mx-auto mt-6" />
-          </Panel>
-          <Panel title="הקובץ המקורי (לעיון)">
-            <Image
-              src="/brand/likey-logo-reference.png"
-              alt="הלוגו המקורי של Likey"
-              width={1748}
-              height={1118}
-              className="h-auto w-full max-w-xs rounded-xl"
-            />
+            <Logo variant="full" onDark height={110} />
           </Panel>
           <Panel title="קומפקטי (כותרת האתר)">
-            <Logo variant="compact" />
+            <Logo variant="wordmark" height={56} />
           </Panel>
           <Panel title="סמל בלבד">
             <div className="flex items-center gap-6">
-              <Logo variant="icon" />
+              <Logo variant="icon" height={56} />
               <span className="flex size-16 items-center justify-center rounded-2xl bg-ink">
-                <TagMark size={42} onDark />
+                <TagMark size={42} />
               </span>
               <span className="flex size-16 items-center justify-center rounded-full bg-accent-soft">
                 <TagMark size={40} />
@@ -138,7 +122,6 @@ export default function BrandPage() {
       <section className="grid gap-8 md:grid-cols-2">
         <div className="space-y-3">
           <h2 className="text-2xl text-ink">טיפוגרפיה</h2>
-          <p className="font-script text-5xl rose-gold-text">Likey</p>
           <p className="text-4xl font-extrabold text-ink">היבו – גופן אחד לכל האתר</p>
           <p className="text-lg text-ink">
             כותרות בהדגשה, טקסט רץ במשקל רגיל – קריא, נקי ונעים בעברית, גם בטלפון.

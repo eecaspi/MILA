@@ -66,10 +66,10 @@ export function Logo({
   const big = variant === "primary";
   return (
     <span className={`inline-flex items-center gap-1.5 ${className}`} aria-label={label} role="img">
-      <TagMark size={big ? 40 : 30} onDark={onDark} />
+      <TagMark size={big ? 42 : 34} onDark={onDark} />
       <span
         aria-hidden
-        className={`font-script leading-none ${big ? "text-[2.75rem]" : "text-[2.15rem]"} ${script}`}
+        className={`font-script leading-none ${big ? "text-[3rem]" : "text-[2.5rem]"} ${script}`}
       >
         {siteConfig.brand.nameEn.charAt(0) + siteConfig.brand.nameEn.slice(1).toLowerCase()}
       </span>

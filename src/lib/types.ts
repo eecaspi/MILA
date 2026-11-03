@@ -46,6 +46,11 @@ export interface Business {
   status: VerificationStatus;
   /** True when this business is a real company (shown as directory listing only). */
   isRealBusiness: boolean;
+  /** Longer text for the business page (back office). */
+  description?: string;
+  phone?: string;
+  logoUrl?: string;
+  coverUrl?: string;
 }
 
 export type OfferKind = "deal" | "coupon";

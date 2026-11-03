@@ -32,15 +32,32 @@ npm run dev                  # http://localhost:3000
 Without Supabase keys the site runs on the bundled demo data in `src/data/`;
 sign-up, the personal area and admin show a "coming soon" state.
 
-### Setting up Supabase (accounts + מועדון לייקי)
+### Setting up Supabase (back office, analytics, accounts)
 
-1. Create a Supabase project and put its URL and anon key in `.env.local` (and in Vercel → Environment Variables).
-2. Run the migrations in order (`supabase/migrations/*.sql`, then `supabase/seed.sql`) in the SQL editor
-   or with the Supabase CLI.
+1. Create a Supabase project. In Vercel → Settings → Environment Variables add
+   `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY` and `ANALYTICS_SALT`
+   (any long random string), then redeploy.
+2. Run the migrations in order (`supabase/migrations/0001…0005`, then `supabase/seed.sql`)
+   in the SQL editor or with the Supabase CLI. `0005` creates the public `media` bucket for uploads.
 3. In Supabase → Authentication → URL Configuration, set the Site URL and add `<site>/auth/callback` as a redirect URL.
 4. Sign up on the site, then make yourself admin in the SQL editor:
    `update profiles set role = 'admin' where email = 'you@example.com';`
-5. Turn the club on (and the profile-completion rule) from `/admin/rewards` when ready.
+   More admins can then be added from `/admin/team`.
+5. Add businesses and offers in `/admin/businesses` and `/admin/offers` and tick "מפורסם באתר".
+   Until something is published, the public site keeps showing the demo content.
+
+### Back office (`/admin`)
+
+- **סקירה**: anonymous analytics for 7/30/90 days — visitors, page views, offer views,
+  clicks out to business sites, daily chart, top businesses/offers/pages, traffic sources, devices.
+  No cookies and no IP addresses are stored: a visitor is a hash that changes every day.
+  Browsers with Do-Not-Track / GPC are not counted. Admin pages are never tracked.
+- **עסקים / הטבות**: create, edit, publish/hide, delete, upload logo/cover/offer images.
+  New items are drafts. Every change is written to the audit log by a database trigger.
+- **Showcase mode**: `features.showCouponCodes` in `src/config/site.ts` is `false`. Coupon codes
+  are stored in the admin-only `offer_codes` table and never sent to the public site; the
+  discount itself (`value_label`, e.g. "20% הנחה") is shown.
+- **צוות**: add or remove admins by email (the last admin can't be removed).
 
 ### Checks
 
@@ -58,7 +75,8 @@ src/
   app/
     (site)/            Consumer site: home, /businesses, /deals, /community,
                        /login, /account (מועדון לייקי), /account/profile
-    admin/             Admin (admins only): overview, /admin/rewards, member detail
+    admin/             Back office (admins only): analytics, businesses, offers, team, rewards
+    api/track/         Anonymous page-view / click collection (privacy-friendly)
     api/affiliate/     Affiliate conversion webhook (501 until a network is connected)
     auth/callback      Email-confirmation handler
     layout.tsx         <html lang="he" dir="rtl">, Heebo font
@@ -67,7 +85,8 @@ src/
     business/          BusinessCard
     deals/             DealCard, CopyCouponButton
     rewards/           PointsSummary, TransactionList
-    admin/             StatTile, ActionResult
+    admin/             Forms, BarChart, RankList, StatTile, TrendTile
+    analytics/         Tracker (page views, outbound clicks)
     ui/                StatusBadge, DemoNotice, FilterChips, SectionHeading, Alert, Field
   config/site.ts       Brand name, nav, feature flags — single source of truth
   data/                Categories + demo seed (businesses, offers)
@@ -79,7 +98,7 @@ src/
     supabase/          Browser, server, middleware and service-role clients
     types.ts           Domain model (incl. affiliate types for phase 3)
 supabase/
-  migrations/          SQL schema with RLS (0002 = rewards foundation)
+  migrations/          SQL schema with RLS (0002 rewards, 0004 back office + analytics, 0005 media bucket)
   seed.sql             Categories
   tests/               Database tests + local Supabase stub
 docs/REWARDS.md        Rewards architecture, security rules, open business decisions

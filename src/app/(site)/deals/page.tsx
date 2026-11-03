@@ -30,7 +30,7 @@ export default async function DealsPage({ searchParams }: { searchParams: Search
   return (
     <div className="mx-auto max-w-6xl px-4 py-10">
       <header className="mb-8">
-        <h1 className="text-3xl font-extrabold text-ink md:text-4xl">מבצעים וקופונים</h1>
+        <h1 className="text-3xl font-medium text-ink md:text-4xl">מבצעים וקופונים</h1>
         <p className="mt-2 text-ink-soft">כל ההטבות לחברות הקהילה, במקום אחד.</p>
       </header>
 
@@ -64,7 +64,7 @@ export default async function DealsPage({ searchParams }: { searchParams: Search
             { value: undefined, label: "כל הקטגוריות" },
             ...categories
               .filter((c) => usedCategories.has(c.slug))
-              .map((c) => ({ value: c.slug, label: `${c.icon} ${c.name}` })),
+              .map((c) => ({ value: c.slug, label: c.name })),
           ]}
         />
       </div>
@@ -76,7 +76,7 @@ export default async function DealsPage({ searchParams }: { searchParams: Search
           ))}
         </div>
       ) : (
-        <p className="rounded-2xl border border-line bg-paper p-8 text-center text-ink-soft">
+        <p className="rounded-2xl border border-line bg-surface p-8 text-center text-ink-soft">
           אין כרגע הטבות שמתאימות לסינון.
         </p>
       )}

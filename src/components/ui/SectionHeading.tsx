@@ -14,11 +14,11 @@ export function SectionHeading({
   return (
     <div className="mb-6 flex items-end justify-between gap-4">
       <div>
-        <h2 className="text-2xl font-bold text-ink md:text-3xl">{title}</h2>
+        <h2 className="text-2xl font-medium text-ink md:text-3xl">{title}</h2>
         {subtitle && <p className="mt-1 text-ink-soft">{subtitle}</p>}
       </div>
       {href && (
-        <Link href={href} className="shrink-0 text-sm font-semibold text-plum hover:underline">
+        <Link href={href} className="shrink-0 text-sm font-semibold text-gold hover:underline">
           {linkLabel} ←
         </Link>
       )}

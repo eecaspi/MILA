@@ -23,8 +23,8 @@ export function NavLinks({ variant }: { variant: "desktop" | "mobile" }) {
               className={[
                 "block rounded-full px-4 py-2 text-[15px] font-medium transition-colors",
                 active
-                  ? "bg-plum-soft text-plum"
-                  : "text-ink-soft hover:bg-plum-soft/60 hover:text-plum",
+                  ? "bg-gold-soft text-gold"
+                  : "text-ink-soft hover:bg-gold-soft/60 hover:text-gold",
               ].join(" ")}
             >
               {item.label}

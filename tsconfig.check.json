@@ -13,6 +13,12 @@
     "src/lib/format.ts",
     "src/lib/data/**/*.ts",
     "src/data/**/*.ts",
+    "src/lib/rewards/types.ts",
+    "src/lib/rewards/format.ts",
+    "src/lib/rewards/conversions.ts",
+    "src/lib/rewards/*.test.ts",
+    "src/lib/notifications/**/*.ts",
+    "src/lib/auth/messages.ts",
     "scripts/**/*.ts"
   ]
 }

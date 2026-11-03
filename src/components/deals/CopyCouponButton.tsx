@@ -19,10 +19,10 @@ export function CopyCouponButton({ code }: { code: string }) {
     <button
       type="button"
       onClick={copy}
-      className="flex w-full items-center justify-between gap-2 rounded-xl border-2 border-dashed border-plum/40 bg-plum-soft px-3 py-2 text-sm transition-colors hover:border-plum"
+      className="flex w-full items-center justify-between gap-2 rounded-xl border-2 border-dashed border-gold/40 bg-gold-soft px-3 py-2 text-sm transition-colors hover:border-gold"
     >
-      <span className="ltr font-mono font-bold tracking-wider text-plum">{code}</span>
-      <span className="font-semibold text-plum" aria-live="polite">
+      <span className="ltr font-mono font-bold tracking-wider text-gold">{code}</span>
+      <span className="font-semibold text-gold" aria-live="polite">
         {copied ? "הועתק ✓" : "העתקת קוד"}
       </span>
     </button>

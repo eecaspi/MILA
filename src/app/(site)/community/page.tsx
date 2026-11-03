@@ -11,13 +11,13 @@ export default function CommunityPage() {
       <p className="text-5xl" aria-hidden>
         💬
       </p>
-      <h1 className="mt-4 text-3xl font-extrabold text-ink">המלצות הקהילה — בקרוב</h1>
+      <h1 className="mt-4 text-3xl font-medium text-ink">המלצות הקהילה — בקרוב</h1>
       <p className="mt-4 text-lg text-ink-soft">
         כאן יופיעו המלצות של נשים מהקהילה על עסקים, אנשי מקצוע ושירותים. אנחנו בונים את זה עכשיו.
       </p>
       <Link
         href="/businesses"
-        className="mt-8 inline-block rounded-full bg-plum px-6 py-3 font-semibold text-white hover:bg-plum-dark"
+        className="mt-8 inline-block rounded-full bg-gold px-6 py-3 font-semibold text-on-gold hover:bg-gold-bright"
       >
         בינתיים, למדריך העסקים
       </Link>

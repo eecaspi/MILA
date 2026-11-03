@@ -1,0 +1,18 @@
+{
+  "//": "Typechecks the framework-free layer (config, domain types, data, scripts). Usable without installing dependencies.",
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "plugins": [],
+    "incremental": false,
+    "allowImportingTsExtensions": true,
+    "types": ["node"]
+  },
+  "include": [
+    "src/config/**/*.ts",
+    "src/lib/types.ts",
+    "src/lib/format.ts",
+    "src/lib/data/**/*.ts",
+    "src/data/**/*.ts",
+    "scripts/**/*.ts"
+  ]
+}

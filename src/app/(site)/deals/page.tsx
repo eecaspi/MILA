@@ -1,0 +1,85 @@
+import type { Metadata } from "next";
+import { DealCard } from "@/components/deals/DealCard";
+import { DemoNotice } from "@/components/ui/DemoNotice";
+import { FilterChips } from "@/components/ui/FilterChips";
+import { categories, isCategorySlug } from "@/data/categories";
+import { getOffers } from "@/lib/data/repository";
+import type { OfferKind } from "@/lib/types";
+
+export const metadata: Metadata = {
+  title: "מבצעים וקופונים",
+  description: "קטלוג מבצעים וקופונים לחברות הקהילה.",
+};
+
+type SearchParams = Promise<{ category?: string; kind?: string }>;
+
+function parseKind(value: string | undefined): OfferKind | undefined {
+  return value === "deal" || value === "coupon" ? value : undefined;
+}
+
+export default async function DealsPage({ searchParams }: { searchParams: SearchParams }) {
+  const params = await searchParams;
+  const category = params.category && isCategorySlug(params.category) ? params.category : undefined;
+  const kind = parseKind(params.kind);
+  const offers = await getOffers({ category, kind });
+
+  // Only show categories that actually have offers, so filters never lead to empty pages.
+  const allOffers = await getOffers();
+  const usedCategories = new Set(allOffers.map((o) => o.business.category));
+
+  return (
+    <div className="mx-auto max-w-6xl px-4 py-10">
+      <header className="mb-8">
+        <h1 className="text-3xl font-extrabold text-ink md:text-4xl">מבצעים וקופונים</h1>
+        <p className="mt-2 text-ink-soft">כל ההטבות לחברות הקהילה, במקום אחד.</p>
+      </header>
+
+      <div className="mb-6">
+        <DemoNotice>
+          כל ההצעות בעמוד זה הן <strong>לדוגמה בלבד</strong>, שייכות לעסקים פיקטיביים ואינן ניתנות
+          למימוש. הצעות אמיתיות יופיעו כאן עם התג &quot;הצעה מאומתת ✓&quot;.
+        </DemoNotice>
+      </div>
+
+      <div className="mb-8 space-y-3">
+        <FilterChips
+          basePath="/deals"
+          param="kind"
+          label="סוג הטבה"
+          current={kind}
+          otherParams={{ category }}
+          options={[
+            { value: undefined, label: "כל ההטבות" },
+            { value: "deal", label: "מבצעים" },
+            { value: "coupon", label: "קופונים" },
+          ]}
+        />
+        <FilterChips
+          basePath="/deals"
+          param="category"
+          label="סינון לפי קטגוריה"
+          current={category}
+          otherParams={{ kind }}
+          options={[
+            { value: undefined, label: "כל הקטגוריות" },
+            ...categories
+              .filter((c) => usedCategories.has(c.slug))
+              .map((c) => ({ value: c.slug, label: `${c.icon} ${c.name}` })),
+          ]}
+        />
+      </div>
+
+      {offers.length > 0 ? (
+        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          {offers.map((offer) => (
+            <DealCard key={offer.id} offer={offer} />
+          ))}
+        </div>
+      ) : (
+        <p className="rounded-2xl border border-line bg-paper p-8 text-center text-ink-soft">
+          אין כרגע הטבות שמתאימות לסינון.
+        </p>
+      )}
+    </div>
+  );
+}

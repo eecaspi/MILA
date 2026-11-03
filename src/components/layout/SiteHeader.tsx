@@ -1,0 +1,52 @@
+import Link from "next/link";
+import { siteConfig } from "@/config/site";
+import { NavLinks } from "./NavLinks";
+
+export function SiteHeader() {
+  return (
+    <header className="sticky top-0 z-40 border-b border-line bg-cream/90 backdrop-blur">
+      <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-4 px-4">
+        <Link href="/" className="flex items-baseline gap-2" aria-label={siteConfig.brand.name}>
+          <span className="ltr text-2xl font-extrabold tracking-wide text-plum">
+            {siteConfig.brand.name}
+          </span>
+          <span className="hidden text-sm text-ink-soft sm:inline">{siteConfig.brand.nameHe}</span>
+        </Link>
+
+        <nav aria-label="ניווט ראשי" className="hidden md:block">
+          <NavLinks variant="desktop" />
+        </nav>
+
+        <div className="flex items-center gap-2">
+          <Link
+            href="/deals"
+            className="hidden rounded-full bg-plum px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-plum-dark sm:inline-block"
+          >
+            להטבות השבוע
+          </Link>
+
+          {/* Mobile menu: native <details>, no JS needed. */}
+          <details className="group relative md:hidden">
+            <summary className="flex size-10 cursor-pointer list-none items-center justify-center rounded-full border border-line bg-paper [&::-webkit-details-marker]:hidden">
+              <span className="sr-only">תפריט</span>
+              <svg aria-hidden viewBox="0 0 24 24" className="size-5 text-ink">
+                <path
+                  d="M4 7h16M4 12h16M4 17h16"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                />
+              </svg>
+            </summary>
+            <nav
+              aria-label="ניווט ראשי"
+              className="absolute end-0 mt-2 w-56 rounded-2xl border border-line bg-paper shadow-lg"
+            >
+              <NavLinks variant="mobile" />
+            </nav>
+          </details>
+        </div>
+      </div>
+    </header>
+  );
+}

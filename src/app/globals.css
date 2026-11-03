@@ -1,0 +1,51 @@
+@import "tailwindcss";
+
+/*
+ * Design tokens. Use logical utilities (ms-/me-, ps-/pe-, start-/end-, text-start)
+ * rather than left/right so every component is correct in RTL.
+ */
+@theme {
+  --font-sans: var(--font-heebo), ui-sans-serif, system-ui, sans-serif;
+
+  --color-cream: #fbf7f2;
+  --color-paper: #ffffff;
+  --color-ink: #2a1f27;
+  --color-ink-soft: #6b5c66;
+  --color-line: #eadfd6;
+
+  --color-plum: #5b2a4e;
+  --color-plum-dark: #43203a;
+  --color-plum-soft: #f3e8ef;
+
+  --color-gold: #b9852f;
+  --color-gold-soft: #faf0dc;
+
+  --color-sage: #3f6b55;
+  --color-sage-soft: #e6f0ea;
+
+  --radius-card: 1.25rem;
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--color-cream);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    line-height: 1.6;
+  }
+
+  /* Codes, URLs and other Latin strings keep LTR order inside RTL text. */
+  .ltr {
+    direction: ltr;
+    unicode-bidi: isolate;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-gold);
+    outline-offset: 2px;
+  }
+}

@@ -32,7 +32,7 @@ export default async function HomePage() {
       <section className="relative overflow-hidden">
         <div
           aria-hidden
-          className="pointer-events-none absolute inset-0 bg-[radial-gradient(50%_60%_at_15%_10%,#f7dde6_0%,transparent_70%),radial-gradient(40%_50%_at_95%_90%,#fce3d4_0%,transparent_70%)]"
+          className="pointer-events-none absolute inset-0 bg-[radial-gradient(50%_60%_at_15%_10%,#ece2f3_0%,transparent_70%),radial-gradient(40%_50%_at_95%_90%,#f1e7d3_0%,transparent_70%)]"
         />
         <div className="relative mx-auto grid max-w-6xl items-center gap-10 px-4 pt-10 pb-14 md:grid-cols-[1.25fr_1fr] md:pt-16 md:pb-20">
           <div>
@@ -40,6 +40,7 @@ export default async function HomePage() {
               {siteConfig.brand.name} – {siteConfig.brand.slogan}
             </h1>
             <Logo variant="slogan" />
+            <div aria-hidden className="gold-rule mt-6" />
             <p className="mt-6 max-w-lg text-lg text-ink-soft md:text-xl">
               {siteConfig.brand.tagline}
             </p>
@@ -53,15 +54,15 @@ export default async function HomePage() {
             </div>
             <ul className="mt-8 flex flex-wrap gap-x-5 gap-y-2 text-sm font-semibold text-ink-soft">
               <li className="flex items-center gap-2">
-                <span aria-hidden className="size-1.5 rounded-full bg-coral" />
+                <span aria-hidden className="size-1.5 rounded-full bg-gold" />
                 בלי עלות
               </li>
               <li className="flex items-center gap-2">
-                <span aria-hidden className="size-1.5 rounded-full bg-coral" />
+                <span aria-hidden className="size-1.5 rounded-full bg-gold" />
                 הכול במקום אחד
               </li>
               <li className="flex items-center gap-2">
-                <span aria-hidden className="size-1.5 rounded-full bg-coral" />
+                <span aria-hidden className="size-1.5 rounded-full bg-gold" />
                 קהילה של נשים שמשתפות
               </li>
             </ul>

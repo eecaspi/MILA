@@ -10,13 +10,13 @@ export const metadata: Metadata = {
 };
 
 const palette = [
-  { name: "פטל עמוק", role: "כפתורים, קישורים, לוגו", hex: "#A63D68", text: "#FFFFFF" },
-  { name: "פטל כהה", role: "מעבר עכבר ולחיצה", hex: "#8C2F56", text: "#FFFFFF" },
-  { name: "ורוד סומק", role: "הדגשות עדינות, תגיות", hex: "#F7DDE6", text: "#30272D" },
-  { name: "שנהב חם", role: "רקע האתר", hex: "#FFF9F7", text: "#30272D" },
-  { name: "אלמוג רך", role: "נקודות ופרטים קטנים בלבד", hex: "#F28C8C", text: "#30272D" },
-  { name: "זהב עמום", role: "תגי 'בקרוב' ופרטים קטנים", hex: "#D8B777", text: "#30272D" },
-  { name: "פחם עמוק", role: "טקסט, פוטר, קהילה", hex: "#30272D", text: "#FFFFFF" },
+  { name: "סגול מלכותי", role: "כפתורים, קישורים, לוגו", hex: "#5C2A7E", text: "#FFFDF9" },
+  { name: "סגול עמוק", role: "מעבר עכבר ולחיצה", hex: "#47205F", text: "#FFFDF9" },
+  { name: "ערפל לילך", role: "הדגשות עדינות, תגיות", hex: "#ECE2F3", text: "#2B1D33" },
+  { name: "שמנת", role: "רקע האתר", hex: "#FAF6EF", text: "#2B1D33" },
+  { name: "שנהב", role: "כרטיסים", hex: "#FFFDF9", text: "#2B1D33" },
+  { name: "זהב שמפניה", role: "פרטים עדינים בלבד", hex: "#C4A062", text: "#2B1D33" },
+  { name: "חציל עמוק", role: "טקסט, פוטר, קהילה", hex: "#2B1D33", text: "#FFFDF9" },
 ];
 
 const tones = ["rose", "peach", "lilac", "mint", "sky", "sand", "coral", "pearl"] as const;
@@ -60,7 +60,7 @@ export default function BrandPage() {
         </h1>
         <p className="mt-3 max-w-2xl text-ink-soft">
           לייקי בהשראת המילה לב. הסמל הוא לב רך עם חור עגול קטן, כמו בתווית מחיר: אכפתיות ומציאה
-          ששווה לשתף, בסימן אחד.
+          ששווה לשתף, בסימן אחד. הצבעים – סגול מלכותי ושמנת, עם נגיעות זהב.
         </p>
       </header>
 
@@ -128,7 +128,7 @@ export default function BrandPage() {
       <section className="grid gap-8 md:grid-cols-2">
         <div className="space-y-3">
           <h2 className="text-2xl text-ink">טיפוגרפיה</h2>
-          <p className="font-display text-4xl font-extrabold text-ink">רוביק לכותרות</p>
+          <p className="font-display text-4xl font-bold text-ink">פרנק רוהל לכותרות</p>
           <p className="text-lg text-ink">
             היבו לטקסט רץ – קריא, נקי ונעים בעברית, גם בטלפון וגם בגדלים קטנים.
           </p>

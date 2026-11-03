@@ -12,11 +12,11 @@ export function CommunityInvite() {
     >
       <div
         aria-hidden
-        className="pointer-events-none absolute -end-20 -top-20 size-72 rounded-full bg-accent/40 blur-3xl"
+        className="pointer-events-none absolute -end-20 -top-20 size-72 rounded-full bg-orchid/40 blur-3xl"
       />
       <div
         aria-hidden
-        className="pointer-events-none absolute -start-16 -bottom-24 size-64 rounded-full bg-coral/25 blur-3xl"
+        className="pointer-events-none absolute -start-16 -bottom-24 size-64 rounded-full bg-gold/25 blur-3xl"
       />
       <div className="relative grid gap-8 md:grid-cols-[1.3fr_1fr] md:items-center">
         <div>
@@ -51,7 +51,7 @@ export function CommunityInvite() {
             "בלי ספאם – רק דברים ששווה לדעת",
           ].map((item) => (
             <li key={item} className="flex items-center gap-3 rounded-2xl bg-white/8 px-4 py-3">
-              <span aria-hidden className="size-2 shrink-0 rounded-full bg-coral" />
+              <span aria-hidden className="size-2 shrink-0 rounded-full bg-gold" />
               {item}
             </li>
           ))}

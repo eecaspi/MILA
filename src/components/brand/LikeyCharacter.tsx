@@ -24,7 +24,7 @@ export function LikeyCharacter({
   return (
     <figure
       data-character-slot="likey"
-      className={`relative aspect-[4/5] w-full max-w-sm overflow-hidden rounded-[2rem] bg-[radial-gradient(80%_70%_at_70%_20%,#ffffff_0%,#f7dde6_55%,#efc6d5_100%)] shadow-[var(--shadow-soft)] ${className}`}
+      className={`relative aspect-[4/5] w-full max-w-sm overflow-hidden rounded-[2rem] bg-[radial-gradient(80%_70%_at_70%_20%,#fffdf9_0%,#ece2f3_55%,#dccbea_100%)] shadow-[var(--shadow-soft)] ${className}`}
     >
       {src && siteConfig.features.aiCharacter ? (
         <Image

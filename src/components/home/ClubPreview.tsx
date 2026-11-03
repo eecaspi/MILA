@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { HeartMark } from "@/components/brand/HeartMark";
+import { TagMark } from "@/components/brand/TagMark";
 
 const ways = [
   {
@@ -27,7 +27,7 @@ export function ClubPreview() {
       className="accent-frame rounded-[var(--radius-card)] p-7 md:p-12"
     >
       <div className="flex flex-wrap items-center gap-3">
-        <HeartMark size={28} />
+        <TagMark size={32} />
         <p className="eyebrow">מועדון לייקי</p>
         <span className="rounded-full bg-gold/25 px-3 py-1 text-xs font-bold text-ink">בהכנה</span>
       </div>

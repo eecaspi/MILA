@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { HeartMark } from "@/components/brand/HeartMark";
+import { TagMark } from "@/components/brand/TagMark";
 import { StatusBadge } from "@/components/ui/StatusBadge";
 import { formatDate } from "@/lib/format";
 import type { OfferWithBusiness } from "@/lib/types";
@@ -68,7 +68,7 @@ export function DealCard({
 
         {showPickNote && offer.likeyPick && (
           <p className="mt-3 flex gap-2 rounded-2xl bg-accent-soft/60 p-3 text-sm text-ink">
-            <HeartMark size={16} className="mt-1 shrink-0" />
+            <TagMark size={20} className="mt-0.5 shrink-0" />
             <span>{offer.likeyPick.note}</span>
           </p>
         )}

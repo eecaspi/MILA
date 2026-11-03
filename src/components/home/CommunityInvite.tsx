@@ -12,7 +12,7 @@ export function CommunityInvite() {
     >
       <div
         aria-hidden
-        className="pointer-events-none absolute -end-20 -top-20 size-72 rounded-full bg-orchid/40 blur-3xl"
+        className="pointer-events-none absolute -end-20 -top-20 size-72 rounded-full bg-glow/40 blur-3xl"
       />
       <div
         aria-hidden

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { HeartMark } from "@/components/brand/HeartMark";
+import { TagMark } from "@/components/brand/TagMark";
 import { CopyCouponButton } from "@/components/deals/CopyCouponButton";
 import { OfferImage } from "@/components/deals/OfferImage";
 import { DemoNotice } from "@/components/ui/DemoNotice";
@@ -61,7 +61,7 @@ export default async function OfferPage({ params }: { params: Params }) {
 
           {offer.likeyPick && (
             <p className="flex gap-3 rounded-2xl bg-accent-soft/60 p-4 text-ink">
-              <HeartMark size={20} className="mt-1 shrink-0" />
+              <TagMark size={24} className="mt-0.5 shrink-0" />
               <span>
                 <strong className="font-display">למה לייקי אוהבת את זה: </strong>
                 {offer.likeyPick.note}

@@ -3,12 +3,12 @@
 /*
  * LIKEY (לייקי) design system — "יש לי משהו בשבילך!"
  *
- * Purple & cream, luxurious and feminine: warm cream canvas, ivory cards,
- * royal amethyst for actions and the logo, lilac mist for highlights,
- * champagne gold for fine details only. Headings in a Hebrew serif.
+ * Rose gold & cream, taken from the official Likey logo: warm cream canvas,
+ * ivory cards, deep rose gold for actions, blush for highlights, champagne gold
+ * for frames and fine details, metallic rose-gold gradient for the wordmark.
  *
- * Contrast (WCAG): ink on canvas 15.6:1 · ink-soft on canvas 6.9:1 ·
- * cream on accent 10.3:1 · accent on canvas 9.7:1.
+ * Contrast (WCAG): ink on canvas 10.5:1 · ink-soft on canvas 5.1:1 ·
+ * cream on accent 5.0:1 · accent on canvas 4.8:1.
  *
  * Use logical utilities (ms-/me-, ps-/pe-, start-/end-, text-start)
  * rather than left/right so every component is correct in RTL.
@@ -16,43 +16,44 @@
 @theme {
   --font-sans: var(--font-heebo), ui-sans-serif, system-ui, sans-serif;
   --font-display: var(--font-frank), var(--font-heebo), "Times New Roman", serif;
+  --font-script: var(--font-script), "Brush Script MT", cursive;
 
-  /* surfaces: warm cream */
-  --color-canvas: #faf6ef;
-  --color-surface: #fffdf9;
-  --color-raised: #f3eef6;
-  --color-line: #e6dde6;
+  /* surfaces: warm cream, taken from the logo artwork */
+  --color-canvas: #fcf7f1;
+  --color-surface: #fffdfa;
+  --color-raised: #f7eee9;
+  --color-line: #ecdfd7;
 
-  /* text: deep aubergine */
-  --color-ink: #2b1d33;
-  --color-ink-soft: #66556f;
+  /* text: warm cocoa */
+  --color-ink: #4b3631;
+  --color-ink-soft: #7c655e;
 
-  /* brand */
-  --color-accent: #5c2a7e; /* royal amethyst — actions, links, logo */
-  --color-accent-bright: #47205f; /* hover/pressed */
-  --color-accent-soft: #ece2f3; /* lilac mist — chips, highlights */
-  --color-on-accent: #fffdf9;
-  --color-gold: #c4a062; /* champagne gold — fine details only */
-  --color-orchid: #b48fcf; /* decorative glow only */
+  /* brand: rose gold */
+  --color-accent: #9a5e57; /* deep rose gold — buttons, links (AA on cream) */
+  --color-accent-bright: #844c46; /* hover/pressed */
+  --color-accent-soft: #f5e4de; /* blush, as in the front tag */
+  --color-on-accent: #fffdfa;
+  --color-gold: #bfa585; /* champagne gold, as in the frame */
+  --color-glow: #e6b9aa; /* decorative glow only */
 
-  /* category tones: muted lilacs and creams, always with ink text */
-  --color-tone-rose: #f2e5ee;
-  --color-tone-peach: #f5ebdc;
-  --color-tone-lilac: #e9e0f3;
-  --color-tone-mint: #e6ede7;
-  --color-tone-sky: #e3e5f3;
-  --color-tone-sand: #f1e7d3;
-  --color-tone-coral: #f0e0e9;
-  --color-tone-pearl: #eeeaf2;
+  /* category tones: blush, cream and champagne, always with ink text */
+  --color-tone-rose: #f5e4de;
+  --color-tone-peach: #f6e8dc;
+  --color-tone-lilac: #f0e5e6;
+  --color-tone-mint: #ebede4;
+  --color-tone-sky: #ece7e8;
+  --color-tone-sand: #f2e7d6;
+  --color-tone-coral: #f4dfd8;
+  --color-tone-pearl: #f3eeea;
 
   /* states */
-  --color-sage: #2f7553;
-  --color-sage-soft: #e3f1e8;
+  --color-sage: #3f7556;
+  --color-sage-soft: #e5f0e7;
   --color-danger: #a8322a;
   --color-danger-soft: #f9e7e4;
 
-  --shadow-card: 0 1px 2px rgba(43, 29, 51, 0.04), 0 10px 28px -14px rgba(43, 29, 51, 0.14);
-  --shadow-soft: 0 20px 44px -20px rgba(92, 42, 126, 0.42);
+  --shadow-card: 0 1px 2px rgba(75, 54, 49, 0.04), 0 10px 28px -14px rgba(75, 54, 49, 0.16);
+  --shadow-soft: 0 20px 44px -20px rgba(154, 94, 87, 0.45);
 
   --radius-card: 1.5rem;
 }
@@ -111,8 +112,8 @@
   /* Featured surface: white card with a blush glow in the corner. */
   .accent-frame {
     background:
-      radial-gradient(90% 80% at 100% 0%, rgba(236, 226, 243, 0.95), transparent 60%),
-      radial-gradient(60% 60% at 0% 100%, rgba(241, 231, 211, 0.7), transparent 60%),
+      radial-gradient(90% 80% at 100% 0%, rgba(245, 228, 222, 0.95), transparent 60%),
+      radial-gradient(60% 60% at 0% 100%, rgba(242, 231, 214, 0.7), transparent 60%),
       var(--color-surface);
     box-shadow: var(--shadow-card);
   }
@@ -182,6 +183,29 @@
   }
   .btn-secondary:active {
     transform: scale(0.98);
+  }
+
+  /* Metallic rose-gold text for the wordmark and large display moments only. */
+  .rose-gold-text {
+    color: #a8746a;
+    background: linear-gradient(
+      100deg,
+      #9a5e57 0%,
+      #c48b7c 28%,
+      #e3b8a8 46%,
+      #b77a6e 64%,
+      #a8746a 100%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .rose-gold-text-light {
+    color: #f0d2c6;
+    background: linear-gradient(100deg, #e9c2b4 0%, #f8e1d7 40%, #d9a596 70%, #f0d2c6 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
   }
 
   /* Thin champagne-gold divider with a small diamond in the middle. */

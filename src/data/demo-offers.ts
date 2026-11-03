@@ -3,7 +3,8 @@ import type { Offer } from "@/lib/types";
 /**
  * DEMO OFFERS — every offer here is fictional and belongs to a fictional sample
  * business. No offer is ever attached to a real business until it is verified
- * directly with that business (status: "verified").
+ * directly with that business (status: "verified"). No prices are listed,
+ * because none were provided by a real business.
  */
 export const demoOffers: Offer[] = [
   {
@@ -15,6 +16,9 @@ export const demoOffers: Offer[] = [
     valueLabel: "20% הנחה",
     validUntil: "2026-12-31",
     status: "demo",
+    addedAt: "2026-10-20",
+    highlight: true,
+    likeyPick: { note: "הקולקציה החדשה בדיוק נכנסה – שווה להקדים לפני שהמידות נגמרות." },
   },
   {
     id: "offer-boutique-second",
@@ -23,9 +27,11 @@ export const demoOffers: Offer[] = [
     title: "הפריט השני בחצי מחיר",
     description: "הדגמה: קוד קופון למימוש בקופה או באתר.",
     valueLabel: "50% על הפריט השני",
-    couponCode: "DEMO-MILA50",
+    couponCode: "DEMO-LIKEY50",
     validUntil: "2026-12-15",
     status: "demo",
+    addedAt: "2026-10-28",
+    highlight: true,
   },
   {
     id: "offer-wigs-wash",
@@ -37,6 +43,9 @@ export const demoOffers: Offer[] = [
     couponCode: "DEMO-WIG40",
     validUntil: "2027-01-31",
     status: "demo",
+    addedAt: "2026-10-25",
+    highlight: true,
+    likeyPick: { note: "בדיוק לפני השמחה – פאה מסודרת בלי לחשוב פעמיים." },
   },
   {
     id: "offer-events-hall",
@@ -47,6 +56,7 @@ export const demoOffers: Offer[] = [
     valueLabel: "קינוח מתנה",
     validUntil: "2027-03-01",
     status: "demo",
+    addedAt: "2026-10-15",
   },
   {
     id: "offer-kitchen-pesach",
@@ -58,5 +68,31 @@ export const demoOffers: Offer[] = [
     couponCode: "DEMO-HOME15",
     validUntil: "2027-04-01",
     status: "demo",
+    addedAt: "2026-11-01",
+    highlight: true,
+  },
+  {
+    id: "offer-gifts-shabbat",
+    businessId: "biz-sample-gifts",
+    kind: "coupon",
+    title: "מארז מתנה מעוצב",
+    description: "הדגמה: הנחה על מארזים לחגים ולשמחות.",
+    valueLabel: "10% הנחה",
+    couponCode: "DEMO-GIFT10",
+    validUntil: "2027-02-28",
+    status: "demo",
+    addedAt: "2026-11-02",
+    likeyPick: { note: "מתנה שנראית מיליון דולר, וחוסכת לך ריצות." },
+  },
+  {
+    id: "offer-workshop-mother-daughter",
+    businessId: "biz-sample-workshop",
+    kind: "deal",
+    title: "סדנת יצירה לאמא ובת",
+    description: "הדגמה: ההשתתפות השנייה בהנחה.",
+    valueLabel: "השנייה ב־50%",
+    validUntil: "2027-01-15",
+    status: "demo",
+    addedAt: "2026-11-03",
   },
 ];

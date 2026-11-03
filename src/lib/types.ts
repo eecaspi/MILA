@@ -10,15 +10,16 @@ export type CategorySlug =
   | "books-judaica"
   | "health-community"
   | "beauty"
-  | "events";
+  | "events"
+  | "gifts"
+  | "leisure";
 
 export type CategoryTone = "rose" | "peach" | "lilac" | "mint" | "sky" | "sand" | "coral" | "pearl";
 
 export interface Category {
   slug: CategorySlug;
   name: string;
-  icon: string;
-  /** Pastel color used for this category's tiles, monograms and deal headers. */
+  /** Pastel color used for this category's tiles, monograms and image placeholders. */
   tone: CategoryTone;
 }
 
@@ -61,6 +62,16 @@ export interface Offer {
   /** ISO date. */
   validUntil?: string;
   status: VerificationStatus;
+  /** ISO date the offer was added to the site (drives "מה חדש אצל לייקי?"). */
+  addedAt: string;
+  /** Shown in "המבצעים הכי שווים". */
+  highlight?: boolean;
+  /** Hand-picked for "לייקי ממליצה", with a one-line reason in לייקי's voice. */
+  likeyPick?: { note: string };
+  /** Real price information, only when the business provided it. Never invented. */
+  priceLabel?: string;
+  /** Product/offer image supplied by the business. A category illustration is shown otherwise. */
+  imageUrl?: string;
   /** Reserved for the affiliate phase: commission rate on this offer (0–1). */
   commissionRate?: number;
 }

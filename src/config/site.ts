@@ -1,17 +1,18 @@
 /**
- * Central site settings.
- *
- * MILA is a temporary brand name. To rebrand, change the values here —
- * every page, the header, footer and metadata read from this object.
+ * Central site settings. Every page, the header, footer and metadata read from
+ * this object, so brand and copy changes happen here.
  */
 export const siteConfig = {
   brand: {
-    name: "MILA",
-    /** Hebrew display name shown next to the logo. */
-    nameHe: "מילה",
-    tagline: "הקהילה שלך לקניות חכמות, עסקים מומלצים והטבות",
+    /** Official brand name — always shown in Hebrew. */
+    name: "לייקי",
+    /** Latin name for places that need it (URLs, app stores, English contexts). */
+    nameEn: "LIKEY",
+    /** Official slogan — must be written exactly like this. */
+    slogan: "יש לי משהו בשבילך!",
+    tagline: "ההטבות, המבצעים וההמלצות הכי שוות – במקום אחד, במיוחד בשבילך.",
     description:
-      "מרכז קהילתי לנשים: מדריך עסקים, מבצעים, קופונים והמלצות מהקהילה — במקום אחד, בשפה שלך.",
+      "לייקי – החברה שתמיד יודעת איפה יש משהו שווה: מבצעים, הטבות, עסקים מומלצים וקהילה של נשים שמשתפות מציאות.",
   },
   locale: {
     lang: "he",
@@ -25,10 +26,17 @@ export const siteConfig = {
   },
   nav: [
     { href: "/", label: "ראשי" },
-    { href: "/businesses", label: "מדריך עסקים" },
-    { href: "/deals", label: "מבצעים וקופונים" },
-    { href: "/community", label: "המלצות הקהילה" },
+    { href: "/deals", label: "לייקי מצאה לך" },
+    { href: "/businesses", label: "העסקים שלנו" },
+    { href: "/community", label: "החברות של לייקי" },
   ],
+  community: {
+    /**
+     * WhatsApp community/group invite link. Leave null until the groups are open:
+     * the site then shows a "coming soon" state instead of a dead link.
+     */
+    whatsappUrl: null as string | null,
+  },
   features: {
     /** Flip on as they are built. */
     communityRecommendations: false,
@@ -40,6 +48,8 @@ export const siteConfig = {
     rewardsMarketplace: false,
     membershipTiers: false,
     challenges: false,
+    /** The לייקי AI character. Until true, a branded placeholder is shown. */
+    aiCharacter: false,
     /** Raffles, prize wheels, surprise draws. Must stay false until legal review. */
     gamesOfChance: false,
   },

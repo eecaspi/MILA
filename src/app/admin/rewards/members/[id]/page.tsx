@@ -65,7 +65,7 @@ export default async function AdminMemberPage({
         → חזרה לרשימה
       </Link>
       <header>
-        <h1 className="text-2xl font-extrabold text-ink">{member.display_name ?? "ללא שם"}</h1>
+        <h1 className="text-2xl text-ink">{member.display_name ?? "ללא שם"}</h1>
         <p className="text-sm text-ink-soft">
           <span className="ltr">{member.email}</span>
           {member.city ? ` · ${member.city}` : ""} · הצטרפה {formatDate(member.created_at)}
@@ -80,7 +80,7 @@ export default async function AdminMemberPage({
       />
 
       <section className="space-y-4 rounded-[var(--radius-card)] bg-surface p-5">
-        <h2 className="text-lg font-extrabold text-ink">עדכון נקודות ידני</h2>
+        <h2 className="text-lg text-ink">עדכון נקודות ידני</h2>
         <form
           action={adjustPoints}
           className="grid gap-3 sm:grid-cols-[8rem_1fr_auto] sm:items-end"
@@ -129,7 +129,7 @@ export default async function AdminMemberPage({
       </section>
 
       <section className="rounded-[var(--radius-card)] bg-surface p-5">
-        <h2 className="text-lg font-extrabold text-ink">היסטוריית תנועות</h2>
+        <h2 className="text-lg text-ink">היסטוריית תנועות</h2>
         <TransactionList
           transactions={transactions}
           renderAction={(tx) =>

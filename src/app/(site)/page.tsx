@@ -1,31 +1,30 @@
 import Link from "next/link";
+import { LikeyCharacter } from "@/components/brand/LikeyCharacter";
+import { Logo } from "@/components/brand/Logo";
 import { BusinessCard } from "@/components/business/BusinessCard";
 import { DealCard } from "@/components/deals/DealCard";
+import { ClubPreview } from "@/components/home/ClubPreview";
+import { CommunityInvite } from "@/components/home/CommunityInvite";
+import { CategoryIcon } from "@/components/ui/CategoryIcon";
 import { DemoNotice } from "@/components/ui/DemoNotice";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { toneClasses } from "@/components/ui/tones";
 import { siteConfig } from "@/config/site";
 import { categories } from "@/data/categories";
-import { getBusinesses, getFeaturedOffers } from "@/lib/data/repository";
-
-const clubSteps = [
-  {
-    title: "קונות דרך MILA",
-    text: "צוברות נקודות על קניות מאומתות",
-    tone: "rose" as const,
-    icon: "🛍️",
-  },
-  {
-    title: "משתתפות בקהילה",
-    text: "נקודות על פעילויות והמלצות",
-    tone: "lilac" as const,
-    icon: "💜",
-  },
-  { title: "פותחות הטבות", text: "חנות ההטבות של MILA — בקרוב", tone: "mint" as const, icon: "🎁" },
-];
+import {
+  getBusinesses,
+  getHighlightedOffers,
+  getLikeyPicks,
+  getNewestOffers,
+} from "@/lib/data/repository";
 
 export default async function HomePage() {
-  const [offers, businesses] = await Promise.all([getFeaturedOffers(3), getBusinesses()]);
+  const [best, newest, picks, businesses] = await Promise.all([
+    getHighlightedOffers(4),
+    getNewestOffers(4),
+    getLikeyPicks(3),
+    getBusinesses(),
+  ]);
 
   return (
     <>
@@ -33,113 +32,122 @@ export default async function HomePage() {
       <section className="relative overflow-hidden">
         <div
           aria-hidden
-          className="pointer-events-none absolute inset-0 bg-[radial-gradient(55%_70%_at_90%_0%,rgba(246,169,189,0.28),transparent_70%),radial-gradient(45%_60%_at_0%_100%,rgba(205,184,245,0.18),transparent_70%)]"
+          className="pointer-events-none absolute inset-0 bg-[radial-gradient(50%_60%_at_15%_10%,#f7dde6_0%,transparent_70%),radial-gradient(40%_50%_at_95%_90%,#fce3d4_0%,transparent_70%)]"
         />
-        <div className="relative mx-auto max-w-6xl px-4 pt-16 pb-12 md:pt-24 md:pb-16">
-          <p className="eyebrow">
-            <span className="ltr">{siteConfig.brand.name}</span> · מועדון הקניות של הקהילה
-          </p>
-          <h1 className="mt-5 max-w-3xl text-4xl font-extrabold text-ink md:text-6xl">
-            {siteConfig.brand.tagline}
-          </h1>
-          <p className="mt-5 max-w-xl text-lg text-ink-soft md:text-xl">
-            {siteConfig.brand.description}
-          </p>
-          <div className="mt-8 flex flex-wrap gap-3">
-            <Link
-              href="/deals"
-              className="rounded-full bg-accent px-7 py-3.5 text-base font-bold text-on-accent transition-colors hover:bg-accent-bright"
-            >
-              למבצעים ולקופונים
-            </Link>
-            <Link
-              href="/businesses"
-              className="rounded-full bg-surface px-7 py-3.5 text-base font-bold text-ink transition-colors hover:bg-raised"
-            >
-              למדריך העסקים
-            </Link>
+        <div className="relative mx-auto grid max-w-6xl items-center gap-10 px-4 pt-10 pb-14 md:grid-cols-[1.25fr_1fr] md:pt-16 md:pb-20">
+          <div>
+            <h1 className="sr-only">
+              {siteConfig.brand.name} – {siteConfig.brand.slogan}
+            </h1>
+            <Logo variant="slogan" />
+            <p className="mt-6 max-w-lg text-lg text-ink-soft md:text-xl">
+              {siteConfig.brand.tagline}
+            </p>
+            <div className="mt-8 flex flex-wrap gap-3">
+              <Link href="/deals" className="btn-primary text-base">
+                בואי לראות מה מצאתי לך
+              </Link>
+              <Link href="#community" className="btn-secondary text-base">
+                הצטרפי לקהילה
+              </Link>
+            </div>
+            <ul className="mt-8 flex flex-wrap gap-x-5 gap-y-2 text-sm font-semibold text-ink-soft">
+              <li className="flex items-center gap-2">
+                <span aria-hidden className="size-1.5 rounded-full bg-coral" />
+                בלי עלות
+              </li>
+              <li className="flex items-center gap-2">
+                <span aria-hidden className="size-1.5 rounded-full bg-coral" />
+                הכול במקום אחד
+              </li>
+              <li className="flex items-center gap-2">
+                <span aria-hidden className="size-1.5 rounded-full bg-coral" />
+                קהילה של נשים שמשתפות
+              </li>
+            </ul>
+          </div>
+          <div className="flex justify-center md:justify-end">
+            <LikeyCharacter className="max-w-[18rem] md:max-w-sm" />
           </div>
         </div>
       </section>
 
-      <div className="mx-auto max-w-6xl space-y-16 px-4">
-        {/* Categories: colorful tiles */}
+      <div className="mx-auto max-w-6xl space-y-20 px-4">
+        {/* 1. המבצעים הכי שווים */}
+        <section aria-labelledby="best">
+          <SectionHeading
+            id="best"
+            title="המבצעים הכי שווים"
+            subtitle="לייקי מצאה לך – ההטבות שהכי כדאי לא לפספס"
+            href="/deals"
+            linkLabel="בואי לראות הכול"
+          />
+          <div className="mb-6">
+            <DemoNotice>
+              ההצעות שמוצגות כרגע הן <strong>לדוגמה בלבד</strong> ושייכות לעסקים פיקטיביים. הצעות
+              אמיתיות יסומנו בתג &quot;הצעה מאומתת&quot; אחרי אישור ישיר מול העסק.
+            </DemoNotice>
+          </div>
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {best.map((offer) => (
+              <DealCard key={offer.id} offer={offer} />
+            ))}
+          </div>
+        </section>
+
+        {/* 2. מה חדש + 3. לייקי ממליצה */}
+        <div className="grid gap-10 lg:grid-cols-[1fr_1.6fr]">
+          <section aria-labelledby="new">
+            <SectionHeading id="new" title="מה חדש אצל לייקי?" subtitle="נכנס השבוע" />
+            <div className="space-y-3">
+              {newest.map((offer) => (
+                <DealCard key={offer.id} offer={offer} layout="row" />
+              ))}
+            </div>
+          </section>
+
+          <section aria-labelledby="picks">
+            <SectionHeading
+              id="picks"
+              title="לייקי ממליצה"
+              subtitle="בחרתי במיוחד בשבילך, והנה למה"
+            />
+            <div className="grid gap-4 sm:grid-cols-2">
+              {picks.slice(0, 2).map((offer) => (
+                <DealCard key={offer.id} offer={offer} showPickNote />
+              ))}
+            </div>
+          </section>
+        </div>
+
+        {/* 4. הקטגוריות שלנו */}
         <section aria-labelledby="cats">
-          <h2 id="cats" className="mb-5 text-2xl text-ink md:text-3xl">
-            מה מחפשות היום?
-          </h2>
-          <ul className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <SectionHeading id="cats" title="מה בא לך למצוא היום?" subtitle="הקטגוריות שלנו" />
+          <ul className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
             {categories.map((c) => (
               <li key={c.slug}>
                 <Link
                   href={`/businesses?category=${c.slug}`}
-                  className={`flex h-28 flex-col justify-between rounded-[var(--radius-card)] p-4 transition-transform hover:-translate-y-0.5 ${toneClasses[c.tone].solid}`}
+                  className={`lift flex h-full items-center gap-3 rounded-[var(--radius-card)] p-4 ${toneClasses[c.tone]}`}
                 >
-                  <span aria-hidden className="text-2xl">
-                    {c.icon}
+                  <span className="flex size-11 shrink-0 items-center justify-center rounded-2xl bg-white/70">
+                    <CategoryIcon slug={c.slug} className="size-6 text-accent" />
                   </span>
-                  <span className="text-base leading-tight font-extrabold">{c.name}</span>
+                  <span className="font-display text-[15px] leading-tight font-bold">{c.name}</span>
                 </Link>
               </li>
             ))}
           </ul>
         </section>
 
-        {/* Featured deals */}
-        <section>
+        {/* 5. העסקים שלנו */}
+        <section aria-labelledby="biz">
           <SectionHeading
-            title="הטבות נבחרות"
-            subtitle="מבצעים וקופונים לחברות הקהילה"
-            href="/deals"
-            linkLabel="לכל ההטבות"
-          />
-          <div className="mb-6">
-            <DemoNotice>
-              ההצעות שמוצגות כרגע הן <strong>לדוגמה בלבד</strong> ושייכות לעסקים פיקטיביים. הצעות
-              אמיתיות יסומנו בתג &quot;הצעה מאומתת&quot; לאחר אישור ישיר מול העסק.
-            </DemoNotice>
-          </div>
-          <div className="grid gap-4 md:grid-cols-3">
-            {offers.map((offer) => (
-              <DealCard key={offer.id} offer={offer} />
-            ))}
-          </div>
-        </section>
-
-        {/* MILA CLUB */}
-        <section className="accent-frame overflow-hidden rounded-[var(--radius-card)] p-6 md:p-10">
-          <p className="eyebrow">MILA CLUB</p>
-          <h2 className="mt-3 max-w-xl text-3xl text-ink md:text-4xl">
-            מועדון שמתגמל אותך על כל קנייה חכמה
-          </h2>
-          <ul className="mt-8 grid gap-3 sm:grid-cols-3">
-            {clubSteps.map((step) => (
-              <li
-                key={step.title}
-                className={`rounded-[var(--radius-card)] p-5 ${toneClasses[step.tone].solid}`}
-              >
-                <span aria-hidden className="text-2xl">
-                  {step.icon}
-                </span>
-                <p className="mt-3 text-lg font-extrabold">{step.title}</p>
-                <p className="mt-1 text-sm font-medium opacity-80">{step.text}</p>
-              </li>
-            ))}
-          </ul>
-          <Link
-            href="/login?mode=signup"
-            className="mt-8 inline-block rounded-full bg-accent px-7 py-3.5 text-base font-bold text-on-accent transition-colors hover:bg-accent-bright"
-          >
-            הצטרפות למועדון — ללא עלות
-          </Link>
-        </section>
-
-        {/* Directory preview */}
-        <section>
-          <SectionHeading
-            title="מדריך העסקים"
+            id="biz"
+            title="העסקים שלנו"
             subtitle="עסקים וארגונים שכדאי להכיר"
             href="/businesses"
+            linkLabel="לכל העסקים"
           />
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
             {businesses.slice(0, 6).map((b) => (
@@ -148,21 +156,11 @@ export default async function HomePage() {
           </div>
         </section>
 
-        {/* Community teaser */}
-        <section className="flex flex-wrap items-center justify-between gap-4 rounded-[var(--radius-card)] bg-surface p-6 md:p-8">
-          <div>
-            <h2 className="text-2xl text-ink">המלצות מהקהילה</h2>
-            <p className="mt-1 text-ink-soft">
-              בקרוב: המלצות אמיתיות מנשים בקהילה על עסקים ואנשי מקצוע.
-            </p>
-          </div>
-          <Link
-            href="/community"
-            className="rounded-full bg-raised px-5 py-2.5 font-bold text-ink transition-colors hover:bg-line"
-          >
-            לפרטים
-          </Link>
-        </section>
+        {/* 6. החברות של לייקי */}
+        <CommunityInvite />
+
+        {/* 7. מועדון לייקי */}
+        <ClubPreview />
       </div>
     </>
   );

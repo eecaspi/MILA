@@ -1,7 +1,7 @@
 import type { VerificationStatus } from "@/lib/types";
 
 const styles: Record<VerificationStatus, { label: string; className: string }> = {
-  demo: { label: "תוכן להדגמה", className: "bg-accent-soft text-accent border-accent/30" },
+  demo: { label: "לדוגמה", className: "bg-tone-sand text-ink border-gold/50" },
   listed: { label: "ממידע פומבי", className: "bg-raised text-ink-soft border-line" },
   verified: { label: "הצעה מאומתת ✓", className: "bg-sage-soft text-sage border-sage/30" },
 };

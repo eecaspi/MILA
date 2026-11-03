@@ -44,6 +44,9 @@ for (const o of demoOffers) {
     check(o.couponCode.startsWith("DEMO-"), `${o.id}: demo coupon codes must start with DEMO-`);
   }
   if (o.validUntil) check(!Number.isNaN(Date.parse(o.validUntil)), `${o.id}: invalid validUntil`);
+  check(!Number.isNaN(Date.parse(o.addedAt)), `${o.id}: invalid addedAt`);
+  // Prices must come from the business. Demo content never shows a price.
+  if (o.status === "demo") check(!o.priceLabel, `${o.id}: demo offers must not show a price`);
   if (o.commissionRate !== undefined) {
     check(o.commissionRate >= 0 && o.commissionRate <= 1, `${o.id}: commissionRate out of range`);
   }

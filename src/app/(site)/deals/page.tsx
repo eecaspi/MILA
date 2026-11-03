@@ -7,8 +7,8 @@ import { getOffers } from "@/lib/data/repository";
 import type { OfferKind } from "@/lib/types";
 
 export const metadata: Metadata = {
-  title: "מבצעים וקופונים",
-  description: "קטלוג מבצעים וקופונים לחברות הקהילה.",
+  title: "לייקי מצאה לך",
+  description: "מבצעים, קופונים והטבות שלייקי מצאה בשבילך.",
 };
 
 type SearchParams = Promise<{ category?: string; kind?: string }>;
@@ -30,8 +30,9 @@ export default async function DealsPage({ searchParams }: { searchParams: Search
   return (
     <div className="mx-auto max-w-6xl px-4 py-10">
       <header className="mb-8">
-        <h1 className="text-3xl font-extrabold text-ink md:text-4xl">מבצעים וקופונים</h1>
-        <p className="mt-2 text-ink-soft">כל ההטבות לחברות הקהילה, במקום אחד.</p>
+        <p className="eyebrow">מבצעים, קופונים והטבות</p>
+        <h1 className="mt-1 text-3xl text-ink md:text-4xl">לייקי מצאה לך</h1>
+        <p className="mt-2 text-ink-soft">כל מה ששווה לדעת עליו, במקום אחד.</p>
       </header>
 
       <div className="mb-6">
@@ -57,11 +58,11 @@ export default async function DealsPage({ searchParams }: { searchParams: Search
         <FilterChips
           basePath="/deals"
           param="category"
-          label="סינון לפי קטגוריה"
+          label="מה בא לך למצוא היום?"
           current={category}
           otherParams={{ kind }}
           options={[
-            { value: undefined, label: "כל הקטגוריות" },
+            { value: undefined, label: "הכול" },
             ...categories
               .filter((c) => usedCategories.has(c.slug))
               .map((c) => ({ value: c.slug, label: c.name })),
@@ -70,14 +71,14 @@ export default async function DealsPage({ searchParams }: { searchParams: Search
       </div>
 
       {offers.length > 0 ? (
-        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {offers.map((offer) => (
             <DealCard key={offer.id} offer={offer} />
           ))}
         </div>
       ) : (
         <p className="rounded-2xl bg-surface p-8 text-center text-ink-soft">
-          אין כרגע הטבות שמתאימות לסינון.
+          עוד לא מצאתי משהו שמתאים לסינון הזה. נסי קטגוריה אחרת?
         </p>
       )}
     </div>

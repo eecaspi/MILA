@@ -36,11 +36,11 @@ test("describeTransaction explains reversals and admin notes", () => {
   );
   assert.equal(
     describeTransaction({ type: "reversal", source: "purchase", note: null }),
-    "ביטול: קנייה דרך MILA",
+    "ביטול: קנייה דרך לייקי",
   );
   assert.equal(
     describeTransaction({ type: "adjustment", source: "admin", note: "פיצוי" }),
-    "עדכון מצוות MILA: פיצוי",
+    "עדכון מצוות לייקי: פיצוי",
   );
 });
 

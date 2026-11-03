@@ -2,23 +2,24 @@ import { getCategory } from "@/data/categories";
 import { hostname } from "@/lib/format";
 import type { Business } from "@/lib/types";
 import { StatusBadge } from "@/components/ui/StatusBadge";
+import { CategoryIcon } from "@/components/ui/CategoryIcon";
 import { toneClasses } from "@/components/ui/tones";
 
 export function BusinessCard({ business }: { business: Business }) {
   const category = getCategory(business.category);
 
   return (
-    <article className="flex h-full flex-col rounded-[var(--radius-card)] bg-surface p-5 transition-transform hover:-translate-y-0.5">
+    <article className="lift flex h-full flex-col rounded-[var(--radius-card)] bg-surface p-5 shadow-[var(--shadow-card)]">
       <div className="flex items-start justify-between gap-3">
         <div className="flex items-center gap-3">
           <span
             aria-hidden
-            className={`flex size-12 shrink-0 items-center justify-center rounded-2xl text-xl font-extrabold ${toneClasses[category.tone].solid}`}
+            className={`flex size-12 shrink-0 items-center justify-center rounded-2xl ${toneClasses[category.tone]}`}
           >
-            {business.name.trim().charAt(0)}
+            <CategoryIcon slug={category.slug} className="size-6 text-ink/75" />
           </span>
           <div>
-            <h3 className="text-lg font-extrabold leading-tight text-ink">{business.name}</h3>
+            <h3 className="text-lg leading-tight text-ink">{business.name}</h3>
             <p className="text-sm text-ink-soft">
               {category.name} · {business.area}
             </p>
@@ -48,7 +49,7 @@ export function BusinessCard({ business }: { business: Business }) {
             href={business.website}
             target="_blank"
             rel="noopener noreferrer nofollow"
-            className={`font-bold hover:underline ${toneClasses[category.tone].text}`}
+            className="font-bold text-accent hover:underline"
           >
             לאתר העסק <span className="ltr text-ink-soft">({hostname(business.website)})</span>
           </a>

@@ -38,6 +38,14 @@ for (const vp of viewports) {
 
     const file = `screenshots/${vp.name}${path === "/" ? "-home" : path.replaceAll("/", "-")}.png`;
     await page.screenshot({ path: file, fullPage: true });
+    if (process.env.PRINT_SCREENSHOTS) {
+      // Compressed copy in the log, for reviewers who can't download artifacts.
+      const jpg = await page.screenshot({ fullPage: true, type: "jpeg", quality: 55 });
+      const b64 = jpg.toString("base64");
+      console.log(`@@SHOT-BEGIN ${file.replace(".png", ".jpg")}`);
+      for (let i = 0; i < b64.length; i += 4000) console.log(`@@ ${b64.slice(i, i + 4000)}`);
+      console.log("@@SHOT-END");
+    }
     console.log(`✓ ${file}${overflow > 1 ? ` (overflow ${overflow}px)` : ""}`);
     await page.close();
   }

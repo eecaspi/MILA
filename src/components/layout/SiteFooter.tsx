@@ -3,10 +3,10 @@ import { siteConfig } from "@/config/site";
 
 export function SiteFooter() {
   return (
-    <footer className="mt-20 border-t border-line bg-paper">
+    <footer className="mt-20 border-t border-line bg-surface">
       <div className="mx-auto grid max-w-6xl gap-8 px-4 py-10 md:grid-cols-3">
         <div>
-          <p className="ltr text-xl font-extrabold text-plum">{siteConfig.brand.name}</p>
+          <p className="ltr wordmark text-xl">{siteConfig.brand.name}</p>
           <p className="mt-2 text-sm text-ink-soft">{siteConfig.brand.tagline}</p>
         </div>
 
@@ -14,7 +14,7 @@ export function SiteFooter() {
           <ul className="space-y-2 text-sm">
             {siteConfig.nav.map((item) => (
               <li key={item.href}>
-                <Link href={item.href} className="text-ink-soft hover:text-plum">
+                <Link href={item.href} className="text-ink-soft hover:text-gold">
                   {item.label}
                 </Link>
               </li>

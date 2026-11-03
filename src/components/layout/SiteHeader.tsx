@@ -7,12 +7,10 @@ export async function SiteHeader() {
   const session = await getSession();
 
   return (
-    <header className="sticky top-0 z-40 border-b border-line bg-cream/90 backdrop-blur">
+    <header className="sticky top-0 z-40 border-b border-line bg-canvas/90 backdrop-blur">
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-4 px-4">
         <Link href="/" className="flex items-baseline gap-2" aria-label={siteConfig.brand.name}>
-          <span className="ltr text-2xl font-extrabold tracking-wide text-plum">
-            {siteConfig.brand.name}
-          </span>
+          <span className="ltr wordmark text-2xl">{siteConfig.brand.name}</span>
           <span className="hidden text-sm text-ink-soft sm:inline">{siteConfig.brand.nameHe}</span>
         </Link>
 
@@ -24,21 +22,21 @@ export async function SiteHeader() {
           {session?.profile.role === "admin" && (
             <Link
               href="/admin"
-              className="hidden text-sm font-semibold text-ink-soft hover:text-plum sm:inline-block"
+              className="hidden text-sm font-semibold text-ink-soft hover:text-gold sm:inline-block"
             >
               ניהול
             </Link>
           )}
           <Link
             href={session ? "/account" : "/login?mode=signup"}
-            className="rounded-full bg-plum px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-plum-dark"
+            className="rounded-full bg-gold px-4 py-2 text-sm font-semibold text-on-gold transition-colors hover:bg-gold-bright"
           >
-            {session ? "האזור שלי 💜" : "הצטרפות למועדון"}
+            {session ? "האזור שלי" : "הצטרפות למועדון"}
           </Link>
 
           {/* Mobile menu: native <details>, no JS needed. */}
           <details className="group relative md:hidden">
-            <summary className="flex size-10 cursor-pointer list-none items-center justify-center rounded-full border border-line bg-paper [&::-webkit-details-marker]:hidden">
+            <summary className="flex size-10 cursor-pointer list-none items-center justify-center rounded-full border border-line bg-surface [&::-webkit-details-marker]:hidden">
               <span className="sr-only">תפריט</span>
               <svg aria-hidden viewBox="0 0 24 24" className="size-5 text-ink">
                 <path
@@ -51,7 +49,7 @@ export async function SiteHeader() {
             </summary>
             <nav
               aria-label="ניווט ראשי"
-              className="absolute end-0 mt-2 w-56 rounded-2xl border border-line bg-paper shadow-lg"
+              className="absolute end-0 mt-2 w-56 rounded-2xl border border-line bg-surface shadow-lg"
             >
               <NavLinks variant="mobile" />
             </nav>

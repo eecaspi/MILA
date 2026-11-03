@@ -37,7 +37,7 @@ const auditLabels: Record<string, string> = {
   "conversion.set_status": "עדכון סטטוס קנייה",
 };
 
-const section = "space-y-4 rounded-[var(--radius-card)] border border-line bg-paper p-5";
+const section = "space-y-4 rounded-[var(--radius-card)] border border-line bg-surface p-5";
 const th = "px-3 py-2 text-start text-xs font-semibold text-ink-soft";
 const td = "px-3 py-2.5 text-sm";
 
@@ -93,7 +93,7 @@ export default async function AdminRewardsPage({ searchParams }: { searchParams:
     <div className="space-y-8">
       <header className="flex flex-wrap items-end justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-extrabold text-ink">מועדון ונקודות</h1>
+          <h1 className="text-2xl font-medium text-ink">מועדון ונקודות</h1>
           <p className="text-sm text-ink-soft">כל פעולה כאן נבדקת בשרת ונרשמת ביומן הפעולות.</p>
         </div>
         {s && (
@@ -109,7 +109,7 @@ export default async function AdminRewardsPage({ searchParams }: { searchParams:
             </span>
             <button
               type="submit"
-              className="rounded-full border border-plum px-4 py-2 text-sm font-semibold text-plum hover:bg-plum-soft"
+              className="rounded-full border border-gold px-4 py-2 text-sm font-semibold text-gold hover:bg-gold-soft"
             >
               {s.program_enabled ? "כיבוי" : "הפעלה"}
             </button>
@@ -130,7 +130,7 @@ export default async function AdminRewardsPage({ searchParams }: { searchParams:
 
       {/* Rules */}
       <section className={section} aria-labelledby="rules">
-        <h2 id="rules" className="text-lg font-bold text-ink">
+        <h2 id="rules" className="text-lg font-medium text-ink">
           כללי צבירה
         </h2>
         <div className="overflow-x-auto">
@@ -178,7 +178,7 @@ export default async function AdminRewardsPage({ searchParams }: { searchParams:
                         <input type="hidden" name="return_to" value="/admin/rewards" />
                         <button
                           type="submit"
-                          className="text-sm font-semibold text-plum hover:underline"
+                          className="text-sm font-semibold text-gold hover:underline"
                         >
                           {r.is_active ? "כיבוי" : "הפעלה"}
                         </button>
@@ -199,7 +199,7 @@ export default async function AdminRewardsPage({ searchParams }: { searchParams:
       {/* Members */}
       <section className={section} aria-labelledby="members">
         <div className="flex flex-wrap items-center justify-between gap-3">
-          <h2 id="members" className="text-lg font-bold text-ink">
+          <h2 id="members" className="text-lg font-medium text-ink">
             חברות ויתרות
           </h2>
           <form className="flex gap-2" role="search">
@@ -211,11 +211,11 @@ export default async function AdminRewardsPage({ searchParams }: { searchParams:
               name="q"
               defaultValue={q}
               placeholder="שם או אימייל"
-              className="rounded-full border border-line bg-cream px-4 py-1.5 text-sm"
+              className="rounded-full border border-line bg-canvas px-4 py-1.5 text-sm"
             />
             <button
               type="submit"
-              className="rounded-full bg-plum px-4 py-1.5 text-sm font-semibold text-white"
+              className="rounded-full bg-gold px-4 py-1.5 text-sm font-semibold text-on-gold"
             >
               חיפוש
             </button>
@@ -247,7 +247,7 @@ export default async function AdminRewardsPage({ searchParams }: { searchParams:
                     <td className={`${td} text-end`}>
                       <Link
                         href={`/admin/rewards/members/${m.id}`}
-                        className="text-sm font-semibold text-plum hover:underline"
+                        className="text-sm font-semibold text-gold hover:underline"
                       >
                         פרטים ←
                       </Link>
@@ -265,7 +265,7 @@ export default async function AdminRewardsPage({ searchParams }: { searchParams:
 
       {/* Pending purchases */}
       <section className={section} aria-labelledby="pending">
-        <h2 id="pending" className="text-lg font-bold text-ink">
+        <h2 id="pending" className="text-lg font-medium text-ink">
           קניות ממתינות לאימות
         </h2>
         {(conversions.data ?? []).length === 0 ? (
@@ -302,7 +302,7 @@ export default async function AdminRewardsPage({ searchParams }: { searchParams:
                   <button
                     name="status"
                     value="approved"
-                    className="rounded-full bg-sage px-3 py-1.5 text-sm font-semibold text-white"
+                    className="rounded-full bg-sage px-3 py-1.5 text-sm font-semibold text-on-gold"
                   >
                     אישור
                   </button>
@@ -322,7 +322,7 @@ export default async function AdminRewardsPage({ searchParams }: { searchParams:
 
       {/* Audit log */}
       <section className={section} aria-labelledby="audit">
-        <h2 id="audit" className="text-lg font-bold text-ink">
+        <h2 id="audit" className="text-lg font-medium text-ink">
           יומן פעולות
         </h2>
         {(audit.data ?? []).length === 0 ? (

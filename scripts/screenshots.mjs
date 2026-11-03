@@ -28,6 +28,15 @@ for (const vp of viewports) {
     page.on("console", (m) => m.type() === "error" && errors.push(m.text()));
     page.on("pageerror", (e) => errors.push(String(e)));
     const res = await page.goto(base + path, { waitUntil: "networkidle" });
+    // Scroll through the page so lazy-loaded images (footer logo etc.) load before the screenshot.
+    await page.evaluate(async () => {
+      for (let y = 0; y < document.body.scrollHeight; y += 600) {
+        window.scrollTo(0, y);
+        await new Promise((r) => setTimeout(r, 60));
+      }
+      window.scrollTo(0, 0);
+    });
+    await page.waitForLoadState("networkidle");
     if (!res || res.status() >= 400) problems.push(`${vp.name} ${path}: HTTP ${res?.status()}`);
 
     const overflow = await page.evaluate(

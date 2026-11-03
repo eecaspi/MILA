@@ -29,9 +29,16 @@ export async function SiteHeader() {
           )}
           <Link
             href={session ? "/account" : "/login?mode=signup"}
-            className="btn-primary px-4 py-2 text-sm shadow-none"
+            className="btn-primary px-4 py-2 text-sm whitespace-nowrap shadow-none"
           >
-            {session ? "האזור שלי" : "בואי להיות חברה שלנו"}
+            {session ? (
+              "האזור שלי"
+            ) : (
+              <>
+                <span className="sm:hidden">הצטרפי</span>
+                <span className="hidden sm:inline">בואי להיות חברה שלנו</span>
+              </>
+            )}
           </Link>
 
           {/* Mobile menu: native <details>, no JS needed. */}

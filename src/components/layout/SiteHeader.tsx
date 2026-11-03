@@ -1,8 +1,11 @@
 import Link from "next/link";
 import { siteConfig } from "@/config/site";
+import { getSession } from "@/lib/auth/session";
 import { NavLinks } from "./NavLinks";
 
-export function SiteHeader() {
+export async function SiteHeader() {
+  const session = await getSession();
+
   return (
     <header className="sticky top-0 z-40 border-b border-line bg-cream/90 backdrop-blur">
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-4 px-4">
@@ -18,11 +21,19 @@ export function SiteHeader() {
         </nav>
 
         <div className="flex items-center gap-2">
+          {session?.profile.role === "admin" && (
+            <Link
+              href="/admin"
+              className="hidden text-sm font-semibold text-ink-soft hover:text-plum sm:inline-block"
+            >
+              ניהול
+            </Link>
+          )}
           <Link
-            href="/deals"
-            className="hidden rounded-full bg-plum px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-plum-dark sm:inline-block"
+            href={session ? "/account" : "/login?mode=signup"}
+            className="rounded-full bg-plum px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-plum-dark"
           >
-            להטבות השבוע
+            {session ? "האזור שלי 💜" : "הצטרפות למועדון"}
           </Link>
 
           {/* Mobile menu: native <details>, no JS needed. */}

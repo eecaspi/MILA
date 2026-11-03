@@ -90,7 +90,7 @@ export const demoOffers: Offer[] = [
     kind: "deal",
     title: "סדנת יצירה לאמא ובת",
     description: "הדגמה: ההשתתפות השנייה בהנחה.",
-    valueLabel: "השנייה ב־50%",
+    valueLabel: "50% הנחה על השנייה",
     validUntil: "2027-01-15",
     status: "demo",
     addedAt: "2026-11-03",

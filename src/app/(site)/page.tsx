@@ -67,7 +67,10 @@ export default async function HomePage() {
             </ul>
           </div>
           <div className="flex justify-center md:justify-end">
-            <LikeyCharacter className="max-w-[18rem] md:max-w-sm" />
+            <LikeyCharacter
+              message="מצאתי לך כמה דברים שווים!"
+              className="max-w-[15rem] md:max-w-sm"
+            />
           </div>
         </div>
       </section>
@@ -88,11 +91,14 @@ export default async function HomePage() {
               אמיתיות יסומנו בתג &quot;הצעה מאומתת&quot; אחרי אישור ישיר מול העסק.
             </DemoNotice>
           </div>
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {/* Phones: swipeable row. Larger screens: grid. */}
+          <ul className="-mx-4 flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 pb-2 sm:mx-0 sm:grid sm:grid-cols-2 sm:overflow-visible sm:px-0 sm:pb-0 lg:grid-cols-4">
             {best.map((offer) => (
-              <DealCard key={offer.id} offer={offer} />
+              <li key={offer.id} className="w-[80%] shrink-0 snap-start sm:w-auto">
+                <DealCard offer={offer} />
+              </li>
             ))}
-          </div>
+          </ul>
         </section>
 
         {/* 2. מה חדש + 3. לייקי ממליצה */}
@@ -112,11 +118,13 @@ export default async function HomePage() {
               title="לייקי ממליצה"
               subtitle="בחרתי במיוחד בשבילך, והנה למה"
             />
-            <div className="grid gap-4 sm:grid-cols-2">
+            <ul className="-mx-4 flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 pb-2 sm:mx-0 sm:grid sm:grid-cols-2 sm:overflow-visible sm:px-0 sm:pb-0">
               {picks.slice(0, 2).map((offer) => (
-                <DealCard key={offer.id} offer={offer} showPickNote />
+                <li key={offer.id} className="w-[80%] shrink-0 snap-start sm:w-auto">
+                  <DealCard offer={offer} showPickNote />
+                </li>
               ))}
-            </div>
+            </ul>
           </section>
         </div>
 

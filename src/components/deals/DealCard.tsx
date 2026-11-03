@@ -52,7 +52,7 @@ export function DealCard({
   return (
     <article className="lift relative flex h-full flex-col overflow-hidden rounded-[var(--radius-card)] bg-surface shadow-[var(--shadow-card)]">
       <div className="relative">
-        <OfferImage offer={offer} />
+        <OfferImage offer={offer} className="aspect-[16/9] sm:aspect-[4/3]" />
         <span className="absolute start-3 top-3 rounded-full bg-accent px-3 py-1.5 text-sm font-bold text-on-accent shadow-[var(--shadow-soft)]">
           {offer.valueLabel}
         </span>

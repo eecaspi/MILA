@@ -4,8 +4,9 @@ import type { CategorySlug } from "@/lib/types";
 const paths: Record<CategorySlug, React.ReactNode> = {
   fashion: (
     <>
-      <path d="M9 3h6l-1.2 4.2L18 20H6l4.2-12.8L9 3z" />
-      <path d="M9.6 9.5h4.8" />
+      <path d="M9.5 3.5c.4 1.5 1.3 2.3 2.5 2.3s2.1-.8 2.5-2.3" />
+      <path d="M9.5 3.5 7.6 4.8l1.6 3.9L6 20.5h12l-3.2-11.8 1.6-3.9-1.9-1.3" />
+      <path d="M9.2 8.7h5.6" />
     </>
   ),
   "baby-kids": (

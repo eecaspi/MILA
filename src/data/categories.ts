@@ -1,14 +1,14 @@
 import type { Category, CategorySlug } from "@/lib/types";
 
 export const categories: Category[] = [
-  { slug: "food", name: "מזון וסופרמרקטים", icon: "🛒" },
-  { slug: "fashion", name: "אופנה צנועה", icon: "👗" },
-  { slug: "baby-kids", name: "תינוקות וילדים", icon: "🍼" },
-  { slug: "home", name: "בית ומטבח", icon: "🏠" },
-  { slug: "books-judaica", name: "ספרים ויודאיקה", icon: "📚" },
-  { slug: "health-community", name: "בריאות וחסד", icon: "🤝" },
-  { slug: "beauty", name: "טיפוח ופאות", icon: "💇‍♀️" },
-  { slug: "events", name: "שמחות ואירועים", icon: "🎉" },
+  { slug: "food", name: "מזון וסופרמרקטים", icon: "🛒", tone: "mint" },
+  { slug: "fashion", name: "אופנה צנועה", icon: "👗", tone: "rose" },
+  { slug: "baby-kids", name: "תינוקות וילדים", icon: "🍼", tone: "sky" },
+  { slug: "home", name: "בית ומטבח", icon: "🏠", tone: "peach" },
+  { slug: "books-judaica", name: "ספרים ויודאיקה", icon: "📚", tone: "sand" },
+  { slug: "health-community", name: "בריאות וחסד", icon: "🤝", tone: "lilac" },
+  { slug: "beauty", name: "טיפוח ופאות", icon: "💇‍♀️", tone: "coral" },
+  { slug: "events", name: "שמחות ואירועים", icon: "🎉", tone: "pearl" },
 ];
 
 const bySlug = new Map(categories.map((c) => [c.slug, c]));

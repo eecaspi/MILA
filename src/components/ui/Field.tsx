@@ -16,7 +16,7 @@ export function Field({
       <input
         id={id}
         name={input.name ?? id}
-        className="rounded-xl border border-line bg-surface px-4 py-3 text-base text-ink outline-none transition-colors placeholder:text-ink-soft/60 focus:border-gold disabled:opacity-60"
+        className="rounded-xl border border-line bg-raised px-4 py-3 text-base text-ink outline-none transition-colors placeholder:text-ink-soft/60 focus:border-accent disabled:opacity-60"
         {...input}
       />
       {hint && <p className="text-xs text-ink-soft">{hint}</p>}
@@ -35,7 +35,7 @@ export function SubmitButton({
     <button
       type="submit"
       disabled={disabled}
-      className="w-full rounded-full bg-gold px-6 py-3 font-semibold text-on-gold transition-colors hover:bg-gold-bright disabled:cursor-not-allowed disabled:opacity-50"
+      className="w-full rounded-full bg-accent px-6 py-3 font-semibold text-on-accent transition-colors hover:bg-accent-bright disabled:cursor-not-allowed disabled:opacity-50"
     >
       {children}
     </button>

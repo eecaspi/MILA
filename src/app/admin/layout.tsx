@@ -23,7 +23,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
       <header className="border-b border-line bg-surface">
         <div className="mx-auto flex min-h-14 max-w-6xl flex-wrap items-center justify-between gap-3 px-4 py-2">
           <div className="flex items-center gap-6">
-            <p className="font-bold text-gold">
+            <p className="font-bold text-accent">
               <span className="ltr">{siteConfig.brand.name}</span> · ניהול
             </p>
             <nav aria-label="ניווט ניהול">
@@ -32,7 +32,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
                   <li key={item.href}>
                     <Link
                       href={item.href}
-                      className="rounded-full px-3 py-1.5 text-sm font-medium text-ink-soft hover:bg-gold-soft hover:text-gold"
+                      className="rounded-full px-3 py-1.5 text-sm font-medium text-ink-soft hover:bg-accent-soft hover:text-accent"
                     >
                       {item.label}
                     </Link>
@@ -43,7 +43,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
           </div>
           <div className="flex items-center gap-4 text-sm text-ink-soft">
             <span>{session.profile.display_name ?? session.email}</span>
-            <Link href="/" className="hover:text-gold">
+            <Link href="/" className="hover:text-accent">
               לאתר ←
             </Link>
           </div>

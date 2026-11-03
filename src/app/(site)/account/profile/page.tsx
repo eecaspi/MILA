@@ -39,10 +39,10 @@ export default async function ProfilePage({ searchParams }: { searchParams: Sear
 
   return (
     <div className="mx-auto max-w-md px-4 py-10">
-      <Link href="/account" className="text-sm font-semibold text-gold hover:underline">
+      <Link href="/account" className="text-sm font-semibold text-accent hover:underline">
         → חזרה לאזור האישי
       </Link>
-      <h1 className="mt-4 text-3xl font-medium text-ink">הפרופיל שלי</h1>
+      <h1 className="mt-4 text-3xl font-extrabold text-ink">הפרופיל שלי</h1>
       <p className="mt-1 text-ink-soft">הפרטים עוזרים לנו להתאים לך עסקים והטבות באזור שלך.</p>
 
       <div className="mt-6 space-y-4">
@@ -55,7 +55,7 @@ export default async function ProfilePage({ searchParams }: { searchParams: Sear
 
         <form
           action={updateProfile}
-          className="space-y-4 rounded-[var(--radius-card)] border border-line bg-surface p-6"
+          className="space-y-4 rounded-[var(--radius-card)] bg-surface p-6"
         >
           <Field
             id="display_name"

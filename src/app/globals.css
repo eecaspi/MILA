@@ -1,40 +1,53 @@
 @import "tailwindcss";
 
 /*
- * MILA — black & champagne gold.
- * Deep warm black canvas, ivory text, one accent: champagne gold.
- * Display type is a Hebrew serif (Frank Ruhl Libre); body is Heebo.
+ * MILA — black with living color.
+ * True-black canvas, charcoal cards one step lighter, bright white bold text.
+ * One accent (blush rose) for actions, plus a soft tone per category so the
+ * page has color without losing elegance. Readability first: body text is
+ * never darker than #c9c9d1 on the canvas.
  *
  * Use logical utilities (ms-/me-, ps-/pe-, start-/end-, text-start)
  * rather than left/right so every component is correct in RTL.
  */
 @theme {
   --font-sans: var(--font-heebo), ui-sans-serif, system-ui, sans-serif;
-  --font-display: var(--font-frank), "Times New Roman", serif;
+  --font-display: var(--font-heebo), ui-sans-serif, system-ui, sans-serif;
+  --font-brand: var(--font-frank), "Times New Roman", serif;
 
-  /* surfaces, darkest to lightest */
-  --color-canvas: #0b0a09;
-  --color-surface: #141210;
-  --color-raised: #1c1916;
-  --color-line: #2c2723;
+  /* surfaces */
+  --color-canvas: #000000;
+  --color-surface: #1c1c1f;
+  --color-raised: #2a2a2f;
+  --color-line: #34343a;
 
   /* text */
-  --color-ink: #f2ece1;
-  --color-ink-soft: #a59c90;
+  --color-ink: #ffffff;
+  --color-ink-soft: #c9c9d1;
 
-  /* accent */
-  --color-gold: #c9a45c;
-  --color-gold-bright: #e0c283;
-  --color-gold-soft: #211b12;
-  --color-on-gold: #0b0a09;
+  /* accent: blush rose */
+  --color-accent: #f6a9bd;
+  --color-accent-bright: #ffc4d2;
+  --color-accent-soft: #3a2229;
+  --color-on-accent: #1a0d11;
+
+  /* category tones (pastel on black) */
+  --color-tone-rose: #f6b8c8;
+  --color-tone-peach: #f9c9a5;
+  --color-tone-lilac: #cdb8f5;
+  --color-tone-mint: #a8e6c8;
+  --color-tone-sky: #a9d3f5;
+  --color-tone-sand: #ecd9a8;
+  --color-tone-coral: #f7a99a;
+  --color-tone-pearl: #e6e1f0;
 
   /* states */
-  --color-sage: #9cc7a8;
-  --color-sage-soft: #13201a;
-  --color-danger: #eb9a92;
-  --color-danger-soft: #2a1513;
+  --color-sage: #7fe0a6;
+  --color-sage-soft: #12301f;
+  --color-danger: #ff9b95;
+  --color-danger-soft: #3a1716;
 
-  --radius-card: 1.25rem;
+  --radius-card: 1.5rem;
 }
 
 @layer base {
@@ -47,6 +60,7 @@
     background-color: var(--color-canvas);
     color: var(--color-ink);
     font-family: var(--font-sans);
+    font-size: 1.0625rem;
     line-height: 1.65;
   }
 
@@ -54,13 +68,15 @@
   h2,
   h3 {
     font-family: var(--font-display);
-    letter-spacing: -0.01em;
+    font-weight: 800;
+    letter-spacing: -0.015em;
+    line-height: 1.2;
     text-wrap: balance;
   }
 
   ::selection {
-    background: var(--color-gold);
-    color: var(--color-on-gold);
+    background: var(--color-accent);
+    color: var(--color-on-accent);
   }
 
   /* Codes, URLs and other Latin strings keep LTR order inside RTL text. */
@@ -70,44 +86,39 @@
   }
 
   :focus-visible {
-    outline: 2px solid var(--color-gold);
+    outline: 2px solid var(--color-accent);
     outline-offset: 2px;
   }
 }
 
 @layer components {
-  /* Thin gold hairline used to frame premium surfaces. */
-  .gold-frame {
-    border: 1px solid color-mix(in srgb, var(--color-gold) 35%, transparent);
+  /* Featured surface: charcoal card with a soft rose glow in the corner. */
+  .accent-frame {
     background:
-      radial-gradient(
-        120% 80% at 100% 0%,
-        color-mix(in srgb, var(--color-gold) 14%, transparent),
-        transparent 60%
-      ),
+      radial-gradient(90% 70% at 100% 0%, rgba(246, 169, 189, 0.22), transparent 65%),
       var(--color-surface);
+    border: 1px solid rgba(246, 169, 189, 0.28);
   }
 
-  /* Letter-spaced small caps label ("MILA CLUB", section eyebrows). */
+  /* Small label above a heading ("MILA CLUB"). */
   .eyebrow {
-    font-size: 0.75rem;
-    font-weight: 600;
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
-    color: var(--color-gold);
+    font-size: 0.875rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: var(--color-accent);
   }
 
   .wordmark {
-    font-family: var(--font-display);
-    font-weight: 500;
-    letter-spacing: 0.32em;
-    color: var(--color-gold);
+    font-family: var(--font-brand);
+    font-weight: 700;
+    letter-spacing: 0.22em;
+    color: var(--color-ink);
   }
 
-  /* Short ornamental gold rule. */
-  .gold-rule {
-    height: 1px;
-    width: 4rem;
-    background: linear-gradient(to left, transparent, var(--color-gold), transparent);
+  .accent-rule {
+    height: 3px;
+    width: 3.5rem;
+    border-radius: 999px;
+    background: var(--color-accent);
   }
 }

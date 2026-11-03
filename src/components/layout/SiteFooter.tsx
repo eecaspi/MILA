@@ -14,7 +14,7 @@ export function SiteFooter() {
           <ul className="space-y-2 text-sm">
             {siteConfig.nav.map((item) => (
               <li key={item.href}>
-                <Link href={item.href} className="text-ink-soft hover:text-gold">
+                <Link href={item.href} className="text-ink-soft hover:text-accent">
                   {item.label}
                 </Link>
               </li>

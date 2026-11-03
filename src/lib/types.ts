@@ -12,10 +12,14 @@ export type CategorySlug =
   | "beauty"
   | "events";
 
+export type CategoryTone = "rose" | "peach" | "lilac" | "mint" | "sky" | "sand" | "coral" | "pearl";
+
 export interface Category {
   slug: CategorySlug;
   name: string;
   icon: string;
+  /** Pastel color used for this category's tiles, monograms and deal headers. */
+  tone: CategoryTone;
 }
 
 /**

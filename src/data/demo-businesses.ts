@@ -22,6 +22,7 @@ export const demoBusinesses: Business[] = [
     website: "https://www.osherad.co.il",
     sourceUrl: "https://en.wikipedia.org/wiki/Osher_Ad",
     tags: ["סופרמרקט", "כשרות מהודרת", "קניות למשפחה"],
+    logoUrl: "/demo/osher-ad-logo.jpg",
     status: "demo",
     isRealBusiness: true,
   },
@@ -120,6 +121,8 @@ export const demoBusinesses: Business[] = [
     name: "סלון פאות לדוגמה",
     category: "beauty",
     shortDescription: "עסק פיקטיבי להדגמת קופון בקטגוריית טיפוח ופאות.",
+    // Temporary placeholder product photos, only to show how the open card looks.
+    galleryUrls: ["/demo/daywear-cream.jpg", "/demo/chloe-parfum.jpg"],
     area: "ירושלים (לדוגמה)",
     tags: ["לדוגמה"],
     status: "demo",

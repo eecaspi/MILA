@@ -123,7 +123,6 @@ export const demoBusinesses: Business[] = [
     category: "baby-kids",
     shortDescription: "רשת חנויות ענק למוצרי תינוקות, מאז 1969, עם סניפים בכל הארץ.",
     area: "פריסה ארצית",
-    website: "http://www.motsesim.co.il",
     sourceUrl: "https://www.d.co.il/80047618/14170/",
     tags: ["תינוקות", "ציוד ללידה", "מוצרי תינוקות"],
     logoUrl: "/demo/mutzim-logo.jpg",

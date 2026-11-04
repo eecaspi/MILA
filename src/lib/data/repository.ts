@@ -17,6 +17,7 @@ import type { Business, CategorySlug, Offer, OfferKind, OfferWithBusiness } from
 import {
   BUSINESS_COLUMNS,
   OFFER_COLUMNS,
+  isExpired,
   mapBusinessRow,
   mapOfferRow,
   withoutCouponCode,
@@ -104,7 +105,7 @@ export async function getOffers(filter: OfferFilter = {}): Promise<OfferWithBusi
     if (!business) continue;
     if (filter.kind && offer.kind !== filter.kind) continue;
     if (filter.category && business.category !== filter.category) continue;
-    if (activeOnly && offer.validUntil && new Date(offer.validUntil) < now) continue;
+    if (activeOnly && isExpired(offer.validUntil, now)) continue;
     result.push(withoutCouponCode({ ...offer, business }, siteConfig.features.showCouponCodes));
   }
   return result;

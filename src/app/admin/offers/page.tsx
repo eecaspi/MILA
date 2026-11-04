@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Alert } from "@/components/ui/Alert";
+import { isExpired } from "@/lib/data/mappers";
 import { formatDate } from "@/lib/format";
 import { createClient } from "@/lib/supabase/server";
 import { setOfferPublished } from "../content-actions";
@@ -33,7 +34,6 @@ export default async function AdminOffers({ searchParams }: { searchParams: Sear
   if (show === "drafts") query = query.eq("is_published", false);
   const { data, error } = await query;
   const rows = (data ?? []) as unknown as Row[];
-  const today = new Date().toISOString().slice(0, 10);
   const returnTo = `/admin/offers?q=${encodeURIComponent(q)}&show=${show}`;
 
   return (
@@ -77,7 +77,7 @@ export default async function AdminOffers({ searchParams }: { searchParams: Sear
       ) : (
         <ul className="divide-y divide-line overflow-hidden rounded-[var(--radius-card)] bg-surface shadow-[var(--shadow-card)]">
           {rows.map((o) => {
-            const expired = Boolean(o.valid_until && o.valid_until < today);
+            const expired = isExpired(o.valid_until);
             return (
               <li key={o.id} className="flex flex-wrap items-center gap-3 p-4">
                 <span className="rounded-xl bg-accent-soft px-3 py-1.5 text-sm font-bold text-accent">

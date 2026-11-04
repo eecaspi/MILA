@@ -1,3 +1,4 @@
+import { isExpired } from "@/lib/data/mappers";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -27,7 +28,7 @@ export default async function OfferPage({ params }: { params: Params }) {
 
   const category = getCategory(offer.business.category);
   const isDemo = offer.status === "demo";
-  const expired = offer.validUntil ? new Date(offer.validUntil) < new Date() : false;
+  const expired = isExpired(offer.validUntil);
 
   return (
     <div className="mx-auto max-w-5xl px-4 py-8 md:py-12">

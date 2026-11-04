@@ -6,7 +6,7 @@ import { BusinessImage } from "./BusinessImage";
 export function BusinessFront({ business }: { business: Business }) {
   return (
     <div className="flex flex-1 flex-col">
-      <div className="relative aspect-[4/3] shrink-0 overflow-hidden">
+      <div className="relative aspect-[16/10] shrink-0 overflow-hidden">
         <BusinessImage
           business={business}
           sizes="(min-width: 1024px) 380px, (min-width: 768px) 45vw, 92vw"

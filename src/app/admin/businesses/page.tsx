@@ -11,6 +11,7 @@ interface Row {
   area: string;
   status: string;
   is_published: boolean;
+  sort_order: number;
   is_real_business: boolean;
   logo_url: string | null;
   offers: { count: number }[];
@@ -24,7 +25,7 @@ export default async function AdminBusinesses({ searchParams }: { searchParams: 
   let query = supabase
     .from("businesses")
     .select(
-      "id, name, category_slug, area, status, is_published, is_real_business, logo_url, offers(count)",
+      "id, name, category_slug, area, status, is_published, sort_order, is_real_business, logo_url, offers(count)",
     )
     .eq("is_real_business", true)
     .order("sort_order")
@@ -97,6 +98,7 @@ export default async function AdminBusinesses({ searchParams }: { searchParams: 
                     : b.category_slug}
                   {b.area && ` · ${b.area}`} · {b.offers[0]?.count ?? 0} הטבות
                   {b.status === "verified" && " · מאומת"}
+                  {b.sort_order < 0 && " · מוצג ראשון"}
                 </p>
               </div>
               <span

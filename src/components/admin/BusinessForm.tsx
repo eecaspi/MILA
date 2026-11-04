@@ -144,16 +144,12 @@ export function BusinessForm({ business }: { business?: BusinessFormValues }) {
             <option value="verified">מאומת</option>
           </select>
         </Field>
-        <Field label="סדר הופעה" name="sort_order" hint="מספר קטן מופיע קודם">
-          <input
-            id="sort_order"
-            name="sort_order"
-            type="number"
-            defaultValue={b?.sort_order ?? 0}
-            className={inputClass}
+        <div className="flex flex-col justify-end gap-3 pb-1 sm:col-span-2">
+          <Check
+            name="pin_first"
+            label="להציג ראשון ברשימת העסקים"
+            defaultChecked={(b?.sort_order ?? 0) < 0}
           />
-        </Field>
-        <div className="flex items-end pb-3">
           <Check name="is_published" label="מפורסם באתר" defaultChecked={b?.is_published} />
         </div>
       </section>

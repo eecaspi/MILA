@@ -1,6 +1,5 @@
 import Image from "next/image";
 import { getCategory } from "@/data/categories";
-import { hostname } from "@/lib/format";
 import type { Business } from "@/lib/types";
 import { StatusBadge } from "@/components/ui/StatusBadge";
 import { CategoryIcon } from "@/components/ui/CategoryIcon";
@@ -20,7 +19,8 @@ export function BusinessCard({
     business.coverUrl ||
     business.galleryUrls?.length ||
     offers.length ||
-    business.phone,
+    business.phone ||
+    business.website,
   );
 
   return (
@@ -65,20 +65,9 @@ export function BusinessCard({
           </ul>
         )}
 
-        <div className="mt-5 flex items-center justify-between border-t border-line pt-4 text-sm">
-          {business.website ? (
-            <a
-              href={business.website}
-              data-track-business={business.id}
-              target="_blank"
-              rel="noopener noreferrer nofollow"
-              className="font-bold text-accent hover:underline"
-            >
-              לאתר העסק <span className="ltr text-ink-soft">({hostname(business.website)})</span>
-            </a>
-          ) : (
-            <span className="text-ink-soft">אתר: טרם אומת</span>
-          )}
+        <div className="mt-5 hidden items-center justify-between border-t border-line pt-4 text-sm md:flex">
+          {/* The website link lives in the details that open on hover. */}
+          <span className="font-semibold text-accent">פרטים וקישור לאתר ←</span>
           {business.isRealBusiness && business.status === "demo" && (
             <span className="text-xs text-ink-soft">ללא קשר מסחרי</span>
           )}
@@ -86,7 +75,7 @@ export function BusinessCard({
 
         {/* Phones: tap to open more details inside the card. */}
         {hasMore && (
-          <details className="group/more mt-3 md:hidden">
+          <details className="group/more mt-4 md:hidden">
             <summary className="flex cursor-pointer list-none items-center justify-center gap-1 rounded-full bg-raised py-2 text-sm font-semibold text-accent [&::-webkit-details-marker]:hidden">
               <span className="group-open/more:hidden">עוד על העסק</span>
               <span className="hidden group-open/more:inline">פחות</span>

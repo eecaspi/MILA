@@ -1,30 +1,17 @@
 import Link from "next/link";
-import { LikeyCharacter } from "@/components/brand/LikeyCharacter";
 import { Logo } from "@/components/brand/Logo";
 import { BusinessCard } from "@/components/business/BusinessCard";
 import { DealCard } from "@/components/deals/DealCard";
-import { ClubPreview } from "@/components/home/ClubPreview";
 import { CommunityInvite } from "@/components/home/CommunityInvite";
 import { CategoryIcon } from "@/components/ui/CategoryIcon";
-import { DemoNotice } from "@/components/ui/DemoNotice";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { toneClasses } from "@/components/ui/tones";
 import { siteConfig } from "@/config/site";
 import { categories } from "@/data/categories";
-import {
-  getBusinesses,
-  getHighlightedOffers,
-  getLikeyPicks,
-  getNewestOffers,
-} from "@/lib/data/repository";
+import { getBusinesses, getHighlightedOffers } from "@/lib/data/repository";
 
 export default async function HomePage() {
-  const [best, newest, picks, businesses] = await Promise.all([
-    getHighlightedOffers(4),
-    getNewestOffers(4),
-    getLikeyPicks(3),
-    getBusinesses(),
-  ]);
+  const [best, businesses] = await Promise.all([getHighlightedOffers(4), getBusinesses()]);
 
   return (
     <>
@@ -32,51 +19,29 @@ export default async function HomePage() {
       <section className="relative overflow-hidden">
         <div
           aria-hidden
-          className="pointer-events-none absolute inset-0 bg-[radial-gradient(50%_60%_at_15%_10%,#f5e4de_0%,transparent_70%),radial-gradient(40%_50%_at_95%_90%,#f2e7d6_0%,transparent_70%)]"
+          className="pointer-events-none absolute inset-0 bg-[radial-gradient(55%_70%_at_50%_0%,#fde8e2_0%,transparent_70%),radial-gradient(40%_50%_at_90%_100%,#faeed8_0%,transparent_70%)]"
         />
-        <div className="relative mx-auto grid max-w-6xl items-center gap-10 px-4 pt-10 pb-14 md:grid-cols-[1.25fr_1fr] md:pt-16 md:pb-20">
-          <div>
-            <h1 className="sr-only">
-              {siteConfig.brand.name} – {siteConfig.brand.slogan}
-            </h1>
-            <Logo variant="full" height={150} priority />
-            <p className="mt-8 max-w-lg text-lg text-ink-soft md:text-xl">
-              {siteConfig.brand.tagline}
-            </p>
-            <div className="mt-8 flex flex-wrap gap-3">
-              <Link href="/deals" className="btn-primary text-base">
-                בואי לראות מה מצאתי לך
-              </Link>
-              <Link href="#community" className="btn-secondary text-base">
-                הצטרפי לקהילה
-              </Link>
-            </div>
-            <ul className="mt-8 flex flex-wrap gap-x-5 gap-y-2 text-sm font-semibold text-ink-soft">
-              <li className="flex items-center gap-2">
-                <span aria-hidden className="size-1.5 rounded-full bg-gold" />
-                בלי עלות
-              </li>
-              <li className="flex items-center gap-2">
-                <span aria-hidden className="size-1.5 rounded-full bg-gold" />
-                הכול במקום אחד
-              </li>
-              <li className="flex items-center gap-2">
-                <span aria-hidden className="size-1.5 rounded-full bg-gold" />
-                קהילה של נשים שמשתפות
-              </li>
-            </ul>
-          </div>
-          <div className="flex justify-center md:justify-end">
-            <LikeyCharacter
-              message="מצאתי לך כמה דברים שווים!"
-              className="max-w-[15rem] md:max-w-sm"
-            />
+        <div className="relative mx-auto flex max-w-2xl flex-col items-center px-4 pt-10 pb-12 text-center md:pt-14 md:pb-16">
+          <h1 className="sr-only">
+            {siteConfig.brand.name} – {siteConfig.brand.slogan}
+          </h1>
+          <Logo variant="full" height={140} priority />
+          <p className="mt-6 max-w-md text-lg text-ink-soft md:text-xl">
+            {siteConfig.brand.tagline}
+          </p>
+          <div className="mt-7 flex flex-wrap justify-center gap-3">
+            <Link href="/deals" className="btn-primary text-base">
+              בואי לראות מה מצאתי לך
+            </Link>
+            <Link href="#community" className="btn-secondary text-base">
+              הצטרפי לקהילה
+            </Link>
           </div>
         </div>
       </section>
 
-      <div className="mx-auto max-w-6xl space-y-20 px-4">
-        {/* 1. המבצעים הכי שווים */}
+      <div className="mx-auto max-w-6xl space-y-16 px-4">
+        {/* המבצעים הכי שווים */}
         <section aria-labelledby="best">
           <SectionHeading
             id="best"
@@ -85,12 +50,6 @@ export default async function HomePage() {
             href="/deals"
             linkLabel="בואי לראות הכול"
           />
-          <div className="mb-6">
-            <DemoNotice>
-              ההצעות שמוצגות כרגע הן <strong>לדוגמה בלבד</strong> ושייכות לעסקים פיקטיביים. הצעות
-              אמיתיות יסומנו בתג &quot;הצעה מאומתת&quot; אחרי אישור ישיר מול העסק.
-            </DemoNotice>
-          </div>
           {/* Phones: swipeable row. Larger screens: grid. */}
           <ul className="-mx-4 flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 pb-2 sm:mx-0 sm:grid sm:grid-cols-2 sm:overflow-visible sm:px-0 sm:pb-0 lg:grid-cols-4">
             {best.map((offer) => (
@@ -99,56 +58,35 @@ export default async function HomePage() {
               </li>
             ))}
           </ul>
+          <p className="mt-3 text-xs text-ink-soft">
+            ההצעות שמוצגות כרגע הן לדוגמה בלבד. הצעות אמיתיות יסומנו &quot;הצעה מאומתת&quot; אחרי
+            אישור ישיר מול העסק.
+          </p>
         </section>
 
-        {/* 2. מה חדש + 3. לייקי ממליצה */}
-        <div className="grid gap-10 lg:grid-cols-[1fr_1.6fr]">
-          <section aria-labelledby="new" className="min-w-0">
-            <SectionHeading id="new" title="מה חדש אצל לייקי?" subtitle="נכנס השבוע" />
-            <div className="space-y-3">
-              {newest.map((offer) => (
-                <DealCard key={offer.id} offer={offer} layout="row" />
-              ))}
-            </div>
-          </section>
-
-          <section aria-labelledby="picks" className="min-w-0">
-            <SectionHeading
-              id="picks"
-              title="לייקי ממליצה"
-              subtitle="בחרתי במיוחד בשבילך, והנה למה"
-            />
-            <ul className="-mx-4 flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 pb-2 sm:mx-0 sm:grid sm:grid-cols-2 sm:overflow-visible sm:px-0 sm:pb-0">
-              {picks.slice(0, 2).map((offer) => (
-                <li key={offer.id} className="w-[80%] shrink-0 snap-start sm:w-auto">
-                  <DealCard offer={offer} showPickNote />
-                </li>
-              ))}
-            </ul>
-          </section>
-        </div>
-
-        {/* 4. הקטגוריות שלנו */}
+        {/* הקטגוריות */}
         <section aria-labelledby="cats">
-          <SectionHeading id="cats" title="מה בא לך למצוא היום?" subtitle="הקטגוריות שלנו" />
-          <ul className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
+          <SectionHeading id="cats" title="מה בא לך למצוא היום?" />
+          <ul className="flex flex-wrap gap-2.5">
             {categories.map((c) => (
               <li key={c.slug}>
                 <Link
                   href={`/businesses?category=${c.slug}`}
-                  className={`lift flex h-full items-center gap-3 rounded-[var(--radius-card)] p-4 ${toneClasses[c.tone]}`}
+                  className="lift flex items-center gap-2 rounded-full border border-line bg-surface py-2 ps-2 pe-4 text-[15px] font-semibold text-ink hover:border-accent"
                 >
-                  <span className="flex size-11 shrink-0 items-center justify-center rounded-2xl bg-white/70">
-                    <CategoryIcon slug={c.slug} className="size-6 text-accent" />
+                  <span
+                    className={`flex size-8 shrink-0 items-center justify-center rounded-full ${toneClasses[c.tone]}`}
+                  >
+                    <CategoryIcon slug={c.slug} className="size-4 text-accent" />
                   </span>
-                  <span className="font-display text-[15px] leading-tight font-bold">{c.name}</span>
+                  {c.name}
                 </Link>
               </li>
             ))}
           </ul>
         </section>
 
-        {/* 5. העסקים שלנו */}
+        {/* העסקים שלנו */}
         <section aria-labelledby="biz">
           <SectionHeading
             id="biz"
@@ -158,17 +96,14 @@ export default async function HomePage() {
             linkLabel="לכל העסקים"
           />
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-            {businesses.slice(0, 6).map((b) => (
+            {businesses.slice(0, 3).map((b) => (
               <BusinessCard key={b.id} business={b} />
             ))}
           </div>
         </section>
 
-        {/* 6. החברות של לייקי */}
+        {/* החברות של לייקי */}
         <CommunityInvite />
-
-        {/* 7. מועדון לייקי */}
-        <ClubPreview />
       </div>
     </>
   );

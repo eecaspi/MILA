@@ -10,13 +10,13 @@ export const metadata: Metadata = {
 };
 
 const palette = [
-  { name: "רוז גולד עמוק", role: "כפתורים וקישורים", hex: "#9A5E57", text: "#FFFDFA" },
+  { name: "רוז חם", role: "כפתורים וקישורים", hex: "#B5594E", text: "#FFFFFF" },
   { name: "רוז גולד מתכתי", role: "הלוגו וכותרות גדולות", hex: "#C48B7C", text: "#FFFDFA" },
-  { name: "סומק", role: "התווית, הדגשות עדינות", hex: "#F5E4DE", text: "#4B3631" },
-  { name: "שמנת", role: "רקע האתר", hex: "#FCF7F1", text: "#4B3631" },
-  { name: "שנהב", role: "כרטיסים", hex: "#FFFDFA", text: "#4B3631" },
-  { name: "זהב שמפניה", role: "המסגרת ופרטים עדינים", hex: "#BFA585", text: "#4B3631" },
-  { name: "קקאו", role: "טקסט, פוטר, קהילה", hex: "#4B3631", text: "#FFFDFA" },
+  { name: "סומק", role: "התווית, הדגשות עדינות", hex: "#FDE8E2", text: "#4A342F" },
+  { name: "שמנת", role: "רקע האתר", hex: "#FFFAF6", text: "#4A342F" },
+  { name: "לבן", role: "כרטיסים", hex: "#FFFFFF", text: "#4B3631" },
+  { name: "זהב דבש", role: "המסגרת ופרטים עדינים", hex: "#D9B184", text: "#4B3631" },
+  { name: "קקאו", role: "טקסט, פוטר, קהילה", hex: "#4A342F", text: "#FFFFFF" },
 ];
 
 const tones = ["rose", "peach", "lilac", "mint", "sky", "sand", "coral", "pearl"] as const;

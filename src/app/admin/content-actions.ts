@@ -5,7 +5,10 @@ import { redirect } from "next/navigation";
 import { requireAdmin } from "@/lib/auth/session";
 import { slugify } from "@/lib/data/mappers";
 import {
+  MAX_GALLERY,
   imageFile,
+  imageFiles,
+  keptGallery,
   parseBusinessForm,
   parseOfferForm,
   uploadPath,
@@ -74,6 +77,7 @@ export async function saveBusiness(_prev: FormState, fd: FormData): Promise<Form
   const errors: FieldErrors = parsed.ok ? {} : { ...parsed.errors };
   const logo = imageFile(fd, "logo", errors);
   const cover = imageFile(fd, "cover", errors);
+  const gallery = imageFiles(fd, "gallery", errors);
   if (!parsed.ok || Object.keys(errors).length) return { errors };
 
   const supabase = await createClient();
@@ -100,6 +104,27 @@ export async function saveBusiness(_prev: FormState, fd: FormData): Promise<Form
   if (cover) images.cover_url = await upload(supabase, "businesses", `${id}-cover`, cover);
   if (Object.keys(images).length) {
     await supabase.from("businesses").update(images).eq("id", id);
+  }
+
+  // Gallery: drop the photos marked for removal, then add new uploads (up to the limit).
+  const { data: current } = await supabase
+    .from("businesses")
+    .select("gallery_urls")
+    .eq("id", id)
+    .maybeSingle();
+  const before = ((current?.gallery_urls as string[] | null) ?? []).filter(Boolean);
+  const kept = keptGallery(before, fd);
+  const room = Math.max(0, MAX_GALLERY - kept.length);
+  const added: string[] = [];
+  for (const [i, file] of gallery.slice(0, room).entries()) {
+    const url = await upload(supabase, "businesses", `${id}-g${i}`, file);
+    if (url) added.push(url);
+  }
+  if (added.length || kept.length !== before.length) {
+    await supabase
+      .from("businesses")
+      .update({ gallery_urls: [...kept, ...added] })
+      .eq("id", id);
   }
 
   refreshSite();

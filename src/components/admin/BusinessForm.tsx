@@ -4,7 +4,7 @@ import { useActionState } from "react";
 import { saveBusiness, type FormState } from "@/app/admin/content-actions";
 import { Alert } from "@/components/ui/Alert";
 import { categories } from "@/data/categories";
-import { Check, Field, ImageField, SubmitButton, inputClass } from "./FormBits";
+import { Check, Field, GalleryField, ImageField, SubmitButton, inputClass } from "./FormBits";
 
 export interface BusinessFormValues {
   id?: string;
@@ -22,6 +22,7 @@ export interface BusinessFormValues {
   sort_order: number;
   logo_url: string | null;
   cover_url: string | null;
+  gallery_urls?: string[] | null;
 }
 
 export function BusinessForm({ business }: { business?: BusinessFormValues }) {
@@ -130,6 +131,7 @@ export function BusinessForm({ business }: { business?: BusinessFormValues }) {
           removeName="remove_cover"
           error={e.cover}
         />
+        <GalleryField current={b?.gallery_urls ?? []} error={e.gallery} />
       </section>
 
       <section className="grid gap-5 rounded-[var(--radius-card)] bg-surface p-5 shadow-[var(--shadow-card)] sm:grid-cols-3">

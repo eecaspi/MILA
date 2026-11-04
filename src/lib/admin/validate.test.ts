@@ -1,6 +1,13 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { imageFile, parseBusinessForm, parseOfferForm, uploadPath } from "./validate.ts";
+import {
+  imageFile,
+  imageFiles,
+  keptGallery,
+  parseBusinessForm,
+  parseOfferForm,
+  uploadPath,
+} from "./validate.ts";
 
 function form(fields: Record<string, string | File>): FormData {
   const fd = new FormData();
@@ -122,4 +129,19 @@ test("image uploads: type and size are checked", () => {
   assert.match(errors.cover ?? "", /5MB/);
   assert.equal(imageFile(form({}), "none", errors), null);
   assert.equal(uploadPath("businesses", "id1", ok, 123), "businesses/id1-123.png");
+});
+
+test("gallery: several images, removals and the size limit", () => {
+  const errors: Record<string, string> = {};
+  const img = () => new File([new Uint8Array(10)], "p.jpg", { type: "image/jpeg" });
+  const fd = new FormData();
+  fd.append("gallery", img());
+  fd.append("gallery", img());
+  assert.equal(imageFiles(fd, "gallery", errors).length, 2);
+  assert.deepEqual(imageFiles(fd, "gallery", errors, 1), []);
+  assert.match(errors.gallery ?? "", /עד 1/);
+
+  const edit = new FormData();
+  edit.append("remove_gallery", "https://x/b.jpg");
+  assert.deepEqual(keptGallery(["https://x/a.jpg", "https://x/b.jpg"], edit), ["https://x/a.jpg"]);
 });

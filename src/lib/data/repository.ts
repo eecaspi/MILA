@@ -37,10 +37,16 @@ const loadContent = cache(async (): Promise<Content> => {
   const supabase = createPublicClient();
   if (!supabase) return demo;
 
-  const [b, o] = await Promise.all([
-    supabase.from("businesses").select(BUSINESS_COLUMNS).order("sort_order").order("name"),
+  const businessesQuery = (columns: string) =>
+    supabase.from("businesses").select(columns).order("sort_order").order("name");
+  let [b, o] = await Promise.all([
+    businessesQuery(BUSINESS_COLUMNS),
     supabase.from("offers").select(OFFER_COLUMNS).order("created_at", { ascending: false }),
   ]);
+  // A newer column whose migration hasn't been run yet: show everything else instead of demo content.
+  if (b.error?.code === "42703") {
+    b = await businessesQuery(BUSINESS_COLUMNS.replace(", gallery_urls", ""));
+  }
   if (b.error || o.error) {
     console.error("content load failed, showing demo content", b.error ?? o.error);
     return demo;

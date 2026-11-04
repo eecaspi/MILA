@@ -51,6 +51,8 @@ export interface Business {
   phone?: string;
   logoUrl?: string;
   coverUrl?: string;
+  /** A few photos from the business (products, the shop). */
+  galleryUrls?: string[];
 }
 
 export type OfferKind = "deal" | "coupon";

@@ -19,6 +19,7 @@ export interface BusinessRow {
   source_url: string | null;
   logo_url: string | null;
   cover_url: string | null;
+  gallery_urls?: string[] | null;
   tags: string[] | null;
   status: VerificationStatus;
   is_real_business: boolean;
@@ -41,7 +42,7 @@ export interface OfferRow {
 }
 
 export const BUSINESS_COLUMNS =
-  "id, slug, name, category_slug, short_description, description, area, city, website, phone, source_url, logo_url, cover_url, tags, status, is_real_business";
+  "id, slug, name, category_slug, short_description, description, area, city, website, phone, source_url, logo_url, cover_url, gallery_urls, tags, status, is_real_business";
 export const OFFER_COLUMNS =
   "id, business_id, kind, title, description, value_label, valid_until, status, created_at, highlight, likey_pick_note, price_label, image_url";
 
@@ -63,6 +64,7 @@ export function mapBusinessRow(row: BusinessRow): Business | null {
     sourceUrl: opt(row.source_url),
     logoUrl: opt(row.logo_url),
     coverUrl: opt(row.cover_url),
+    galleryUrls: (row.gallery_urls ?? []).filter((u) => u.trim()),
     tags: (row.tags ?? []).filter((t) => t.trim()),
     status: row.status,
     isRealBusiness: row.is_real_business,

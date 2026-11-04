@@ -1,5 +1,6 @@
 "use server";
 
+import { siteConfig } from "@/config/site";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { safeNextPath } from "@/lib/auth/session";
@@ -34,6 +35,7 @@ export async function signIn(formData: FormData): Promise<void> {
 export async function signUp(formData: FormData): Promise<void> {
   const next = safeNextPath(formData.get("next"));
   if (!isSupabaseConfigured) back("signup", "not_configured", next);
+  if (!siteConfig.features.memberSignup) back("login", "signup_closed", next);
 
   const displayName = field(formData, "display_name");
   const email = field(formData, "email");

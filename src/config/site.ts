@@ -44,6 +44,12 @@ export const siteConfig = {
      * page data while this is false.
      */
     showCouponCodes: false as boolean,
+    /**
+     * Public member sign-up. Off while the club is being built: visitors see
+     * "מועדון הלקוחות · בעבודה" and only the team signs in (accounts are created
+     * by an admin). The sign-up action refuses on the server while this is false.
+     */
+    memberSignup: false as boolean,
     /** Flip on as they are built. */
     communityRecommendations: false,
     affiliateProgram: false,

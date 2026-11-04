@@ -18,7 +18,7 @@ export const metadata: Metadata = {
 const ways = [
   {
     icon: "🛍️",
-    title: "קונות דרך לייקי",
+    title: "קונות דרך ליקי",
     text: "נקודות על קניות מאומתות דרך הקישורים שלנו.",
     tone: "rose" as const,
   },
@@ -31,7 +31,7 @@ const ways = [
   {
     icon: "🎁",
     title: "צוברות נקודות ופותחות הטבות",
-    text: "חנות ההטבות של לייקי בדרך.",
+    text: "חנות ההטבות של ליקי בדרך.",
     tone: "mint" as const,
   },
 ];
@@ -51,7 +51,7 @@ export default async function AccountPage({ searchParams }: { searchParams: Sear
     <div className="mx-auto max-w-3xl space-y-8 px-4 py-10">
       <header className="flex flex-wrap items-end justify-between gap-4">
         <div>
-          <p className="eyebrow">מועדון לייקי</p>
+          <p className="eyebrow">מועדון ליקי</p>
           <h1 className="mt-1 text-3xl text-ink">
             שלום{name ? ` ${name}` : ""}, ברוכה הבאה למועדון!
           </h1>
@@ -105,7 +105,7 @@ export default async function AccountPage({ searchParams }: { searchParams: Sear
           ))}
         </ul>
         <p className="rounded-2xl border border-dashed border-accent/30 bg-accent-soft px-4 py-3 text-center text-sm font-semibold text-accent">
-          בקרוב: חנות ההטבות של לייקי
+          בקרוב: חנות ההטבות של ליקי
         </p>
       </section>
 

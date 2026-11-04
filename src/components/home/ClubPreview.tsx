@@ -4,7 +4,7 @@ import { siteConfig } from "@/config/site";
 
 const ways = [
   {
-    title: "קונות דרך לייקי",
+    title: "קונות דרך ליקי",
     text: "נקודות על קניות מאומתות דרך הקישורים שלנו",
     tone: "bg-tone-rose",
   },
@@ -20,7 +20,7 @@ const ways = [
   },
 ];
 
-/** "מועדון לייקי" — a preview of the loyalty club. It is not active yet, so no benefits are promised. */
+/** "מועדון ליקי" — a preview of the loyalty club. It is not active yet, so no benefits are promised. */
 export function ClubPreview() {
   return (
     <section
@@ -30,7 +30,7 @@ export function ClubPreview() {
     >
       <div className="flex flex-wrap items-center gap-3">
         <TagMark size={32} />
-        <p className="eyebrow">מועדון לייקי</p>
+        <p className="eyebrow">מועדון ליקי</p>
         <span className="rounded-full bg-gold/25 px-3 py-1 text-xs font-bold text-ink">בהכנה</span>
       </div>
       <h2 id="club-title" className="mt-4 max-w-xl text-3xl text-ink md:text-4xl">

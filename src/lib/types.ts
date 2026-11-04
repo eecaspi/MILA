@@ -69,11 +69,11 @@ export interface Offer {
   /** ISO date. */
   validUntil?: string;
   status: VerificationStatus;
-  /** ISO date the offer was added to the site (drives "מה חדש אצל לייקי?"). */
+  /** ISO date the offer was added to the site (drives "מה חדש אצל ליקי?"). */
   addedAt: string;
   /** Shown in "המבצעים הכי שווים". */
   highlight?: boolean;
-  /** Hand-picked for "לייקי ממליצה", with a one-line reason in לייקי's voice. */
+  /** Hand-picked for "ליקי ממליצה", with a one-line reason in ליקי's voice. */
   likeyPick?: { note: string };
   /** Real price information, only when the business provided it. Never invented. */
   priceLabel?: string;

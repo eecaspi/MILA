@@ -125,12 +125,12 @@ export async function getHighlightedOffers(limit = 4): Promise<OfferWithBusiness
   return [...picked, ...all.filter((o) => !o.highlight)].slice(0, limit);
 }
 
-/** "מה חדש אצל לייקי?" — most recently added first. */
+/** "מה חדש אצל ליקי?" — most recently added first. */
 export async function getNewestOffers(limit = 3): Promise<OfferWithBusiness[]> {
   return (await getOffers()).sort((a, b) => b.addedAt.localeCompare(a.addedAt)).slice(0, limit);
 }
 
-/** "לייקי ממליצה" — hand-picked offers with a note. */
+/** "ליקי ממליצה" — hand-picked offers with a note. */
 export async function getLikeyPicks(limit = 3): Promise<OfferWithBusiness[]> {
   return (await getOffers()).filter((o) => o.likeyPick).slice(0, limit);
 }

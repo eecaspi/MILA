@@ -68,7 +68,7 @@ export default async function OfferPage({
     <div className="mx-auto max-w-5xl px-4 py-8 md:py-12">
       <TrackView type="offer_view" offerId={offer.id} businessId={offer.business.id} />
       <Link href="/deals" className="text-sm font-semibold text-accent hover:underline">
-        → לכל מה שלייקי מצאה
+        → לכל מה שליקי מצאה
       </Link>
 
       <div className="mt-6 grid gap-8 md:grid-cols-2">
@@ -101,7 +101,7 @@ export default async function OfferPage({
             <p className="flex gap-3 rounded-2xl bg-accent-soft/60 p-4 text-ink">
               <TagMark size={24} className="mt-0.5 shrink-0" />
               <span>
-                <strong className="font-display">למה לייקי אוהבת את זה: </strong>
+                <strong className="font-display">למה ליקי אוהבת את זה: </strong>
                 {offer.likeyPick.note}
               </span>
             </p>

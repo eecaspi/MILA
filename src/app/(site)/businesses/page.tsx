@@ -7,7 +7,7 @@ import { getBusinesses } from "@/lib/data/repository";
 
 export const metadata: Metadata = {
   title: "העסקים שלנו",
-  description: "עסקים, חנויות וארגוני חסד שלייקי ממליצה להכיר.",
+  description: "עסקים, חנויות וארגוני חסד שליקי ממליצה להכיר.",
 };
 
 type SearchParams = Promise<{ category?: string }>;
@@ -27,7 +27,7 @@ export default async function BusinessesPage({ searchParams }: { searchParams: S
 
       <div className="mb-6">
         <DemoNotice>
-          הרישומים במדריך מבוססים על מידע פומבי ומוצגים <strong>להדגמה בלבד</strong>. אין ללייקי קשר
+          הרישומים במדריך מבוססים על מידע פומבי ומוצגים <strong>להדגמה בלבד</strong>. אין לליקי קשר
           מסחרי עם העסקים האלה, והפרטים טרם אומתו מולם.
         </DemoNotice>
       </div>

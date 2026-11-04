@@ -1,10 +1,10 @@
 import Image from "next/image";
 
-/** The two Likey tags from the official logo, used as a small brand symbol. */
+/** The Liky bag from the official logo, used as a small brand symbol. */
 export function TagMark({ size = 40, className }: { size?: number; className?: string }) {
   return (
     <Image
-      src="/brand/likey-tags.png"
+      src="/brand/liky-icon.png"
       alt=""
       aria-hidden
       width={size}

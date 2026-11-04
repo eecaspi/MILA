@@ -4,23 +4,24 @@ import { siteConfig } from "@/config/site";
 export type LogoVariant = "full" | "wordmark" | "icon";
 
 const files = {
-  full: "/brand/likey-logo.png",
-  fullLight: "/brand/likey-logo-light.png",
-  wordmark: "/brand/likey-logo-wordmark.png",
-  icon: "/brand/likey-tags.png",
+  full: "/brand/liky-logo.png",
+  icon: "/brand/liky-icon.png",
 } as const;
 
+// The full artwork is 900 × 756.
+const FULL_RATIO = 900 / 756;
+
 /**
- * The official Likey logo (artwork supplied by the brand, background removed).
- * - full:     tags + "likey" + slogan "יש לי משהו בשבילך"
- * - wordmark: tags + "likey", no slogan — for small sizes such as the header
- * - icon:     the two tags alone
- * `onDark` uses the light version, for dark backgrounds (full only).
+ * The official Liky logo (the red shopping bag), background removed.
+ * - full:     the bag with "Liky" and the slogan "יש לי קישור בשבילך"
+ * - wordmark: the small bag next to the name, for the header
+ * - icon:     the bag alone
  * `height` is the rendered height in px; width follows the artwork's proportions.
+ * `onDark` is kept for older call sites: the logo is red on transparent, so it
+ * belongs on light backgrounds.
  */
 export function Logo({
   variant = "full",
-  onDark = false,
   height = 80,
   priority = false,
   className = "",
@@ -31,13 +32,13 @@ export function Logo({
   priority?: boolean;
   className?: string;
 }) {
-  const alt = `${siteConfig.brand.nameEn} ${siteConfig.brand.name} – ${siteConfig.brand.slogan}`;
+  const name = `${siteConfig.brand.nameEn} ${siteConfig.brand.name}`;
 
   if (variant === "icon") {
     return (
       <Image
         src={files.icon}
-        alt={`${siteConfig.brand.nameEn} ${siteConfig.brand.name}`}
+        alt={name}
         width={height}
         height={height}
         priority={priority}
@@ -46,13 +47,23 @@ export function Logo({
     );
   }
 
-  // Artwork is 906 × 304.
-  const width = Math.round((height * 906) / 304);
-  const src = variant === "wordmark" ? files.wordmark : onDark ? files.fullLight : files.full;
+  if (variant === "wordmark") {
+    return (
+      <span className={`flex items-center gap-2 ${className}`}>
+        <Image src={files.icon} alt="" aria-hidden width={height} height={height} priority={priority} />
+        <span className="font-display text-2xl font-extrabold leading-none text-accent">
+          {siteConfig.brand.name}
+        </span>
+        <span className="sr-only">{siteConfig.brand.nameEn}</span>
+      </span>
+    );
+  }
+
+  const width = Math.round(height * FULL_RATIO);
   return (
     <Image
-      src={src}
-      alt={variant === "wordmark" ? `${siteConfig.brand.nameEn} ${siteConfig.brand.name}` : alt}
+      src={files.full}
+      alt={`${name} – ${siteConfig.brand.slogan}`}
       width={width}
       height={height}
       priority={priority}

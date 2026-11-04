@@ -28,9 +28,9 @@ const RANGES = [7, 30, 90] as const;
 
 const pageNames: Record<string, string> = {
   "/": "עמוד הבית",
-  "/deals": "לייקי מצאה לך",
+  "/deals": "ליקי מצאה לך",
   "/businesses": "העסקים שלנו",
-  "/community": "החברות של לייקי",
+  "/community": "החברות של ליקי",
 };
 function pageName(path: string) {
   if (pageNames[path]) return pageNames[path];

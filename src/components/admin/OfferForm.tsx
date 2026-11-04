@@ -133,9 +133,9 @@ export function OfferForm({
       <section className="grid gap-5 rounded-[var(--radius-card)] bg-surface p-5 shadow-[var(--shadow-card)] sm:grid-cols-2">
         <div className="sm:col-span-2">
           <Field
-            label="לייקי ממליצה (לא חובה)"
+            label="ליקי ממליצה (לא חובה)"
             name="likey_pick_note"
-            hint="משפט קצר: למה בחרנו בהטבה. מופיע ב'הבחירות של לייקי'"
+            hint="משפט קצר: למה בחרנו בהטבה. מופיע ב'הבחירות של ליקי'"
           >
             <input
               id="likey_pick_note"

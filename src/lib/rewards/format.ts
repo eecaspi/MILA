@@ -20,9 +20,9 @@ export const txTypeLabel: Record<PointsTxType, string> = {
 };
 
 export const txSourceLabel: Record<PointsTxSource, string> = {
-  purchase: "קנייה דרך לייקי",
+  purchase: "קנייה דרך ליקי",
   activity: "פעילות בקהילה",
-  admin: "צוות לייקי",
+  admin: "צוות ליקי",
   redemption: "מימוש הטבה",
   system: "מערכת",
 };
@@ -61,7 +61,7 @@ export function describeTransaction(
 ): string {
   if (tx.type === "reversal") return `ביטול: ${txSourceLabel[tx.source]}`;
   if (tx.type === "adjustment")
-    return tx.note ? `עדכון מצוות לייקי: ${tx.note}` : "עדכון מצוות לייקי";
+    return tx.note ? `עדכון מצוות ליקי: ${tx.note}` : "עדכון מצוות ליקי";
   return txSourceLabel[tx.source];
 }
 

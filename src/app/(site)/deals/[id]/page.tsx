@@ -13,6 +13,7 @@ import { siteConfig } from "@/config/site";
 import { getCategory } from "@/data/categories";
 import { getSession } from "@/lib/auth/session";
 import { getOfferById } from "@/lib/data/repository";
+import { lockOffer } from "@/lib/data/visibility";
 import { createClient } from "@/lib/supabase/server";
 import { formatDate, hostname } from "@/lib/format";
 
@@ -54,14 +55,17 @@ export default async function OfferPage({
   params: Params;
   searchParams: SearchParams;
 }) {
-  const offer = await getOfferById((await params).id);
-  if (!offer) notFound();
+  const found = await getOfferById((await params).id);
+  if (!found) notFound();
+  const session = await getSession();
+  const offer = session ? found : lockOffer(found);
 
   const category = getCategory(offer.business.category);
   const isDemo = offer.status === "demo";
   const expired = isExpired(offer.validUntil);
   const canClaim = siteConfig.features.personalCodes && !isDemo && !expired;
   const mine = canClaim ? await myCode(offer.id) : null;
+  const showSignupBox = offer.locked && (isDemo || !canClaim);
   const problem = (await searchParams).claim;
 
   return (
@@ -79,6 +83,7 @@ export default async function OfferPage({
             sizes="(min-width: 768px) 50vw, 100vw"
           />
           <span className="absolute start-4 top-4 rounded-full bg-accent px-4 py-2 text-lg font-bold text-on-accent shadow-[var(--shadow-soft)]">
+            {offer.locked && <span aria-hidden>🔒 </span>}
             {offer.valueLabel}
           </span>
         </div>
@@ -95,7 +100,7 @@ export default async function OfferPage({
               <p className="mt-2 text-xl font-bold text-ink">{offer.priceLabel}</p>
             )}
           </div>
-          <p className="text-lg text-ink-soft">{offer.description}</p>
+          {offer.description && <p className="text-lg text-ink-soft">{offer.description}</p>}
 
           {offer.likeyPick && (
             <p className="flex gap-3 rounded-2xl bg-accent-soft/60 p-4 text-ink">
@@ -112,6 +117,19 @@ export default async function OfferPage({
               זו <strong>הצעה לדוגמה</strong> של עסק פיקטיבי. היא מראה איך הטבות ייראו באתר, ואי
               אפשר לממש אותה.
             </DemoNotice>
+          )}
+
+          {showSignupBox && (
+            <div className="rounded-[var(--radius-card)] bg-accent-soft p-5">
+              <p className="font-display font-bold text-ink">ההטבה פתוחה לחברות לייקי</p>
+              <p className="mt-1 text-sm text-ink-soft">ההרשמה חינמית ולוקחת דקה.</p>
+              <Link
+                href={`/login?mode=signup&next=${encodeURIComponent(`/deals/${offer.id}`)}`}
+                className="btn-primary mt-3 w-full"
+              >
+                הצטרפי בחינם
+              </Link>
+            </div>
           )}
 
           {mine && (

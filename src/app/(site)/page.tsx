@@ -8,10 +8,17 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 import { toneClasses } from "@/components/ui/tones";
 import { siteConfig } from "@/config/site";
 import { categories } from "@/data/categories";
+import { getSession } from "@/lib/auth/session";
 import { getBusinesses, getHighlightedOffers } from "@/lib/data/repository";
+import { forViewer } from "@/lib/data/visibility";
 
 export default async function HomePage() {
-  const [best, businesses] = await Promise.all([getHighlightedOffers(4), getBusinesses()]);
+  const [highlighted, businesses, session] = await Promise.all([
+    getHighlightedOffers(4),
+    getBusinesses(),
+    getSession(),
+  ]);
+  const best = forViewer(highlighted, !!session);
 
   return (
     <>

@@ -65,6 +65,8 @@ export interface Offer {
   description: string;
   /** Human-readable value, e.g. "15% הנחה". */
   valueLabel: string;
+  /** True when the benefit details are hidden because the visitor is not signed in. */
+  locked?: boolean;
   couponCode?: string;
   /** ISO date. */
   validUntil?: string;

@@ -52,7 +52,7 @@ const loadContent = cache(async (): Promise<Content> => {
     return demo;
   }
 
-  const businesses = ((b.data ?? []) as BusinessRow[])
+  const businesses = ((b.data ?? []) as unknown as BusinessRow[])
     .map(mapBusinessRow)
     .filter((x): x is Business => x !== null);
   const offers = ((o.data ?? []) as OfferRow[]).map(mapOfferRow);

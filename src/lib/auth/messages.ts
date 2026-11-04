@@ -9,6 +9,10 @@ export const authMessages = {
   signed_out: "התנתקת בהצלחה.",
   not_configured: "ההרשמה למועדון תיפתח בקרוב.",
   signup_closed: "מועדון הלקוחות עדיין בעבודה, וההרשמה תיפתח בקרוב.",
+  missing_fields_password: "צריך למלא את כל השדות.",
+  wrong_current_password: "הסיסמה הנוכחית לא נכונה.",
+  password_mismatch: "שתי הסיסמאות החדשות לא זהות.",
+  same_password: "הסיסמה החדשה זהה לנוכחית. בחרי סיסמה אחרת.",
   unknown: "משהו השתבש. נסי שוב בעוד רגע.",
 } as const;
 

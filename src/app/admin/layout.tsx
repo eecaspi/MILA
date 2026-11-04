@@ -46,6 +46,9 @@ export default async function AdminLayout({ children }: { children: React.ReactN
           </div>
           <div className="flex items-center gap-4 text-sm text-ink-soft">
             <span>{session.profile.display_name ?? session.email}</span>
+            <Link href="/account/password" className="hover:text-accent">
+              שינוי סיסמה
+            </Link>
             <Link href="/" className="hover:text-accent">
               לאתר ←
             </Link>

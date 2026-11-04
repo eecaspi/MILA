@@ -3,6 +3,7 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { Alert } from "@/components/ui/Alert";
 import { Field, SubmitButton } from "@/components/ui/Field";
+import { PasswordField } from "@/components/ui/PasswordField";
 import { siteConfig } from "@/config/site";
 import { authMessage } from "@/lib/auth/messages";
 import { getSession, safeNextPath } from "@/lib/auth/session";
@@ -88,11 +89,9 @@ export default async function LoginPage({ searchParams }: { searchParams: Search
             required
             disabled={disabled}
           />
-          <Field
+          <PasswordField
             id="password"
             label="סיסמה"
-            type="password"
-            dir="ltr"
             autoComplete={mode === "signup" ? "new-password" : "current-password"}
             minLength={mode === "signup" ? 8 : undefined}
             hint={mode === "signup" ? "לפחות 8 תווים" : undefined}

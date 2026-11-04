@@ -8,6 +8,7 @@ export const authMessages = {
   confirm_failed: "הקישור לאישור החשבון לא תקין או שפג תוקפו. נסי להירשם או להתחבר שוב.",
   signed_out: "התנתקת בהצלחה.",
   not_configured: "ההרשמה למועדון תיפתח בקרוב.",
+  channel_required: "צריך לבחור איך נשארות בקשר: קבוצת וואטסאפ או אימייל.",
   signup_closed: "מועדון הלקוחות עדיין בעבודה, וההרשמה תיפתח בקרוב.",
   missing_fields_password: "צריך למלא את כל השדות.",
   wrong_current_password: "הסיסמה הנוכחית לא נכונה.",

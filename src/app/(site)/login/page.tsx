@@ -50,7 +50,7 @@ export default async function LoginPage({ searchParams }: { searchParams: Search
         </h1>
         <p className="mt-2 text-ink-soft">
           {mode === "signup"
-            ? "חשבון אחד להטבות, להמלצות ולמועדון לייקי. בלי עלות."
+            ? "דקה אחת, בלי עלות, ומקבלים קוד אישי להטבות."
             : signupOpen
               ? "התחברי ואני אראה לך מה חדש."
               : "מועדון הלקוחות עדיין בעבודה. הכניסה כרגע לצוות בלבד."}
@@ -98,6 +98,35 @@ export default async function LoginPage({ searchParams }: { searchParams: Search
             required
             disabled={disabled}
           />
+          {mode === "signup" && (
+            <fieldset className="space-y-2">
+              <legend className="mb-1 text-sm font-semibold text-ink">איך נשארות בקשר?</legend>
+              {(
+                [
+                  ["whatsapp", "קבוצת הוואטסאפ של לייקי", "הטבות חדשות ישר לטלפון"],
+                  ["email", "אימייל", "למי שאין וואטסאפ"],
+                ] as const
+              ).map(([value, title, hint]) => (
+                <label
+                  key={value}
+                  className="flex cursor-pointer items-start gap-3 rounded-2xl border border-line p-3 has-[:checked]:border-accent has-[:checked]:bg-accent-soft/60"
+                >
+                  <input
+                    type="radio"
+                    name="channel"
+                    value={value}
+                    required
+                    disabled={disabled}
+                    className="mt-1 accent-[var(--color-accent)]"
+                  />
+                  <span>
+                    <span className="block font-semibold text-ink">{title}</span>
+                    <span className="block text-xs text-ink-soft">{hint}</span>
+                  </span>
+                </label>
+              ))}
+            </fieldset>
+          )}
           <SubmitButton disabled={disabled}>
             {mode === "signup" ? "אני מצטרפת" : "כניסה"}
           </SubmitButton>

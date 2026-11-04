@@ -49,7 +49,12 @@ export const siteConfig = {
      * "מועדון הלקוחות · בעבודה" and only the team signs in (accounts are created
      * by an admin). The sign-up action refuses on the server while this is false.
      */
-    memberSignup: false as boolean,
+    memberSignup: true as boolean,
+    /**
+     * Personal one-day coupon codes: a signed-in member can claim a code on an offer
+     * (max 3 live codes, each valid 24 hours). The public codes above stay hidden.
+     */
+    personalCodes: true as boolean,
     /** Flip on as they are built. */
     communityRecommendations: false,
     affiliateProgram: false,

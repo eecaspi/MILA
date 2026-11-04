@@ -6,14 +6,39 @@ import { TagMark } from "@/components/brand/TagMark";
 import { TrackView } from "@/components/analytics/Tracker";
 import { CopyCouponButton } from "@/components/deals/CopyCouponButton";
 import { OfferImage } from "@/components/deals/OfferImage";
+import { PersonalCode } from "@/components/deals/PersonalCode";
 import { DemoNotice } from "@/components/ui/DemoNotice";
 import { StatusBadge } from "@/components/ui/StatusBadge";
 import { siteConfig } from "@/config/site";
 import { getCategory } from "@/data/categories";
+import { getSession } from "@/lib/auth/session";
 import { getOfferById } from "@/lib/data/repository";
+import { createClient } from "@/lib/supabase/server";
 import { formatDate, hostname } from "@/lib/format";
 
 type Params = Promise<{ id: string }>;
+type SearchParams = Promise<{ claim?: string }>;
+
+/** The signed-in member's live code for this offer (row-level security shows only her own). */
+async function myCode(offerId: string) {
+  const session = await getSession();
+  if (!session) return { signedIn: false, claim: null, wantsWhatsApp: false };
+  const supabase = await createClient();
+  const [{ data }, { data: auth }] = await Promise.all([
+    supabase
+      .from("code_claims")
+      .select("code, expires_at")
+      .eq("offer_id", offerId)
+      .gt("expires_at", new Date().toISOString())
+      .maybeSingle(),
+    supabase.auth.getUser(),
+  ]);
+  return {
+    signedIn: true,
+    claim: data ? { code: data.code as string, expiresAt: data.expires_at as string } : null,
+    wantsWhatsApp: auth.user?.user_metadata?.community_channel === "whatsapp",
+  };
+}
 
 export async function generateMetadata({ params }: { params: Params }): Promise<Metadata> {
   const offer = await getOfferById((await params).id);
@@ -22,13 +47,22 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
     : { title: "ההטבה לא נמצאה" };
 }
 
-export default async function OfferPage({ params }: { params: Params }) {
+export default async function OfferPage({
+  params,
+  searchParams,
+}: {
+  params: Params;
+  searchParams: SearchParams;
+}) {
   const offer = await getOfferById((await params).id);
   if (!offer) notFound();
 
   const category = getCategory(offer.business.category);
   const isDemo = offer.status === "demo";
   const expired = isExpired(offer.validUntil);
+  const canClaim = siteConfig.features.personalCodes && !isDemo && !expired;
+  const mine = canClaim ? await myCode(offer.id) : null;
+  const problem = (await searchParams).claim;
 
   return (
     <div className="mx-auto max-w-5xl px-4 py-8 md:py-12">
@@ -78,6 +112,16 @@ export default async function OfferPage({ params }: { params: Params }) {
               זו <strong>הצעה לדוגמה</strong> של עסק פיקטיבי. היא מראה איך הטבות ייראו באתר, ואי
               אפשר לממש אותה.
             </DemoNotice>
+          )}
+
+          {mine && (
+            <PersonalCode
+              offerId={offer.id}
+              signedIn={mine.signedIn}
+              claim={mine.claim}
+              problem={problem}
+              wantsWhatsApp={mine.wantsWhatsApp}
+            />
           )}
 
           {siteConfig.features.showCouponCodes && offer.couponCode && !expired && (

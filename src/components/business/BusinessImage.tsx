@@ -5,14 +5,14 @@ import { CategoryIcon } from "@/components/ui/CategoryIcon";
 import { toneClasses } from "@/components/ui/tones";
 
 /**
- * The picture that represents a business: its cover photo, else its first
- * product photo, else its logo, else a colored block with the category icon.
- * Fills its parent (give the parent a size and `relative`).
+ * The general picture of a business (its shop, its brand): the cover photo, else
+ * its logo, else a colored block with the category icon. Product photos are not
+ * used here, they are shown inside the card. Fills its parent (give it a size
+ * and `relative`).
  */
 export function BusinessImage({ business, sizes }: { business: Business; sizes: string }) {
-  const photo = business.coverUrl ?? business.galleryUrls?.[0];
-  if (photo) {
-    return <Image src={photo} alt="" fill sizes={sizes} className="object-cover" />;
+  if (business.coverUrl) {
+    return <Image src={business.coverUrl} alt="" fill sizes={sizes} className="object-cover" />;
   }
   if (business.logoUrl) {
     return (

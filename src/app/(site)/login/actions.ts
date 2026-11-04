@@ -48,6 +48,8 @@ export async function signUp(formData: FormData): Promise<void> {
   const password = rawField(formData, "password");
   if (!email || !password) back("signup", "missing_fields", next);
   if (password.length < 8) back("signup", "weak_password", next);
+  const channel = field(formData, "channel");
+  if (channel !== "whatsapp" && channel !== "email") back("signup", "channel_required", next);
 
   const origin = (await headers()).get("origin") ?? process.env.NEXT_PUBLIC_SITE_URL ?? "";
   const supabase = await createClient();
@@ -55,7 +57,7 @@ export async function signUp(formData: FormData): Promise<void> {
     email,
     password,
     options: {
-      data: { display_name: displayName },
+      data: { display_name: displayName, community_channel: channel },
       emailRedirectTo: `${origin}/auth/callback?next=${encodeURIComponent(next)}`,
     },
   });

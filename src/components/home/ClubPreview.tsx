@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { TagMark } from "@/components/brand/TagMark";
+import { siteConfig } from "@/config/site";
 
 const ways = [
   {
@@ -23,6 +24,7 @@ const ways = [
 export function ClubPreview() {
   return (
     <section
+      id="club"
       aria-labelledby="club-title"
       className="accent-frame rounded-[var(--radius-card)] p-7 md:p-12"
     >
@@ -48,9 +50,16 @@ export function ClubPreview() {
         ))}
       </ul>
 
-      <Link href="/login?mode=signup" className="btn-primary mt-8">
-        בואי להיות חברה שלנו
-      </Link>
+      {siteConfig.features.memberSignup ? (
+        <Link href="/login?mode=signup" className="btn-primary mt-8">
+          בואי להיות חברה שלנו
+        </Link>
+      ) : (
+        <p className="mt-8 inline-flex items-center gap-2 rounded-full bg-surface px-5 py-2.5 text-sm font-semibold text-ink shadow-[var(--shadow-card)]">
+          <span aria-hidden className="size-2 rounded-full bg-gold" />
+          המועדון בעבודה. נעדכן כאן כשההרשמה תיפתח
+        </p>
+      )}
     </section>
   );
 }

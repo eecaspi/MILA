@@ -3,6 +3,7 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { Alert } from "@/components/ui/Alert";
 import { Field, SubmitButton } from "@/components/ui/Field";
+import { siteConfig } from "@/config/site";
 import { authMessage } from "@/lib/auth/messages";
 import { getSession, safeNextPath } from "@/lib/auth/session";
 import { isSupabaseConfigured } from "@/lib/supabase/env";
@@ -20,7 +21,8 @@ export default async function LoginPage({ searchParams }: { searchParams: Search
   const next = safeNextPath(params.next);
   if (await getSession()) redirect(next);
 
-  const mode = params.mode === "signup" ? "signup" : "login";
+  const signupOpen = siteConfig.features.memberSignup;
+  const mode = signupOpen && params.mode === "signup" ? "signup" : "login";
   const error = authMessage(params.error);
   const notice = authMessage(params.notice);
   const disabled = !isSupabaseConfigured;
@@ -41,22 +43,26 @@ export default async function LoginPage({ searchParams }: { searchParams: Search
   return (
     <div className="mx-auto max-w-md px-4 py-12">
       <div className="mb-8 text-center">
-        <p className="eyebrow">מועדון לייקי</p>
+        <p className="eyebrow">{signupOpen ? "מועדון לייקי" : "כניסה לצוות לייקי"}</p>
         <h1 className="mt-2 text-3xl text-ink">
           {mode === "signup" ? "בואי להיות חברה שלנו" : "איזה כיף שחזרת!"}
         </h1>
         <p className="mt-2 text-ink-soft">
           {mode === "signup"
             ? "חשבון אחד להטבות, להמלצות ולמועדון לייקי. בלי עלות."
-            : "התחברי ואני אראה לך מה חדש."}
+            : signupOpen
+              ? "התחברי ואני אראה לך מה חדש."
+              : "מועדון הלקוחות עדיין בעבודה. הכניסה כרגע לצוות בלבד."}
         </p>
       </div>
 
       <div className="space-y-4 rounded-[var(--radius-card)] bg-surface p-6 shadow-[var(--shadow-card)]">
-        <nav aria-label="סוג כניסה" className="flex gap-1 rounded-full bg-raised p-1">
-          {tab("login", "כניסה")}
-          {tab("signup", "הרשמה")}
-        </nav>
+        {signupOpen && (
+          <nav aria-label="סוג כניסה" className="flex gap-1 rounded-full bg-raised p-1">
+            {tab("login", "כניסה")}
+            {tab("signup", "הרשמה")}
+          </nav>
+        )}
 
         {disabled && <Alert tone="info">{authMessage("not_configured")}</Alert>}
         {error && <Alert tone="error">{error}</Alert>}
@@ -99,9 +105,11 @@ export default async function LoginPage({ searchParams }: { searchParams: Search
         </form>
       </div>
 
-      <p className="mt-6 text-center text-xs text-ink-soft">
-        ההצטרפות חינמית. לא נשלח לך הודעות בוואטסאפ או ב־SMS בלי שאישרת זאת.
-      </p>
+      {signupOpen && (
+        <p className="mt-6 text-center text-xs text-ink-soft">
+          ההצטרפות חינמית. לא נשלח לך הודעות בוואטסאפ או ב־SMS בלי שאישרת זאת.
+        </p>
+      )}
     </div>
   );
 }

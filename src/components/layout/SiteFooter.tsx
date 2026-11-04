@@ -22,9 +22,15 @@ export function SiteFooter() {
               </li>
             ))}
             <li>
-              <Link href="/login?mode=signup" className="text-white/75 hover:text-white">
-                בואי להיות חברה שלנו
-              </Link>
+              {siteConfig.features.memberSignup ? (
+                <Link href="/login?mode=signup" className="text-white/75 hover:text-white">
+                  בואי להיות חברה שלנו
+                </Link>
+              ) : (
+                <Link href="/club" className="text-white/75 hover:text-white">
+                  מועדון הלקוחות (בעבודה)
+                </Link>
+              )}
             </li>
           </ul>
         </nav>

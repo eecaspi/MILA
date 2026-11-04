@@ -27,19 +27,33 @@ export async function SiteHeader() {
               ניהול
             </Link>
           )}
-          <Link
-            href={session ? "/account" : "/login?mode=signup"}
-            className="btn-primary px-4 py-2 text-sm whitespace-nowrap shadow-none"
-          >
-            {session ? (
-              "האזור שלי"
-            ) : (
-              <>
-                <span className="sm:hidden">הצטרפי</span>
-                <span className="hidden sm:inline">בואי להיות חברה שלנו</span>
-              </>
-            )}
-          </Link>
+          {session ? (
+            <Link
+              href="/account"
+              className="btn-primary px-4 py-2 text-sm whitespace-nowrap shadow-none"
+            >
+              האזור שלי
+            </Link>
+          ) : siteConfig.features.memberSignup ? (
+            <Link
+              href="/login?mode=signup"
+              className="btn-primary px-4 py-2 text-sm whitespace-nowrap shadow-none"
+            >
+              <span className="sm:hidden">הצטרפי</span>
+              <span className="hidden sm:inline">בואי להיות חברה שלנו</span>
+            </Link>
+          ) : (
+            <Link
+              href="/club"
+              className="btn-primary gap-2 px-4 py-2 text-sm whitespace-nowrap shadow-none"
+            >
+              <span className="sm:hidden">המועדון</span>
+              <span className="hidden sm:inline">כניסה למועדון הלקוחות</span>
+              <span className="rounded-full bg-on-accent/20 px-2 py-0.5 text-[11px] font-bold">
+                בעבודה
+              </span>
+            </Link>
+          )}
 
           {/* Mobile menu: native <details>, no JS needed. */}
           <details className="group relative md:hidden">

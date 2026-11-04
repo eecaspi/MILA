@@ -5,7 +5,16 @@ import { mkdir } from "node:fs/promises";
 import { chromium } from "playwright";
 
 const base = process.argv[2] ?? "http://localhost:3000";
-const pages = ["/", "/deals", "/deals/offer-boutique-season", "/businesses", "/community", "/login", "/brand"];
+const pages = [
+  "/",
+  "/deals",
+  "/deals/offer-boutique-season",
+  "/businesses",
+  "/community",
+  "/login",
+  "/club",
+  "/brand",
+];
 const viewports = [
   { name: "mobile", width: 390, height: 844, isMobile: true },
   { name: "desktop", width: 1366, height: 900, isMobile: false },
@@ -54,7 +63,10 @@ for (const vp of viewports) {
           let clipped = false;
           for (let p = el.parentElement; p && p !== document.body; p = p.parentElement) {
             const ox = getComputedStyle(p).overflowX;
-            if (ox !== "visible") { clipped = true; break; }
+            if (ox !== "visible") {
+              clipped = true;
+              break;
+            }
           }
           if (clipped) continue;
           flagged.add(el);
@@ -63,12 +75,19 @@ for (const vp of viewports) {
         for (const el of flagged) {
           if ([...flagged].some((o) => o !== el && el.contains(o))) continue;
           const r = el.getBoundingClientRect();
-          const cls = typeof el.className === "string" ? el.className.slice(0, 90) : String(el.className?.baseVal ?? "");
-          out.push(`<${el.tagName.toLowerCase()} class="${cls}"> "${(el.textContent || "").trim().slice(0, 40)}" left=${Math.round(r.left)} right=${Math.round(r.right)} width=${Math.round(r.width)}`);
+          const cls =
+            typeof el.className === "string"
+              ? el.className.slice(0, 90)
+              : String(el.className?.baseVal ?? "");
+          out.push(
+            `<${el.tagName.toLowerCase()} class="${cls}"> "${(el.textContent || "").trim().slice(0, 40)}" left=${Math.round(r.left)} right=${Math.round(r.right)} width=${Math.round(r.width)}`,
+          );
         }
         return out.slice(0, 8);
       });
-      problems.push(`${vp.name} ${path}: scrolls sideways by ${overflow}px\n      ${culprits.join("\n      ")}`);
+      problems.push(
+        `${vp.name} ${path}: scrolls sideways by ${overflow}px\n      ${culprits.join("\n      ")}`,
+      );
     }
     for (const e of errors) problems.push(`${vp.name} ${path}: console error: ${e}`);
 

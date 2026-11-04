@@ -35,7 +35,7 @@ export const siteConfig = {
      * WhatsApp community/group invite link. Leave null until the groups are open:
      * the site then shows a "coming soon" state instead of a dead link.
      */
-    whatsappUrl: null as string | null,
+    whatsappUrl: "https://chat.whatsapp.com/KgTRTaqAQbe77y0hZapU1y" as string | null,
   },
   features: {
     /**

@@ -1,7 +1,7 @@
 "use client";
 
-import { useActionState } from "react";
 import { saveBusiness, type FormState } from "@/app/admin/content-actions";
+import { useKeepValuesAction } from "./useKeepValuesAction";
 import { Alert } from "@/components/ui/Alert";
 import { categories } from "@/data/categories";
 import { Check, Field, GalleryField, ImageField, SubmitButton, inputClass } from "./FormBits";
@@ -26,12 +26,12 @@ export interface BusinessFormValues {
 }
 
 export function BusinessForm({ business }: { business?: BusinessFormValues }) {
-  const [state, action] = useActionState<FormState, FormData>(saveBusiness, {});
+  const { state, pending, onSubmit } = useKeepValuesAction<FormState>(saveBusiness, {});
   const e = state.errors ?? {};
   const b = business;
 
   return (
-    <form action={action} className="space-y-6" noValidate>
+    <form onSubmit={onSubmit} className="space-y-6" noValidate>
       {b?.id && <input type="hidden" name="id" value={b.id} />}
       {state.message && <Alert tone="error">{state.message}</Alert>}
       {Object.keys(e).length > 0 && <Alert tone="error">יש שדות שצריך לתקן (מסומנים למטה).</Alert>}
@@ -156,7 +156,7 @@ export function BusinessForm({ business }: { business?: BusinessFormValues }) {
         </div>
       </section>
 
-      <SubmitButton>{b?.id ? "שמירת שינויים" : "הוספת העסק"}</SubmitButton>
+      <SubmitButton pending={pending}>{b?.id ? "שמירת שינויים" : "הוספת העסק"}</SubmitButton>
     </form>
   );
 }

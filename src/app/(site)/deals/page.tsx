@@ -3,10 +3,7 @@ import { DealCard } from "@/components/deals/DealCard";
 import { DemoNotice } from "@/components/ui/DemoNotice";
 import { FilterChips } from "@/components/ui/FilterChips";
 import { categories, isCategorySlug } from "@/data/categories";
-import Link from "next/link";
-import { getSession } from "@/lib/auth/session";
 import { getOffers } from "@/lib/data/repository";
-import { forViewer } from "@/lib/data/visibility";
 import type { OfferKind } from "@/lib/types";
 
 export const metadata: Metadata = {
@@ -24,8 +21,7 @@ export default async function DealsPage({ searchParams }: { searchParams: Search
   const params = await searchParams;
   const category = params.category && isCategorySlug(params.category) ? params.category : undefined;
   const kind = parseKind(params.kind);
-  const session = await getSession();
-  const offers = forViewer(await getOffers({ category, kind }), !!session);
+  const offers = await getOffers({ category, kind });
 
   // Only show categories that actually have offers, so filters never lead to empty pages.
   const allOffers = await getOffers();
@@ -38,17 +34,6 @@ export default async function DealsPage({ searchParams }: { searchParams: Search
         <h1 className="mt-1 text-3xl text-ink md:text-4xl">לייקי מצאה לך</h1>
         <p className="mt-2 text-ink-soft">כל מה ששווה לדעת עליו, במקום אחד.</p>
       </header>
-
-      {!session && (
-        <p className="mb-6 flex flex-wrap items-center justify-between gap-3 rounded-2xl bg-accent-soft px-4 py-3 text-ink">
-          <span>
-            <strong>ההטבות פתוחות לחברות לייקי.</strong> ההרשמה חינמית ולוקחת דקה.
-          </span>
-          <Link href="/login?mode=signup&next=/deals" className="btn-primary px-5 py-2 text-sm">
-            הצטרפי בחינם
-          </Link>
-        </p>
-      )}
 
       <div className="mb-6">
         <DemoNotice>

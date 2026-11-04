@@ -55,7 +55,7 @@ export function PersonalCode({ offerId, signedIn, claim, problem, wantsWhatsApp 
           <p className="text-sm text-ink-soft">
             {signedIn
               ? "הקוד נוצר רק בשבילך, חד־פעמי, ותקף ל־24 שעות."
-              : "ההטבה והקוד האישי פתוחים לחברות לייקי. ההרשמה חינמית ולוקחת דקה, והקוד חד־פעמי ותקף ל־24 שעות."}
+              : "ההרשמה לוקחת דקה, ואחריה מקבלים קוד אישי וחד־פעמי, תקף ל־24 שעות."}
           </p>
           {problem && problems[problem] && (
             <p role="alert" className="rounded-xl bg-accent-soft px-3 py-2 text-sm text-ink">

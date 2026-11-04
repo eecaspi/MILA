@@ -38,10 +38,7 @@ export function DealCard({
               {offer.title}
             </Link>
           </h3>
-          <p className="mt-1 text-sm font-bold text-accent">
-            {offer.locked && <span aria-hidden>🔒 </span>}
-            {offer.valueLabel}
-          </p>
+          <p className="mt-1 text-sm font-bold text-accent">{offer.valueLabel}</p>
         </div>
         {isDemo && (
           <span className="shrink-0 self-start rounded-full bg-raised px-2 py-0.5 text-[11px] font-semibold text-ink-soft">
@@ -57,7 +54,6 @@ export function DealCard({
       <div className="relative">
         <OfferImage offer={offer} className="aspect-[16/9] sm:aspect-[4/3]" />
         <span className="absolute start-3 top-3 rounded-full bg-accent px-3 py-1.5 text-sm font-bold text-on-accent shadow-[var(--shadow-soft)]">
-          {offer.locked && <span aria-hidden>🔒 </span>}
           {offer.valueLabel}
         </span>
         <span className="absolute end-3 top-3 rounded-full bg-surface/90 px-2.5 py-1 text-xs font-semibold text-ink">

@@ -104,7 +104,7 @@ export default async function LoginPage({ searchParams }: { searchParams: Search
               {(
                 [
                   ["whatsapp", "קבוצת הוואטסאפ של לייקי", "הטבות חדשות ישר לטלפון"],
-                  ["email", "אימייל", "למי שאין וואטסאפ"],
+                  ["email", "אימייל", "למי שאין וואטסאפ. נוסיף אותך לרשימת העדכונים"],
                 ] as const
               ).map(([value, title, hint]) => (
                 <label
@@ -125,6 +125,16 @@ export default async function LoginPage({ searchParams }: { searchParams: Search
                   </span>
                 </label>
               ))}
+              {siteConfig.community.whatsappUrl && (
+                <a
+                  href={siteConfig.community.whatsappUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block text-center text-sm font-semibold text-accent hover:underline"
+                >
+                  רוצה להיכנס לקבוצה כבר עכשיו? פתחי בוואטסאפ ←
+                </a>
+              )}
             </fieldset>
           )}
           <SubmitButton disabled={disabled}>

@@ -18,7 +18,7 @@ test("valid business form is cleaned up", () => {
       tags: "שמלות, חצאיות,, ערב",
       is_published: "on",
       status: "verified",
-      sort_order: "5",
+      pin_first: "on",
     }),
   );
   assert.ok(r.ok);
@@ -28,7 +28,7 @@ test("valid business form is cleaned up", () => {
   assert.deepEqual(r.values.tags, ["שמלות", "חצאיות", "ערב"]);
   assert.equal(r.values.is_published, true);
   assert.equal(r.values.status, "verified");
-  assert.equal(r.values.sort_order, 5);
+  assert.equal(r.values.sort_order, -1);
 });
 
 test("business form reports each problem in Hebrew", () => {
@@ -65,6 +65,7 @@ test("unpublished by default; unknown status falls back to listed", () => {
   if (r.ok) {
     assert.equal(r.values.is_published, false);
     assert.equal(r.values.status, "listed");
+    assert.equal(r.values.sort_order, 0);
   }
 });
 

@@ -71,7 +71,6 @@ export function parseBusinessForm(fd: FormData): Parsed<BusinessValues> {
   const phone = text(fd, "phone", 30);
   if (phone && !/^[0-9+\-\s()]{7,20}$/.test(phone)) errors.phone = "מספר הטלפון לא תקין";
   const status = text(fd, "status", 20) === "verified" ? "verified" : "listed";
-  const sort = Number.parseInt(text(fd, "sort_order", 6) || "0", 10);
   const website = url(fd, "website", errors);
 
   if (Object.keys(errors).length) return { ok: false, errors };
@@ -93,7 +92,8 @@ export function parseBusinessForm(fd: FormData): Parsed<BusinessValues> {
         .slice(0, 8),
       status,
       is_published: fd.get("is_published") === "on",
-      sort_order: Number.isFinite(sort) ? Math.max(-999, Math.min(999, sort)) : 0,
+      // "להציג ראשון": pinned businesses sort before the rest (then by name)
+      sort_order: fd.get("pin_first") === "on" ? -1 : 0,
     },
   };
 }

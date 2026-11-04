@@ -39,10 +39,11 @@ const loadContent = cache(async (): Promise<Content> => {
 
   const businessesQuery = (columns: string) =>
     supabase.from("businesses").select(columns).order("sort_order").order("name");
-  let [b, o] = await Promise.all([
+  const [firstTry, o] = await Promise.all([
     businessesQuery(BUSINESS_COLUMNS),
     supabase.from("offers").select(OFFER_COLUMNS).order("created_at", { ascending: false }),
   ]);
+  let b = firstTry;
   // A newer column whose migration hasn't been run yet: show everything else instead of demo content.
   if (b.error?.code === "42703") {
     b = await businessesQuery(BUSINESS_COLUMNS.replace(", gallery_urls", ""));

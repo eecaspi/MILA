@@ -1,6 +1,6 @@
-# לייקי · LIKEY
+# ליקי · LIKEY
 
-**יש לי משהו בשבילך!** — community shopping, deals and benefits platform for Haredi women in Israel.
+**יש לי קישור בשבילך.** — community shopping, deals and benefits platform for Haredi women in Israel.
 Hebrew-first, full RTL, mobile-first. Brand name, slogan, nav and feature flags live in
 [`src/config/site.ts`](src/config/site.ts). (The project was previously called MILA; the repository
 name and deployment are unchanged.)
@@ -74,7 +74,7 @@ npm run format:check
 src/
   app/
     (site)/            Consumer site: home, /businesses, /deals, /community,
-                       /login, /account (מועדון לייקי), /account/profile
+                       /login, /account (מועדון ליקי), /account/profile
     admin/             Back office (admins only): analytics, businesses, offers, team, rewards
     api/track/         Anonymous page-view / click collection (privacy-friendly)
     api/affiliate/     Affiliate conversion webhook (501 until a network is connected)
@@ -126,7 +126,7 @@ Rules (enforced by `npm run check:data` and a DB trigger):
 ## Roadmap
 
 1. **Phase 1 (done):** setup, RTL layout, homepage, navigation, business directory, deals catalog.
-2. **Phase 2 (this branch):** accounts, personal area, מועדון לייקי points ledger, earning rules,
+2. **Phase 2 (this branch):** accounts, personal area, מועדון ליקי points ledger, earning rules,
    minimal rewards admin. See [docs/REWARDS.md](docs/REWARDS.md).
 3. **Next:** admin CRUD for businesses and offers, move directory data to the DB.
 4. **Later:** community recommendations; affiliate network integration and verified purchase points;

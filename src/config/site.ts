@@ -5,14 +5,14 @@
 export const siteConfig = {
   brand: {
     /** Official brand name — always shown in Hebrew. */
-    name: "לייקי",
+    name: "ליקי",
     /** Latin name for places that need it (URLs, app stores, English contexts). */
-    nameEn: "LIKEY",
+    nameEn: "Liky",
     /** Official slogan — must be written exactly like this. */
-    slogan: "יש לי משהו בשבילך!",
+    slogan: "יש לי קישור בשבילך.",
     tagline: "ההטבות, המבצעים וההמלצות הכי שוות – במקום אחד, במיוחד בשבילך.",
     description:
-      "לייקי – החברה שתמיד יודעת איפה יש משהו שווה: מבצעים, הטבות, עסקים מומלצים וקהילה של נשים שמשתפות מציאות.",
+      "ליקי – החברה שתמיד יודעת איפה יש משהו שווה: מבצעים, הטבות, עסקים מומלצים וקהילה של נשים שמשתפות מציאות.",
   },
   locale: {
     lang: "he",
@@ -26,9 +26,9 @@ export const siteConfig = {
   },
   nav: [
     { href: "/", label: "ראשי" },
-    { href: "/deals", label: "לייקי מצאה לך" },
+    { href: "/deals", label: "ליקי מצאה לך" },
     { href: "/businesses", label: "העסקים שלנו" },
-    { href: "/community", label: "החברות של לייקי" },
+    { href: "/community", label: "החברות של ליקי" },
   ],
   community: {
     /**
@@ -65,7 +65,7 @@ export const siteConfig = {
     rewardsMarketplace: false,
     membershipTiers: false,
     challenges: false,
-    /** The לייקי AI character. Until true, a branded placeholder is shown. */
+    /** The ליקי AI character. Until true, a branded placeholder is shown. */
     aiCharacter: false,
     /** Raffles, prize wheels, surprise draws. Must stay false until legal review. */
     gamesOfChance: false,

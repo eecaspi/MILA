@@ -1,4 +1,4 @@
-# מועדון לייקי (LIKEY Club) — Rewards — architecture
+# מועדון ליקי (LIKEY Club) — Rewards — architecture
 
 Status: **foundation only.** The program ships switched off. No member earns
 points until an admin enables the program and an earning rule at `/admin/rewards`.

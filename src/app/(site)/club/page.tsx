@@ -4,7 +4,7 @@ import { ClubPreview } from "@/components/home/ClubPreview";
 
 export const metadata: Metadata = {
   title: "מועדון הלקוחות",
-  description: "מועדון הלקוחות של לייקי בעבודה. בינתיים, כל ההטבות פתוחות לכולן.",
+  description: "מועדון הלקוחות של ליקי בעבודה. בינתיים, כל ההטבות פתוחות לכולן.",
 };
 
 export default function ClubPage() {
@@ -14,7 +14,7 @@ export default function ClubPage() {
       <p className="text-center text-ink-soft">
         בינתיים, כל ההטבות פתוחות לכולן.{" "}
         <Link href="/deals" className="font-semibold text-accent hover:underline">
-          לייקי מצאה לך ←
+          ליקי מצאה לך ←
         </Link>
       </p>
     </div>

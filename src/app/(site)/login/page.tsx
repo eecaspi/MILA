@@ -44,7 +44,7 @@ export default async function LoginPage({ searchParams }: { searchParams: Search
   return (
     <div className="mx-auto max-w-md px-4 py-12">
       <div className="mb-8 text-center">
-        <p className="eyebrow">{signupOpen ? "מועדון לייקי" : "כניסה לצוות לייקי"}</p>
+        <p className="eyebrow">{signupOpen ? "מועדון ליקי" : "כניסה לצוות ליקי"}</p>
         <h1 className="mt-2 text-3xl text-ink">
           {mode === "signup" ? "בואי להיות חברה שלנו" : "איזה כיף שחזרת!"}
         </h1>
@@ -103,7 +103,7 @@ export default async function LoginPage({ searchParams }: { searchParams: Search
               <legend className="mb-1 text-sm font-semibold text-ink">איך נשארות בקשר?</legend>
               {(
                 [
-                  ["whatsapp", "קבוצת הוואטסאפ של לייקי", "הטבות חדשות ישר לטלפון"],
+                  ["whatsapp", "קבוצת הוואטסאפ של ליקי", "הטבות חדשות ישר לטלפון"],
                   ["email", "אימייל", "למי שאין וואטסאפ. נוסיף אותך לרשימת העדכונים"],
                 ] as const
               ).map(([value, title, hint]) => (

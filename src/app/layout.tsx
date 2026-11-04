@@ -10,7 +10,7 @@ const heebo = Heebo({
   display: "swap",
 });
 
-const title = `Likey ${siteConfig.brand.name} | ${siteConfig.brand.slogan}`;
+const title = `${siteConfig.brand.nameEn} ${siteConfig.brand.name} | ${siteConfig.brand.slogan}`;
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
@@ -26,12 +26,12 @@ export const metadata: Metadata = {
     siteName: siteConfig.brand.name,
     locale: "he_IL",
     type: "website",
-    images: [{ url: "/brand/og.jpg", width: 1200, height: 630, alt: "Likey – יש לי משהו בשבילך" }],
+    images: [{ url: "/brand/og.jpg", width: 1200, height: 630, alt: "Liky – יש לי קישור בשבילך" }],
   },
 };
 
 export const viewport: Viewport = {
-  themeColor: "#fffaf6",
+  themeColor: "#fff8f7",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

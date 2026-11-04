@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { LikeyCharacter } from "@/components/brand/LikeyCharacter";
+import { Logo } from "@/components/brand/Logo";
 import { CommunityInvite } from "@/components/home/CommunityInvite";
 
 export const metadata: Metadata = {
-  title: "החברות של לייקי",
-  description: "קהילת הנשים של לייקי: הטבות ראשונות, המלצות אמיתיות ושיתוף מציאות.",
+  title: "החברות של ליקי",
+  description: "קהילת הנשים של ליקי: הטבות ראשונות, המלצות אמיתיות ושיתוף מציאות.",
 };
 
 export default function CommunityPage() {
@@ -14,13 +14,13 @@ export default function CommunityPage() {
       <header className="grid items-center gap-8 md:grid-cols-[1.4fr_1fr]">
         <div>
           <p className="eyebrow">הקהילה</p>
-          <h1 className="mt-1 text-3xl text-ink md:text-5xl">החברות של לייקי</h1>
+          <h1 className="mt-1 text-3xl text-ink md:text-5xl">החברות של ליקי</h1>
           <p className="mt-4 max-w-xl text-lg text-ink-soft">
-            לייקי היא קודם כול חברה. כאן משתפות מציאות, ממליצות על עסקים טובים ושואלות את מי שכבר
+            ליקי היא קודם כול חברה. כאן משתפות מציאות, ממליצות על עסקים טובים ושואלות את מי שכבר
             ניסתה.
           </p>
         </div>
-        <LikeyCharacter message="בואי, יש פה חברות!" className="mx-auto max-w-[16rem]" />
+        <Logo variant="full" height={220} className="mx-auto" />
       </header>
 
       <CommunityInvite />

@@ -25,13 +25,13 @@ export default async function HomePage() {
       <section className="relative overflow-hidden">
         <div
           aria-hidden
-          className="pointer-events-none absolute inset-0 bg-[radial-gradient(55%_70%_at_50%_0%,#fde8e2_0%,transparent_70%),radial-gradient(40%_50%_at_90%_100%,#faeed8_0%,transparent_70%)]"
+          className="pointer-events-none absolute inset-0 bg-[radial-gradient(55%_70%_at_50%_0%,#fde8e8_0%,transparent_70%),radial-gradient(40%_50%_at_90%_100%,#ffd6d6_0%,transparent_70%)]"
         />
         <div className="relative mx-auto flex max-w-2xl flex-col items-center px-4 pt-10 pb-12 text-center md:pt-14 md:pb-16">
           <h1 className="sr-only">
             {siteConfig.brand.name} – {siteConfig.brand.slogan}
           </h1>
-          <Logo variant="full" height={140} priority />
+          <Logo variant="full" height={190} priority />
           <p className="mt-6 max-w-md text-lg text-ink-soft md:text-xl">
             {siteConfig.brand.tagline}
           </p>
@@ -52,7 +52,7 @@ export default async function HomePage() {
           <SectionHeading
             id="best"
             title="המבצעים הכי שווים"
-            subtitle="לייקי מצאה לך – ההטבות שהכי כדאי לא לפספס"
+            subtitle="ליקי מצאה לך – ההטבות שהכי כדאי לא לפספס"
             href="/deals"
             linkLabel="בואי לראות הכול"
           />
@@ -108,7 +108,7 @@ export default async function HomePage() {
           </div>
         </section>
 
-        {/* החברות של לייקי */}
+        {/* החברות של ליקי */}
         <CommunityInvite />
       </div>
     </>

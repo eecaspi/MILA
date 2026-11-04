@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { TagMark } from "@/components/brand/TagMark";
-import { LikeyCharacter } from "@/components/brand/LikeyCharacter";
 import { Logo } from "@/components/brand/Logo";
 import { siteConfig } from "@/config/site";
 
@@ -10,13 +9,13 @@ export const metadata: Metadata = {
 };
 
 const palette = [
-  { name: "רוז חם", role: "כפתורים וקישורים", hex: "#B5594E", text: "#FFFFFF" },
-  { name: "רוז גולד מתכתי", role: "הלוגו וכותרות גדולות", hex: "#C48B7C", text: "#FFFDFA" },
-  { name: "סומק", role: "התווית, הדגשות עדינות", hex: "#FDE8E2", text: "#4A342F" },
-  { name: "שמנת", role: "רקע האתר", hex: "#FFFAF6", text: "#4A342F" },
-  { name: "לבן", role: "כרטיסים", hex: "#FFFFFF", text: "#4B3631" },
-  { name: "זהב דבש", role: "המסגרת ופרטים עדינים", hex: "#D9B184", text: "#4B3631" },
-  { name: "קקאו", role: "טקסט, פוטר, קהילה", hex: "#4A342F", text: "#FFFFFF" },
+  { name: "אדום התיק", role: "כפתורים, קישורים והלוגו", hex: "#C4050B", text: "#FFFFFF" },
+  { name: "אדום כהה", role: "מעבר עכבר ולחיצה", hex: "#A30409", text: "#FFFFFF" },
+  { name: "סומק", role: "הדגשות רכות ורקעים", hex: "#FDE8E8", text: "#3F1D20" },
+  { name: "ורוד עדין", role: "פרטים ואפקטים", hex: "#EEB1B5", text: "#3F1D20" },
+  { name: "שמנת", role: "רקע האתר", hex: "#FFF8F7", text: "#3F1D20" },
+  { name: "לבן", role: "כרטיסים", hex: "#FFFFFF", text: "#3F1D20" },
+  { name: "יין כהה", role: "טקסט וכותרות", hex: "#3F1D20", text: "#FFFFFF" },
 ];
 
 const tones = ["rose", "peach", "lilac", "mint", "sky", "sand", "coral", "pearl"] as const;
@@ -31,20 +30,10 @@ const toneBg: Record<(typeof tones)[number], string> = {
   pearl: "bg-tone-pearl",
 };
 
-function Panel({
-  title,
-  dark,
-  children,
-}: {
-  title: string;
-  dark?: boolean;
-  children: React.ReactNode;
-}) {
+function Panel({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <div
-      className={`flex flex-col gap-4 rounded-[var(--radius-card)] p-6 ${dark ? "bg-ink" : "bg-surface shadow-[var(--shadow-card)]"}`}
-    >
-      <p className={`text-xs font-bold ${dark ? "text-white/60" : "text-ink-soft"}`}>{title}</p>
+    <div className="flex flex-col gap-4 rounded-[var(--radius-card)] bg-surface p-6 shadow-[var(--shadow-card)]">
+      <p className="text-xs font-bold text-ink-soft">{title}</p>
       <div className="flex min-h-24 items-center">{children}</div>
     </div>
   );
@@ -59,8 +48,9 @@ export default function BrandPage() {
           {siteConfig.brand.name} – {siteConfig.brand.slogan}
         </h1>
         <p className="mt-3 max-w-2xl text-ink-soft">
-          הלוגו הרשמי: שתי תוויות מחיר עם סימן וי – מצאתי משהו ששווה – לצד likey בכתב יד מעוגל,
-          והסלוגן &quot;יש לי משהו בשבילך&quot;. כל האתר בנוי מהצבעים של הלוגו: רוז גולד, סומק ושמנת.
+          הלוגו הרשמי: תיק קניות אדום עם השם Liky, שרשרת קטנה בתוך ה־k (הקישור שליקי מוצאת
+          בשבילך) והסלוגן &quot;יש לי קישור בשבילך&quot;. כל האתר בנוי מהצבעים של הלוגו: אדום
+          התיק, סומק ורוד ולבן.
         </p>
       </header>
 
@@ -68,22 +58,22 @@ export default function BrandPage() {
         <h2 className="text-2xl text-ink">גרסאות הלוגו</h2>
         <div className="grid gap-4 md:grid-cols-2">
           <Panel title="הלוגו המלא – על רקע בהיר">
-            <Logo variant="full" height={110} />
+            <Logo variant="full" height={170} />
           </Panel>
-          <Panel title="הלוגו המלא – על רקע כהה" dark>
-            <Logo variant="full" onDark height={110} />
-          </Panel>
+          <div className="flex flex-col gap-4 rounded-[var(--radius-card)] bg-accent-soft p-6">
+            <p className="text-xs font-bold text-ink-soft">הלוגו המלא – על רקע סומק</p>
+            <div className="flex min-h-24 items-center">
+              <Logo variant="full" height={170} />
+            </div>
+          </div>
           <Panel title="קומפקטי (כותרת האתר)">
-            <Logo variant="wordmark" height={56} />
+            <Logo variant="wordmark" height={48} />
           </Panel>
           <Panel title="סמל בלבד">
             <div className="flex items-center gap-6">
-              <Logo variant="icon" height={56} />
-              <span className="flex size-16 items-center justify-center rounded-2xl bg-ink">
-                <TagMark size={42} />
-              </span>
+              <Logo variant="icon" height={64} />
               <span className="flex size-16 items-center justify-center rounded-full bg-accent-soft">
-                <TagMark size={40} />
+                <TagMark size={44} />
               </span>
             </div>
           </Panel>
@@ -119,7 +109,7 @@ export default function BrandPage() {
         </ul>
       </section>
 
-      <section className="grid gap-8 md:grid-cols-2">
+      <section className="grid gap-8 md:grid-cols-1">
         <div className="space-y-3">
           <h2 className="text-2xl text-ink">טיפוגרפיה</h2>
           <p className="text-4xl font-extrabold text-ink">היבו – גופן אחד לכל האתר</p>
@@ -130,16 +120,9 @@ export default function BrandPage() {
           <ul className="space-y-1 text-ink-soft">
             <li>&quot;בואי לראות מה שווה&quot; במקום &quot;צפייה במבצעים&quot;</li>
             <li>&quot;בואי להיות חברה שלנו&quot; במקום &quot;הצטרפות למועדון&quot;</li>
-            <li>&quot;לייקי מצאה לך&quot; במקום &quot;מבצעים מומלצים&quot;</li>
+            <li>&quot;ליקי מצאה לך&quot; במקום &quot;מבצעים מומלצים&quot;</li>
             <li>&quot;מה בא לך למצוא היום?&quot; במקום &quot;כל הקטגוריות&quot;</li>
           </ul>
-        </div>
-        <div className="space-y-3">
-          <h2 className="text-2xl text-ink">מקום לדמות של לייקי</h2>
-          <p className="text-ink-soft">
-            מסגרת קבועה (4:5) שמחכה לדמות הסופית. כשהיא תהיה מוכנה, מחליפים רק את התמונה.
-          </p>
-          <LikeyCharacter className="max-w-[16rem]" />
         </div>
       </section>
     </div>

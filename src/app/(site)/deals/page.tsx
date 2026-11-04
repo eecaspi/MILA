@@ -9,8 +9,8 @@ import { getOffers } from "@/lib/data/repository";
 import type { OfferKind } from "@/lib/types";
 
 export const metadata: Metadata = {
-  title: "לייקי מצאה לך",
-  description: "מבצעים, קופונים והטבות שלייקי מצאה בשבילך.",
+  title: "ליקי מצאה לך",
+  description: "מבצעים, קופונים והטבות שליקי מצאה בשבילך.",
 };
 
 type SearchParams = Promise<{ category?: string; kind?: string }>;
@@ -34,7 +34,7 @@ export default async function DealsPage({ searchParams }: { searchParams: Search
     <div className="mx-auto max-w-6xl px-4 py-10">
       <header className="mb-8">
         <p className="eyebrow">מבצעים, קופונים והטבות</p>
-        <h1 className="mt-1 text-3xl text-ink md:text-4xl">לייקי מצאה לך</h1>
+        <h1 className="mt-1 text-3xl text-ink md:text-4xl">ליקי מצאה לך</h1>
         <p className="mt-2 text-ink-soft">כל מה ששווה לדעת עליו, במקום אחד.</p>
       </header>
 

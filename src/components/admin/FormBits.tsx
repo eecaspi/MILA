@@ -101,3 +101,44 @@ export function ImageField({
     </Field>
   );
 }
+
+/** Photos from the business: current ones (each can be removed) plus a multi-file picker. */
+export function GalleryField({ current, error }: { current: string[]; error?: string }) {
+  return (
+    <div className="sm:col-span-2">
+      <Field
+        label="תמונות מהעסק"
+        name="gallery"
+        error={error}
+        hint="עד 8 תמונות: מוצרים, החנות, עבודות. מופיעות כשעומדים על העסק באתר."
+      >
+        {current.length > 0 && (
+          <ul className="flex flex-wrap gap-3">
+            {current.map((url) => (
+              <li key={url} className="space-y-1">
+                {/* eslint-disable-next-line @next/next/no-img-element -- admin preview of an uploaded file */}
+                <img
+                  src={url}
+                  alt=""
+                  className="size-20 rounded-xl border border-line object-cover"
+                />
+                <label className="flex items-center gap-1 text-xs text-ink-soft">
+                  <input type="checkbox" name="remove_gallery" value={url} className="size-3.5" />
+                  להסיר
+                </label>
+              </li>
+            ))}
+          </ul>
+        )}
+        <input
+          id="gallery"
+          name="gallery"
+          type="file"
+          multiple
+          accept="image/jpeg,image/png,image/webp,image/avif"
+          className="block w-full text-sm text-ink-soft file:me-3 file:rounded-full file:border-0 file:bg-accent-soft file:px-4 file:py-2 file:font-semibold file:text-accent"
+        />
+      </Field>
+    </div>
+  );
+}

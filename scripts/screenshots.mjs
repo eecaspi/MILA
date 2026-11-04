@@ -102,6 +102,27 @@ for (const vp of viewports) {
       console.log("@@SHOT-END");
     }
     console.log(`✓ ${file}${overflow > 1 ? ` (overflow ${overflow}px)` : ""}`);
+
+    // Interaction states worth reviewing: the business card details (hover / tap).
+    if (path === "/businesses") {
+      const card = page.locator("main .group\\/biz").first();
+      await card.scrollIntoViewIfNeeded();
+      await page.evaluate(() => window.scrollBy(0, -120));
+      if (vp.isMobile) {
+        const more = card.locator("summary");
+        if (await more.count()) await more.click();
+      } else {
+        await card.hover();
+      }
+      await page.waitForTimeout(500);
+      const shot = await page.screenshot({ type: "jpeg", quality: 60 });
+      if (process.env.PRINT_SCREENSHOTS) {
+        const b64 = shot.toString("base64");
+        console.log(`@@SHOT-BEGIN screenshots/${vp.name}-businesses-open.jpg`);
+        for (let i = 0; i < b64.length; i += 4000) console.log(`@@ ${b64.slice(i, i + 4000)}`);
+        console.log("@@SHOT-END");
+      }
+    }
     await page.close();
   }
   await context.close();

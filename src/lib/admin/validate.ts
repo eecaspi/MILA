@@ -45,6 +45,43 @@ export function imageFile(fd: FormData, name: string, errors: FieldErrors): File
   return f;
 }
 
+export const MAX_GALLERY = 8;
+
+/** Several uploaded images from one multi-file input (empty picks are ignored). */
+export function imageFiles(
+  fd: FormData,
+  name: string,
+  errors: FieldErrors,
+  max = MAX_GALLERY,
+): File[] {
+  const files: File[] = [];
+  for (const f of fd.getAll(name)) {
+    if (typeof f === "string" || f.size === 0) continue;
+    if (!IMAGE_TYPES.includes(f.type)) {
+      errors[name] = "אפשר להעלות רק תמונות (JPG, PNG, WEBP)";
+      return [];
+    }
+    if (f.size > MAX_IMAGE_BYTES) {
+      errors[name] = "אחת התמונות גדולה מדי (עד 5MB לתמונה)";
+      return [];
+    }
+    files.push(f);
+  }
+  if (files.length > max) {
+    errors[name] = `אפשר עד ${max} תמונות`;
+    return [];
+  }
+  return files;
+}
+
+/** Gallery after an edit: current photos minus the ones marked for removal, capped. */
+export function keptGallery(current: string[], fd: FormData): string[] {
+  const remove = new Set(
+    fd.getAll("remove_gallery").filter((v): v is string => typeof v === "string"),
+  );
+  return current.filter((u) => !remove.has(u));
+}
+
 export interface BusinessValues {
   name: string;
   category_slug: string;

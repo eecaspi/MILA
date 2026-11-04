@@ -52,6 +52,8 @@ select pg_temp.fails($$insert into businesses (slug, name, category_slug) values
   '23514', 'slugs must be lowercase latin with dashes');
 select pg_temp.fails($$insert into businesses (slug, name, category_slug, website) values ('x-site', 'שם', 'fashion', 'javascript:alert(1)')$$,
   '23514', 'website must be an http(s) link');
+select pg_temp.fails($$insert into businesses (slug, name, category_slug, gallery_urls) values ('x-gallery', 'שם', 'fashion', array['1','2','3','4','5','6','7','8','9'])$$,
+  '23514', 'gallery holds at most 8 photos');
 
 -- ===== visitors see only published content =====
 reset role;

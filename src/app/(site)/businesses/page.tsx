@@ -3,7 +3,7 @@ import { BusinessCard } from "@/components/business/BusinessCard";
 import { DemoNotice } from "@/components/ui/DemoNotice";
 import { FilterChips } from "@/components/ui/FilterChips";
 import { categories, isCategorySlug } from "@/data/categories";
-import { getBusinesses } from "@/lib/data/repository";
+import { getBusinesses, getOffers } from "@/lib/data/repository";
 
 export const metadata: Metadata = {
   title: "העסקים שלנו",
@@ -15,7 +15,13 @@ type SearchParams = Promise<{ category?: string }>;
 export default async function BusinessesPage({ searchParams }: { searchParams: SearchParams }) {
   const { category: rawCategory } = await searchParams;
   const category = rawCategory && isCategorySlug(rawCategory) ? rawCategory : undefined;
-  const businesses = await getBusinesses({ category });
+  const [businesses, offers] = await Promise.all([getBusinesses({ category }), getOffers()]);
+  const offersByBusiness = new Map<string, { id: string; title: string; valueLabel: string }[]>();
+  for (const o of offers) {
+    const list = offersByBusiness.get(o.business.id) ?? [];
+    list.push({ id: o.id, title: o.title, valueLabel: o.valueLabel });
+    offersByBusiness.set(o.business.id, list);
+  }
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-10">
@@ -48,7 +54,7 @@ export default async function BusinessesPage({ searchParams }: { searchParams: S
       {businesses.length > 0 ? (
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
           {businesses.map((b) => (
-            <BusinessCard key={b.id} business={b} />
+            <BusinessCard key={b.id} business={b} offers={offersByBusiness.get(b.id)} />
           ))}
         </div>
       ) : (

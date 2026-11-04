@@ -8,15 +8,17 @@ import { useActionState, useTransition, type FormEvent } from "react";
  * server answers with validation errors. Submitting by hand keeps the values.
  */
 export function useKeepValuesAction<S>(
-  action: (prev: S, formData: FormData) => Promise<S>,
-  initial: S,
+  action: (prev: Awaited<S>, formData: FormData) => Promise<S>,
+  initial: Awaited<S>,
 ) {
-  const [state, run] = useActionState<S, FormData>(action, initial);
+  const [state, run] = useActionState(action, initial);
   const [pending, start] = useTransition();
   const onSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const data = new FormData(e.currentTarget);
-    start(() => run(data));
+    start(() => {
+      run(data);
+    });
   };
   return { state, pending, onSubmit };
 }

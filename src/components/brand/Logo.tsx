@@ -14,7 +14,7 @@ const FULL_RATIO = 900 / 756;
 /**
  * The official Liky logo (the red shopping bag), background removed.
  * - full:     the bag with "Liky" and the slogan "יש לי קישור בשבילך"
- * - wordmark: the small bag next to the name, for the header
+ * - wordmark: the bag alone, for the header (the bag already says Liky)
  * - icon:     the bag alone
  * `height` is the rendered height in px; width follows the artwork's proportions.
  * `onDark` is kept for older call sites: the logo is red on transparent, so it
@@ -34,7 +34,7 @@ export function Logo({
 }) {
   const name = `${siteConfig.brand.nameEn} ${siteConfig.brand.name}`;
 
-  if (variant === "icon") {
+  if (variant === "icon" || variant === "wordmark") {
     return (
       <Image
         src={files.icon}
@@ -44,18 +44,6 @@ export function Logo({
         priority={priority}
         className={className}
       />
-    );
-  }
-
-  if (variant === "wordmark") {
-    return (
-      <span className={`flex items-center gap-2 ${className}`}>
-        <Image src={files.icon} alt="" aria-hidden width={height} height={height} priority={priority} />
-        <span className="font-display text-2xl font-extrabold leading-none text-accent">
-          {siteConfig.brand.name}
-        </span>
-        <span className="sr-only">{siteConfig.brand.nameEn}</span>
-      </span>
     );
   }
 

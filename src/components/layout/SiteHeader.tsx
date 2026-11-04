@@ -11,7 +11,7 @@ export async function SiteHeader() {
     <header className="sticky top-0 z-40 border-b border-line/70 bg-canvas/90 backdrop-blur">
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-4 px-4">
         <Link href="/" aria-label={`${siteConfig.brand.name} – לדף הבית`} className="shrink-0">
-          <Logo variant="wordmark" height={44} priority />
+          <Logo variant="wordmark" height={48} priority />
         </Link>
 
         <nav aria-label="ניווט ראשי" className="hidden md:block">

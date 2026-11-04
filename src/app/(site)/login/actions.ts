@@ -12,6 +12,12 @@ function field(formData: FormData, name: string): string {
   return typeof value === "string" ? value.trim() : "";
 }
 
+/** Passwords are used exactly as typed. */
+function rawField(formData: FormData, name: string): string {
+  const value = formData.get(name);
+  return typeof value === "string" ? value : "";
+}
+
 function back(mode: "login" | "signup", code: string, next: string): never {
   redirect(`/login?mode=${mode}&error=${code}&next=${encodeURIComponent(next)}`);
 }
@@ -21,7 +27,7 @@ export async function signIn(formData: FormData): Promise<void> {
   if (!isSupabaseConfigured) back("login", "not_configured", next);
 
   const email = field(formData, "email");
-  const password = field(formData, "password");
+  const password = rawField(formData, "password");
   if (!email || !password) back("login", "missing_fields", next);
 
   const supabase = await createClient();
@@ -39,7 +45,7 @@ export async function signUp(formData: FormData): Promise<void> {
 
   const displayName = field(formData, "display_name");
   const email = field(formData, "email");
-  const password = field(formData, "password");
+  const password = rawField(formData, "password");
   if (!email || !password) back("signup", "missing_fields", next);
   if (password.length < 8) back("signup", "weak_password", next);
 

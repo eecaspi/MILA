@@ -127,12 +127,20 @@ export default async function AccountPage({ searchParams }: { searchParams: Sear
             {session.profile.city ? ` · ${session.profile.city}` : ""}
           </p>
         </div>
-        <Link
-          href="/account/profile"
-          className="rounded-full border border-accent px-4 py-2 text-sm font-semibold text-accent hover:bg-accent-soft"
-        >
-          עריכת פרופיל
-        </Link>
+        <div className="flex flex-wrap gap-2">
+          <Link
+            href="/account/profile"
+            className="rounded-full border border-accent px-4 py-2 text-sm font-semibold text-accent hover:bg-accent-soft"
+          >
+            עריכת פרופיל
+          </Link>
+          <Link
+            href="/account/password"
+            className="rounded-full border border-line px-4 py-2 text-sm font-semibold text-ink-soft hover:border-accent hover:text-accent"
+          >
+            שינוי סיסמה
+          </Link>
+        </div>
       </section>
     </div>
   );

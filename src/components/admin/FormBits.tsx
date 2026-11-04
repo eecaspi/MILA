@@ -55,8 +55,16 @@ export function Check({
   );
 }
 
-export function SubmitButton({ children }: { children: React.ReactNode }) {
-  const { pending } = useFormStatus();
+export function SubmitButton({
+  children,
+  pending: pendingProp,
+}: {
+  children: React.ReactNode;
+  /** For forms that submit by hand (see useKeepValuesAction). */
+  pending?: boolean;
+}) {
+  const status = useFormStatus();
+  const pending = pendingProp ?? status.pending;
   return (
     <button type="submit" disabled={pending} className="btn-primary disabled:opacity-60">
       {pending ? "שומרת…" : children}

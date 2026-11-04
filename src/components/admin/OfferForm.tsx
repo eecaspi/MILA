@@ -1,7 +1,7 @@
 "use client";
 
-import { useActionState } from "react";
 import { saveOffer, type FormState } from "@/app/admin/content-actions";
+import { useKeepValuesAction } from "./useKeepValuesAction";
 import { Alert } from "@/components/ui/Alert";
 import { Check, Field, ImageField, SubmitButton, inputClass } from "./FormBits";
 
@@ -29,12 +29,12 @@ export function OfferForm({
   offer?: OfferFormValues;
   businesses: { id: string; name: string }[];
 }) {
-  const [state, action] = useActionState<FormState, FormData>(saveOffer, {});
+  const { state, pending, onSubmit } = useKeepValuesAction<FormState>(saveOffer, {});
   const e = state.errors ?? {};
   const o = offer;
 
   return (
-    <form action={action} className="space-y-6" noValidate>
+    <form onSubmit={onSubmit} className="space-y-6" noValidate>
       {o?.id && <input type="hidden" name="id" value={o.id} />}
       {state.message && <Alert tone="error">{state.message}</Alert>}
       {Object.keys(e).length > 0 && <Alert tone="error">יש שדות שצריך לתקן (מסומנים למטה).</Alert>}
@@ -162,7 +162,7 @@ export function OfferForm({
         </div>
       </section>
 
-      <SubmitButton>{o?.id ? "שמירת שינויים" : "הוספת ההטבה"}</SubmitButton>
+      <SubmitButton pending={pending}>{o?.id ? "שמירת שינויים" : "הוספת ההטבה"}</SubmitButton>
     </form>
   );
 }

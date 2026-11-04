@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { TagMark } from "@/components/brand/TagMark";
 import { StatusBadge } from "@/components/ui/StatusBadge";
+import { claimCode } from "@/app/(site)/deals/[id]/actions";
+import { isExpired } from "@/lib/data/mappers";
 import { formatDate } from "@/lib/format";
 import type { OfferWithBusiness } from "@/lib/types";
 import { OfferImage } from "./OfferImage";
@@ -15,13 +17,17 @@ export function DealCard({
   offer,
   layout = "card",
   showPickNote = false,
+  codes,
 }: {
   offer: OfferWithBusiness;
   layout?: "card" | "row";
   showPickNote?: boolean;
+  /** Pass when personal codes are on: shows "get a code" when the card is hovered. */
+  codes?: { signedIn: boolean };
 }) {
   const href = `/deals/${offer.id}`;
   const isDemo = offer.status === "demo";
+  const canClaim = !!codes && !isDemo && !isExpired(offer.validUntil);
 
   if (layout === "row") {
     return (
@@ -50,7 +56,7 @@ export function DealCard({
   }
 
   return (
-    <article className="lift relative flex h-full flex-col overflow-hidden rounded-[var(--radius-card)] bg-surface shadow-[var(--shadow-card)]">
+    <article className="lift group relative flex h-full flex-col overflow-hidden rounded-[var(--radius-card)] bg-surface shadow-[var(--shadow-card)]">
       <div className="relative">
         <OfferImage offer={offer} className="aspect-[16/9] sm:aspect-[4/3]" />
         <span className="absolute start-3 top-3 rounded-full bg-accent px-3 py-1.5 text-sm font-bold text-on-accent shadow-[var(--shadow-soft)]">
@@ -59,6 +65,25 @@ export function DealCard({
         <span className="absolute end-3 top-3 rounded-full bg-surface/90 px-2.5 py-1 text-xs font-semibold text-ink">
           {kindLabel[offer.kind]}
         </span>
+        {codes && canClaim && (
+          <div className="absolute inset-x-3 bottom-3 z-10 opacity-0 transition-opacity duration-200 focus-within:opacity-100 group-hover:opacity-100 [@media(hover:none)]:opacity-100">
+            {codes.signedIn ? (
+              <form action={claimCode}>
+                <input type="hidden" name="offer_id" value={offer.id} />
+                <button type="submit" className="btn-primary w-full py-2.5 text-[15px]">
+                  קבלי קוד אישי
+                </button>
+              </form>
+            ) : (
+              <Link
+                href={`/login?mode=signup&next=${encodeURIComponent(href)}`}
+                className="btn-primary w-full py-2.5 text-[15px]"
+              >
+                הצטרפי וקבלי קוד
+              </Link>
+            )}
+          </div>
+        )}
       </div>
 
       <div className="flex flex-1 flex-col p-5">

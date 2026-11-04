@@ -3,6 +3,8 @@ import { DealCard } from "@/components/deals/DealCard";
 import { DemoNotice } from "@/components/ui/DemoNotice";
 import { FilterChips } from "@/components/ui/FilterChips";
 import { categories, isCategorySlug } from "@/data/categories";
+import { siteConfig } from "@/config/site";
+import { getSession } from "@/lib/auth/session";
 import { getOffers } from "@/lib/data/repository";
 import type { OfferKind } from "@/lib/types";
 
@@ -22,6 +24,7 @@ export default async function DealsPage({ searchParams }: { searchParams: Search
   const category = params.category && isCategorySlug(params.category) ? params.category : undefined;
   const kind = parseKind(params.kind);
   const offers = await getOffers({ category, kind });
+  const codes = siteConfig.features.personalCodes ? { signedIn: !!(await getSession()) } : undefined;
 
   // Only show categories that actually have offers, so filters never lead to empty pages.
   const allOffers = await getOffers();
@@ -73,7 +76,7 @@ export default async function DealsPage({ searchParams }: { searchParams: Search
       {offers.length > 0 ? (
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {offers.map((offer) => (
-            <DealCard key={offer.id} offer={offer} />
+            <DealCard key={offer.id} offer={offer} codes={codes} />
           ))}
         </div>
       ) : (

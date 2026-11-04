@@ -8,10 +8,16 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 import { toneClasses } from "@/components/ui/tones";
 import { siteConfig } from "@/config/site";
 import { categories } from "@/data/categories";
+import { getSession } from "@/lib/auth/session";
 import { getBusinesses, getHighlightedOffers } from "@/lib/data/repository";
 
 export default async function HomePage() {
-  const [best, businesses] = await Promise.all([getHighlightedOffers(4), getBusinesses()]);
+  const [best, businesses, session] = await Promise.all([
+    getHighlightedOffers(4),
+    getBusinesses(),
+    getSession(),
+  ]);
+  const codes = siteConfig.features.personalCodes ? { signedIn: !!session } : undefined;
 
   return (
     <>
@@ -54,7 +60,7 @@ export default async function HomePage() {
           <ul className="-mx-4 flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 pb-2 sm:mx-0 sm:grid sm:grid-cols-2 sm:overflow-visible sm:px-0 sm:pb-0 lg:grid-cols-4">
             {best.map((offer) => (
               <li key={offer.id} className="w-[80%] shrink-0 snap-start sm:w-auto">
-                <DealCard offer={offer} />
+                <DealCard offer={offer} codes={codes} />
               </li>
             ))}
           </ul>

@@ -19,7 +19,7 @@ const offer = {
 } as unknown as OfferWithBusiness;
 
 test("visitors never receive the benefit details", () => {
-  const o = forViewer([offer], false)[0]!;
+  const [o] = forViewer([offer], false);
   assert.equal(o.valueLabel, MEMBERS_ONLY_LABEL);
   assert.equal(o.description, "");
   assert.equal(o.priceLabel, undefined);
@@ -31,7 +31,7 @@ test("visitors never receive the benefit details", () => {
 });
 
 test("members see everything", () => {
-  const o = forViewer([offer], true)[0]!;
+  const [o] = forViewer([offer], true);
   assert.equal(o.valueLabel, "20% הנחה");
   assert.equal(o.locked, undefined);
 });

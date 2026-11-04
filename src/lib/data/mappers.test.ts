@@ -1,6 +1,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import {
+  isExpired,
   mapBusinessRow,
   mapOfferRow,
   slugify,
@@ -77,4 +78,13 @@ test("slugify makes database-safe slugs", () => {
   assert.equal(slugify("Osher Ad", r), "osher-ad-abc123");
   assert.equal(slugify("בוטיק נועה", r), "biz-abc123");
   assert.match(slugify("  Café & Co!! ", r), /^[a-z0-9]+(-[a-z0-9]+)*$/);
+});
+
+test("offers stay valid through their last day, Israel time", () => {
+  // 2026-11-04 23:30 in Israel (UTC+2) is still the 4th there
+  assert.equal(isExpired("2026-11-04", new Date("2026-11-04T21:30:00Z")), false);
+  // 00:10 on the 5th in Israel: expired
+  assert.equal(isExpired("2026-11-04", new Date("2026-11-04T22:10:00Z")), true);
+  assert.equal(isExpired(undefined), false);
+  assert.equal(isExpired(null), false);
 });

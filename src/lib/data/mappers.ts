@@ -111,3 +111,13 @@ export function slugify(
     .replace(/-+$/g, "");
   return base ? `${base}-${random()}` : `biz-${random()}`;
 }
+
+/**
+ * An offer is valid through the whole of its last day, Israel time, and
+ * disappears from the site from the next morning (00:00 in Israel).
+ */
+export function isExpired(validUntil: string | undefined | null, now = new Date()): boolean {
+  if (!validUntil) return false;
+  const today = new Intl.DateTimeFormat("en-CA", { timeZone: "Asia/Jerusalem" }).format(now);
+  return validUntil.slice(0, 10) < today;
+}

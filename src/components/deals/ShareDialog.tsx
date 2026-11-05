@@ -39,17 +39,37 @@ export function ShareDialog({
   }
 
   async function shareWithImage() {
-    try {
-      const blob = await (await fetch(imagePath)).blob();
-      const file = new File([blob], "liky-offer.png", { type: "image/png" });
-      if (navigator.canShare?.({ files: [file] })) {
-        await navigator.share({ files: [file], text: message });
-        return;
+    const isPhone = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+    if (isPhone) {
+      try {
+        const blob = await (await fetch(imagePath)).blob();
+        const file = new File([blob], "liky-offer.png", { type: "image/png" });
+        if (navigator.canShare?.({ files: [file] })) {
+          await navigator.share({ files: [file], text: message });
+          return;
+        }
+      } catch {
+        /* fall through to the computer way */
       }
-    } catch {
-      /* fall through to the manual way */
     }
-    say("בטלפון נפתחת שיתוף עם התמונה. במחשב: הורידי את התמונה, צרפי אותה והדביקי את ההודעה");
+    // On a computer WhatsApp cannot receive a picture from a link: copy the picture, open WhatsApp
+    // with the message, and the picture is pasted into the chat with Ctrl/Cmd+V.
+    let copied = false;
+    try {
+      const write = navigator.clipboard.write([
+        new ClipboardItem({ "image/png": fetch(imagePath).then((r) => r.blob()) }),
+      ]);
+      window.open(`https://wa.me/?text=${encodeURIComponent(message)}`, "_blank", "noopener,noreferrer");
+      await write;
+      copied = true;
+    } catch {
+      window.open(`https://wa.me/?text=${encodeURIComponent(message)}`, "_blank", "noopener,noreferrer");
+    }
+    say(
+      copied
+        ? "התמונה הועתקה. בוואטסאפ לוחצים Ctrl+V (או Cmd+V) והתמונה נכנסת להודעה"
+        : "וואטסאפ נפתח עם ההודעה. להורדת התמונה ולצירוף ידני: כפתור הורדת התמונה",
+    );
   }
 
   return (
@@ -133,7 +153,7 @@ export function ShareDialog({
               העתקת הקישור
             </button>
           </div>
-          <p aria-live="polite" className="min-h-5 text-center text-sm text-ink-soft">
+          <p aria-live="polite" className="min-h-5 text-center text-sm font-semibold text-accent">
             {note}
           </p>
         </div>

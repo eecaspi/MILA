@@ -44,7 +44,16 @@ async function myCode(offerId: string) {
 export async function generateMetadata({ params }: { params: Params }): Promise<Metadata> {
   const offer = await getOfferById((await params).id);
   return offer
-    ? { title: `${offer.title} – ${offer.business.name}`, description: offer.description }
+    ? {
+        title: `${offer.title} – ${offer.business.name}`,
+        description: offer.description || `${offer.valueLabel} ב${offer.business.name}`,
+        alternates: { canonical: `/deals/${offer.id}` },
+        openGraph: {
+          title: `${offer.valueLabel} ב${offer.business.name}`,
+          description: offer.title,
+          ...(offer.imageUrl ? { images: [{ url: offer.imageUrl }] } : {}),
+        },
+      }
     : { title: "ההטבה לא נמצאה" };
 }
 

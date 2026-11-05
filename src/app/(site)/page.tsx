@@ -3,6 +3,7 @@ import { Logo } from "@/components/brand/Logo";
 import { BusinessCard } from "@/components/business/BusinessCard";
 import { DealCard } from "@/components/deals/DealCard";
 import { CommunityInvite } from "@/components/home/CommunityInvite";
+import { HowItWorks } from "@/components/home/HowItWorks";
 import { CategoryIcon } from "@/components/ui/CategoryIcon";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { toneClasses } from "@/components/ui/tones";
@@ -72,6 +73,8 @@ export default async function HomePage() {
             אישור ישיר מול העסק.
           </p>
         </section>
+
+        <HowItWorks />
 
         {/* הקטגוריות */}
         <section aria-labelledby="cats">

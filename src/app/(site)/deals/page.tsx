@@ -7,6 +7,7 @@ import { siteConfig } from "@/config/site";
 import { getSession } from "@/lib/auth/session";
 import { getMyCodes } from "@/lib/data/my-codes";
 import { getOffers } from "@/lib/data/repository";
+import { matchesQuery } from "@/lib/data/search";
 import type { OfferKind } from "@/lib/types";
 
 export const metadata: Metadata = {
@@ -14,7 +15,7 @@ export const metadata: Metadata = {
   description: "מבצעים, קופונים והטבות שליקי מצאה בשבילך.",
 };
 
-type SearchParams = Promise<{ category?: string; kind?: string }>;
+type SearchParams = Promise<{ category?: string; kind?: string; q?: string }>;
 
 function parseKind(value: string | undefined): OfferKind | undefined {
   return value === "deal" || value === "coupon" ? value : undefined;
@@ -24,7 +25,8 @@ export default async function DealsPage({ searchParams }: { searchParams: Search
   const params = await searchParams;
   const category = params.category && isCategorySlug(params.category) ? params.category : undefined;
   const kind = parseKind(params.kind);
-  const offers = await getOffers({ category, kind });
+  const q = (params.q ?? "").trim().slice(0, 60) || undefined;
+  const offers = (await getOffers({ category, kind })).filter((o) => matchesQuery(o, q));
   const signedIn = !!(await getSession());
   const codes = siteConfig.features.personalCodes
     ? { signedIn, mine: await getMyCodes() }
@@ -49,13 +51,30 @@ export default async function DealsPage({ searchParams }: { searchParams: Search
         </DemoNotice>
       </div>
 
+      <form action="/deals" role="search" className="mb-5 flex gap-2">
+        {category && <input type="hidden" name="category" value={category} />}
+        {kind && <input type="hidden" name="kind" value={kind} />}
+        <input
+          type="search"
+          name="q"
+          defaultValue={q}
+          maxLength={60}
+          placeholder="מה מחפשים? למשל: פאות, בגדי ילדים, תכשיטים"
+          aria-label="חיפוש הטבות"
+          className="min-w-0 flex-1 rounded-full border border-line bg-surface px-5 py-3 text-base text-ink outline-none placeholder:text-ink-soft/60 focus:border-accent"
+        />
+        <button type="submit" className="btn-primary px-6">
+          חיפוש
+        </button>
+      </form>
+
       <div className="mb-8 space-y-3">
         <FilterChips
           basePath="/deals"
           param="kind"
           label="סוג הטבה"
           current={kind}
-          otherParams={{ category }}
+          otherParams={{ category, q }}
           options={[
             { value: undefined, label: "כל ההטבות" },
             { value: "deal", label: "מבצעים" },
@@ -67,7 +86,7 @@ export default async function DealsPage({ searchParams }: { searchParams: Search
           param="category"
           label="מה בא לך למצוא היום?"
           current={category}
-          otherParams={{ kind }}
+          otherParams={{ kind, q }}
           options={[
             { value: undefined, label: "הכול" },
             ...categories
@@ -85,7 +104,7 @@ export default async function DealsPage({ searchParams }: { searchParams: Search
         </div>
       ) : (
         <p className="rounded-2xl bg-surface p-8 text-center text-ink-soft">
-          עוד לא מצאתי משהו שמתאים לסינון הזה. נסי קטגוריה אחרת?
+          {q ? `לא מצאתי משהו שמתאים ל"${q}". נסי מילה אחרת?` : "עוד לא מצאתי משהו שמתאים לסינון הזה. נסי קטגוריה אחרת?"}
         </p>
       )}
     </div>

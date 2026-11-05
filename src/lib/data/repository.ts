@@ -8,6 +8,7 @@
  */
 import "server-only";
 
+import { unstable_cache } from "next/cache";
 import { cache } from "react";
 import { siteConfig } from "@/config/site";
 import { demoBusinesses } from "@/data/demo-businesses";
@@ -32,7 +33,7 @@ interface Content {
 }
 
 /** Loads all published content once per request. */
-const loadContent = cache(async (): Promise<Content> => {
+const fetchContent = async (): Promise<Content> => {
   const demo: Content = { businesses: demoBusinesses, offers: demoOffers, source: "demo" };
   const supabase = createPublicClient();
   if (!supabase) return demo;
@@ -68,7 +69,13 @@ const loadContent = cache(async (): Promise<Content> => {
     };
   }
   return { businesses, offers, source: "database" };
-});
+};
+
+/**
+ * Kept for 60 seconds across visitors (and per request), so a busy day doesn't hit the database
+ * on every page view. Saving in the back office clears it at once (tag "content").
+ */
+const loadContent = cache(unstable_cache(fetchContent, ["site-content"], { revalidate: 60, tags: ["content"] }));
 
 export async function getContentSource(): Promise<Content["source"]> {
   return (await loadContent()).source;

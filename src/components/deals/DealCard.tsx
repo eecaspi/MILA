@@ -66,7 +66,10 @@ export function DealCard({
           {kindLabel[offer.kind]}
         </span>
         {codes && canClaim && (
-          <div className="absolute inset-x-3 bottom-3 z-10 opacity-0 transition-opacity duration-200 focus-within:opacity-100 group-hover:opacity-100 [@media(hover:none)]:opacity-100">
+          <div className="absolute inset-x-3 bottom-3 z-10 space-y-1.5 opacity-0 transition-opacity duration-200 focus-within:opacity-100 group-hover:opacity-100 [@media(hover:none)]:opacity-100">
+            <p className="rounded-full bg-white/90 px-3 py-1 text-center text-xs font-semibold text-ink">
+              קוד אישי וחד־פעמי · תקף ל־24 שעות
+            </p>
             {codes.signedIn ? (
               <form action={claimCode}>
                 <input type="hidden" name="offer_id" value={offer.id} />

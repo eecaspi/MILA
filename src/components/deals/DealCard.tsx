@@ -2,7 +2,7 @@ import Link from "next/link";
 import { TagMark } from "@/components/brand/TagMark";
 import { StatusBadge } from "@/components/ui/StatusBadge";
 import { CardCode } from "./CardCode";
-import { isExpired, offerBadge } from "@/lib/data/mappers";
+import { isExpired, isUpcoming, offerBadge, redeemChannelLabel } from "@/lib/data/mappers";
 import { ShareButton } from "./ShareButton";
 import { formatDate } from "@/lib/format";
 import type { OfferWithBusiness } from "@/lib/types";
@@ -29,7 +29,8 @@ export function DealCard({
   const href = `/deals/${offer.id}`;
   const isDemo = offer.status === "demo";
   const badge = offerBadge(offer);
-  const canClaim = !!codes && !isDemo && !isExpired(offer.validUntil);
+  const canClaim =
+    !!codes && !isDemo && !isExpired(offer.validUntil) && !isUpcoming(offer.startsOn);
 
   if (layout === "row") {
     return (
@@ -93,8 +94,17 @@ export function DealCard({
         <div className="mt-auto pt-5">
           <div className="mb-3 flex flex-wrap items-center gap-2 text-xs text-ink-soft">
             {isDemo && <StatusBadge status={offer.status} />}
-            {offer.validUntil && <span>בתוקף עד {formatDate(offer.validUntil)}</span>}
-            {!isDemo && (
+            {offer.redeemChannel && (
+              <span className="rounded-full bg-raised px-2 py-0.5 font-semibold text-ink">
+                {redeemChannelLabel[offer.redeemChannel]}
+              </span>
+            )}
+            {isUpcoming(offer.startsOn) && offer.startsOn ? (
+              <span>מתחילה ב־{formatDate(offer.startsOn)}</span>
+            ) : (
+              offer.validUntil && <span>בתוקף עד {formatDate(offer.validUntil)}</span>
+            )}
+            {!isDemo && !isUpcoming(offer.startsOn) && (
               <ShareButton
                 path={href}
                 text={`${offer.valueLabel} ב${offer.business.name}: ${offer.title}`}

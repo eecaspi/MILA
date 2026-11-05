@@ -33,6 +33,8 @@ export interface OfferRow {
   description: string | null;
   value_label: string;
   valid_until: string | null;
+  starts_on: string | null;
+  redeem_channel: string | null;
   status: VerificationStatus;
   created_at: string;
   highlight: boolean | null;
@@ -44,7 +46,7 @@ export interface OfferRow {
 export const BUSINESS_COLUMNS =
   "id, slug, name, category_slug, short_description, description, area, city, website, phone, source_url, logo_url, cover_url, gallery_urls, tags, status, is_real_business";
 export const OFFER_COLUMNS =
-  "id, business_id, kind, title, description, value_label, valid_until, status, created_at, highlight, likey_pick_note, price_label, image_url";
+  "id, business_id, kind, title, description, value_label, valid_until, starts_on, redeem_channel, status, created_at, highlight, likey_pick_note, price_label, image_url";
 
 const opt = (v: string | null | undefined) => (v && v.trim() ? v.trim() : undefined);
 
@@ -82,6 +84,11 @@ export function mapOfferRow(row: OfferRow): Offer {
     description: row.description ?? "",
     valueLabel: row.value_label,
     validUntil: row.valid_until ?? undefined,
+    startsOn: row.starts_on ?? undefined,
+    redeemChannel:
+      row.redeem_channel === "online" || row.redeem_channel === "store" || row.redeem_channel === "both"
+        ? row.redeem_channel
+        : undefined,
     status: row.status,
     addedAt: row.created_at.slice(0, 10),
     highlight: Boolean(row.highlight),
@@ -124,6 +131,19 @@ export function isExpired(validUntil: string | undefined | null, now = new Date(
   return validUntil.slice(0, 10) < today;
 }
 
+/** True while the offer's start date is still ahead (Israel time). */
+export function isUpcoming(startsOn: string | undefined | null, now = new Date()): boolean {
+  if (!startsOn) return false;
+  const today = new Intl.DateTimeFormat("en-CA", { timeZone: "Asia/Jerusalem" }).format(now);
+  return startsOn.slice(0, 10) > today;
+}
+
+export const redeemChannelLabel = {
+  online: "אונליין",
+  store: "בחנות",
+  both: "אונליין ובחנות",
+} as const;
+
 export type OfferBadge = { label: string; tone: "hot" | "new" };
 
 const DAY_MS = 86_400_000;
@@ -133,10 +153,11 @@ const DAY_MS = 86_400_000;
  * or "חדש" (added in the last 14 days). Ended and demo offers get none.
  */
 export function offerBadge(
-  offer: { validUntil?: string; addedAt: string; status: string },
+  offer: { validUntil?: string; startsOn?: string; addedAt: string; status: string },
   now = new Date(),
 ): OfferBadge | null {
   if (offer.status === "demo" || isExpired(offer.validUntil, now)) return null;
+  if (isUpcoming(offer.startsOn, now)) return { label: "בקרוב", tone: "new" };
   if (offer.validUntil) {
     const today = new Intl.DateTimeFormat("en-CA", { timeZone: "Asia/Jerusalem" }).format(now);
     const days = Math.round(

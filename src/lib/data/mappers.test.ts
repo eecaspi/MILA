@@ -5,6 +5,7 @@ import {
   mapBusinessRow,
   mapOfferRow,
   offerBadge,
+  isUpcoming,
   slugify,
   withoutCouponCode,
   type BusinessRow,
@@ -37,6 +38,8 @@ const offer: OfferRow = {
   description: null,
   value_label: "20% הנחה",
   valid_until: "2027-01-01",
+  starts_on: null,
+  redeem_channel: null,
   status: "verified",
   created_at: "2026-11-04T10:00:00Z",
   highlight: true,
@@ -100,4 +103,18 @@ test("offer badges: ends today / soon / new / none", () => {
   assert.equal(offerBadge({ ...base, addedAt: "2026-11-01" }, now)?.label, "חדש");
   assert.equal(offerBadge({ ...base, addedAt: "2026-10-01" }, now), null, "old");
   assert.equal(offerBadge({ addedAt: "2026-11-04", status: "demo" }, now), null, "demo");
+});
+
+test("upcoming offers show a 'soon' badge and map channel safely", () => {
+  const now = new Date("2026-11-05T10:00:00Z");
+  assert.equal(isUpcoming("2026-11-06", now), true);
+  assert.equal(isUpcoming("2026-11-05", now), false);
+  assert.equal(isUpcoming(undefined, now), false);
+  assert.equal(
+    offerBadge({ addedAt: "2026-01-01", status: "verified", startsOn: "2026-11-20" }, now)?.label,
+    "בקרוב",
+  );
+  assert.equal(mapOfferRow({ ...offer, redeem_channel: "store", starts_on: "2026-12-01" }).redeemChannel, "store");
+  assert.equal(mapOfferRow({ ...offer, redeem_channel: "pigeon" }).redeemChannel, undefined);
+  assert.equal(mapOfferRow({ ...offer, starts_on: "2026-12-01" }).startsOn, "2026-12-01");
 });

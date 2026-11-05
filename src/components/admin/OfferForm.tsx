@@ -13,6 +13,8 @@ export interface OfferFormValues {
   value_label: string;
   description: string;
   valid_until: string | null;
+  starts_on: string | null;
+  redeem_channel: string | null;
   price_label: string | null;
   highlight: boolean;
   likey_pick_note: string | null;
@@ -98,6 +100,33 @@ export function OfferForm({
             defaultValue={o?.valid_until ?? ""}
             className={inputClass}
           />
+        </Field>
+        <Field
+          label="מתחילה ב (לא חובה)"
+          name="starts_on"
+          error={e.starts_on}
+          hint="אם התאריך עוד לא הגיע, ההטבה תופיע כ'בקרוב' ולא ניתן יהיה לקבל קוד"
+        >
+          <input
+            id="starts_on"
+            name="starts_on"
+            type="date"
+            defaultValue={o?.starts_on ?? ""}
+            className={inputClass}
+          />
+        </Field>
+        <Field label="איפה מממשים" name="redeem_channel" hint="לא חובה">
+          <select
+            id="redeem_channel"
+            name="redeem_channel"
+            defaultValue={o?.redeem_channel ?? ""}
+            className={inputClass}
+          >
+            <option value="">לא צוין</option>
+            <option value="online">אונליין</option>
+            <option value="store">בחנות</option>
+            <option value="both">אונליין ובחנות</option>
+          </select>
         </Field>
         <Field label="מחיר (לא חובה)" name="price_label" hint="רק מחיר שהעסק אישר">
           <input

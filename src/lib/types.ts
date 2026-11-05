@@ -68,6 +68,10 @@ export interface Offer {
   couponCode?: string;
   /** ISO date. */
   validUntil?: string;
+  /** ISO date the offer starts; before it the offer shows as "בקרוב" and gives no code. */
+  startsOn?: string;
+  /** Where it can be redeemed. */
+  redeemChannel?: "online" | "store" | "both";
   status: VerificationStatus;
   /** ISO date the offer was added to the site (drives "מה חדש אצל ליקי?"). */
   addedAt: string;

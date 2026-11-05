@@ -104,7 +104,7 @@ export default async function HomePage() {
         </section>
 
         {/* החברות של ליקי */}
-        <CommunityInvite />
+        {!session && <CommunityInvite />}
       </div>
     </>
   );

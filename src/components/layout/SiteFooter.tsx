@@ -45,7 +45,7 @@ export function SiteFooter() {
       </div>
       <div className="border-t border-accent/15 px-4 py-4 text-center text-xs text-ink-soft">
         <nav aria-label="עמודים משפטיים" className="mb-2 flex flex-wrap justify-center gap-x-5 gap-y-1">
-          <Link href="/for-businesses" className="hover:text-accent">לבעלי עסקים</Link>
+          <Link href="/contact" className="hover:text-accent">יצירת קשר</Link>
           <Link href="/terms" className="hover:text-accent">תנאי שימוש</Link>
           <Link href="/privacy" className="hover:text-accent">מדיניות פרטיות</Link>
           <Link href="/disclosure" className="hover:text-accent">גילוי נאות</Link>

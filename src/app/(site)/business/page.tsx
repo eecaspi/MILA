@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { redirect } from "next/navigation";
 import { requireSession } from "@/lib/auth/session";
 import { createClient } from "@/lib/supabase/server";
 import { formatDate } from "@/lib/format";
@@ -39,6 +40,8 @@ export default async function MyBusinessPage() {
   const supabase = await createClient();
   const { data: mine } = await supabase.rpc("my_businesses");
   const businesses = (mine ?? []) as { id: string; name: string; slug: string }[];
+  // An account that is not connected to a business has nothing to show here.
+  if (businesses.length === 0) redirect("/account");
 
   const stats = await Promise.all(
     businesses.map(async (b) => {
@@ -53,18 +56,6 @@ export default async function MyBusinessPage() {
         <p className="eyebrow">אזור בעלי עסקים</p>
         <h1 className="mt-1 text-3xl text-ink">העסק שלי</h1>
       </header>
-
-      {businesses.length === 0 && (
-        <div className="rounded-[var(--radius-card)] bg-surface p-6 text-ink-soft shadow-[var(--shadow-card)]">
-          <p className="font-bold text-ink">החשבון הזה עדיין לא מחובר לעסק.</p>
-          <p className="mt-1 text-sm">
-            בעלת עסק? פני אלינו והצוות של ליקי יחבר את החשבון שלך לעסק. אחרי החיבור יופיעו כאן הנתונים שלו.
-          </p>
-          <Link href="/for-businesses" className="btn-secondary mt-4 inline-flex px-5 py-2 text-sm">
-            השארת פרטים לבעלי עסקים
-          </Link>
-        </div>
-      )}
 
       {stats.map(({ business, stats: s }) => (
         <section key={business.id} className="space-y-4 rounded-[var(--radius-card)] bg-surface p-5 shadow-[var(--shadow-card)]">

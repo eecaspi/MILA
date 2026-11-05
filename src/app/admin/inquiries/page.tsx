@@ -1,7 +1,7 @@
 import { requireAdmin } from "@/lib/auth/session";
 import { formatDate } from "@/lib/format";
 import { createClient } from "@/lib/supabase/server";
-import { setInquiryHandled } from "./actions";
+import { setInquiryHandled, setReportHandled } from "./actions";
 
 type Inquiry = {
   id: string;
@@ -15,6 +15,16 @@ type Inquiry = {
   handled: boolean;
 };
 
+type Report = {
+  id: string;
+  created_at: string;
+  name: string | null;
+  contact: string;
+  message: string;
+  page: string | null;
+  handled: boolean;
+};
+
 export default async function Inquiries() {
   await requireAdmin();
   const supabase = await createClient();
@@ -25,6 +35,13 @@ export default async function Inquiries() {
     .order("created_at", { ascending: false })
     .limit(300);
   const rows = (data ?? []) as Inquiry[];
+  const { data: reportData } = await supabase
+    .from("problem_reports")
+    .select("id, created_at, name, contact, message, page, handled")
+    .order("handled")
+    .order("created_at", { ascending: false })
+    .limit(300);
+  const reports = (reportData ?? []) as Report[];
 
   return (
     <div className="max-w-3xl space-y-6">
@@ -53,6 +70,28 @@ export default async function Inquiries() {
             </p>
             {r.message && <p className="whitespace-pre-line text-sm text-ink-soft">{r.message}</p>}
             <form action={setInquiryHandled}>
+              <input type="hidden" name="id" value={r.id} />
+              <input type="hidden" name="handled" value={String(!r.handled)} />
+              <button className="btn-secondary px-4 py-1.5 text-sm">{r.handled ? "החזרה לטיפול" : "סימון כטופל"}</button>
+            </form>
+          </li>
+        ))}
+      </ul>
+
+      <h2 className="pt-6 text-2xl text-ink">דיווחים על בעיות באתר</h2>
+      {reports.length === 0 && <p className="text-ink-soft">עוד לא הגיעו דיווחים.</p>}
+      <ul className="space-y-3">
+        {reports.map((r) => (
+          <li key={r.id} className={`space-y-2 rounded-[var(--radius-card)] bg-surface p-5 ${r.handled ? "opacity-60" : ""}`}>
+            <div className="flex flex-wrap items-center justify-between gap-2">
+              <p className="font-bold text-ink">
+                {r.name || "ללא שם"} <span className="ltr font-normal text-ink-soft">· {r.contact}</span>
+              </p>
+              <span className="text-xs text-ink-soft">{formatDate(r.created_at)}</span>
+            </div>
+            <p className="whitespace-pre-line text-sm text-ink-soft">{r.message}</p>
+            {r.page && <p className="ltr text-xs text-ink-soft">{r.page}</p>}
+            <form action={setReportHandled}>
               <input type="hidden" name="id" value={r.id} />
               <input type="hidden" name="handled" value={String(!r.handled)} />
               <button className="btn-secondary px-4 py-1.5 text-sm">{r.handled ? "החזרה לטיפול" : "סימון כטופל"}</button>

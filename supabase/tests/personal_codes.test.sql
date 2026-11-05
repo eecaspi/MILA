@@ -42,6 +42,7 @@ insert into offers (id, business_id, kind, title, value_label, status, is_publis
   ('cccc0000-0000-0000-0000-000000000005', 'bbbb0000-0000-0000-0000-000000000001', 'coupon', 'פגה', '5%', 'verified', true),
   ('cccc0000-0000-0000-0000-000000000006', 'bbbb0000-0000-0000-0000-000000000001', 'coupon', 'טיוטה', '5%', 'verified', false);
 update offers set valid_until = date '2020-01-01' where id = 'cccc0000-0000-0000-0000-000000000005';
+update offers set code_mode = 'personal';
 insert into offer_codes (offer_id, coupon_code) values ('cccc0000-0000-0000-0000-000000000001', 'NOA20');
 
 -- ===== visitors =====

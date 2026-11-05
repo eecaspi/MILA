@@ -188,7 +188,10 @@ export interface OfferValues {
   valid_until: string | null;
   starts_on: string | null;
   redeem_channel: "online" | "store" | "both" | null;
-  code_mode: "personal" | "daily";
+  code_mode: "fixed" | "personal" | "daily" | "link" | "store";
+  redeem_url: string | null;
+  terms: string | null;
+  usage_limit: string | null;
   /** One code per day, from `daily_start`; empty when the box was left blank. */
   daily: DailyCode[];
   price_label: string | null;
@@ -220,7 +223,15 @@ export function parseOfferForm(fd: FormData): Parsed<OfferValues> {
     errors.starts_on = "תאריך ההתחלה אחרי תאריך הסיום";
   }
   const channel = text(fd, "redeem_channel", 10);
-  const codeMode = text(fd, "code_mode", 10) === "daily" ? "daily" : "personal";
+  const modeRaw = text(fd, "code_mode", 10);
+  const codeMode =
+    modeRaw === "personal" || modeRaw === "daily" || modeRaw === "link" || modeRaw === "store"
+      ? modeRaw
+      : "fixed";
+  const redeemUrl = text(fd, "redeem_url", 300);
+  if (redeemUrl && !/^https:\/\/[^\s/]+\.[^\s/]+/.test(redeemUrl)) {
+    errors.redeem_url = "הקישור צריך להתחיל ב־https://";
+  }
   let daily: DailyCode[] = [];
   const dailyRaw = (fd.get("daily_codes") as string | null) ?? "";
   if (dailyRaw.trim()) {
@@ -236,6 +247,9 @@ export function parseOfferForm(fd: FormData): Parsed<OfferValues> {
   const code = text(fd, "coupon_code", 60);
   if (code && !/^[A-Za-z0-9_\-]{2,60}$/.test(code))
     errors.coupon_code = "קוד קופון: אותיות באנגלית, ספרות ומקף בלבד";
+  if (codeMode === "fixed" && !code && fd.get("is_published") === "on") {
+    errors.coupon_code = "בקוד קבוע צריך להזין את הקוד לפני פרסום";
+  }
 
   if (Object.keys(errors).length) return { ok: false, errors };
   return {
@@ -250,6 +264,9 @@ export function parseOfferForm(fd: FormData): Parsed<OfferValues> {
       starts_on: orNull(starts),
       code_mode: codeMode,
       daily,
+      redeem_url: orNull(redeemUrl),
+      terms: orNull(text(fd, "terms", 600)),
+      usage_limit: orNull(text(fd, "usage_limit", 100)),
       redeem_channel: channel === "online" || channel === "store" || channel === "both" ? channel : null,
       price_label: orNull(text(fd, "price_label", 60)),
       highlight: fd.get("highlight") === "on",

@@ -3,12 +3,13 @@
 import Link from "next/link";
 import { useActionState } from "react";
 import { claimCodeInline, type CardCodeState } from "@/app/(site)/deals/[id]/actions";
+import { codeModeNote } from "@/lib/data/mappers";
 import { CopyCouponButton } from "./CopyCouponButton";
 
 const messages: Record<NonNullable<CardCodeState["error"]>, string> = {
   limit: "אפשר להחזיק עד 3 קודים ב־24 שעות. נסי שוב כשאחד יפוג.",
   unavailable: "ההטבה הזאת כבר לא זמינה.",
-  nocode: "הקוד של היום עוד לא מוכן. נסי שוב בהמשך היום.",
+  nocode: "הקוד עוד לא מוכן. נסי שוב בהמשך.",
   failed: "משהו השתבש. נסי שוב.",
   signin: "צריך להתחבר מחדש.",
 };
@@ -33,14 +34,14 @@ export function CardCode({
   signedIn,
   signupHref,
   initial,
-  daily = false,
+  mode = "personal",
 }: {
   offerId: string;
   signedIn: boolean;
   signupHref: string;
   initial?: { code: string; expiresAt: string };
-  /** A daily code: the same for every member, valid until midnight. */
-  daily?: boolean;
+  /** fixed: one code for everyone; personal: made for her; daily: the business's code for today. */
+  mode?: "fixed" | "personal" | "daily";
 }) {
   const [state, action, pending] = useActionState<CardCodeState, FormData>(
     claimCodeInline,
@@ -57,7 +58,7 @@ export function CardCode({
           הצטרפי וקבלי קוד
         </Link>
         <p className="text-center text-xs text-ink-soft">
-          {daily ? "קוד היום · תקף עד סוף היום" : "קוד אישי וחד־פעמי · תקף ל־24 שעות"}
+          {codeModeNote[mode]}
         </p>
       </div>
     );
@@ -69,7 +70,9 @@ export function CardCode({
         <CopyCouponButton code={state.code} />
         {state.expiresAt && (
           <p className="text-center text-xs text-ink-soft">
-            {daily ? "קוד היום" : "אישי וחד־פעמי"} · תקף עד {until(state.expiresAt)}
+            {mode === "daily" ? "קוד היום" : mode === "fixed" ? "קוד קבוע" : "אישי וחד־פעמי"}
+            {new Date(state.expiresAt).getTime() - Date.now() < 300 * 86_400_000 &&
+              ` · תקף עד ${until(state.expiresAt)}`}
           </p>
         )}
       </div>
@@ -94,7 +97,7 @@ export function CardCode({
         </p>
       ) : (
         <p className="text-center text-xs text-ink-soft">
-          {daily ? "קוד היום · תקף עד סוף היום" : "קוד אישי וחד־פעמי · תקף ל־24 שעות"}
+          {codeModeNote[mode]}
         </p>
       )}
     </form>

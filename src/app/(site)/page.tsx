@@ -27,39 +27,43 @@ export default async function HomePage() {
     ? { signedIn: !!session, mine: await getMyCodes() }
     : undefined;
 
+  const joinHref = siteConfig.features.memberSignup ? "/login?mode=signup" : "#community";
   const characterSlides = [
-    <FullImageSlide
-      key="bag"
+    <CharacterSlide
+      key="hello"
       image="/brand/liky-character-bag.jpg"
-      alt="ליקי עם שקית של האתר. בואי לראות מה מצאתי לך"
+      alt="ליקי עם שקית של האתר"
+      headline="היי, אני ליקי"
+      text="כאן לשירותך, עם ההטבות והמבצעים הכי שווים במקום אחד."
       href="/deals"
-      fit="contain"
+      cta="בואי לראות מה מצאתי לך"
       priority
     />,
     <FullImageSlide
       key="red"
       image="/brand/liky-banner-red.jpg"
-      alt="ליקי, יש לי קישור בשבילך. בואי לראות את ההטבות"
-      href="/deals"
-      fit="cover"
-    />,
-    <CharacterSlide
-      key="standing"
-      image="/brand/liky-standing.jpg"
-      alt="ליקי, הדמות של האתר, ליד מחשב נייד שמציג את האתר"
-      headline={siteConfig.brand.slogan}
-      text="ההטבות והמבצעים הכי שווים, במקום אחד."
+      alt="ליקי, יש לי קישור בשבילך"
       href="/deals"
       cta="בואי לראות מה מצאתי לך"
     />,
     <CharacterSlide
-      key="unboxing"
-      image="/brand/liky-unboxing.jpg"
-      alt="ליקי פותחת חבילה בהתרגשות"
-      headline="מצטרפות בחינם"
-      text="ומקבלות קוד קופון להטבות של העסקים."
-      href={siteConfig.features.memberSignup ? "/login?mode=signup" : "#community"}
+      key="presenting"
+      image="/brand/liky-presenting.jpg"
+      alt="ליקי מציגה שקית של האתר"
+      headline={siteConfig.brand.slogan}
+      text="מצטרפות בחינם ומקבלות קוד קופון להטבות של העסקים."
+      href={joinHref}
       cta="אני רוצה להצטרף"
+    />,
+    <CharacterSlide
+      key="community"
+      image="/brand/liky-podcast.jpg"
+      alt="ליקי מספרת על ההטבות"
+      headline="מציאה שווה? משתפות חברות."
+      text="הקהילה שלנו בוואטסאפ מלאה בהמלצות אמיתיות מנשים כמוך."
+      href="#community"
+      cta="הצטרפי לקהילה"
+      imageFirst
     />,
   ];
 

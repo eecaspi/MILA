@@ -1,0 +1,227 @@
+"use client";
+
+import Image from "next/image";
+import Link from "next/link";
+import { useCallback, useEffect, useRef, useState } from "react";
+import type { HomeBanner } from "@/lib/data/banners";
+
+const IMAGE_MS = 6000;
+const VIDEO_MS = 10000;
+
+function Chevron({ dir }: { dir: "next" | "prev" }) {
+  return (
+    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      {/* the site reads right to left: "next" points left */}
+      <path d={dir === "next" ? "M15 5l-7 7 7 7" : "M9 5l7 7-7 7"} />
+    </svg>
+  );
+}
+
+/**
+ * The top of the home page: the Liky brand slide first, then the banners from the back office.
+ * Swipe or use the arrows/dots; it also advances by itself, with a pause button, and does not
+ * move on its own for people who asked their device for less motion.
+ */
+export function HeroCarousel({
+  banners,
+  children,
+}: {
+  banners: HomeBanner[];
+  /** The brand slide (logo, tagline, buttons). */
+  children: React.ReactNode;
+}) {
+  const total = banners.length + 1;
+  const slideRefs = useRef<(HTMLElement | null)[]>([]);
+  const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
+  const [active, setActive] = useState(0);
+  const [paused, setPaused] = useState(false);
+  const [hovering, setHovering] = useState(false);
+  const [reduced, setReduced] = useState(false);
+
+  useEffect(() => {
+    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    setReduced(mq.matches);
+    if (mq.matches) setPaused(true);
+  }, []);
+
+  const goTo = useCallback(
+    (i: number) => {
+      const index = (i + total) % total;
+      slideRefs.current[index]?.scrollIntoView({
+        behavior: reduced ? "auto" : "smooth",
+        inline: "start",
+        block: "nearest",
+      });
+    },
+    [total, reduced],
+  );
+
+  // Which slide is in view.
+  useEffect(() => {
+    const els = slideRefs.current.filter(Boolean) as HTMLElement[];
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting && entry.intersectionRatio >= 0.6) {
+            setActive(els.indexOf(entry.target as HTMLElement));
+          }
+        }
+      },
+      { threshold: [0.6] },
+    );
+    els.forEach((el) => io.observe(el));
+    return () => io.disconnect();
+  }, [total]);
+
+  // Videos play only while their slide is showing.
+  useEffect(() => {
+    videoRefs.current.forEach((v, i) => {
+      if (!v) return;
+      if (i === active) void v.play().catch(() => {});
+      else v.pause();
+    });
+  }, [active]);
+
+  // Advance by itself.
+  useEffect(() => {
+    if (total < 2 || paused || hovering) return;
+    const isVideo = active > 0 && banners[active - 1]?.type === "video";
+    const t = setTimeout(() => goTo(active + 1), isVideo ? VIDEO_MS : IMAGE_MS);
+    return () => clearTimeout(t);
+  }, [active, paused, hovering, total, banners, goTo]);
+
+  return (
+    <section
+      aria-roledescription="carousel"
+      aria-label="הבאנר הראשי"
+      className="relative"
+      onMouseEnter={() => setHovering(true)}
+      onMouseLeave={() => setHovering(false)}
+    >
+      <div className="flex h-[470px] snap-x snap-mandatory overflow-x-auto overscroll-x-contain [scrollbar-width:none] md:h-[440px] [&::-webkit-scrollbar]:hidden">
+        <div
+          ref={(el) => {
+            slideRefs.current[0] = el;
+          }}
+          role="group"
+          aria-roledescription="שקופית"
+          aria-label={`1 מתוך ${total}`}
+          className="relative flex h-full w-full shrink-0 snap-start items-center justify-center overflow-hidden"
+        >
+          {children}
+        </div>
+
+        {banners.map((b, i) => {
+          const n = i + 1;
+          const media =
+            b.type === "video" ? (
+              <video
+                ref={(el) => {
+                  videoRefs.current[n] = el;
+                }}
+                src={b.url}
+                muted
+                loop
+                playsInline
+                preload="metadata"
+                className="absolute inset-0 size-full object-cover"
+              />
+            ) : (
+              <Image
+                src={b.url}
+                alt={b.title ?? ""}
+                fill
+                sizes="100vw"
+                className="object-cover"
+                priority={false}
+              />
+            );
+          const caption = b.title ? (
+            <span className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/60 to-transparent px-6 pb-12 pt-16 text-xl font-bold text-white md:px-12 md:text-3xl">
+              {b.title}
+            </span>
+          ) : null;
+          const external = b.link && /^https?:/.test(b.link);
+          return (
+            <div
+              key={b.id}
+              ref={(el) => {
+                slideRefs.current[n] = el;
+              }}
+              role="group"
+              aria-roledescription="שקופית"
+              aria-label={`${n + 1} מתוך ${total}`}
+              className="relative h-full w-full shrink-0 snap-start overflow-hidden bg-raised"
+            >
+              {b.link ? (
+                <Link
+                  href={b.link}
+                  {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+                  aria-label={b.title ?? "לפרטים נוספים"}
+                  className="absolute inset-0 block"
+                >
+                  {media}
+                  {caption}
+                </Link>
+              ) : (
+                <>
+                  {media}
+                  {caption}
+                </>
+              )}
+            </div>
+          );
+        })}
+      </div>
+
+      {total > 1 && (
+        <>
+          <button
+            type="button"
+            onClick={() => goTo(active - 1)}
+            aria-label="לשקופית הקודמת"
+            className="absolute start-3 top-1/2 hidden size-10 -translate-y-1/2 items-center justify-center rounded-full bg-surface/90 text-ink shadow-[var(--shadow-soft)] hover:bg-surface md:flex"
+          >
+            <Chevron dir="prev" />
+          </button>
+          <button
+            type="button"
+            onClick={() => goTo(active + 1)}
+            aria-label="לשקופית הבאה"
+            className="absolute end-3 top-1/2 hidden size-10 -translate-y-1/2 items-center justify-center rounded-full bg-surface/90 text-ink shadow-[var(--shadow-soft)] hover:bg-surface md:flex"
+          >
+            <Chevron dir="next" />
+          </button>
+
+          <div className="absolute inset-x-0 bottom-3 flex items-center justify-center gap-3">
+            <ul className="flex items-center gap-2 rounded-full bg-surface/85 px-3 py-2">
+              {Array.from({ length: total }, (_, i) => (
+                <li key={i}>
+                  <button
+                    type="button"
+                    onClick={() => goTo(i)}
+                    aria-label={`לשקופית ${i + 1}`}
+                    aria-current={i === active}
+                    className={`block h-2.5 rounded-full transition-all ${i === active ? "w-6 bg-accent" : "w-2.5 bg-ink-soft/40 hover:bg-ink-soft/70"}`}
+                  />
+                </li>
+              ))}
+            </ul>
+            <button
+              type="button"
+              onClick={() => setPaused((p) => !p)}
+              aria-label={paused ? "הפעלת ההחלפה האוטומטית" : "עצירת ההחלפה האוטומטית"}
+              className="flex size-8 items-center justify-center rounded-full bg-surface/85 text-ink hover:bg-surface"
+            >
+              {paused ? (
+                <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor" aria-hidden="true"><path d="M7 5l12 7-12 7z" /></svg>
+              ) : (
+                <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor" aria-hidden="true"><path d="M7 5h4v14H7zM13 5h4v14h-4z" /></svg>
+              )}
+            </button>
+          </div>
+        </>
+      )}
+    </section>
+  );
+}

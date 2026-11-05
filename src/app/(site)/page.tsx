@@ -3,6 +3,7 @@ import { Logo } from "@/components/brand/Logo";
 import { BusinessCard } from "@/components/business/BusinessCard";
 import { DealCard } from "@/components/deals/DealCard";
 import { CommunityInvite } from "@/components/home/CommunityInvite";
+import { HeroCarousel } from "@/components/home/HeroCarousel";
 import { HowItWorks } from "@/components/home/HowItWorks";
 import { CategoryIcon } from "@/components/ui/CategoryIcon";
 import { SectionHeading } from "@/components/ui/SectionHeading";
@@ -10,45 +11,53 @@ import { toneClasses } from "@/components/ui/tones";
 import { siteConfig } from "@/config/site";
 import { categories } from "@/data/categories";
 import { getSession } from "@/lib/auth/session";
+import { getBanners } from "@/lib/data/banners";
 import { getMyCodes } from "@/lib/data/my-codes";
 import { getBusinesses, getHighlightedOffers } from "@/lib/data/repository";
 
 export default async function HomePage() {
-  const [best, businesses, session] = await Promise.all([
+  const [best, businesses, session, banners] = await Promise.all([
     getHighlightedOffers(4),
     getBusinesses(),
     getSession(),
+    getBanners(),
   ]);
   const codes = siteConfig.features.personalCodes
     ? { signedIn: !!session, mine: await getMyCodes() }
     : undefined;
 
+  const brandSlide = (
+    <>
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 bg-[radial-gradient(60%_80%_at_50%_0%,#fde8e8_0%,transparent_75%)]"
+      />
+      <div className="relative mx-auto flex max-w-2xl flex-col items-center px-4 pt-8 pb-14 text-center md:pt-14 md:pb-16">
+        <h1 className="sr-only">
+          {siteConfig.brand.name} – {siteConfig.brand.slogan}
+        </h1>
+        <Logo variant="full" height={190} priority />
+        <p className="mt-6 max-w-md text-lg text-ink-soft md:text-xl">{siteConfig.brand.tagline}</p>
+        <div className="mt-7 flex flex-wrap justify-center gap-3">
+          <Link href="/deals" className="btn-primary text-base">
+            בואי לראות מה מצאתי לך
+          </Link>
+          <Link href="#community" className="btn-secondary text-base">
+            הצטרפי לקהילה
+          </Link>
+        </div>
+      </div>
+    </>
+  );
+
   return (
     <>
-      {/* Hero */}
-      <section className="relative overflow-hidden">
-        <div
-          aria-hidden
-          className="pointer-events-none absolute inset-0 bg-[radial-gradient(60%_80%_at_50%_0%,#fde8e8_0%,transparent_75%)]"
-        />
-        <div className="relative mx-auto flex max-w-2xl flex-col items-center px-4 pt-10 pb-12 text-center md:pt-14 md:pb-16">
-          <h1 className="sr-only">
-            {siteConfig.brand.name} – {siteConfig.brand.slogan}
-          </h1>
-          <Logo variant="full" height={190} priority />
-          <p className="mt-6 max-w-md text-lg text-ink-soft md:text-xl">
-            {siteConfig.brand.tagline}
-          </p>
-          <div className="mt-7 flex flex-wrap justify-center gap-3">
-            <Link href="/deals" className="btn-primary text-base">
-              בואי לראות מה מצאתי לך
-            </Link>
-            <Link href="#community" className="btn-secondary text-base">
-              הצטרפי לקהילה
-            </Link>
-          </div>
-        </div>
-      </section>
+      {/* Hero: the brand slide, followed by the banners from the back office */}
+      {banners.length > 0 ? (
+        <HeroCarousel banners={banners}>{brandSlide}</HeroCarousel>
+      ) : (
+        <section className="relative overflow-hidden">{brandSlide}</section>
+      )}
 
       <div className="mx-auto max-w-6xl space-y-16 px-4">
         {/* המבצעים הכי שווים */}

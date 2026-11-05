@@ -3,7 +3,7 @@ import Link from "next/link";
 
 /**
  * A hero slide with the Liky character: words on one side, the character on the other.
- * The pictures have white backgrounds, so they are multiplied onto the blush background.
+ * The pictures have white backgrounds, so the slide is white too.
  */
 export function CharacterSlide({
   image,
@@ -23,7 +23,7 @@ export function CharacterSlide({
   priority?: boolean;
 }) {
   return (
-    <div className="relative flex size-full items-center justify-between gap-2 overflow-hidden bg-[radial-gradient(70%_100%_at_30%_0%,#fff3f3_0%,var(--color-canvas)_75%)] px-5 pb-12 pt-4 sm:px-10 md:px-20">
+    <div className="relative flex size-full items-center justify-between gap-2 overflow-hidden bg-surface px-5 pb-12 pt-4 sm:px-10 md:px-20">
       <div className="max-w-[58%] space-y-2 sm:max-w-[50%] sm:space-y-4">
         <p className="font-display text-2xl font-bold leading-tight text-ink sm:text-4xl md:text-5xl">
           {headline}
@@ -40,7 +40,7 @@ export function CharacterSlide({
           fill
           sizes="(min-width: 768px) 340px, 40vw"
           priority={priority}
-          className="object-contain object-bottom mix-blend-multiply"
+          className="object-contain object-bottom"
         />
       </div>
     </div>

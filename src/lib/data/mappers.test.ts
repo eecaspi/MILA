@@ -1,6 +1,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import {
+  daysUntilEnd,
   isExpired,
   mapBusinessRow,
   mapOfferRow,
@@ -117,4 +118,12 @@ test("upcoming offers show a 'soon' badge and map channel safely", () => {
   assert.equal(mapOfferRow({ ...offer, redeem_channel: "store", starts_on: "2026-12-01" }).redeemChannel, "store");
   assert.equal(mapOfferRow({ ...offer, redeem_channel: "pigeon" }).redeemChannel, undefined);
   assert.equal(mapOfferRow({ ...offer, starts_on: "2026-12-01" }).startsOn, "2026-12-01");
+});
+
+test("days until an offer ends (Israel time)", () => {
+  const now = new Date("2026-11-05T10:00:00Z");
+  assert.equal(daysUntilEnd(undefined, now), null);
+  assert.equal(daysUntilEnd("2026-11-05", now), 0);
+  assert.equal(daysUntilEnd("2026-11-08", now), 3);
+  assert.equal(daysUntilEnd("2026-11-04", now), -1);
 });

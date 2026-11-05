@@ -74,12 +74,14 @@ export default async function DealsPage({ searchParams }: { searchParams: Search
         <p className="mt-2 text-ink-soft">כל מה ששווה לדעת עליו, במקום אחד.</p>
       </header>
 
-      <div className="mb-6">
-        <DemoNotice>
-          כל ההצעות בעמוד זה הן <strong>לדוגמה בלבד</strong>, שייכות לעסקים פיקטיביים ואינן ניתנות
-          למימוש. הצעות אמיתיות יופיעו כאן עם התג &quot;הצעה מאומתת ✓&quot;.
-        </DemoNotice>
-      </div>
+      {offers.some((o) => o.status === "demo") && (
+        <div className="mb-6">
+          <DemoNotice>
+            הצעות שמסומנות <strong>&quot;לדוגמה&quot;</strong> שייכות לעסקים פיקטיביים ואינן ניתנות
+            למימוש. הצעות אמיתיות מופיעות עם התג &quot;הצעה מאומתת ✓&quot;.
+          </DemoNotice>
+        </div>
+      )}
 
       <div className="mb-8 space-y-5 rounded-[var(--radius-card)] bg-surface p-4 shadow-[var(--shadow-card)] md:p-6">
         <SearchBox suggestions={suggestions} hints={q ? [] : hints} defaultValue={q} hidden={{ category, kind, channel }} />

@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { WhatsAppGate } from "@/components/auth/WhatsAppGate";
 import { siteConfig } from "@/config/site";
-import { safeNextPath } from "@/lib/auth/session";
+import { getSession, safeNextPath } from "@/lib/auth/session";
 
 export const metadata: Metadata = {
   title: "ברוכה הבאה",
@@ -17,6 +17,7 @@ export default async function Welcome({
   searchParams: Promise<{ channel?: string; next?: string }>;
 }) {
   const { channel, next } = await searchParams;
+  const session = await getSession();
   // The default sign-up destination is the personal area; right after joining she goes to the home page.
   const wanted = safeNextPath(next, "/");
   const to = wanted === "/account" || wanted.startsWith("/welcome") ? "/" : wanted;
@@ -25,7 +26,9 @@ export default async function Welcome({
 
   return (
     <div className="mx-auto max-w-3xl px-4 py-10">
-      {viaWhatsApp && whatsapp && <WhatsAppGate url={whatsapp} />}
+      {viaWhatsApp && whatsapp && (
+        <WhatsAppGate url={whatsapp} userId={session?.userId ?? "guest"} />
+      )}
       <div className="grid items-center overflow-hidden rounded-[var(--radius-card)] bg-surface shadow-[var(--shadow-card)] md:grid-cols-[1.1fr_1fr]">
         <Image
           src="/brand/liky-character-bag.jpg"

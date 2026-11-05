@@ -1,6 +1,6 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
+import { revalidatePath, revalidateTag } from "next/cache";
 import { redirect } from "next/navigation";
 import { requireAdmin } from "@/lib/auth/session";
 import { slugify } from "@/lib/data/mappers";
@@ -30,6 +30,7 @@ export interface FormState {
 type Supabase = Awaited<ReturnType<typeof createClient>>;
 
 function refreshSite() {
+  revalidateTag("content");
   revalidatePath("/", "layout");
 }
 

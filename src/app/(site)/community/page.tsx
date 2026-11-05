@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Logo } from "@/components/brand/Logo";
+import { getSession } from "@/lib/auth/session";
 import { CommunityInvite } from "@/components/home/CommunityInvite";
 
 export const metadata: Metadata = {
@@ -8,7 +9,8 @@ export const metadata: Metadata = {
   description: "קהילת הנשים של ליקי: הטבות חדשות והמלצות ישר לוואטסאפ.",
 };
 
-export default function CommunityPage() {
+export default async function CommunityPage() {
+  const session = await getSession();
   return (
     <div className="mx-auto max-w-6xl space-y-12 px-4 py-10">
       <header className="grid items-center gap-8 md:grid-cols-[1.4fr_1fr]">
@@ -23,7 +25,7 @@ export default function CommunityPage() {
         <Logo variant="full" height={220} className="mx-auto" />
       </header>
 
-      <CommunityInvite />
+      {!session && <CommunityInvite />}
 
       <section className="flex flex-wrap items-center justify-between gap-4 rounded-[var(--radius-card)] bg-surface p-6 shadow-[var(--shadow-card)] md:p-8">
         <div>

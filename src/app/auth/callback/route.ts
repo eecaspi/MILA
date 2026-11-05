@@ -12,7 +12,15 @@ export async function GET(request: NextRequest) {
   if (isSupabaseConfigured && code) {
     const supabase = await createClient();
     const { error } = await supabase.auth.exchangeCodeForSession(code);
-    if (!error) return NextResponse.redirect(`${origin}${next}`);
+    if (!error) {
+      // A new member lands on the welcome step (which holds the WhatsApp window for those who chose it).
+      const { data } = await supabase.auth.getUser();
+      const channel = data.user?.user_metadata?.community_channel;
+      if (channel === "whatsapp" || channel === "email") {
+        return NextResponse.redirect(`${origin}/welcome?channel=${channel}&next=${encodeURIComponent(next)}`);
+      }
+      return NextResponse.redirect(`${origin}${next}`);
+    }
   }
   return NextResponse.redirect(`${origin}/login?error=confirm_failed`);
 }

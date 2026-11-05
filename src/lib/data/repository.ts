@@ -20,7 +20,9 @@ import type { Business, CategorySlug, Offer, OfferKind, OfferWithBusiness } from
 import {
   BUSINESS_COLUMNS,
   OFFER_COLUMNS,
+  daysUntilEnd,
   isExpired,
+  isUpcoming,
   mapBusinessRow,
   mapOfferRow,
   withoutCouponCode,
@@ -148,6 +150,33 @@ export async function getHighlightedOffers(limit = 4): Promise<OfferWithBusiness
   const all = await getOffers();
   const picked = all.filter((o) => o.highlight);
   return [...picked, ...all.filter((o) => !o.highlight)].slice(0, limit);
+}
+
+export interface NowOffers {
+  best: OfferWithBusiness[];
+  fresh: OfferWithBusiness[];
+  ending: OfferWithBusiness[];
+}
+
+/** "מה שווה עכשיו?": the best offers, the newest (last 14 days) and the ones ending within a week. */
+export async function getNowOffers(limit = 4, now = new Date()): Promise<NowOffers> {
+  const all = (await getOffers({ now })).filter((o) => !isUpcoming(o.startsOn, now));
+  const best = await getHighlightedOffers(limit);
+  const fresh = all
+    .filter((o) => {
+      const added = Date.parse(o.addedAt);
+      return !Number.isNaN(added) && now.getTime() - added <= 14 * 86_400_000 && added <= now.getTime();
+    })
+    .sort((a, b) => b.addedAt.localeCompare(a.addedAt))
+    .slice(0, limit);
+  const ending = all
+    .filter((o) => {
+      const d = daysUntilEnd(o.validUntil, now);
+      return d !== null && d >= 0 && d <= 7;
+    })
+    .sort((a, b) => (a.validUntil ?? "").localeCompare(b.validUntil ?? ""))
+    .slice(0, limit);
+  return { best, fresh, ending };
 }
 
 /** "מה חדש אצל ליקי?" — most recently added first. */

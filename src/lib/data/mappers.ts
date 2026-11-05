@@ -146,6 +146,13 @@ export const redeemChannelLabel = {
   both: "אונליין ובחנות",
 } as const;
 
+/** Whole days from today (Israel) until the offer's last day; 0 = ends today, null = no end date. */
+export function daysUntilEnd(validUntil: string | undefined | null, now = new Date()): number | null {
+  if (!validUntil) return null;
+  const today = new Intl.DateTimeFormat("en-CA", { timeZone: "Asia/Jerusalem" }).format(now);
+  return Math.round((Date.parse(validUntil.slice(0, 10)) - Date.parse(today)) / DAY_MS);
+}
+
 export type OfferBadge = { label: string; tone: "hot" | "new" };
 
 const DAY_MS = 86_400_000;

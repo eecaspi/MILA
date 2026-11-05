@@ -6,8 +6,8 @@
  * Bright and feminine, taken from the logo: the bag red for actions, white cards,
  * soft blush for highlights and a gentle pink for fine details.
  *
- * Contrast (WCAG): ink on canvas 14:1 · ink-soft on canvas 6.1:1 ·
- * white on accent 6.2:1 · accent on canvas 5.9:1.
+ * Contrast (WCAG, approx.): ink on canvas 13:1 · ink-soft on canvas 5.4:1 ·
+ * white on accent 6.2:1 · accent on canvas 5.2:1 · accent on white 6.2:1.
  *
  * Use logical utilities (ms-/me-, ps-/pe-, start-/end-, text-start)
  * rather than left/right so every component is correct in RTL.
@@ -16,11 +16,11 @@
   --font-sans: var(--font-heebo), ui-sans-serif, system-ui, sans-serif;
   --font-display: var(--font-heebo), ui-sans-serif, system-ui, sans-serif;
 
-  /* surfaces: warm cream, taken from the logo artwork */
-  --color-canvas: #fff8f7;
+  /* surfaces: the whole site is the soft pink of the banner; cards stay white */
+  --color-canvas: #fde9e9;
   --color-surface: #ffffff;
-  --color-raised: #fdeeee;
-  --color-line: #f6dcdc;
+  --color-raised: #fdf1f1;
+  --color-line: #f4cfcf;
 
   /* text: warm cocoa */
   --color-ink: #3f1d20;
@@ -29,7 +29,7 @@
   /* brand: rose gold */
   --color-accent: #c4050b; /* the logo red — buttons, links (AA on white and blush) */
   --color-accent-bright: #a30409; /* hover/pressed */
-  --color-accent-soft: #fde8e8; /* blush */
+  --color-accent-soft: #fbd9d9; /* blush, a step deeper than the page */
   --color-on-accent: #ffffff;
   --color-gold: #eeb1b5; /* soft pink */
   --color-glow: #f7b5b8; /* decorative glow only */
@@ -143,17 +143,19 @@
     justify-content: center;
     gap: 0.5rem;
     border-radius: 999px;
-    background: var(--color-accent);
-    color: var(--color-on-accent);
+    background: var(--color-surface);
+    color: var(--color-accent);
+    border: 2px solid var(--color-accent);
     font-weight: 700;
-    padding: 0.875rem 1.75rem;
-    box-shadow: var(--shadow-soft);
+    padding: 0.8125rem 1.75rem;
     transition:
       background-color 150ms ease,
+      color 150ms ease,
       transform 150ms ease;
   }
   .btn-primary:hover {
-    background: var(--color-accent-bright);
+    background: var(--color-accent);
+    color: var(--color-on-accent);
   }
   .btn-primary:active {
     transform: scale(0.98);
@@ -165,19 +167,17 @@
     justify-content: center;
     gap: 0.5rem;
     border-radius: 999px;
-    background: var(--color-surface);
+    background: transparent;
     color: var(--color-accent);
     font-weight: 700;
     padding: 0.875rem 1.75rem;
-    border: 1.5px solid var(--color-accent-soft);
+    border: 1.5px solid var(--color-accent);
     transition:
-      border-color 150ms ease,
       background-color 150ms ease,
       transform 150ms ease;
   }
   .btn-secondary:hover {
-    border-color: var(--color-accent);
-    background: var(--color-raised);
+    background: var(--color-surface);
   }
   .btn-secondary:active {
     transform: scale(0.98);

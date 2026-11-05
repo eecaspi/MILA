@@ -73,8 +73,17 @@ export function CardCode({
   return (
     <form action={action} className="space-y-1.5">
       <input type="hidden" name="offer_id" value={offerId} />
-      <button type="submit" disabled={pending} className="btn-primary w-full py-2.5 text-[15px] disabled:opacity-60">
-        {pending ? "יוצרת קוד…" : "קבלי קוד אישי"}
+      <button
+        type="submit"
+        disabled={pending}
+        className="flex w-full items-center justify-between gap-2 rounded-2xl border-2 border-dashed border-accent/40 bg-accent-soft/60 px-4 py-3 text-sm transition-colors hover:border-accent active:scale-[0.99] disabled:opacity-60"
+      >
+        <span aria-hidden className="ltr font-mono font-bold tracking-wider text-accent/50">
+          ••••-•••••
+        </span>
+        <span className="font-semibold text-accent">
+          {pending ? "יוצרת קוד…" : "לחצי לקבלת קוד קופון"}
+        </span>
       </button>
       {state.error ? (
         <p role="alert" className="text-center text-xs text-danger">

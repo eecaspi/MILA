@@ -57,6 +57,12 @@ export interface Business {
 
 export type OfferKind = "deal" | "coupon";
 
+/**
+ * How a benefit is redeemed: a fixed code (the default), a code made for each member, the business's
+ * code of the day, a link to the business's website, or at the physical store.
+ */
+export type CodeMode = "fixed" | "personal" | "daily" | "link" | "store";
+
 export interface Offer {
   id: string;
   businessId: string;
@@ -73,7 +79,13 @@ export interface Offer {
   /** Where it can be redeemed. */
   redeemChannel?: "online" | "store" | "both";
   /** "personal": a code made for each member. "daily": the business's code for the day, same for everyone. */
-  codeMode?: "personal" | "daily";
+  codeMode?: CodeMode;
+  /** For "link" offers: where to go (the business website when empty). */
+  redeemUrl?: string;
+  /** Terms of the offer, shown on its page. */
+  terms?: string;
+  /** Usage limit, e.g. "פעם אחת ללקוחה". */
+  usageLimit?: string;
   status: VerificationStatus;
   /** ISO date the offer was added to the site (drives "מה חדש אצל ליקי?"). */
   addedAt: string;

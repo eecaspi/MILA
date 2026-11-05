@@ -39,6 +39,9 @@ insert into offers (id, business_id, kind, title, value_label, status, is_publis
 select pg_temp.fails($$update offers set redeem_channel = 'carrier-pigeon' where id = 'cccc0000-0000-0000-0000-000000000001'$$, '23514', 'unknown channel rejected');
 select pg_temp.eq((select redeem_channel from offers where id = 'cccc0000-0000-0000-0000-000000000003'), 'both', 'channel is saved');
 
+-- these tests are about personal codes (new offers default to a fixed code)
+update offers set code_mode = 'personal';
+
 set role authenticated;
 select set_config('request.jwt.claim.sub', 'aaaa0000-0000-0000-0000-00000000000a', false);
 select pg_temp.eq((select count(*)::int from claim_offer_code('cccc0000-0000-0000-0000-000000000001')), 1, 'live offer gives a code');

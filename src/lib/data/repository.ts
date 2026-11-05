@@ -42,11 +42,18 @@ const fetchContent = async (): Promise<Content> => {
 
   const businessesQuery = (columns: string) =>
     supabase.from("businesses").select(columns).order("sort_order").order("name");
-  const [firstTry, o] = await Promise.all([
+  const offersQuery = (columns: string) =>
+    supabase.from("offers").select(columns).order("created_at", { ascending: false });
+  const [firstTry, firstOffers] = await Promise.all([
     businessesQuery(BUSINESS_COLUMNS),
-    supabase.from("offers").select(OFFER_COLUMNS).order("created_at", { ascending: false }),
+    offersQuery(OFFER_COLUMNS),
   ]);
   let b = firstTry;
+  let o = firstOffers;
+  // Newer offer columns whose migration hasn't been run yet: show the offers without them.
+  if (o.error?.code === "42703") {
+    o = await offersQuery(OFFER_COLUMNS.replace(", redeem_url, terms, usage_limit", ""));
+  }
   // A newer column whose migration hasn't been run yet: show everything else instead of demo content.
   if (b.error?.code === "42703") {
     b = await businessesQuery(BUSINESS_COLUMNS.replace(", gallery_urls", ""));

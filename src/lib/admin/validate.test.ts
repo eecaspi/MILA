@@ -193,7 +193,27 @@ test("offer form: daily mode and pasted codes", () => {
   );
   assert.ok(plain.ok);
   if (plain.ok) {
-    assert.equal(plain.values.code_mode, "personal");
+    assert.equal(plain.values.code_mode, "fixed");
     assert.deepEqual(plain.values.daily, []);
   }
+});
+
+test("offer form: redeem types, link, terms and the fixed-code rule", () => {
+  const base = { business_id: "bbbb0000-0000-0000-0000-000000000001", title: "הנחה", value_label: "20%" };
+  const link = parseOfferForm(
+    form({ ...base, code_mode: "link", redeem_url: "https://noa.co.il/sale", terms: " לא כולל מבצעים ", usage_limit: "פעם אחת" }),
+  );
+  assert.ok(link.ok);
+  if (link.ok) {
+    assert.equal(link.values.code_mode, "link");
+    assert.equal(link.values.redeem_url, "https://noa.co.il/sale");
+    assert.equal(link.values.terms, "לא כולל מבצעים");
+    assert.equal(link.values.usage_limit, "פעם אחת");
+  }
+  assert.equal(parseOfferForm(form({ ...base, code_mode: "link", redeem_url: "http://noa.co.il" })).ok, false);
+  assert.equal(parseOfferForm(form({ ...base, code_mode: "store" })).ok, true);
+  // a fixed code offer can be a draft without its code, but not published
+  assert.equal(parseOfferForm(form({ ...base, code_mode: "fixed" })).ok, true);
+  assert.equal(parseOfferForm(form({ ...base, code_mode: "fixed", is_published: "on" })).ok, false);
+  assert.equal(parseOfferForm(form({ ...base, code_mode: "fixed", is_published: "on", coupon_code: "noa20" })).ok, true);
 });

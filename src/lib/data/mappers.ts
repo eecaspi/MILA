@@ -3,7 +3,7 @@
  * domain types. Pure functions so they can be unit-tested without a database.
  */
 import { isCategorySlug } from "../../data/categories.ts";
-import type { Business, Offer, OfferKind, VerificationStatus } from "../types.ts";
+import type { Business, CodeMode, Offer, OfferKind, VerificationStatus } from "../types.ts";
 
 export interface BusinessRow {
   id: string;
@@ -36,6 +36,9 @@ export interface OfferRow {
   starts_on: string | null;
   redeem_channel: string | null;
   code_mode?: string | null;
+  redeem_url?: string | null;
+  terms?: string | null;
+  usage_limit?: string | null;
   status: VerificationStatus;
   created_at: string;
   highlight: boolean | null;
@@ -47,9 +50,20 @@ export interface OfferRow {
 export const BUSINESS_COLUMNS =
   "id, slug, name, category_slug, short_description, description, area, city, website, phone, source_url, logo_url, cover_url, gallery_urls, tags, status, is_real_business";
 export const OFFER_COLUMNS =
-  "id, business_id, kind, title, description, value_label, valid_until, starts_on, redeem_channel, code_mode, status, created_at, highlight, likey_pick_note, price_label, image_url";
+  "id, business_id, kind, title, description, value_label, valid_until, starts_on, redeem_channel, code_mode, redeem_url, terms, usage_limit, status, created_at, highlight, likey_pick_note, price_label, image_url";
 
 const opt = (v: string | null | undefined) => (v && v.trim() ? v.trim() : undefined);
+
+export function parseCodeMode(v: string | null | undefined): CodeMode {
+  return v === "personal" || v === "daily" || v === "link" || v === "store" ? v : "fixed";
+}
+
+/** Short line under a code control: what kind of code it is and how long it lasts. */
+export const codeModeNote: Record<"fixed" | "personal" | "daily", string> = {
+  fixed: "קוד קבוע של העסק",
+  personal: "קוד אישי וחד־פעמי · תקף ל־24 שעות",
+  daily: "קוד היום · תקף עד סוף היום",
+};
 
 /** Returns null for rows the site can't show (e.g. an unknown category). */
 export function mapBusinessRow(row: BusinessRow): Business | null {
@@ -86,7 +100,10 @@ export function mapOfferRow(row: OfferRow): Offer {
     valueLabel: row.value_label,
     validUntil: row.valid_until ?? undefined,
     startsOn: row.starts_on ?? undefined,
-    codeMode: row.code_mode === "daily" ? "daily" : "personal",
+    codeMode: parseCodeMode(row.code_mode),
+    redeemUrl: opt(row.redeem_url),
+    terms: opt(row.terms),
+    usageLimit: opt(row.usage_limit),
     redeemChannel:
       row.redeem_channel === "online" || row.redeem_channel === "store" || row.redeem_channel === "both"
         ? row.redeem_channel

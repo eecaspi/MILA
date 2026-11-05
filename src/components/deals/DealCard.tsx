@@ -4,6 +4,7 @@ import { StatusBadge } from "@/components/ui/StatusBadge";
 import { AdminShare } from "./AdminShare";
 import { CardCode } from "./CardCode";
 import { FavoriteButton } from "./FavoriteButton";
+import { RedeemInfo } from "./RedeemInfo";
 import { isExpired, isUpcoming, offerBadge, redeemChannelLabel } from "@/lib/data/mappers";
 import { formatDate } from "@/lib/format";
 import type { OfferWithBusiness } from "@/lib/types";
@@ -128,6 +129,9 @@ export function DealCard({
                 </span>
               )
             )}
+            {offer.usageLimit && (
+              <span className="text-xs font-medium text-ink-soft">{offer.usageLimit}</span>
+            )}
             {offer.redeemChannel && (
               <span className="rounded-full bg-raised px-2.5 py-0.5 text-xs font-semibold text-ink">
                 {redeemChannelLabel[offer.redeemChannel]}
@@ -136,13 +140,25 @@ export function DealCard({
           </div>
           {codes && canClaim && (
             <div className="relative z-10 mb-3">
-              <CardCode
-                offerId={offer.id}
-                signedIn={codes.signedIn}
-                signupHref={`/login?mode=signup&next=${encodeURIComponent(href)}`}
-                initial={codes.mine?.[offer.id]}
-                daily={offer.codeMode === "daily"}
-              />
+              {offer.codeMode === "link" || offer.codeMode === "store" ? (
+                <RedeemInfo
+                  mode={offer.codeMode}
+                  signedIn={codes.signedIn}
+                  signupHref={`/login?mode=signup&next=${encodeURIComponent(href)}`}
+                  url={offer.redeemUrl ?? offer.business.website}
+                  offerId={offer.id}
+                  businessId={offer.business.id}
+                  compact
+                />
+              ) : (
+                <CardCode
+                  offerId={offer.id}
+                  signedIn={codes.signedIn}
+                  signupHref={`/login?mode=signup&next=${encodeURIComponent(href)}`}
+                  initial={codes.mine?.[offer.id]}
+                  mode={offer.codeMode ?? "fixed"}
+                />
+              )}
             </div>
           )}
           <AdminShare

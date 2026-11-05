@@ -227,10 +227,7 @@ export default async function OfferPage({
             </div>
           )}
           {!expired && !upcoming && !isDemo && (
-            <AdminShare
-              path={`/deals/${offer.id}`}
-              text={`${offer.valueLabel} ב${offer.business.name}: ${offer.title}`}
-            />
+            <AdminShare offer={offer} />
           )}
         </div>
       </div>

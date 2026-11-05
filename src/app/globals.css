@@ -63,6 +63,13 @@
     color-scheme: light;
   }
 
+  /* Phones: everything a little smaller, so more fits on the screen. */
+  @media (max-width: 639px) {
+    html {
+      font-size: 87.5%;
+    }
+  }
+
   body {
     background-color: var(--color-canvas);
     color: var(--color-ink);

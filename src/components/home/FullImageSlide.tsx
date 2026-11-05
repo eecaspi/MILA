@@ -19,17 +19,28 @@ export function FullImageSlide({
   priority?: boolean;
 }) {
   return (
-    <Link href={href} aria-label={`${alt}. ${cta}`} className="absolute inset-0 block bg-canvas">
+    <Link href={href} aria-label={`${alt}. ${cta}`} className="absolute inset-0 flex items-center justify-center bg-canvas sm:block">
+      {/* The same picture, blurred, fills the space above and below it on a phone. */}
       <Image
         src={image}
         alt=""
+        aria-hidden
         fill
         sizes="100vw"
-        priority={priority}
-        className="object-cover object-[17%_center] sm:object-[30%_center] md:object-center"
+        className="scale-125 object-cover opacity-80 blur-2xl sm:hidden"
       />
-      <span className="btn-primary absolute bottom-14 left-[44%] -translate-x-1/2 whitespace-nowrap !px-5 !py-2 text-sm sm:left-[27%] sm:!px-7 sm:!py-3 sm:text-base md:bottom-[14%] md:left-[28%]">
-        {cta}
+      <span className="relative block aspect-[1600/630] w-full sm:absolute sm:inset-0 sm:aspect-auto">
+        <Image
+          src={image}
+          alt=""
+          fill
+          sizes="100vw"
+          priority={priority}
+          className="object-contain sm:object-cover sm:object-[30%_center] md:object-center"
+        />
+        <span className="btn-primary absolute bottom-[10%] left-[28%] -translate-x-1/2 whitespace-nowrap !px-3.5 !py-1.5 text-xs sm:bottom-14 sm:left-[27%] sm:!px-7 sm:!py-3 sm:text-base md:bottom-[14%] md:left-[28%]">
+          {cta}
+        </span>
       </span>
     </Link>
   );

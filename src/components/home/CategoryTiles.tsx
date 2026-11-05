@@ -16,7 +16,7 @@ function Chevron({ dir }: { dir: "prev" | "next" }) {
 }
 
 /**
- * Category banners in a row that slides sideways, with arrows. Each banner is shown whole: the
+ * Square category cards in a row that slides sideways, with arrows. Each card is shown whole: the
  * picture with its icon and name.
  */
 export function CategoryTiles() {
@@ -48,16 +48,16 @@ export function CategoryTiles() {
         className="-mx-4 flex snap-x snap-mandatory gap-3 overflow-x-auto scroll-smooth px-4 pb-2 md:mx-0 md:px-0 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
       >
         {categories.map((c) => (
-          <li key={c.slug} className="w-[82%] shrink-0 snap-start sm:w-[48%] md:w-[40%] lg:w-[32%]">
+          <li key={c.slug} className="w-[46%] shrink-0 snap-start sm:w-[31%] md:w-[23%] lg:w-[19%]">
             <Link href={`/businesses?category=${c.slug}`} className="lift block overflow-hidden rounded-3xl bg-accent-soft">
               {c.image ? (
                 <Image
                   src={c.image}
                   alt={c.name}
-                  width={1200}
-                  height={240}
-                  sizes="(min-width: 1024px) 32vw, (min-width: 768px) 40vw, (min-width: 640px) 48vw, 82vw"
-                  className="h-auto w-full"
+                  width={640}
+                  height={730}
+                  sizes="(min-width: 1024px) 19vw, (min-width: 768px) 23vw, (min-width: 640px) 31vw, 46vw"
+                  className="aspect-[7/8] w-full object-cover"
                 />
               ) : (
                 <span className="flex items-center justify-end gap-3 p-6 font-display text-xl font-bold text-ink">

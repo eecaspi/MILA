@@ -75,7 +75,7 @@ export async function signUp(formData: FormData): Promise<void> {
   }
   // With email confirmation on (Supabase default), there is no session until the link is clicked.
   if (!data.session) redirect("/login?notice=check_email");
-  redirect(next);
+  redirect(`/welcome?channel=${channel}&next=${encodeURIComponent(next)}`);
 }
 
 export async function signOut(): Promise<void> {

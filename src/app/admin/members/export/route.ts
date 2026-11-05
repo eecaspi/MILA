@@ -12,15 +12,16 @@ export async function GET(): Promise<Response> {
   const supabase = await createClient();
   const { data } = await supabase
     .from("profiles")
-    .select("display_name, email, community_channel, created_at")
+    .select("display_name, email, community_channel, marketing_consent, created_at")
     .order("created_at", { ascending: false });
 
-  const rows: unknown[][] = [["שם", "אימייל", "ערוץ", "תאריך הצטרפות"]];
+  const rows: unknown[][] = [["שם", "אימייל", "ערוץ", "אישרה דיוור", "תאריך הצטרפות"]];
   for (const m of data ?? []) {
     rows.push([
       m.display_name,
       m.email,
       channelLabel[m.community_channel as string] ?? "",
+      m.marketing_consent ? "כן" : "לא",
       String(m.created_at ?? "").slice(0, 10),
     ]);
   }

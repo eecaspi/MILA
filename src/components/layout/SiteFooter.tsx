@@ -43,7 +43,13 @@ export function SiteFooter() {
           </p>
         </div>
       </div>
-      <div className="border-t border-accent/15 py-4 text-center text-xs text-ink-soft">
+      <div className="border-t border-accent/15 px-4 py-4 text-center text-xs text-ink-soft">
+        <nav aria-label="עמודים משפטיים" className="mb-2 flex flex-wrap justify-center gap-x-5 gap-y-1">
+          <Link href="/terms" className="hover:text-accent">תנאי שימוש</Link>
+          <Link href="/privacy" className="hover:text-accent">מדיניות פרטיות</Link>
+          <Link href="/disclosure" className="hover:text-accent">גילוי נאות</Link>
+          <Link href="/accessibility" className="hover:text-accent">הצהרת נגישות</Link>
+        </nav>
         © {new Date().getFullYear()} {siteConfig.brand.name} · {siteConfig.brand.slogan}
       </div>
     </footer>

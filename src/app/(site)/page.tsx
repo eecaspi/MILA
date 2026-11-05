@@ -33,6 +33,21 @@ export default async function HomePage() {
         {siteConfig.brand.name} – {siteConfig.brand.slogan}
       </h1>
       <HeroCarousel banners={banners} />
+      <div className="mx-auto max-w-3xl px-4 pt-8">
+        <form action="/deals" role="search" className="flex gap-2">
+          <input
+            type="search"
+            name="q"
+            maxLength={60}
+            placeholder="מה מחפשים? למשל: פאות, בגדי ילדים, תכשיטים"
+            aria-label="חיפוש הטבות"
+            className="min-w-0 flex-1 rounded-full border-2 border-line bg-surface px-5 py-3.5 text-base text-ink shadow-[var(--shadow-card)] outline-none placeholder:text-ink-soft/60 focus:border-accent md:text-lg"
+          />
+          <button type="submit" className="btn-primary px-7">
+            חיפוש
+          </button>
+        </form>
+      </div>
       <div className="h-10" />
 
       <div className="mx-auto max-w-6xl space-y-16 px-4">

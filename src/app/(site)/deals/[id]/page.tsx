@@ -1,4 +1,4 @@
-import { isExpired } from "@/lib/data/mappers";
+import { isExpired, isUpcoming, redeemChannelLabel } from "@/lib/data/mappers";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -61,7 +61,8 @@ export default async function OfferPage({
   const category = getCategory(offer.business.category);
   const isDemo = offer.status === "demo";
   const expired = isExpired(offer.validUntil);
-  const canClaim = siteConfig.features.personalCodes && !isDemo && !expired;
+  const upcoming = isUpcoming(offer.startsOn);
+  const canClaim = siteConfig.features.personalCodes && !isDemo && !expired && !upcoming;
   const mine = canClaim ? await myCode(offer.id) : null;
   const problem = (await searchParams).claim;
 
@@ -115,6 +116,12 @@ export default async function OfferPage({
             </DemoNotice>
           )}
 
+          {upcoming && offer.startsOn && (
+            <p className="rounded-2xl bg-accent-soft/60 p-4 font-semibold text-ink">
+              ההטבה הזאת מתחילה ב־{formatDate(offer.startsOn)}. אחרי שתיפתח אפשר יהיה לקבל כאן קוד.
+            </p>
+          )}
+
           {mine && (
             <PersonalCode
               offerId={offer.id}
@@ -133,6 +140,12 @@ export default async function OfferPage({
           )}
 
           <dl className="grid gap-3 rounded-[var(--radius-card)] bg-surface p-5 text-sm shadow-[var(--shadow-card)]">
+            {offer.redeemChannel && (
+              <div className="flex justify-between gap-3">
+                <dt className="text-ink-soft">מימוש</dt>
+                <dd className="font-semibold text-ink">{redeemChannelLabel[offer.redeemChannel]}</dd>
+              </div>
+            )}
             {offer.validUntil && (
               <div className="flex justify-between gap-3">
                 <dt className="text-ink-soft">בתוקף עד</dt>
@@ -165,7 +178,7 @@ export default async function OfferPage({
             )}
           </dl>
 
-          {!expired && offer.status !== "demo" && (
+          {!expired && !upcoming && offer.status !== "demo" && (
             <ShareButton
               path={`/deals/${offer.id}`}
               text={`${offer.valueLabel} ב${offer.business.name}: ${offer.title}`}

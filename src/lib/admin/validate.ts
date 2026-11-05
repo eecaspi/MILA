@@ -142,6 +142,8 @@ export interface OfferValues {
   value_label: string;
   description: string;
   valid_until: string | null;
+  starts_on: string | null;
+  redeem_channel: "online" | "store" | "both" | null;
   price_label: string | null;
   highlight: boolean;
   likey_pick_note: string | null;
@@ -164,6 +166,13 @@ export function parseOfferForm(fd: FormData): Parsed<OfferValues> {
   if (until && (!/^\d{4}-\d{2}-\d{2}$/.test(until) || Number.isNaN(Date.parse(until)))) {
     errors.valid_until = "תאריך לא תקין";
   }
+  const starts = text(fd, "starts_on", 10);
+  if (starts && (!/^\d{4}-\d{2}-\d{2}$/.test(starts) || Number.isNaN(Date.parse(starts)))) {
+    errors.starts_on = "תאריך לא תקין";
+  } else if (starts && until && starts > until) {
+    errors.starts_on = "תאריך ההתחלה אחרי תאריך הסיום";
+  }
+  const channel = text(fd, "redeem_channel", 10);
   const code = text(fd, "coupon_code", 60);
   if (code && !/^[A-Za-z0-9_\-]{2,60}$/.test(code))
     errors.coupon_code = "קוד קופון: אותיות באנגלית, ספרות ומקף בלבד";
@@ -178,6 +187,8 @@ export function parseOfferForm(fd: FormData): Parsed<OfferValues> {
       value_label: value,
       description: text(fd, "description", 1000),
       valid_until: orNull(until),
+      starts_on: orNull(starts),
+      redeem_channel: channel === "online" || channel === "store" || channel === "both" ? channel : null,
       price_label: orNull(text(fd, "price_label", 60)),
       highlight: fd.get("highlight") === "on",
       likey_pick_note: orNull(text(fd, "likey_pick_note", 200)),

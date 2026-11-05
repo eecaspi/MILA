@@ -3,12 +3,14 @@ import Link from "next/link";
 import { DealCard } from "@/components/deals/DealCard";
 import { DemoNotice } from "@/components/ui/DemoNotice";
 import { FilterChips } from "@/components/ui/FilterChips";
-import { categories, isCategorySlug } from "@/data/categories";
+import { categories, getCategory, isCategorySlug } from "@/data/categories";
 import { siteConfig } from "@/config/site";
 import { getSession } from "@/lib/auth/session";
 import { getMyCodes } from "@/lib/data/my-codes";
-import { getOffers } from "@/lib/data/repository";
-import { matchesQuery } from "@/lib/data/search";
+import { BusinessCard } from "@/components/business/BusinessCard";
+import { SearchBox } from "@/components/ui/SearchBox";
+import { getBusinesses, getOffers, getSearchSuggestions } from "@/lib/data/repository";
+import { matchesBusiness, matchesQuery } from "@/lib/data/search";
 import type { OfferKind } from "@/lib/types";
 
 export const metadata: Metadata = {
@@ -35,9 +37,14 @@ export default async function DealsPage({ searchParams }: { searchParams: Search
   const q = (params.q ?? "").trim().slice(0, 60) || undefined;
   const channel = parseChannel(params.channel);
   const offers = (await getOffers({ category, kind }))
-    .filter((o) => matchesQuery(o, q))
+    .filter((o) => matchesQuery(o, q, getCategory(o.business.category).name))
     // "both" can be redeemed either way.
     .filter((o) => !channel || o.redeemChannel === channel || o.redeemChannel === "both");
+  // A search also looks at businesses, so a business name never ends in an empty page.
+  const matchingBusinesses = q
+    ? (await getBusinesses({ category })).filter((b) => matchesBusiness(b, q, getCategory(b.category).name))
+    : [];
+  const suggestions = await getSearchSuggestions();
   const signedIn = !!(await getSession());
   const codes = siteConfig.features.personalCodes
     ? { signedIn, mine: await getMyCodes() }
@@ -48,6 +55,8 @@ export default async function DealsPage({ searchParams }: { searchParams: Search
   const usedCategories = new Set(allOffers.map((o) => o.business.category));
   const hasChannels = allOffers.some((o) => o.redeemChannel);
   const filtered = !!(category || kind || channel || q);
+  const showBusinesses = !kind && !channel;
+  const total = offers.length + (showBusinesses ? matchingBusinesses.length : 0);
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-10">
@@ -65,23 +74,7 @@ export default async function DealsPage({ searchParams }: { searchParams: Search
       </div>
 
       <div className="mb-8 space-y-5 rounded-[var(--radius-card)] bg-surface p-4 shadow-[var(--shadow-card)] md:p-6">
-        <form action="/deals" role="search" className="flex gap-2">
-          {category && <input type="hidden" name="category" value={category} />}
-          {kind && <input type="hidden" name="kind" value={kind} />}
-          {channel && <input type="hidden" name="channel" value={channel} />}
-          <input
-            type="search"
-            name="q"
-            defaultValue={q}
-            maxLength={60}
-            placeholder="מה מחפשים? למשל: פאות, בגדי ילדים, תכשיטים"
-            aria-label="חיפוש הטבות"
-            className="min-w-0 flex-1 rounded-full border-2 border-line bg-canvas px-5 py-3.5 text-base text-ink outline-none placeholder:text-ink-soft/60 focus:border-accent md:text-lg"
-          />
-          <button type="submit" className="btn-primary px-7">
-            חיפוש
-          </button>
-        </form>
+        <SearchBox suggestions={suggestions} defaultValue={q} hidden={{ category, kind, channel }} />
 
         <div className="space-y-3">
           <FilterChips
@@ -127,7 +120,9 @@ export default async function DealsPage({ searchParams }: { searchParams: Search
         {filtered && (
           <p className="flex flex-wrap items-center gap-3 text-sm text-ink-soft">
             <span>
-              {offers.length === 0 ? "לא נמצאו הטבות" : offers.length === 1 ? "נמצאה הטבה אחת" : `נמצאו ${offers.length} הטבות`}
+              {total === 0
+                ? "לא נמצאו תוצאות"
+                : `נמצאו ${offers.length} הטבות${showBusinesses && matchingBusinesses.length > 0 ? ` ו־${matchingBusinesses.length} עסקים` : ""}`}
             </span>
             <Link href="/deals" className="font-semibold text-accent hover:underline">
               ניקוי הסינון
@@ -136,16 +131,43 @@ export default async function DealsPage({ searchParams }: { searchParams: Search
         )}
       </div>
 
-      {offers.length > 0 ? (
+      {offers.length > 0 && (
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {offers.map((offer) => (
             <DealCard key={offer.id} offer={offer} codes={codes} />
           ))}
         </div>
-      ) : (
-        <p className="rounded-2xl bg-surface p-8 text-center text-ink-soft">
-          {q ? `לא מצאתי משהו שמתאים ל"${q}". נסי מילה אחרת?` : "עוד לא מצאתי משהו שמתאים לסינון הזה. נסי קטגוריה אחרת?"}
-        </p>
+      )}
+
+      {showBusinesses && matchingBusinesses.length > 0 && (
+        <section aria-labelledby="biz-results" className={offers.length > 0 ? "mt-12" : ""}>
+          <h2 id="biz-results" className="mb-4 text-2xl text-ink">
+            עסקים שמתאימים ל&quot;{q}&quot;
+          </h2>
+          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+            {matchingBusinesses.map((b) => (
+              <BusinessCard key={b.id} business={b} />
+            ))}
+          </div>
+        </section>
+      )}
+
+      {total === 0 && (
+        <div className="rounded-2xl bg-surface p-8 text-center text-ink-soft">
+          <p>
+            {q
+              ? `לא מצאתי משהו שמתאים ל"${q}". נסי מילה אחרת, או בחרי קטגוריה.`
+              : "עוד לא מצאתי משהו שמתאים לסינון הזה. נסי קטגוריה אחרת?"}
+          </p>
+          <p className="mt-4 flex flex-wrap justify-center gap-3">
+            <Link href="/deals" className="btn-secondary">
+              לכל ההטבות
+            </Link>
+            <Link href="/businesses" className="btn-secondary">
+              לכל העסקים
+            </Link>
+          </p>
+        </div>
       )}
     </div>
   );

@@ -11,6 +11,8 @@ import "server-only";
 import { unstable_cache } from "next/cache";
 import { cache } from "react";
 import { siteConfig } from "@/config/site";
+import { categories } from "@/data/categories";
+import { buildSuggestions } from "@/lib/data/search";
 import { demoBusinesses } from "@/data/demo-businesses";
 import { demoOffers } from "@/data/demo-offers";
 import { createPublicClient } from "@/lib/supabase/public";
@@ -123,6 +125,17 @@ export async function getOffers(filter: OfferFilter = {}): Promise<OfferWithBusi
     result.push(withoutCouponCode({ ...offer, business }, siteConfig.features.showCouponCodes));
   }
   return result;
+}
+
+/** Words offered while typing in the search box. */
+export async function getSearchSuggestions(): Promise<string[]> {
+  const [businesses, offers] = await Promise.all([getBusinesses(), getOffers()]);
+  return buildSuggestions([
+    categories.map((c) => c.name),
+    businesses.map((b) => b.name),
+    businesses.flatMap((b) => b.tags),
+    offers.map((o) => o.title),
+  ]);
 }
 
 /** "המבצעים הכי שווים" — highlighted first, then the newest, so the section is never empty. */

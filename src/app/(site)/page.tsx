@@ -5,6 +5,7 @@ import { CommunityInvite } from "@/components/home/CommunityInvite";
 import { HeroCarousel } from "@/components/home/HeroCarousel";
 import { HowItWorks } from "@/components/home/HowItWorks";
 import { CategoryIcon } from "@/components/ui/CategoryIcon";
+import { SearchBox } from "@/components/ui/SearchBox";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { toneClasses } from "@/components/ui/tones";
 import { siteConfig } from "@/config/site";
@@ -12,14 +13,15 @@ import { categories } from "@/data/categories";
 import { getSession } from "@/lib/auth/session";
 import { getBanners } from "@/lib/data/banners";
 import { getMyCodes } from "@/lib/data/my-codes";
-import { getBusinesses, getHighlightedOffers } from "@/lib/data/repository";
+import { getBusinesses, getHighlightedOffers, getSearchSuggestions } from "@/lib/data/repository";
 
 export default async function HomePage() {
-  const [best, businesses, session, banners] = await Promise.all([
+  const [best, businesses, session, banners, suggestions] = await Promise.all([
     getHighlightedOffers(4),
     getBusinesses(),
     getSession(),
     getBanners(),
+    getSearchSuggestions(),
   ]);
   const codes = siteConfig.features.personalCodes
     ? { signedIn: !!session, mine: await getMyCodes() }
@@ -34,19 +36,7 @@ export default async function HomePage() {
       </h1>
       <HeroCarousel banners={banners} />
       <div className="mx-auto max-w-3xl px-4 pt-8">
-        <form action="/deals" role="search" className="flex gap-2">
-          <input
-            type="search"
-            name="q"
-            maxLength={60}
-            placeholder="מה מחפשים? למשל: פאות, בגדי ילדים, תכשיטים"
-            aria-label="חיפוש הטבות"
-            className="min-w-0 flex-1 rounded-full border-2 border-line bg-surface px-5 py-3.5 text-base text-ink shadow-[var(--shadow-card)] outline-none placeholder:text-ink-soft/60 focus:border-accent md:text-lg"
-          />
-          <button type="submit" className="btn-primary px-7">
-            חיפוש
-          </button>
-        </form>
+        <SearchBox suggestions={suggestions} raised />
       </div>
       <div className="h-10" />
 

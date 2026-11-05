@@ -99,3 +99,22 @@ export function parseBannerForm(fd: FormData, supabaseUrl: string): BannerParse 
     },
   };
 }
+
+export interface LinkOption {
+  value: string;
+  label: string;
+}
+
+/** Where a banner can lead: the site's pages, then (passed in) its offers. */
+export function pageLinkOptions(whatsappUrl: string | null): LinkOption[] {
+  return [
+    { value: "/", label: "דף הבית" },
+    { value: "/deals", label: "כל ההטבות (ליקי מצאה לך)" },
+    { value: "/businesses", label: "העסקים שלנו" },
+    { value: "/community", label: "החברות של ליקי" },
+    { value: "/about", label: "קצת עלינו" },
+    { value: "/login?mode=signup", label: "הרשמה לחברות" },
+    { value: "/login", label: "כניסה" },
+    ...(whatsappUrl ? [{ value: whatsappUrl, label: "קבוצת הוואטסאפ" }] : []),
+  ];
+}

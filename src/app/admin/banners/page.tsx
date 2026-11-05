@@ -1,7 +1,8 @@
 import { BannerUploader } from "@/components/admin/BannerUploader";
 import { BannerTextFields } from "@/components/admin/BannerTextFields";
 import { inputClass } from "@/components/admin/styles";
-import type { BannerLayout } from "@/lib/banners";
+import { pageLinkOptions, type BannerLayout, type LinkOption } from "@/lib/banners";
+import { siteConfig } from "@/config/site";
 import { createClient } from "@/lib/supabase/server";
 import { deleteBanner, updateBanner } from "../banner-actions";
 
@@ -28,6 +29,20 @@ export default async function AdminBanners() {
     .order("created_at", { ascending: false });
   const rows = (data ?? []) as Row[];
 
+  const { data: offerRows } = await supabase
+    .from("offers")
+    .select("id, title, businesses!inner(name, is_real_business)")
+    .eq("businesses.is_real_business", true)
+    .order("title")
+    .limit(200);
+  const linkOptions: LinkOption[] = [
+    ...pageLinkOptions(siteConfig.community.whatsappUrl),
+    ...((offerRows ?? []) as unknown as { id: string; title: string; businesses: { name: string } | null }[]).map((o) => ({
+      value: `/deals/${o.id}`,
+      label: `הטבה: ${o.title}${o.businesses ? ` (${o.businesses.name})` : ""}`,
+    })),
+  ];
+
   return (
     <div className="space-y-6">
       <div>
@@ -37,7 +52,7 @@ export default async function AdminBanners() {
         </p>
       </div>
 
-      <BannerUploader />
+      <BannerUploader linkOptions={linkOptions} />
 
       {error && (
         <p role="alert" className="rounded-xl bg-danger/10 px-3 py-2 text-sm text-danger">
@@ -65,7 +80,7 @@ export default async function AdminBanners() {
               <div className="space-y-3">
                 <form action={updateBanner} className="grid gap-3 sm:grid-cols-2">
                   <input type="hidden" name="id" value={b.id} />
-                  <BannerTextFields values={b} />
+                  <BannerTextFields values={b} linkOptions={linkOptions} />
                   <label className="block">
                     <span className="mb-1 block text-xs font-semibold text-ink-soft">סדר</span>
                     <input name="sort_order" inputMode="numeric" defaultValue={b.sort_order} className={inputClass} />

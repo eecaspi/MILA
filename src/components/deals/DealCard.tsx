@@ -3,7 +3,6 @@ import { TagMark } from "@/components/brand/TagMark";
 import { StatusBadge } from "@/components/ui/StatusBadge";
 import { CardCode } from "./CardCode";
 import { isExpired, isUpcoming, offerBadge, redeemChannelLabel } from "@/lib/data/mappers";
-import { ShareButton } from "./ShareButton";
 import { formatDate } from "@/lib/format";
 import type { OfferWithBusiness } from "@/lib/types";
 import { OfferImage } from "./OfferImage";
@@ -103,14 +102,6 @@ export function DealCard({
               <span>מתחילה ב־{formatDate(offer.startsOn)}</span>
             ) : (
               offer.validUntil && <span>בתוקף עד {formatDate(offer.validUntil)}</span>
-            )}
-            {!isDemo && !isUpcoming(offer.startsOn) && (
-              <ShareButton
-                path={href}
-                text={`${offer.valueLabel} ב${offer.business.name}: ${offer.title}`}
-                compact
-                className="relative z-10 ms-auto"
-              />
             )}
           </div>
           {codes && canClaim && (

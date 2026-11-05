@@ -7,6 +7,7 @@ import { NavLinks } from "./NavLinks";
 
 export async function SiteHeader() {
   const session = await getSession();
+  const extra = session?.profile.role === "business_owner" ? [{ href: "/business", label: "העסק שלי" }] : [];
 
   return (
     <header className="sticky top-0 z-40 border-b border-line/70 bg-canvas/90 backdrop-blur">
@@ -16,7 +17,7 @@ export async function SiteHeader() {
         </Link>
 
         <nav aria-label="ניווט ראשי" className="hidden lg:block">
-          <NavLinks variant="desktop" />
+          <NavLinks variant="desktop" extra={extra} />
         </nav>
 
         <div className="flex items-center gap-2">
@@ -84,7 +85,7 @@ export async function SiteHeader() {
               aria-label="ניווט ראשי"
               className="absolute end-0 mt-2 w-60 rounded-2xl bg-surface shadow-[var(--shadow-soft)]"
             >
-              <NavLinks variant="mobile" />
+              <NavLinks variant="mobile" extra={extra} />
             </nav>
           </details>
         </div>

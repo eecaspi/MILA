@@ -8,12 +8,19 @@ function isActive(pathname: string, href: string) {
   return href === "/" ? pathname === "/" : pathname.startsWith(href);
 }
 
-export function NavLinks({ variant }: { variant: "desktop" | "mobile" }) {
+export function NavLinks({
+  variant,
+  extra = [],
+}: {
+  variant: "desktop" | "mobile";
+  /** Links only some members see, e.g. "העסק שלי" for business owners. */
+  extra?: { href: string; label: string }[];
+}) {
   const pathname = usePathname();
 
   return (
     <ul className={variant === "desktop" ? "flex items-center gap-1" : "flex flex-col gap-1 p-2"}>
-      {siteConfig.nav.map((item) => {
+      {[...siteConfig.nav, ...extra].map((item) => {
         const active = isActive(pathname, item.href);
         return (
           <li key={item.href}>

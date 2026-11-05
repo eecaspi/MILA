@@ -55,7 +55,7 @@ export async function GET(req: Request, { params }: { params: Promise<{ id: stri
     channel: offer.redeemChannel ? (CHANNEL[offer.redeemChannel] ?? "") : "",
     until: until ? `בתוקף עד ${until}` : "",
     usage: offer.usageLimit ?? "",
-    cta: "הקוד והפרטים באתר",
+    cta: offer.couponCode && (offer.codeMode ?? "fixed") === "fixed" ? "קוד הקופון מתחת לתמונה" : "הקוד והפרטים באתר",
     brand: "ליקי",
     slogan: "יש לי קישור בשבילך",
     host: hostname(siteConfig.url),

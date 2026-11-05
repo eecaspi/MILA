@@ -12,8 +12,9 @@ function buildMessage(offer: OfferWithBusiness, url: string): string {
   return [
     `🎁 ${offer.valueLabel} ב${offer.business.name}`,
     offer.title,
-    fixedCode ? `🏷️ קוד קופון: ${fixedCode}` : null,
     until ? `⏰ בתוקף עד ${until}` : null,
+    "",
+    fixedCode ? `🏷️ קוד קופון (לחיצה ארוכה להעתקה):\n\`\`\`${fixedCode}\`\`\`` : null,
     "",
     `👇 לפרטים ולמימוש באתר ליקי`,
     url,

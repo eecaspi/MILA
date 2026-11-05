@@ -131,21 +131,39 @@ export function HeroCarousel({
                 className="absolute inset-0 size-full object-cover"
               />
             ) : (
-              <Image
-                src={b.url}
-                alt={b.title ?? ""}
-                fill
-                sizes="100vw"
-                className="object-cover"
-                priority={false}
-              />
+              <>
+                {/* The picture is shown whole; the same picture, blurred, fills the space around it. */}
+                <Image
+                  src={b.url}
+                  alt=""
+                  aria-hidden
+                  fill
+                  sizes="50vw"
+                  className="scale-125 object-cover opacity-70 blur-2xl"
+                />
+                <Image
+                  src={b.url}
+                  alt={b.title ?? ""}
+                  fill
+                  sizes="100vw"
+                  className="object-contain"
+                  priority={false}
+                />
+              </>
             );
-          const caption = b.title ? (
-            <span className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/60 to-transparent px-6 pb-12 pt-16 text-xl font-bold text-white md:px-12 md:text-3xl">
-              {b.title}
+          const href = b.link ?? "/deals";
+          const external = /^https?:/.test(href);
+          // Every banner says something and has a button: its title (if any) and "לפרטים נוספים".
+          const caption = (
+            <span className="absolute inset-x-4 bottom-14 flex flex-col items-start gap-2 md:inset-x-10">
+              {b.title && (
+                <span className="max-w-[80%] rounded-2xl bg-surface/90 px-4 py-2 text-base font-bold text-ink shadow-[var(--shadow-card)] md:text-2xl">
+                  {b.title}
+                </span>
+              )}
+              <span className="btn-primary !px-5 !py-2 text-sm md:text-base">לפרטים נוספים</span>
             </span>
-          ) : null;
-          const external = b.link && /^https?:/.test(b.link);
+          );
           return (
             <div
               key={b.id}
@@ -155,24 +173,17 @@ export function HeroCarousel({
               role="group"
               aria-roledescription="שקופית"
               aria-label={`${n + 1} מתוך ${total}`}
-              className="relative w-full shrink-0 snap-start overflow-hidden bg-raised"
+              className="relative w-full shrink-0 snap-start overflow-hidden bg-surface"
             >
-              {b.link ? (
-                <Link
-                  href={b.link}
-                  {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-                  aria-label={b.title ?? "לפרטים נוספים"}
-                  className="absolute inset-0 block"
-                >
-                  {media}
-                  {caption}
-                </Link>
-              ) : (
-                <>
-                  {media}
-                  {caption}
-                </>
-              )}
+              <Link
+                href={href}
+                {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+                aria-label={`${b.title ?? "לפרטים נוספים"}`}
+                className="absolute inset-0 block"
+              >
+                {media}
+                {caption}
+              </Link>
             </div>
           );
         })}

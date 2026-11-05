@@ -4,7 +4,7 @@ import Link from "next/link";
 /**
  * A hero slide that is one picture over the whole banner.
  * "cover" fills the banner (for designed banners); "contain" keeps a whole figure in view and
- * blends its white background into the page colour.
+ * sits on white, like its own background.
  */
 export function FullImageSlide({
   image,
@@ -20,7 +20,7 @@ export function FullImageSlide({
   priority?: boolean;
 }) {
   return (
-    <Link href={href} aria-label={alt} className="absolute inset-0 block bg-canvas">
+    <Link href={href} aria-label={alt} className={`absolute inset-0 block ${fit === "contain" ? "bg-surface" : "bg-canvas"}`}>
       <Image
         src={image}
         alt=""
@@ -30,7 +30,7 @@ export function FullImageSlide({
         className={
           fit === "cover"
             ? "object-cover object-[30%_center] md:object-center"
-            : "object-contain object-center mix-blend-multiply"
+            : "object-contain object-center"
         }
       />
     </Link>

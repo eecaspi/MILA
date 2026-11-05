@@ -7,6 +7,7 @@ import { TrackView } from "@/components/analytics/Tracker";
 import { CopyCouponButton } from "@/components/deals/CopyCouponButton";
 import { OfferImage } from "@/components/deals/OfferImage";
 import { PersonalCode } from "@/components/deals/PersonalCode";
+import { ShareButton } from "@/components/deals/ShareButton";
 import { DemoNotice } from "@/components/ui/DemoNotice";
 import { StatusBadge } from "@/components/ui/StatusBadge";
 import { siteConfig } from "@/config/site";
@@ -163,6 +164,13 @@ export default async function OfferPage({
               </div>
             )}
           </dl>
+
+          {!expired && offer.status !== "demo" && (
+            <ShareButton
+              path={`/deals/${offer.id}`}
+              text={`${offer.valueLabel} ב${offer.business.name}: ${offer.title}`}
+            />
+          )}
         </div>
       </div>
     </div>

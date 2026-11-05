@@ -99,13 +99,13 @@ export function ShareDialog({
         className="m-auto w-[min(92vw,26rem)] rounded-3xl border border-line bg-surface p-0 text-ink shadow-[var(--shadow-card)] backdrop:bg-ink/40"
       >
         <div className="max-h-[90vh] space-y-3 overflow-y-auto p-5">
-          <div className="flex items-center justify-between">
+          <div className="sticky top-0 z-10 -mx-5 -mt-5 flex items-center justify-between bg-surface px-5 pb-2 pt-5">
             <p className="font-display text-lg font-bold">שיתוף בקבוצה</p>
             <button
               type="button"
               onClick={() => ref.current?.close()}
               aria-label="סגירה"
-              className="rounded-full px-2 text-2xl leading-none text-ink-soft hover:text-ink"
+              className="flex size-10 items-center justify-center rounded-full bg-accent-soft text-2xl leading-none text-ink hover:bg-line"
             >
               ×
             </button>
@@ -153,6 +153,9 @@ export function ShareDialog({
               העתקת הקישור
             </button>
           </div>
+          <button type="button" onClick={() => ref.current?.close()} className="btn-secondary w-full py-2.5">
+            סגירה
+          </button>
           <p aria-live="polite" className="min-h-5 text-center text-sm font-semibold text-accent">
             {note}
           </p>

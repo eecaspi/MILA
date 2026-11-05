@@ -62,6 +62,23 @@ function visualLines(text: string, max: number): string[] {
   return out.slice(0, 3).map(visual);
 }
 
+/** A picture from our own storage as an inline image (PNG or JPEG only), or null. */
+async function remoteImage(url: string | undefined): Promise<string | null> {
+  if (!url) return null;
+  try {
+    const u = new URL(url);
+    if (u.protocol !== "https:" || !u.hostname.endsWith(".supabase.co")) return null;
+    const res = await fetch(u, { signal: AbortSignal.timeout(4000) });
+    const type = res.headers.get("content-type")?.split(";")[0] ?? "";
+    if (!res.ok || (type !== "image/png" && type !== "image/jpeg")) return null;
+    const bytes = Buffer.from(await res.arrayBuffer());
+    if (bytes.length > 2_000_000) return null;
+    return `data:${type};base64,${bytes.toString("base64")}`;
+  } catch {
+    return null;
+  }
+}
+
 const CHANNEL: Record<string, string> = {
   online: "אונליין",
   store: "בחנות",
@@ -91,10 +108,12 @@ export async function GET(req: Request, { params }: { params: Promise<{ id: stri
     host: hostname(siteConfig.url),
   };
   const all = Object.values(lines).join("") + "0123456789%₪-";
-  const [bold, regular, logo] = await Promise.all([
+  const [bold, regular, logo, photo, bizLogo] = await Promise.all([
     loadFont(all, 800),
     loadFont(all, 500),
     dataUri(origin, "/brand/liky-icon.png", "image/png"),
+    remoteImage(offer.imageUrl),
+    remoteImage(offer.business.logoUrl),
   ]);
   const fonts: { name: string; data: ArrayBuffer; weight: 500 | 800 }[] = [];
   if (bold) fonts.push({ name: "Heebo", data: bold, weight: 800 });
@@ -159,30 +178,70 @@ export async function GET(req: Request, { params }: { params: Promise<{ id: stri
             </div>
           </div>
 
-          <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 26 }}>
-            <div
-              style={{
-                display: "flex",
-                background: "#b8201b",
-                color: "#ffffff",
-                fontSize: lines.value.length > 9 ? 120 : 190,
-                fontWeight: 800,
-                padding: "10px 64px 22px",
-                borderRadius: 64,
-                lineHeight: 1.1,
-              }}
-            >
-              {visual(lines.value)}
-            </div>
-            <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-              {visualLines(lines.business, 18).map((l, i) => (
-                <div key={i} style={{ display: "flex", fontSize: 76, fontWeight: 800, color: "#3f1d20" }}>
-                  {l}
+          <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 22 }}>
+            {photo ? (
+              <div style={{ display: "flex", position: "relative", width: "100%", height: 390 }}>
+                <img
+                  src={photo}
+                  width={916}
+                  height={390}
+                  alt=""
+                  style={{ width: "100%", height: 390, objectFit: "cover", borderRadius: 36 }}
+                />
+                <div
+                  style={{
+                    display: "flex",
+                    position: "absolute",
+                    top: 18,
+                    right: 18,
+                    background: "#b8201b",
+                    color: "#ffffff",
+                    fontSize: lines.value.length > 9 ? 56 : 90,
+                    fontWeight: 800,
+                    padding: "6px 36px 14px",
+                    borderRadius: 40,
+                    lineHeight: 1.1,
+                  }}
+                >
+                  {visual(lines.value)}
                 </div>
-              ))}
+              </div>
+            ) : (
+              <div
+                style={{
+                  display: "flex",
+                  background: "#b8201b",
+                  color: "#ffffff",
+                  fontSize: lines.value.length > 9 ? 120 : bizLogo ? 150 : 190,
+                  fontWeight: 800,
+                  padding: "10px 64px 22px",
+                  borderRadius: 64,
+                  lineHeight: 1.1,
+                }}
+              >
+                {visual(lines.value)}
+              </div>
+            )}
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 22 }}>
+              <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+                {visualLines(lines.business, photo ? 22 : 18).map((l, i) => (
+                  <div key={i} style={{ display: "flex", fontSize: photo ? 60 : 76, fontWeight: 800, color: "#3f1d20" }}>
+                    {l}
+                  </div>
+                ))}
+              </div>
+              {bizLogo ? (
+                <img
+                  src={bizLogo}
+                  width={photo ? 110 : 130}
+                  height={photo ? 110 : 130}
+                  alt=""
+                  style={{ objectFit: "contain", borderRadius: 999, border: "4px solid #fbe8e8", background: "#ffffff" }}
+                />
+              ) : null}
             </div>
             <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-              {visualLines(lines.title, 26).map((l, i) => (
+              {visualLines(lines.title, 26).slice(0, photo ? 2 : 3).map((l, i) => (
                 <div key={i} style={{ display: "flex", fontSize: 46, fontWeight: 500, color: "#7a5558" }}>
                   {l}
                 </div>

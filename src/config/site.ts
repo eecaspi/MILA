@@ -47,6 +47,7 @@ export const siteConfig = {
     { href: "/deals", label: "ליקי מצאה לך" },
     { href: "/businesses", label: "העסקים שלנו" },
     { href: "/community", label: "החברות של ליקי" },
+    { href: "/favorites", label: "המועדפים" },
     { href: "/about", label: "קצת עלינו" },
   ],
   community: {

@@ -14,7 +14,7 @@ export async function SiteHeader() {
           <Logo variant="wordmark" height={48} priority />
         </Link>
 
-        <nav aria-label="ניווט ראשי" className="hidden md:block">
+        <nav aria-label="ניווט ראשי" className="hidden lg:block">
           <NavLinks variant="desktop" />
         </nav>
 
@@ -56,7 +56,7 @@ export async function SiteHeader() {
           )}
 
           {/* Mobile menu: native <details>, no JS needed. */}
-          <details className="group relative md:hidden">
+          <details className="group relative lg:hidden">
             <summary className="flex size-10 cursor-pointer list-none items-center justify-center rounded-full bg-surface shadow-[var(--shadow-card)] [&::-webkit-details-marker]:hidden">
               <span className="sr-only">תפריט</span>
               <svg aria-hidden viewBox="0 0 24 24" className="size-5 text-ink">

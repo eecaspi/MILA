@@ -1,7 +1,9 @@
 import Link from "next/link";
 import { TagMark } from "@/components/brand/TagMark";
 import { StatusBadge } from "@/components/ui/StatusBadge";
+import { AdminShare } from "./AdminShare";
 import { CardCode } from "./CardCode";
+import { FavoriteButton } from "./FavoriteButton";
 import { isExpired, isUpcoming, offerBadge, redeemChannelLabel } from "@/lib/data/mappers";
 import { formatDate } from "@/lib/format";
 import type { OfferWithBusiness } from "@/lib/types";
@@ -76,6 +78,7 @@ export function DealCard({
         <span className="absolute end-3 top-3 rounded-full bg-surface/90 px-2.5 py-1 text-xs font-semibold text-ink">
           {kindLabel[offer.kind]}
         </span>
+        {!isDemo && <FavoriteButton offerId={offer.id} className="absolute bottom-3 end-3 z-10" />}
         {badge && (
           <span
             className={`absolute bottom-3 start-3 rounded-full px-2.5 py-1 text-xs font-bold shadow-[var(--shadow-soft)] ${
@@ -142,6 +145,12 @@ export function DealCard({
               />
             </div>
           )}
+          <AdminShare
+            path={href}
+            text={`${offer.valueLabel} ב${offer.business.name}: ${offer.title}`}
+            compact
+            className="relative z-10 mb-3"
+          />
           <Link
             href={href}
             className={`${codes && canClaim ? "btn-secondary" : "btn-primary"} w-full py-2.5 text-[15px] after:absolute after:inset-0`}

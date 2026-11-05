@@ -9,8 +9,8 @@ import { getSession } from "@/lib/auth/session";
 import { getMyCodes } from "@/lib/data/my-codes";
 import { BusinessCard } from "@/components/business/BusinessCard";
 import { SearchBox } from "@/components/ui/SearchBox";
-import { getBusinesses, getOffers, getSearchSuggestions } from "@/lib/data/repository";
-import { matchesBusiness, matchesQuery } from "@/lib/data/search";
+import { getBusinesses, getOffers, getSearchHints, getSearchSuggestions } from "@/lib/data/repository";
+import { searchBusinesses, searchOffers } from "@/lib/data/search";
 import type { OfferKind } from "@/lib/types";
 
 export const metadata: Metadata = {
@@ -36,15 +36,23 @@ export default async function DealsPage({ searchParams }: { searchParams: Search
   const kind = parseKind(params.kind);
   const q = (params.q ?? "").trim().slice(0, 60) || undefined;
   const channel = parseChannel(params.channel);
-  const offers = (await getOffers({ category, kind }))
-    .filter((o) => matchesQuery(o, q, getCategory(o.business.category).name))
-    // "both" can be redeemed either way.
-    .filter((o) => !channel || o.redeemChannel === channel || o.redeemChannel === "both");
+  const catName = (o: { business: { category: Parameters<typeof getCategory>[0] } }) =>
+    getCategory(o.business.category).name;
+  const found = searchOffers(
+    (await getOffers({ category, kind })).filter(
+      // "both" can be redeemed either way.
+      (o) => !channel || o.redeemChannel === channel || o.redeemChannel === "both",
+    ),
+    q,
+    catName,
+  );
+  const offers = found.items;
   // A search also looks at businesses, so a business name never ends in an empty page.
-  const matchingBusinesses = q
-    ? (await getBusinesses({ category })).filter((b) => matchesBusiness(b, q, getCategory(b.category).name))
-    : [];
-  const suggestions = await getSearchSuggestions();
+  const foundBusinesses = q
+    ? searchBusinesses(await getBusinesses({ category }), q, (x) => getCategory(x.category).name)
+    : { items: [], approximate: false };
+  const matchingBusinesses = foundBusinesses.items;
+  const [suggestions, hints] = await Promise.all([getSearchSuggestions(), getSearchHints()]);
   const signedIn = !!(await getSession());
   const codes = siteConfig.features.personalCodes
     ? { signedIn, mine: await getMyCodes() }
@@ -74,7 +82,7 @@ export default async function DealsPage({ searchParams }: { searchParams: Search
       </div>
 
       <div className="mb-8 space-y-5 rounded-[var(--radius-card)] bg-surface p-4 shadow-[var(--shadow-card)] md:p-6">
-        <SearchBox suggestions={suggestions} defaultValue={q} hidden={{ category, kind, channel }} />
+        <SearchBox suggestions={suggestions} hints={q ? [] : hints} defaultValue={q} hidden={{ category, kind, channel }} />
 
         <div className="space-y-3">
           <FilterChips
@@ -130,6 +138,12 @@ export default async function DealsPage({ searchParams }: { searchParams: Search
           </p>
         )}
       </div>
+
+      {(found.approximate || foundBusinesses.approximate) && (
+        <p className="mb-4 rounded-2xl bg-accent-soft px-4 py-3 text-ink">
+          לא מצאתי בדיוק את מה שחיפשת, אלה התוצאות הכי קרובות.
+        </p>
+      )}
 
       {offers.length > 0 && (
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">

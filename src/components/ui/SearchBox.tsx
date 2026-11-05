@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { useId } from "react";
 
 /**
@@ -9,6 +10,7 @@ export function SearchBox({
   defaultValue,
   hidden = {},
   raised = false,
+  hints = [],
 }: {
   suggestions: string[];
   defaultValue?: string;
@@ -16,9 +18,12 @@ export function SearchBox({
   hidden?: Record<string, string | undefined>;
   /** White field with a soft shadow (for use on the pink page). */
   raised?: boolean;
+  /** Ideas for what to search, shown as small links under the box. */
+  hints?: string[];
 }) {
   const listId = useId();
   return (
+    <div>
     <form action="/deals" role="search" className="flex gap-2">
       {Object.entries(hidden).map(([name, value]) =>
         value ? <input key={name} type="hidden" name={name} value={value} /> : null,
@@ -46,5 +51,20 @@ export function SearchBox({
         חיפוש
       </button>
     </form>
+    {hints.length > 0 && (
+      <p className="mt-2 flex flex-wrap items-center gap-2 text-sm text-ink-soft">
+        <span>נסי לחפש:</span>
+        {hints.map((h) => (
+          <Link
+            key={h}
+            href={`/deals?q=${encodeURIComponent(h)}`}
+            className="rounded-full border border-line bg-surface px-3 py-0.5 font-medium text-ink hover:border-accent hover:text-accent"
+          >
+            {h}
+          </Link>
+        ))}
+      </p>
+    )}
+    </div>
   );
 }

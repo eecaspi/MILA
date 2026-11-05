@@ -13,15 +13,16 @@ import { categories } from "@/data/categories";
 import { getSession } from "@/lib/auth/session";
 import { getBanners } from "@/lib/data/banners";
 import { getMyCodes } from "@/lib/data/my-codes";
-import { getBusinesses, getHighlightedOffers, getSearchSuggestions } from "@/lib/data/repository";
+import { getBusinesses, getHighlightedOffers, getSearchHints, getSearchSuggestions } from "@/lib/data/repository";
 
 export default async function HomePage() {
-  const [best, businesses, session, banners, suggestions] = await Promise.all([
+  const [best, businesses, session, banners, suggestions, hints] = await Promise.all([
     getHighlightedOffers(4),
     getBusinesses(),
     getSession(),
     getBanners(),
     getSearchSuggestions(),
+    getSearchHints(),
   ]);
   const codes = siteConfig.features.personalCodes
     ? { signedIn: !!session, mine: await getMyCodes() }
@@ -36,7 +37,7 @@ export default async function HomePage() {
       </h1>
       <HeroCarousel banners={banners} />
       <div className="mx-auto max-w-3xl px-4 pt-8">
-        <SearchBox suggestions={suggestions} raised />
+        <SearchBox suggestions={suggestions} hints={hints} raised />
       </div>
       <div className="h-10" />
 

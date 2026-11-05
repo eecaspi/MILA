@@ -5,6 +5,8 @@ import { notFound } from "next/navigation";
 import { TagMark } from "@/components/brand/TagMark";
 import { TrackView } from "@/components/analytics/Tracker";
 import { CopyCouponButton } from "@/components/deals/CopyCouponButton";
+import { AdminShare } from "@/components/deals/AdminShare";
+import { FavoriteButton } from "@/components/deals/FavoriteButton";
 import { OfferImage } from "@/components/deals/OfferImage";
 import { PersonalCode } from "@/components/deals/PersonalCode";
 import { DemoNotice } from "@/components/ui/DemoNotice";
@@ -50,7 +52,7 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
         openGraph: {
           title: `${offer.valueLabel} ב${offer.business.name}`,
           description: offer.title,
-          ...(offer.imageUrl ? { images: [{ url: offer.imageUrl }] } : {}),
+          images: [{ url: offer.imageUrl ?? "/brand/og.jpg" }],
         },
       }
     : { title: "ההטבה לא נמצאה" };
@@ -186,6 +188,19 @@ export default async function OfferPage({
               </div>
             )}
           </dl>
+
+          {!expired && !upcoming && !isDemo && (
+            <div className="flex flex-wrap items-center gap-3">
+              <FavoriteButton offerId={offer.id} className="!bg-surface border border-line" />
+              <span className="text-sm text-ink-soft">שמרי במועדפים</span>
+            </div>
+          )}
+          {!expired && !upcoming && !isDemo && (
+            <AdminShare
+              path={`/deals/${offer.id}`}
+              text={`${offer.valueLabel} ב${offer.business.name}: ${offer.title}`}
+            />
+          )}
         </div>
       </div>
     </div>

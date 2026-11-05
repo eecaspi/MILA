@@ -12,7 +12,7 @@ import { unstable_cache } from "next/cache";
 import { cache } from "react";
 import { siteConfig } from "@/config/site";
 import { categories } from "@/data/categories";
-import { buildSuggestions } from "@/lib/data/search";
+import { buildSuggestions, topTerms } from "@/lib/data/search";
 import { demoBusinesses } from "@/data/demo-businesses";
 import { demoOffers } from "@/data/demo-offers";
 import { createPublicClient } from "@/lib/supabase/public";
@@ -136,6 +136,11 @@ export async function getSearchSuggestions(): Promise<string[]> {
     businesses.flatMap((b) => b.tags),
     offers.map((o) => o.title),
   ]);
+}
+
+/** A few ideas for what to search, taken from the most common business tags. */
+export async function getSearchHints(limit = 6): Promise<string[]> {
+  return topTerms((await getBusinesses()).map((b) => b.tags), limit);
 }
 
 /** "המבצעים הכי שווים" — highlighted first, then the newest, so the section is never empty. */

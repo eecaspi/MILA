@@ -31,7 +31,9 @@ export const siteConfig = {
    */
   legal: {
     draft: true as boolean,
-    operatorName: "[שם מפעילת האתר – להשלמה]",
+    operatorName: "אסתר תחיה סוכנות ודיגיטל בע״מ",
+    /** Company registration number (ח.פ.). */
+    companyId: "516941044",
     contactEmail: "hello@example.com",
     /** City whose courts have jurisdiction (to be set with the lawyer). */
     courtCity: "[עיר – להשלמה]",

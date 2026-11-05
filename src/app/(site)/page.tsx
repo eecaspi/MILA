@@ -4,6 +4,7 @@ import { DealCard } from "@/components/deals/DealCard";
 import { CommunityInvite } from "@/components/home/CommunityInvite";
 import { HeroCarousel } from "@/components/home/HeroCarousel";
 import { HowItWorks } from "@/components/home/HowItWorks";
+import { NowTabs } from "@/components/home/NowTabs";
 import { CategoryIcon } from "@/components/ui/CategoryIcon";
 import { SearchBox } from "@/components/ui/SearchBox";
 import { SectionHeading } from "@/components/ui/SectionHeading";
@@ -13,11 +14,11 @@ import { categories } from "@/data/categories";
 import { getSession } from "@/lib/auth/session";
 import { getBanners } from "@/lib/data/banners";
 import { getMyCodes } from "@/lib/data/my-codes";
-import { getBusinesses, getHighlightedOffers, getSearchHints, getSearchSuggestions } from "@/lib/data/repository";
+import { getBusinesses, getNowOffers, getSearchHints, getSearchSuggestions } from "@/lib/data/repository";
 
 export default async function HomePage() {
-  const [best, businesses, session, banners, suggestions, hints] = await Promise.all([
-    getHighlightedOffers(4),
+  const [now, businesses, session, banners, suggestions, hints] = await Promise.all([
+    getNowOffers(4),
     getBusinesses(),
     getSession(),
     getBanners(),
@@ -42,27 +43,42 @@ export default async function HomePage() {
       <div className="h-10" />
 
       <div className="mx-auto max-w-6xl space-y-16 px-4">
-        {/* המבצעים הכי שווים */}
+        {/* מה שווה עכשיו? */}
         <section aria-labelledby="best">
           <SectionHeading
             id="best"
-            title="המבצעים הכי שווים"
-            subtitle="ליקי מצאה לך – ההטבות שהכי כדאי לא לפספס"
+            title="מה שווה עכשיו?"
+            subtitle="ההטבות הבולטות, החדשות והאחרונות לפני שהן נגמרות"
             href="/deals"
             linkLabel="בואי לראות הכול"
           />
-          {/* Phones: swipeable row. Larger screens: grid. */}
-          <ul className="-mx-4 flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 pb-2 sm:mx-0 sm:grid sm:grid-cols-2 sm:overflow-visible sm:px-0 sm:pb-0 lg:grid-cols-4">
-            {best.map((offer) => (
-              <li key={offer.id} className="w-[80%] shrink-0 snap-start sm:w-auto">
-                <DealCard offer={offer} codes={codes} />
-              </li>
-            ))}
-          </ul>
-          <p className="mt-3 text-xs text-ink-soft">
-            ההצעות שמוצגות כרגע הן לדוגמה בלבד. הצעות אמיתיות יסומנו &quot;הצעה מאומתת&quot; אחרי
-            אישור ישיר מול העסק.
-          </p>
+          <NowTabs
+            tabs={[
+              { id: "best", label: "הכי שווים", offers: now.best },
+              { id: "fresh", label: "חדש", offers: now.fresh },
+              { id: "ending", label: "מסתיים בקרוב", offers: now.ending },
+            ]
+              .filter((t) => t.offers.length > 0)
+              .map((t) => ({
+                id: t.id,
+                label: t.label,
+                node: (
+                  <ul className="-mx-4 flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 pb-2 sm:mx-0 sm:grid sm:grid-cols-2 sm:overflow-visible sm:px-0 sm:pb-0 lg:grid-cols-4">
+                    {t.offers.map((offer) => (
+                      <li key={offer.id} className="w-[80%] shrink-0 snap-start sm:w-auto">
+                        <DealCard offer={offer} codes={codes} />
+                      </li>
+                    ))}
+                  </ul>
+                ),
+              }))}
+          />
+          {[...now.best, ...now.fresh, ...now.ending].some((o) => o.status === "demo") && (
+            <p className="mt-3 text-xs text-ink-soft">
+              הצעות שמסומנות &quot;לדוגמה&quot; הן להמחשה בלבד. הצעות אמיתיות מסומנות &quot;הצעה
+              מאומתת&quot; אחרי אישור ישיר מול העסק.
+            </p>
+          )}
         </section>
 
         <HowItWorks />

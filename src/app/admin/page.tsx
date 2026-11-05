@@ -31,6 +31,7 @@ const pageNames: Record<string, string> = {
   "/deals": "ליקי מצאה לך",
   "/businesses": "העסקים שלנו",
   "/community": "החברות של ליקי",
+  "/about": "קצת עלינו",
 };
 function pageName(path: string) {
   if (pageNames[path]) return pageNames[path];

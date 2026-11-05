@@ -7,6 +7,15 @@ import { formatDate } from "@/lib/format";
 import type { OfferWithBusiness } from "@/lib/types";
 import { OfferImage } from "./OfferImage";
 
+function ClockIcon() {
+  return (
+    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" className="text-accent">
+      <circle cx="12" cy="12" r="9" />
+      <path d="M12 7v5l3 2" />
+    </svg>
+  );
+}
+
 const kindLabel = { deal: "מבצע", coupon: "קופון" } as const;
 
 /**
@@ -60,8 +69,8 @@ export function DealCard({
   return (
     <article className="lift group relative flex h-full flex-col overflow-hidden rounded-[var(--radius-card)] bg-surface shadow-[var(--shadow-card)]">
       <div className="relative">
-        <OfferImage offer={offer} className="aspect-[16/9] sm:aspect-[4/3]" />
-        <span className="absolute start-3 top-3 rounded-full bg-accent px-3 py-1.5 text-sm font-bold text-on-accent shadow-[var(--shadow-soft)]">
+        <OfferImage offer={offer} className="aspect-[4/3]" />
+        <span className="absolute start-3 top-3 max-w-[70%] rounded-2xl bg-accent px-4 py-2 text-xl font-extrabold leading-tight text-on-accent shadow-[var(--shadow-soft)] sm:text-2xl">
           {offer.valueLabel}
         </span>
         <span className="absolute end-3 top-3 rounded-full bg-surface/90 px-2.5 py-1 text-xs font-semibold text-ink">
@@ -79,7 +88,17 @@ export function DealCard({
       </div>
 
       <div className="flex flex-1 flex-col p-5">
-        <p className="text-sm font-semibold text-ink-soft">{offer.business.name}</p>
+        <p className="flex items-center gap-2 text-sm font-bold text-ink-soft">
+          {offer.business.logoUrl && (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={offer.business.logoUrl}
+              alt=""
+              className="size-6 rounded-full border border-line object-cover"
+            />
+          )}
+          {offer.business.name}
+        </p>
         <h3 className="mt-1 text-xl text-ink">{offer.title}</h3>
         {offer.priceLabel && <p className="mt-1 font-bold text-ink">{offer.priceLabel}</p>}
 
@@ -91,17 +110,25 @@ export function DealCard({
         )}
 
         <div className="mt-auto pt-5">
-          <div className="mb-3 flex flex-wrap items-center gap-2 text-xs text-ink-soft">
+          <div className="mb-3 flex flex-wrap items-center gap-x-3 gap-y-2 text-sm text-ink">
             {isDemo && <StatusBadge status={offer.status} />}
+            {isUpcoming(offer.startsOn) && offer.startsOn ? (
+              <span className="inline-flex items-center gap-1.5 font-semibold">
+                <ClockIcon />
+                מתחילה ב־{formatDate(offer.startsOn)}
+              </span>
+            ) : (
+              offer.validUntil && (
+                <span className="inline-flex items-center gap-1.5 font-semibold">
+                  <ClockIcon />
+                  בתוקף עד {formatDate(offer.validUntil)}
+                </span>
+              )
+            )}
             {offer.redeemChannel && (
-              <span className="rounded-full bg-raised px-2 py-0.5 font-semibold text-ink">
+              <span className="rounded-full bg-raised px-2.5 py-0.5 text-xs font-semibold text-ink">
                 {redeemChannelLabel[offer.redeemChannel]}
               </span>
-            )}
-            {isUpcoming(offer.startsOn) && offer.startsOn ? (
-              <span>מתחילה ב־{formatDate(offer.startsOn)}</span>
-            ) : (
-              offer.validUntil && <span>בתוקף עד {formatDate(offer.validUntil)}</span>
             )}
           </div>
           {codes && canClaim && (
@@ -117,9 +144,9 @@ export function DealCard({
           )}
           <Link
             href={href}
-            className="btn-secondary w-full py-2.5 text-[15px] after:absolute after:inset-0"
+            className={`${codes && canClaim ? "btn-secondary" : "btn-primary"} w-full py-2.5 text-[15px] after:absolute after:inset-0`}
           >
-            בואי לראות מה שווה
+            {codes && canClaim ? "לפרטי ההטבה" : "למימוש ההטבה"}
           </Link>
         </div>
       </div>

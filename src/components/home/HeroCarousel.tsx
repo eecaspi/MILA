@@ -99,7 +99,7 @@ export function HeroCarousel({
       onMouseEnter={() => setHovering(true)}
       onMouseLeave={() => setHovering(false)}
     >
-      <div className="flex h-[260px] snap-x snap-mandatory overflow-x-auto overscroll-x-contain [scrollbar-width:none] sm:h-[340px] md:h-[440px] [&::-webkit-scrollbar]:hidden">
+      <div className="flex h-[400px] snap-x snap-mandatory overflow-x-auto overscroll-x-contain [scrollbar-width:none] sm:h-[340px] md:aspect-[16/6] md:h-auto md:max-h-[520px] [&::-webkit-scrollbar]:hidden">
         {leading.map((slide, i) => (
           <div
             key={`lead-${i}`}
@@ -109,7 +109,7 @@ export function HeroCarousel({
             role="group"
             aria-roledescription="שקופית"
             aria-label={`${i + 1} מתוך ${total}`}
-            className="relative h-full w-full shrink-0 snap-start overflow-hidden"
+            className="relative w-full shrink-0 snap-start overflow-hidden"
           >
             {slide}
           </div>
@@ -155,7 +155,7 @@ export function HeroCarousel({
               role="group"
               aria-roledescription="שקופית"
               aria-label={`${n + 1} מתוך ${total}`}
-              className="relative h-full w-full shrink-0 snap-start overflow-hidden bg-raised"
+              className="relative w-full shrink-0 snap-start overflow-hidden bg-raised"
             >
               {b.link ? (
                 <Link

@@ -18,12 +18,20 @@ function Chevron({ dir }: { dir: "next" | "prev" }) {
 }
 
 /**
- * The top of the home page: the banners from the back office (the first one is the Liky character).
+ * The top of the home page: the Liky character slides first, then the banners from the back office.
  * Swipe or use the arrows/dots; it also advances by itself, with a pause button, and does not
  * move on its own for people who asked their device for less motion.
  */
-export function HeroCarousel({ banners }: { banners: HomeBanner[] }) {
-  const total = banners.length;
+export function HeroCarousel({
+  leading,
+  banners,
+}: {
+  /** Built-in slides that always come first (the Liky character). */
+  leading: React.ReactNode[];
+  banners: HomeBanner[];
+}) {
+  const lead = leading.length;
+  const total = lead + banners.length;
   const slideRefs = useRef<(HTMLElement | null)[]>([]);
   const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
   const [active, setActive] = useState(0);
@@ -78,7 +86,7 @@ export function HeroCarousel({ banners }: { banners: HomeBanner[] }) {
   // Advance by itself.
   useEffect(() => {
     if (total < 2 || paused || hovering) return;
-    const isVideo = banners[active]?.type === "video";
+    const isVideo = banners[active - lead]?.type === "video";
     const t = setTimeout(() => goTo(active + 1), isVideo ? VIDEO_MS : IMAGE_MS);
     return () => clearTimeout(t);
   }, [active, paused, hovering, total, banners, goTo]);
@@ -92,8 +100,23 @@ export function HeroCarousel({ banners }: { banners: HomeBanner[] }) {
       onMouseLeave={() => setHovering(false)}
     >
       <div className="flex h-[260px] snap-x snap-mandatory overflow-x-auto overscroll-x-contain [scrollbar-width:none] sm:h-[340px] md:h-[440px] [&::-webkit-scrollbar]:hidden">
+        {leading.map((slide, i) => (
+          <div
+            key={`lead-${i}`}
+            ref={(el) => {
+              slideRefs.current[i] = el;
+            }}
+            role="group"
+            aria-roledescription="שקופית"
+            aria-label={`${i + 1} מתוך ${total}`}
+            className="relative h-full w-full shrink-0 snap-start overflow-hidden"
+          >
+            {slide}
+          </div>
+        ))}
+
         {banners.map((b, i) => {
-          const n = i;
+          const n = lead + i;
           const media =
             b.type === "video" ? (
               <video

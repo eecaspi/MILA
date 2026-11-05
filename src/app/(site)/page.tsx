@@ -1,8 +1,8 @@
 import Link from "next/link";
-import { Logo } from "@/components/brand/Logo";
 import { BusinessCard } from "@/components/business/BusinessCard";
 import { DealCard } from "@/components/deals/DealCard";
 import { CommunityInvite } from "@/components/home/CommunityInvite";
+import { CharacterSlide } from "@/components/home/CharacterSlide";
 import { HeroCarousel } from "@/components/home/HeroCarousel";
 import { HowItWorks } from "@/components/home/HowItWorks";
 import { CategoryIcon } from "@/components/ui/CategoryIcon";
@@ -26,54 +26,36 @@ export default async function HomePage() {
     ? { signedIn: !!session, mine: await getMyCodes() }
     : undefined;
 
-  const brandSlide = (
-    <>
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0 bg-[radial-gradient(60%_80%_at_50%_0%,#fde8e8_0%,transparent_75%)]"
-      />
-      <div className="relative mx-auto flex max-w-2xl flex-col items-center px-4 pt-8 pb-14 text-center md:pt-14 md:pb-16">
-        <h1 className="sr-only">
-          {siteConfig.brand.name} – {siteConfig.brand.slogan}
-        </h1>
-        <Logo variant="full" height={190} priority />
-        <p className="mt-6 max-w-md text-lg text-ink-soft md:text-xl">{siteConfig.brand.tagline}</p>
-        <div className="mt-7 flex flex-wrap justify-center gap-3">
-          <Link href="/deals" className="btn-primary text-base">
-            בואי לראות מה מצאתי לך
-          </Link>
-          <Link href="#community" className="btn-secondary text-base">
-            הצטרפי לקהילה
-          </Link>
-        </div>
-      </div>
-    </>
-  );
+  const characterSlides = [
+    <CharacterSlide
+      key="standing"
+      image="/brand/liky-standing.jpg"
+      alt="ליקי, הדמות של האתר, ליד מחשב נייד שמציג את האתר"
+      headline={siteConfig.brand.slogan}
+      text="ההטבות והמבצעים הכי שווים, במקום אחד."
+      href="/deals"
+      cta="בואי לראות מה מצאתי לך"
+      priority
+    />,
+    <CharacterSlide
+      key="unboxing"
+      image="/brand/liky-unboxing.jpg"
+      alt="ליקי פותחת חבילה בהתרגשות"
+      headline="מצטרפות בחינם"
+      text="ומקבלות קוד קופון להטבות של העסקים."
+      href={siteConfig.features.memberSignup ? "/login?mode=signup" : "#community"}
+      cta="אני רוצה להצטרף"
+    />,
+  ];
 
   return (
     <>
-      {/* Hero: the banners from the back office (first = the Liky character); the logo block until some exist */}
-      {banners.length > 0 ? (
-        <>
-          <HeroCarousel banners={banners} />
-          <section className="mx-auto flex max-w-2xl flex-col items-center px-4 pt-8 text-center">
-            <h1 className="sr-only">
-              {siteConfig.brand.name} – {siteConfig.brand.slogan}
-            </h1>
-            <p className="max-w-md text-lg text-ink-soft md:text-xl">{siteConfig.brand.tagline}</p>
-            <div className="mt-5 flex flex-wrap justify-center gap-3">
-              <Link href="/deals" className="btn-primary text-base">
-                בואי לראות מה מצאתי לך
-              </Link>
-              <Link href="#community" className="btn-secondary text-base">
-                הצטרפי לקהילה
-              </Link>
-            </div>
-          </section>
-        </>
-      ) : (
-        <section className="relative overflow-hidden">{brandSlide}</section>
-      )}
+      {/* Hero: the Liky character slides, then the banners from the back office */}
+      <h1 className="sr-only">
+        {siteConfig.brand.name} – {siteConfig.brand.slogan}
+      </h1>
+      <HeroCarousel leading={characterSlides} banners={banners} />
+      <div className="h-10" />
 
       <div className="mx-auto max-w-6xl space-y-16 px-4">
         {/* המבצעים הכי שווים */}

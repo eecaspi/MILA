@@ -6,20 +6,15 @@ import { toneClasses } from "@/components/ui/tones";
 
 /**
  * The general picture of a business (its shop, its brand): the cover photo, else
- * its logo, else a colored block with the category icon. Product photos are not
+ * its logo (both fill the frame), else a colored block with the category icon. Product photos are not
  * used here, they are shown inside the card. Fills its parent (give it a size
  * and `relative`).
  */
 export function BusinessImage({ business, sizes }: { business: Business; sizes: string }) {
-  if (business.coverUrl) {
-    return <Image src={business.coverUrl} alt="" fill sizes={sizes} className="object-cover" />;
-  }
-  if (business.logoUrl) {
-    return (
-      <span className="absolute inset-0 bg-raised">
-        <Image src={business.logoUrl} alt="" fill sizes={sizes} className="object-contain p-8" />
-      </span>
-    );
+  // Cover photo, or the logo when there is no cover: either one fills the whole frame.
+  const picture = business.coverUrl ?? business.logoUrl;
+  if (picture) {
+    return <Image src={picture} alt="" fill sizes={sizes} className="object-cover" />;
   }
   const category = getCategory(business.category);
   return (

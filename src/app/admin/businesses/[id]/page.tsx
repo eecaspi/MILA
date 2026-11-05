@@ -49,11 +49,11 @@ export default async function EditBusiness({
       <section className="space-y-3 rounded-[var(--radius-card)] bg-surface p-5">
         <h2 className="text-lg text-ink">בעלי העסק (גישה לדשבורד)</h2>
         <p className="text-sm text-ink-soft">
-          בעלת העסק נרשמת לאתר כמו כל חברה, ואז מחברים אותה כאן לפי המייל שלה. היא תראה רק את העסק הזה.
+          בעל/ת העסק נרשמים לאתר כמו כל חבר/ה, ואז מחברים אותם כאן לפי המייל. הם יראו רק את העסק הזה.
         </p>
         {owner === "ok" && <Alert tone="success">החיבור נוצר.</Alert>}
         {owner === "removed" && <Alert tone="success">החיבור הוסר.</Alert>}
-        {owner === "missing" && <Alert tone="error">לא נמצאה חברה רשומה עם המייל הזה.</Alert>}
+        {owner === "missing" && <Alert tone="error">לא נמצא משתמש רשום עם המייל הזה.</Alert>}
         {(owners ?? []).length > 0 && (
           <ul className="divide-y divide-line">
             {(owners ?? []).map((o) => (
@@ -76,8 +76,8 @@ export default async function EditBusiness({
             type="email"
             name="email"
             required
-            placeholder="המייל של בעלת העסק (רשומה באתר)"
-            aria-label="מייל בעלת העסק"
+            placeholder="המייל של בעל/ת העסק (רשום באתר)"
+            aria-label="מייל בעל/ת העסק"
             className="ltr min-w-0 flex-1 rounded-full border border-line bg-canvas px-4 py-2 text-sm"
           />
           <button className="btn-secondary px-5 py-2 text-sm">חיבור</button>

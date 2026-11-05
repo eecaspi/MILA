@@ -1,3 +1,4 @@
+import Link from "next/link";
 import type { Metadata } from "next";
 import { BusinessCard } from "@/components/business/BusinessCard";
 import { DemoNotice } from "@/components/ui/DemoNotice";
@@ -56,6 +57,16 @@ export default async function BusinessesPage({ searchParams }: { searchParams: S
           עוד אין כאן עסקים – אני כבר מחפשת בשבילך.
         </p>
       )}
+
+      <section className="mt-12 flex flex-wrap items-center justify-between gap-4 rounded-[var(--radius-card)] bg-accent-soft p-6">
+        <div>
+          <h2 className="text-xl text-ink md:text-2xl">בעלי עסקים? רוצים להופיע כאן?</h2>
+          <p className="mt-1 text-ink-soft">השאירו פרטים ונחזור אליכם עם כל המידע.</p>
+        </div>
+        <Link href="/for-businesses" className="btn-primary px-6 py-2.5">
+          פנו אלינו
+        </Link>
+      </section>
     </div>
   );
 }

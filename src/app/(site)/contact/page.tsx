@@ -3,22 +3,22 @@ import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "יצירת קשר",
-  description: "בעלת עסק או נתקלת בבעיה באתר? אנחנו כאן.",
+  description: "בעלי עסקים, או מי שנתקלה בבעיה באתר? אנחנו כאן.",
 };
 
 const options = [
   {
     href: "/for-businesses",
     icon: "🏪",
-    title: "אני בעלת עסק",
-    text: "רוצה שליקי תספר על העסק שלך? השאירי פרטים ונחזור אלייך עם כל המידע.",
+    title: "אני בעל/ת עסק",
+    text: "רוצים שליקי תספר על העסק שלכם? השאירו פרטים ונחזור אליכם עם כל המידע.",
     cta: "להשארת פרטים",
   },
   {
     href: "/report-problem",
     icon: "🛠️",
     title: "נתקלתי בבעיה באתר",
-    text: "משהו לא עובד, לא מובן או נראה לא נכון? ספרי לנו ונטפל בזה.",
+    text: "משהו לא עובד, לא מובן או נראה לא נכון? ספרו לנו ונטפל בזה.",
     cta: "לדיווח על בעיה",
   },
 ];
@@ -29,7 +29,7 @@ export default function ContactPage() {
       <header>
         <p className="eyebrow">צור קשר</p>
         <h1 className="mt-1 text-3xl text-ink md:text-4xl">איך אפשר לעזור?</h1>
-        <p className="mt-2 text-ink-soft">בחרי את הנושא ונחזור אלייך בהקדם.</p>
+        <p className="mt-2 text-ink-soft">בחרו את הנושא ונחזור אליכם בהקדם.</p>
       </header>
       <ul className="grid gap-4 sm:grid-cols-2">
         {options.map((o) => (

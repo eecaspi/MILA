@@ -7,7 +7,8 @@ import { NavLinks } from "./NavLinks";
 
 export async function SiteHeader() {
   const session = await getSession();
-  const extra = session?.profile.role === "business_owner" ? [{ href: "/business", label: "העסק שלי" }] : [];
+  const isOwner = session?.profile.role === "business_owner";
+  const extra = isOwner ? [{ href: "/business", label: "העסק שלי" }] : [];
 
   return (
     <header className="sticky top-0 z-40 border-b border-line/70 bg-canvas/90 backdrop-blur">
@@ -21,6 +22,14 @@ export async function SiteHeader() {
         </nav>
 
         <div className="flex items-center gap-2">
+          {!isOwner && (
+            <Link
+              href="/for-businesses"
+              className="hidden whitespace-nowrap rounded-full border border-accent/40 bg-accent-soft px-3.5 py-2 text-sm font-bold text-accent transition-colors hover:border-accent md:inline-block"
+            >
+              בעלי עסקים? פנו אלינו
+            </Link>
+          )}
           {session?.profile.role === "admin" && (
             <Link
               href="/admin"
@@ -85,7 +94,11 @@ export async function SiteHeader() {
               aria-label="ניווט ראשי"
               className="absolute end-0 mt-2 w-60 rounded-2xl bg-surface shadow-[var(--shadow-soft)]"
             >
-              <NavLinks variant="mobile" extra={extra} />
+              <NavLinks
+                variant="mobile"
+                extra={extra}
+                cta={isOwner ? undefined : { href: "/for-businesses", label: "בעלי עסקים? פנו אלינו" }}
+              />
             </nav>
           </details>
         </div>

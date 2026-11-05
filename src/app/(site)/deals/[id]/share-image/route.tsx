@@ -32,6 +32,36 @@ async function dataUri(origin: string, path: string, mime: string): Promise<stri
   }
 }
 
+
+/**
+ * The picture maker lays text out left to right without handling Hebrew direction, so Hebrew is
+ * turned into visual order here: words in reverse order, letters of each Hebrew word reversed,
+ * numbers and Latin text left as they are.
+ */
+function visual(text: string): string {
+  const tokens = text.match(/[\u0590-\u05FF]+|[A-Za-z0-9%.:₪+\-/]+|\s+|[^]/g) ?? [];
+  return tokens
+    .map((t) => (/^[\u0590-\u05FF]+$/.test(t) ? Array.from(t).reverse().join("") : t))
+    .reverse()
+    .join("");
+}
+
+/** Splits text into lines of at most `max` characters (by words), each in visual order. */
+function visualLines(text: string, max: number): string[] {
+  const out: string[] = [];
+  let line = "";
+  for (const word of text.split(/\s+/).filter(Boolean)) {
+    if (line && (line + " " + word).length > max) {
+      out.push(line);
+      line = word;
+    } else {
+      line = line ? `${line} ${word}` : word;
+    }
+  }
+  if (line) out.push(line);
+  return out.slice(0, 3).map(visual);
+}
+
 const CHANNEL: Record<string, string> = {
   online: "אונליין",
   store: "בחנות",
@@ -84,7 +114,7 @@ export async function GET(req: Request, { params }: { params: Promise<{ id: stri
           borderRadius: 999,
         }}
       >
-        {text}
+        {visual(text)}
       </div>
     ) : null;
 
@@ -99,7 +129,6 @@ export async function GET(req: Request, { params }: { params: Promise<{ id: stri
           background: "#fdeaea",
           padding: 56,
           fontFamily: "Heebo",
-          direction: "rtl",
         }}
       >
         <div
@@ -114,16 +143,20 @@ export async function GET(req: Request, { params }: { params: Promise<{ id: stri
           }}
         >
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-            <div style={{ display: "flex", alignItems: "center", gap: 18 }}>
-              {logo ? <img src={logo} width={84} height={84} alt="" /> : null}
-              <div style={{ display: "flex", flexDirection: "column" }}>
-                <div style={{ display: "flex", fontSize: 54, fontWeight: 800, color: "#c4050b" }}>{lines.brand}</div>
-                <div style={{ display: "flex", fontSize: 28, fontWeight: 500, color: "#7a5558" }}>{lines.slogan}</div>
-              </div>
-            </div>
             {lines.category ? (
-              <div style={{ display: "flex", fontSize: 32, fontWeight: 500, color: "#7a5558" }}>{lines.category}</div>
-            ) : null}
+              <div style={{ display: "flex", fontSize: 32, fontWeight: 500, color: "#7a5558" }}>
+                {visual(lines.category)}
+              </div>
+            ) : (
+              <div style={{ display: "flex" }} />
+            )}
+            <div style={{ display: "flex", alignItems: "center", gap: 18 }}>
+              <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end" }}>
+                <div style={{ display: "flex", fontSize: 54, fontWeight: 800, color: "#c4050b" }}>{visual(lines.brand)}</div>
+                <div style={{ display: "flex", fontSize: 28, fontWeight: 500, color: "#7a5558" }}>{visual(lines.slogan)}</div>
+              </div>
+              {logo ? <img src={logo} width={84} height={84} alt="" /> : null}
+            </div>
           </div>
 
           <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 26 }}>
@@ -139,22 +172,21 @@ export async function GET(req: Request, { params }: { params: Promise<{ id: stri
                 lineHeight: 1.1,
               }}
             >
-              {lines.value}
+              {visual(lines.value)}
             </div>
-            <div style={{ display: "flex", fontSize: 76, fontWeight: 800, color: "#3f1d20", textAlign: "center" }}>
-              {lines.business}
+            <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+              {visualLines(lines.business, 18).map((l, i) => (
+                <div key={i} style={{ display: "flex", fontSize: 76, fontWeight: 800, color: "#3f1d20" }}>
+                  {l}
+                </div>
+              ))}
             </div>
-            <div
-              style={{
-                display: "flex",
-                fontSize: 46,
-                fontWeight: 500,
-                color: "#7a5558",
-                textAlign: "center",
-                justifyContent: "center",
-              }}
-            >
-              {lines.title}
+            <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+              {visualLines(lines.title, 26).map((l, i) => (
+                <div key={i} style={{ display: "flex", fontSize: 46, fontWeight: 500, color: "#7a5558" }}>
+                  {l}
+                </div>
+              ))}
             </div>
             <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: 14, marginTop: 8 }}>
               {pill(lines.channel, "c")}
@@ -175,7 +207,7 @@ export async function GET(req: Request, { params }: { params: Promise<{ id: stri
                 borderRadius: 999,
               }}
             >
-              {lines.cta}
+              {visual(lines.cta)}
             </div>
             <div style={{ display: "flex", fontSize: 30, fontWeight: 500, color: "#7a5558" }}>{lines.host}</div>
           </div>

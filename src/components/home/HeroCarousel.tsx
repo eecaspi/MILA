@@ -165,7 +165,7 @@ export function HeroCarousel({ banners }: { banners: HomeBanner[] }) {
                   {b.title}
                 </span>
               )}
-              <span className="btn-primary !px-5 !py-2 text-sm md:text-base">{b.cta ?? "לפרטים נוספים"}</span>
+              <span className="btn-primary !px-5 !py-2 text-sm sm:!px-7 sm:!py-3 sm:text-base">{b.cta ?? "לפרטים נוספים"}</span>
             </span>
           );
           return (

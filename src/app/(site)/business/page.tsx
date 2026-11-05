@@ -60,8 +60,8 @@ export default async function MyBusinessPage() {
           <p className="mt-1 text-sm">
             בעלת עסק? פני אלינו והצוות של ליקי יחבר את החשבון שלך לעסק. אחרי החיבור יופיעו כאן הנתונים שלו.
           </p>
-          <Link href="/about" className="btn-secondary mt-4 inline-flex px-5 py-2 text-sm">
-            קצת עלינו
+          <Link href="/for-businesses" className="btn-secondary mt-4 inline-flex px-5 py-2 text-sm">
+            השארת פרטים לבעלי עסקים
           </Link>
         </div>
       )}

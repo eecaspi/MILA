@@ -8,6 +8,7 @@ import {
   MAX_BANNER_IMAGE_BYTES,
   MAX_BANNER_VIDEO_BYTES,
   VIDEO_MIME,
+  type LinkOption,
 } from "@/lib/banners";
 import { createClient } from "@/lib/supabase/client";
 import { BannerTextFields } from "./BannerTextFields";
@@ -17,7 +18,7 @@ import { inputClass } from "./styles";
  * Adds a banner. The file goes from the browser straight to storage (a video can be large),
  * then the banner row is saved by a server action that re-checks everything.
  */
-export function BannerUploader() {
+export function BannerUploader({ linkOptions }: { linkOptions: LinkOption[] }) {
   const router = useRouter();
   const formRef = useRef<HTMLFormElement>(null);
   const [busy, setBusy] = useState(false);
@@ -97,7 +98,7 @@ export function BannerUploader() {
           תמונה רחבה (למשל 1600×700) עד 5MB, או סרטון קצר MP4 / WEBM עד 20MB. הסרטון מתנגן בלי קול.
         </span>
       </label>
-      <BannerTextFields />
+      <BannerTextFields linkOptions={linkOptions} />
       <label className="block">
         <span className="mb-1 block text-sm font-semibold text-ink">סדר (מספר נמוך קודם)</span>
         <input name="sort_order" inputMode="numeric" placeholder="0" className={inputClass} />

@@ -1,10 +1,13 @@
-import { LAYOUTS, type BannerLayout } from "@/lib/banners";
+import { useId } from "react";
+import { LAYOUTS, type BannerLayout, type LinkOption } from "@/lib/banners";
 import { inputClass } from "./styles";
 
 /** The fields every banner has: how it looks, what it says, the button and where it leads. */
 export function BannerTextFields({
   values,
+  linkOptions,
 }: {
+  linkOptions: LinkOption[];
   values?: {
     layout: BannerLayout;
     title: string | null;
@@ -14,6 +17,7 @@ export function BannerTextFields({
     link_url: string | null;
   };
 }) {
+  const listId = useId();
   return (
     <>
       <label className="block sm:col-span-2">
@@ -50,9 +54,21 @@ export function BannerTextFields({
           name="link_url"
           dir="ltr"
           defaultValue={values?.link_url ?? ""}
-          placeholder="/deals או https://..."
+          placeholder="בחרי מהרשימה או הדביקי כתובת"
+          list={listId}
+          autoComplete="off"
           className={inputClass}
         />
+        <datalist id={listId}>
+          {linkOptions.map((o) => (
+            <option key={o.value} value={o.value}>
+              {o.label}
+            </option>
+          ))}
+        </datalist>
+        <span className="mt-1 block text-xs text-ink-soft">
+          לחיצה בשדה פותחת רשימה של עמודי האתר וההטבות. אפשר גם להדביק כתובת שמתחילה ב־https.
+        </span>
       </label>
       <label className="block sm:col-span-2">
         <span className="mb-1 block text-xs font-semibold text-ink-soft">

@@ -50,12 +50,25 @@ export default async function LoginPage({ searchParams }: { searchParams: Search
         </h1>
         <p className="mt-2 text-ink-soft">
           {mode === "signup"
-            ? "דקה אחת, בלי עלות, ומקבלים קוד אישי להטבות."
+            ? "דקה אחת, בלי עלות. אחרי ההרשמה קודי הקופון של העסקים מופיעים לך באתר."
             : signupOpen
               ? "התחברי ואני אראה לך מה חדש."
               : "מועדון הלקוחות עדיין בעבודה. הכניסה כרגע לצוות בלבד."}
         </p>
       </div>
+
+      {mode === "signup" && (
+        <ol className="mb-4 flex justify-center gap-4 text-center text-xs text-ink-soft">
+          {["נרשמות", "מצטרפות לקבוצה (אם בחרת וואטסאפ)", "הקודים מופיעים באתר"].map((t, i) => (
+            <li key={t} className="flex flex-1 flex-col items-center gap-1">
+              <span className="flex size-7 items-center justify-center rounded-full bg-accent text-sm font-bold text-on-accent">
+                {i + 1}
+              </span>
+              {t}
+            </li>
+          ))}
+        </ol>
+      )}
 
       <div className="space-y-4 rounded-[var(--radius-card)] bg-surface p-6 shadow-[var(--shadow-card)]">
         {signupOpen && (

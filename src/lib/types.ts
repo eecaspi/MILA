@@ -21,6 +21,8 @@ export interface Category {
   name: string;
   /** Pastel color used for this category's tiles, monograms and image placeholders. */
   tone: CategoryTone;
+  /** Photo for the home page tile, e.g. "/categories/fashion.jpg". A designed tile is shown until it exists. */
+  image?: string;
 }
 
 /**

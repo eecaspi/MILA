@@ -9,6 +9,7 @@ import { AdminShare } from "@/components/deals/AdminShare";
 import { FavoriteButton } from "@/components/deals/FavoriteButton";
 import { OfferImage } from "@/components/deals/OfferImage";
 import { PersonalCode } from "@/components/deals/PersonalCode";
+import { RedeemInfo } from "@/components/deals/RedeemInfo";
 import { DemoNotice } from "@/components/ui/DemoNotice";
 import { StatusBadge } from "@/components/ui/StatusBadge";
 import { siteConfig } from "@/config/site";
@@ -132,16 +133,33 @@ export default async function OfferPage({
             </p>
           )}
 
-          {mine && (
-            <PersonalCode
-              offerId={offer.id}
-              signedIn={mine.signedIn}
-              claim={mine.claim}
-              problem={problem}
-              wantsWhatsApp={mine.wantsWhatsApp}
-              daily={offer.codeMode === "daily"}
-            />
-          )}
+          {mine &&
+            (offer.codeMode === "link" || offer.codeMode === "store" ? (
+              !expired &&
+              !upcoming &&
+              !isDemo && (
+                <div className="rounded-[var(--radius-card)] bg-surface p-5 shadow-[var(--shadow-card)]">
+                  <p className="mb-3 font-display font-bold text-ink">איך מממשים</p>
+                  <RedeemInfo
+                    mode={offer.codeMode}
+                    signedIn={mine.signedIn}
+                    signupHref={`/login?mode=signup&next=${encodeURIComponent(`/deals/${offer.id}`)}`}
+                    url={offer.redeemUrl ?? offer.business.website}
+                    offerId={offer.id}
+                    businessId={offer.business.id}
+                  />
+                </div>
+              )
+            ) : (
+              <PersonalCode
+                offerId={offer.id}
+                signedIn={mine.signedIn}
+                claim={mine.claim}
+                problem={problem}
+                wantsWhatsApp={mine.wantsWhatsApp}
+                mode={offer.codeMode ?? "fixed"}
+              />
+            ))}
 
           {siteConfig.features.showCouponCodes && offer.couponCode && !expired && (
             <div className="rounded-[var(--radius-card)] bg-surface p-5 shadow-[var(--shadow-card)]">
@@ -155,6 +173,12 @@ export default async function OfferPage({
               <div className="flex justify-between gap-3">
                 <dt className="text-ink-soft">מימוש</dt>
                 <dd className="font-semibold text-ink">{redeemChannelLabel[offer.redeemChannel]}</dd>
+              </div>
+            )}
+            {offer.usageLimit && (
+              <div className="flex justify-between gap-3">
+                <dt className="text-ink-soft">מגבלת שימוש</dt>
+                <dd className="font-semibold text-ink">{offer.usageLimit}</dd>
               </div>
             )}
             {offer.validUntil && (
@@ -188,6 +212,13 @@ export default async function OfferPage({
               </div>
             )}
           </dl>
+
+          {offer.terms && (
+            <div className="rounded-[var(--radius-card)] bg-surface p-5 text-sm shadow-[var(--shadow-card)]">
+              <p className="mb-1 font-display font-bold text-ink">תנאים</p>
+              <p className="whitespace-pre-line text-ink-soft">{offer.terms}</p>
+            </div>
+          )}
 
           {!expired && !upcoming && !isDemo && (
             <div className="flex flex-wrap items-center gap-3">

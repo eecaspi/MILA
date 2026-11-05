@@ -16,6 +16,9 @@ export interface OfferFormValues {
   starts_on: string | null;
   redeem_channel: string | null;
   code_mode: string;
+  redeem_url: string | null;
+  terms: string | null;
+  usage_limit: string | null;
   price_label: string | null;
   highlight: boolean;
   likey_pick_note: string | null;
@@ -144,7 +147,7 @@ export function OfferForm({
           label="קוד קופון"
           name="coupon_code"
           error={e.coupon_code}
-          hint="נשמר במערכת בלבד. כרגע האתר במצב תדמיתי והקוד לא מוצג לגולשות."
+          hint="בסוג &quot;קוד קבוע&quot;: הקוד של העסק, שכל חברה רשומה מקבלת. בסוג אישי: משמש כתחילית. הקוד לא מוצג לגולשות שלא נרשמו."
         >
           <input
             id="coupon_code"
@@ -155,15 +158,34 @@ export function OfferForm({
           />
         </Field>
         <Field
-          label="סוג הקוד"
+          label="איך מממשים"
           name="code_mode"
-          hint="אישי: קוד שנוצר לכל חברה. יומי: הקוד של העסק לאותו יום, זהה לכל החברות ופג בחצות"
+          hint="קוד קבוע: קוד אחד של העסק, זהה לכל החברות, בתוקף כל עוד ההטבה בתוקף. אישי: קוד שנוצר לכל חברה ל־24 שעות. יומי: הקוד של העסק לאותו יום. קישור: מעבירה לאתר העסק. בחנות: ממשים בחנות הפיזית, בלי קוד."
         >
-          <select id="code_mode" name="code_mode" defaultValue={o?.code_mode ?? "personal"} className={inputClass}>
-            <option value="personal">אישי לכל חברה</option>
+          <select id="code_mode" name="code_mode" defaultValue={o?.code_mode ?? "fixed"} className={inputClass}>
+            <option value="fixed">קוד קבוע (ברירת מחדל)</option>
+            <option value="personal">קוד אישי לכל חברה</option>
             <option value="daily">קוד יומי (זהה לכולן)</option>
+            <option value="link">קישור לאתר העסק</option>
+            <option value="store">הטבה בחנות פיזית</option>
           </select>
         </Field>
+        <Field
+          label="קישור למימוש"
+          name="redeem_url"
+          error={e.redeem_url}
+          hint="רק בסוג &quot;קישור&quot;. ריק = האתר של העסק."
+        >
+          <input id="redeem_url" name="redeem_url" dir="ltr" placeholder="https://..." defaultValue={o?.redeem_url ?? ""} className={inputClass} />
+        </Field>
+        <Field label="מגבלת שימוש" name="usage_limit" hint="למשל: פעם אחת ללקוחה">
+          <input id="usage_limit" name="usage_limit" maxLength={100} defaultValue={o?.usage_limit ?? ""} className={inputClass} />
+        </Field>
+        <div className="sm:col-span-2">
+          <Field label="תנאים" name="terms" hint="יוצגו בעמוד ההטבה, למשל: לא כולל מוצרים במבצע">
+            <textarea id="terms" name="terms" rows={3} maxLength={600} defaultValue={o?.terms ?? ""} className={inputClass} />
+          </Field>
+        </div>
         <ImageField
           label="תמונה"
           name="image"

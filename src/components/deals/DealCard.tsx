@@ -66,7 +66,7 @@ export function DealCard({
           {kindLabel[offer.kind]}
         </span>
         {codes && canClaim && (
-          <div className="absolute inset-x-3 bottom-3 z-10 space-y-1.5 opacity-0 transition-opacity duration-200 focus-within:opacity-100 group-hover:opacity-100 [@media(hover:none)]:opacity-100">
+          <div className="absolute inset-x-3 bottom-3 z-10 space-y-1.5">
             <p className="rounded-full bg-white/90 px-3 py-1 text-center text-xs font-semibold text-ink">
               קוד אישי וחד־פעמי · תקף ל־24 שעות
             </p>
@@ -80,7 +80,7 @@ export function DealCard({
             ) : (
               <Link
                 href={`/login?mode=signup&next=${encodeURIComponent(href)}`}
-                className="btn-primary w-full py-2.5 text-[15px]"
+                className="inline-flex w-full items-center justify-center rounded-full border-2 border-accent bg-white py-2.5 text-[15px] font-bold text-accent shadow-[var(--shadow-card)] transition hover:bg-accent-soft"
               >
                 הצטרפי וקבלי קוד
               </Link>

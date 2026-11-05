@@ -12,3 +12,12 @@ export async function setInquiryHandled(formData: FormData): Promise<void> {
   await supabase.from("business_inquiries").update({ handled: formData.get("handled") === "true" }).eq("id", id);
   revalidatePath("/admin/inquiries");
 }
+
+export async function setReportHandled(formData: FormData): Promise<void> {
+  await requireAdmin();
+  const id = String(formData.get("id") ?? "");
+  if (!/^[0-9a-f-]{36}$/i.test(id)) return;
+  const supabase = await createClient();
+  await supabase.from("problem_reports").update({ handled: formData.get("handled") === "true" }).eq("id", id);
+  revalidatePath("/admin/inquiries");
+}

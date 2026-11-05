@@ -43,6 +43,8 @@ export default async function AccountPage({ searchParams }: { searchParams: Sear
   const { notice } = await searchParams;
   const supabase = await createClient();
   const rewards = await getMemberRewards(supabase, session.userId);
+  const { data: myBusinesses } = await supabase.rpc("my_businesses");
+  const hasBusiness = ((myBusinesses ?? []) as unknown[]).length > 0;
   const name = session.profile.display_name;
   const profileComplete = Boolean(session.profile.display_name && session.profile.city);
   const profileRule = rewards.activeRules.find((r) => r.key === "profile_completed");
@@ -68,7 +70,7 @@ export default async function AccountPage({ searchParams }: { searchParams: Sear
 
       {notice === "profile_saved" && <Alert tone="success">הפרופיל עודכן.</Alert>}
 
-      {(session.profile.role === "business_owner" || session.profile.role === "admin") && (
+      {hasBusiness && (
         <Link
           href="/business"
           className="flex items-center justify-between gap-4 rounded-[var(--radius-card)] border border-line bg-surface p-5 hover:border-accent"

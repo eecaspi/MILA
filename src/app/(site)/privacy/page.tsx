@@ -14,7 +14,7 @@ export default function Privacy() {
   return (
     <LegalPage title="מדיניות פרטיות">
       <p>
-        {brand.name} (&quot;האתר&quot;) מופעל על ידי {legal.operatorName} (&quot;המפעילה&quot;).
+        {brand.name} (&quot;האתר&quot;) מופעל על ידי {legal.operatorName} (ח.פ. {legal.companyId}, &quot;המפעילה&quot;).
         הפרטיות שלך חשובה לנו. כאן מוסבר איזה מידע נאסף, לשם מה, ואילו זכויות יש לך. השימוש באתר כפוף
         גם ל<Link href="/terms">תנאי השימוש</Link>.
       </p>

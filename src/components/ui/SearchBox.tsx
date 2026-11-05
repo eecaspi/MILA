@@ -63,8 +63,10 @@ export function SearchBox({
       e.preventDefault();
       setActive((a) => (a <= 0 ? matches.length - 1 : a - 1));
     } else if (e.key === "Enter" && active >= 0) {
+      const chosen = matches[active];
+      if (!chosen) return;
       e.preventDefault();
-      pick(matches[active]);
+      pick(chosen);
     } else if (e.key === "Escape") {
       setOpen(false);
       setActive(-1);

@@ -13,6 +13,7 @@ const nav = [
   { href: "/admin/businesses", label: "עסקים" },
   { href: "/admin/offers", label: "הטבות" },
   { href: "/admin/rewards", label: "מועדון ונקודות" },
+  { href: "/admin/members", label: "חברות" },
   { href: "/admin/team", label: "צוות" },
 ];
 

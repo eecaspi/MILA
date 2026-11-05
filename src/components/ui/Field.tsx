@@ -35,7 +35,7 @@ export function SubmitButton({
     <button
       type="submit"
       disabled={disabled}
-      className="w-full rounded-full bg-accent px-6 py-3 font-semibold text-on-accent transition-colors hover:bg-accent-bright disabled:cursor-not-allowed disabled:opacity-50"
+      className="btn-primary w-full disabled:cursor-not-allowed disabled:opacity-50"
     >
       {children}
     </button>

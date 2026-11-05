@@ -3,6 +3,7 @@ import { BusinessCard } from "@/components/business/BusinessCard";
 import { DealCard } from "@/components/deals/DealCard";
 import { CommunityInvite } from "@/components/home/CommunityInvite";
 import { CharacterSlide } from "@/components/home/CharacterSlide";
+import { FullImageSlide } from "@/components/home/FullImageSlide";
 import { HeroCarousel } from "@/components/home/HeroCarousel";
 import { HowItWorks } from "@/components/home/HowItWorks";
 import { CategoryIcon } from "@/components/ui/CategoryIcon";
@@ -27,6 +28,21 @@ export default async function HomePage() {
     : undefined;
 
   const characterSlides = [
+    <FullImageSlide
+      key="bag"
+      image="/brand/liky-character-bag.jpg"
+      alt="ליקי עם שקית של האתר. בואי לראות מה מצאתי לך"
+      href="/deals"
+      fit="contain"
+      priority
+    />,
+    <FullImageSlide
+      key="red"
+      image="/brand/liky-banner-red.jpg"
+      alt="ליקי, יש לי קישור בשבילך. בואי לראות את ההטבות"
+      href="/deals"
+      fit="cover"
+    />,
     <CharacterSlide
       key="standing"
       image="/brand/liky-standing.jpg"
@@ -35,7 +51,6 @@ export default async function HomePage() {
       text="ההטבות והמבצעים הכי שווים, במקום אחד."
       href="/deals"
       cta="בואי לראות מה מצאתי לך"
-      priority
     />,
     <CharacterSlide
       key="unboxing"

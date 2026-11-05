@@ -5,6 +5,7 @@ import { FilterChips } from "@/components/ui/FilterChips";
 import { categories, isCategorySlug } from "@/data/categories";
 import { siteConfig } from "@/config/site";
 import { getSession } from "@/lib/auth/session";
+import { getMyCodes } from "@/lib/data/my-codes";
 import { getOffers } from "@/lib/data/repository";
 import type { OfferKind } from "@/lib/types";
 
@@ -24,7 +25,10 @@ export default async function DealsPage({ searchParams }: { searchParams: Search
   const category = params.category && isCategorySlug(params.category) ? params.category : undefined;
   const kind = parseKind(params.kind);
   const offers = await getOffers({ category, kind });
-  const codes = siteConfig.features.personalCodes ? { signedIn: !!(await getSession()) } : undefined;
+  const signedIn = !!(await getSession());
+  const codes = siteConfig.features.personalCodes
+    ? { signedIn, mine: await getMyCodes() }
+    : undefined;
 
   // Only show categories that actually have offers, so filters never lead to empty pages.
   const allOffers = await getOffers();

@@ -14,13 +14,21 @@ export default async function EditOffer({ params }: { params: Promise<{ id: stri
     supabase
       .from("offers")
       .select(
-        "id, business_id, kind, title, value_label, description, valid_until, starts_on, redeem_channel, price_label, highlight, likey_pick_note, status, is_published, image_url, offer_codes(coupon_code)",
+        "id, business_id, kind, title, value_label, description, valid_until, starts_on, redeem_channel, code_mode, price_label, highlight, likey_pick_note, status, is_published, image_url, offer_codes(coupon_code)",
       )
       .eq("id", id)
       .maybeSingle(),
     businessOptions(),
   ]);
   if (!offer.data) notFound();
+  const today = new Intl.DateTimeFormat("en-CA", { timeZone: "Asia/Jerusalem" }).format(new Date());
+  const { data: dailyRows } = await supabase
+    .from("offer_daily_codes")
+    .select("day, code")
+    .eq("offer_id", id)
+    .gte("day", today)
+    .order("day");
+  const dailyUpcoming = (dailyRows ?? []) as { day: string; code: string }[];
   const { offer_codes, ...rest } = offer.data as unknown as Omit<OfferFormValues, "coupon_code"> & {
     offer_codes: { coupon_code: string } | null;
   };
@@ -43,7 +51,7 @@ export default async function EditOffer({ params }: { params: Promise<{ id: stri
           </Link>
         )}
       </div>
-      <OfferForm offer={values} businesses={businesses} />
+      <OfferForm offer={values} businesses={businesses} dailyUpcoming={dailyUpcoming} />
       <DangerZone
         action={deleteOffer}
         id={id}

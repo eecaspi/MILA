@@ -138,6 +138,7 @@ export default async function OfferPage({
               claim={mine.claim}
               problem={problem}
               wantsWhatsApp={mine.wantsWhatsApp}
+              daily={offer.codeMode === "daily"}
             />
           )}
 

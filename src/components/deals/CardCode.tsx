@@ -8,6 +8,7 @@ import { CopyCouponButton } from "./CopyCouponButton";
 const messages: Record<NonNullable<CardCodeState["error"]>, string> = {
   limit: "אפשר להחזיק עד 3 קודים ב־24 שעות. נסי שוב כשאחד יפוג.",
   unavailable: "ההטבה הזאת כבר לא זמינה.",
+  nocode: "הקוד של היום עוד לא מוכן. נסי שוב בהמשך היום.",
   failed: "משהו השתבש. נסי שוב.",
   signin: "צריך להתחבר מחדש.",
 };
@@ -32,11 +33,14 @@ export function CardCode({
   signedIn,
   signupHref,
   initial,
+  daily = false,
 }: {
   offerId: string;
   signedIn: boolean;
   signupHref: string;
   initial?: { code: string; expiresAt: string };
+  /** A daily code: the same for every member, valid until midnight. */
+  daily?: boolean;
 }) {
   const [state, action, pending] = useActionState<CardCodeState, FormData>(
     claimCodeInline,
@@ -52,7 +56,9 @@ export function CardCode({
         >
           הצטרפי וקבלי קוד
         </Link>
-        <p className="text-center text-xs text-ink-soft">קוד אישי וחד־פעמי · תקף ל־24 שעות</p>
+        <p className="text-center text-xs text-ink-soft">
+          {daily ? "קוד היום · תקף עד סוף היום" : "קוד אישי וחד־פעמי · תקף ל־24 שעות"}
+        </p>
       </div>
     );
   }
@@ -63,7 +69,7 @@ export function CardCode({
         <CopyCouponButton code={state.code} />
         {state.expiresAt && (
           <p className="text-center text-xs text-ink-soft">
-            אישי וחד־פעמי · תקף עד {until(state.expiresAt)}
+            {daily ? "קוד היום" : "אישי וחד־פעמי"} · תקף עד {until(state.expiresAt)}
           </p>
         )}
       </div>
@@ -87,7 +93,9 @@ export function CardCode({
           {messages[state.error]}
         </p>
       ) : (
-        <p className="text-center text-xs text-ink-soft">קוד אישי וחד־פעמי · תקף ל־24 שעות</p>
+        <p className="text-center text-xs text-ink-soft">
+          {daily ? "קוד היום · תקף עד סוף היום" : "קוד אישי וחד־פעמי · תקף ל־24 שעות"}
+        </p>
       )}
     </form>
   );

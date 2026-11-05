@@ -6,6 +6,8 @@ import {
   keptGallery,
   parseBusinessForm,
   parseOfferForm,
+  parseDailyCodes,
+  addDays,
   uploadPath,
 } from "./validate.ts";
 
@@ -144,4 +146,54 @@ test("gallery: several images, removals and the size limit", () => {
   const edit = new FormData();
   edit.append("remove_gallery", "https://x/b.jpg");
   assert.deepEqual(keptGallery(["https://x/a.jpg", "https://x/b.jpg"], edit), ["https://x/a.jpg"]);
+});
+
+test("daily codes: one per line, one per day, validated", () => {
+  const ok = parseDailyCodes(" noa-d1 \n\nNOA-D2\r\nnoa_d3", "2026-11-28");
+  assert.deepEqual(ok, {
+    codes: [
+      { day: "2026-11-28", code: "NOA-D1" },
+      { day: "2026-11-29", code: "NOA-D2" },
+      { day: "2026-11-30", code: "NOA_D3" },
+    ],
+  });
+  assert.equal(addDays("2026-12-31", 1), "2027-01-01", "crosses a year end");
+  assert.ok("error" in parseDailyCodes("OK1\nbad code!", "2026-11-05"));
+  assert.ok("error" in parseDailyCodes("AB1\nab1", "2026-11-05"), "duplicates are refused");
+  assert.ok("error" in parseDailyCodes(Array.from({ length: 400 }, (_, i) => `C${i}X`).join("\n"), "2026-11-05"));
+});
+
+test("offer form: daily mode and pasted codes", () => {
+  const r = parseOfferForm(
+    form({
+      business_id: "bbbb0000-0000-0000-0000-000000000001",
+      title: "הנחה",
+      value_label: "20% הנחה",
+      code_mode: "daily",
+      daily_start: "2026-11-10",
+      daily_codes: "A1\nA2",
+    }),
+  );
+  assert.ok(r.ok);
+  if (r.ok) {
+    assert.equal(r.values.code_mode, "daily");
+    assert.deepEqual(r.values.daily.map((d) => d.day), ["2026-11-10", "2026-11-11"]);
+  }
+  const bad = parseOfferForm(
+    form({
+      business_id: "bbbb0000-0000-0000-0000-000000000001",
+      title: "הנחה",
+      value_label: "20% הנחה",
+      daily_codes: "no good",
+    }),
+  );
+  assert.equal(bad.ok, false);
+  const plain = parseOfferForm(
+    form({ business_id: "bbbb0000-0000-0000-0000-000000000001", title: "הנחה", value_label: "x" }),
+  );
+  assert.ok(plain.ok);
+  if (plain.ok) {
+    assert.equal(plain.values.code_mode, "personal");
+    assert.deepEqual(plain.values.daily, []);
+  }
 });

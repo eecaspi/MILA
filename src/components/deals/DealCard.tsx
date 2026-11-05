@@ -120,6 +120,7 @@ export function DealCard({
                 signedIn={codes.signedIn}
                 signupHref={`/login?mode=signup&next=${encodeURIComponent(href)}`}
                 initial={codes.mine?.[offer.id]}
+                daily={offer.codeMode === "daily"}
               />
             </div>
           )}

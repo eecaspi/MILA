@@ -30,8 +30,11 @@ export default function AboutPage() {
           מי עומדת מאחורי האתר
         </h2>
         <p className="mt-3 text-ink-soft">
-          האתר מופעל על ידי {legal.operatorName} (ח.פ. {legal.companyId}). אנחנו בונות את ליקי צעד אחרי
-          צעד, כדי שיהיה קל למצוא הטבות טובות מעסקים שכדאי להכיר.
+          את ליקי מובילות אסתי ואסתר תחיה. אנחנו בונות אותה צעד אחרי צעד, כדי שיהיה קל למצוא הטבות
+          טובות מעסקים שכדאי להכיר.
+        </p>
+        <p className="mt-3 text-sm text-ink-soft">
+          מאחורינו עומדת {legal.operatorName} (ח.פ. {legal.companyId}).
         </p>
         <p className="mt-3 text-ink-soft">
           ליקי עצמה, הדמות עם השקית האדומה שמלווה אותך באתר, היא דמות שנוצרה בעזרת בינה מלאכותית.

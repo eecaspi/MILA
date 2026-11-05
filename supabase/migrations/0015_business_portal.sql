@@ -22,7 +22,8 @@ begin
   if not found then
     raise exception 'No member with this email' using errcode = 'P0002';
   end if;
-  if not exists (select 1 from businesses where id = p_business) then
+  perform 1 from businesses where id = p_business;
+  if not found then
     raise exception 'No such business' using errcode = 'P0002';
   end if;
   insert into business_members (business_id, user_id) values (p_business, p.id) on conflict do nothing;

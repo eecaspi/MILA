@@ -18,19 +18,12 @@ function Chevron({ dir }: { dir: "next" | "prev" }) {
 }
 
 /**
- * The top of the home page: the Liky brand slide first, then the banners from the back office.
+ * The top of the home page: the banners from the back office (the first one is the Liky character).
  * Swipe or use the arrows/dots; it also advances by itself, with a pause button, and does not
  * move on its own for people who asked their device for less motion.
  */
-export function HeroCarousel({
-  banners,
-  children,
-}: {
-  banners: HomeBanner[];
-  /** The brand slide (logo, tagline, buttons). */
-  children: React.ReactNode;
-}) {
-  const total = banners.length + 1;
+export function HeroCarousel({ banners }: { banners: HomeBanner[] }) {
+  const total = banners.length;
   const slideRefs = useRef<(HTMLElement | null)[]>([]);
   const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
   const [active, setActive] = useState(0);
@@ -85,7 +78,7 @@ export function HeroCarousel({
   // Advance by itself.
   useEffect(() => {
     if (total < 2 || paused || hovering) return;
-    const isVideo = active > 0 && banners[active - 1]?.type === "video";
+    const isVideo = banners[active]?.type === "video";
     const t = setTimeout(() => goTo(active + 1), isVideo ? VIDEO_MS : IMAGE_MS);
     return () => clearTimeout(t);
   }, [active, paused, hovering, total, banners, goTo]);
@@ -98,21 +91,9 @@ export function HeroCarousel({
       onMouseEnter={() => setHovering(true)}
       onMouseLeave={() => setHovering(false)}
     >
-      <div className="flex h-[470px] snap-x snap-mandatory overflow-x-auto overscroll-x-contain [scrollbar-width:none] md:h-[440px] [&::-webkit-scrollbar]:hidden">
-        <div
-          ref={(el) => {
-            slideRefs.current[0] = el;
-          }}
-          role="group"
-          aria-roledescription="שקופית"
-          aria-label={`1 מתוך ${total}`}
-          className="relative flex h-full w-full shrink-0 snap-start items-center justify-center overflow-hidden"
-        >
-          {children}
-        </div>
-
+      <div className="flex h-[260px] snap-x snap-mandatory overflow-x-auto overscroll-x-contain [scrollbar-width:none] sm:h-[340px] md:h-[440px] [&::-webkit-scrollbar]:hidden">
         {banners.map((b, i) => {
-          const n = i + 1;
+          const n = i;
           const media =
             b.type === "video" ? (
               <video

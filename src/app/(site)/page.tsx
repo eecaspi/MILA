@@ -52,9 +52,25 @@ export default async function HomePage() {
 
   return (
     <>
-      {/* Hero: the brand slide, followed by the banners from the back office */}
+      {/* Hero: the banners from the back office (first = the Liky character); the logo block until some exist */}
       {banners.length > 0 ? (
-        <HeroCarousel banners={banners}>{brandSlide}</HeroCarousel>
+        <>
+          <HeroCarousel banners={banners} />
+          <section className="mx-auto flex max-w-2xl flex-col items-center px-4 pt-8 text-center">
+            <h1 className="sr-only">
+              {siteConfig.brand.name} – {siteConfig.brand.slogan}
+            </h1>
+            <p className="max-w-md text-lg text-ink-soft md:text-xl">{siteConfig.brand.tagline}</p>
+            <div className="mt-5 flex flex-wrap justify-center gap-3">
+              <Link href="/deals" className="btn-primary text-base">
+                בואי לראות מה מצאתי לך
+              </Link>
+              <Link href="#community" className="btn-secondary text-base">
+                הצטרפי לקהילה
+              </Link>
+            </div>
+          </section>
+        </>
       ) : (
         <section className="relative overflow-hidden">{brandSlide}</section>
       )}

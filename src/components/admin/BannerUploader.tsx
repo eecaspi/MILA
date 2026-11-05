@@ -105,7 +105,7 @@ export function BannerUploader() {
         <input name="link_url" dir="ltr" placeholder="/deals או https://..." className={inputClass} />
       </label>
       <label className="block">
-        <span className="mb-1 block text-sm font-semibold text-ink">סדר (מספר נמוך קודם)</span>
+        <span className="mb-1 block text-sm font-semibold text-ink">סדר (מספר נמוך קודם, הדמות של ליקי: 0)</span>
         <input name="sort_order" inputMode="numeric" placeholder="0" className={inputClass} />
       </label>
       <div className="flex items-end">

@@ -17,7 +17,9 @@ export default async function Welcome({
   searchParams: Promise<{ channel?: string; next?: string }>;
 }) {
   const { channel, next } = await searchParams;
-  const to = safeNextPath(next, "/deals");
+  // The default sign-up destination is the personal area; right after joining she goes to the home page.
+  const wanted = safeNextPath(next, "/");
+  const to = wanted === "/account" || wanted.startsWith("/welcome") ? "/" : wanted;
   const whatsapp = siteConfig.community.whatsappUrl;
   const viaWhatsApp = channel !== "email";
 

@@ -7,9 +7,33 @@ import { useEffect, useRef, useState } from "react";
  * ignores Escape and clicks outside, and the page behind it can't be reached: it opens only
  * after she taps "join" (which opens WhatsApp) or ticks "I'm already in the group".
  */
+const COOKIE = "liky_wa_done";
+
+function remember() {
+  try {
+    document.cookie = `${COOKIE}=1; path=/; max-age=31536000; samesite=lax`;
+  } catch {
+    /* the window just shows again after a reload */
+  }
+}
+
 export function WhatsAppGate({ url }: { url: string }) {
   const [open, setOpen] = useState(true);
   const joinRef = useRef<HTMLAnchorElement>(null);
+
+  // Back from WhatsApp (the phone often reloads this page): she already did this step.
+  useEffect(() => {
+    try {
+      if (document.cookie.split("; ").includes(`${COOKIE}=1`)) setOpen(false);
+    } catch {
+      /* ignore */
+    }
+  }, []);
+
+  function done() {
+    remember();
+    setOpen(false);
+  }
 
   useEffect(() => {
     if (!open) return;
@@ -67,7 +91,7 @@ export function WhatsAppGate({ url }: { url: string }) {
           href={url}
           target="_blank"
           rel="noopener noreferrer"
-          onClick={() => setOpen(false)}
+          onClick={done}
           className="btn-primary mt-6 w-full py-4 text-lg"
         >
           הצטרפי לקבוצת הוואטסאפ
@@ -75,7 +99,7 @@ export function WhatsAppGate({ url }: { url: string }) {
         <label className="mt-5 flex cursor-pointer items-center justify-center gap-2 text-sm text-ink">
           <input
             type="checkbox"
-            onChange={(e) => e.target.checked && setOpen(false)}
+            onChange={(e) => e.target.checked && done()}
             className="size-4 accent-[var(--color-accent)]"
           />
           אני כבר בקבוצה

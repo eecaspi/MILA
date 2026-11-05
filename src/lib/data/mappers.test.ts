@@ -4,6 +4,7 @@ import {
   isExpired,
   mapBusinessRow,
   mapOfferRow,
+  offerBadge,
   slugify,
   withoutCouponCode,
   type BusinessRow,
@@ -87,4 +88,16 @@ test("offers stay valid through their last day, Israel time", () => {
   assert.equal(isExpired("2026-11-04", new Date("2026-11-04T22:10:00Z")), true);
   assert.equal(isExpired(undefined), false);
   assert.equal(isExpired(null), false);
+});
+
+test("offer badges: ends today / soon / new / none", () => {
+  const now = new Date("2026-11-05T10:00:00Z");
+  const base = { addedAt: "2026-01-01", status: "verified" };
+  assert.equal(offerBadge({ ...base, validUntil: "2026-11-05" }, now)?.label, "מסתיים היום");
+  assert.equal(offerBadge({ ...base, validUntil: "2026-11-08" }, now)?.label, "מסתיים בקרוב");
+  assert.equal(offerBadge({ ...base, validUntil: "2026-11-09" }, now), null);
+  assert.equal(offerBadge({ ...base, validUntil: "2026-11-04" }, now), null, "ended");
+  assert.equal(offerBadge({ ...base, addedAt: "2026-11-01" }, now)?.label, "חדש");
+  assert.equal(offerBadge({ ...base, addedAt: "2026-10-01" }, now), null, "old");
+  assert.equal(offerBadge({ addedAt: "2026-11-04", status: "demo" }, now), null, "demo");
 });

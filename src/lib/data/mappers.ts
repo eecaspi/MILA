@@ -123,3 +123,30 @@ export function isExpired(validUntil: string | undefined | null, now = new Date(
   const today = new Intl.DateTimeFormat("en-CA", { timeZone: "Asia/Jerusalem" }).format(now);
   return validUntil.slice(0, 10) < today;
 }
+
+export type OfferBadge = { label: string; tone: "hot" | "new" };
+
+const DAY_MS = 86_400_000;
+
+/**
+ * A small status tag for an offer card: "מסתיים היום" / "מסתיים בקרוב" (within 3 days),
+ * or "חדש" (added in the last 14 days). Ended and demo offers get none.
+ */
+export function offerBadge(
+  offer: { validUntil?: string; addedAt: string; status: string },
+  now = new Date(),
+): OfferBadge | null {
+  if (offer.status === "demo" || isExpired(offer.validUntil, now)) return null;
+  if (offer.validUntil) {
+    const today = new Intl.DateTimeFormat("en-CA", { timeZone: "Asia/Jerusalem" }).format(now);
+    const days = Math.round(
+      (Date.parse(offer.validUntil.slice(0, 10)) - Date.parse(today)) / DAY_MS,
+    );
+    if (days === 0) return { label: "מסתיים היום", tone: "hot" };
+    if (days > 0 && days <= 3) return { label: "מסתיים בקרוב", tone: "hot" };
+  }
+  const added = Date.parse(offer.addedAt);
+  if (!Number.isNaN(added) && now.getTime() - added <= 14 * DAY_MS && added <= now.getTime())
+    return { label: "חדש", tone: "new" };
+  return null;
+}

@@ -2,7 +2,8 @@ import Link from "next/link";
 import { TagMark } from "@/components/brand/TagMark";
 import { StatusBadge } from "@/components/ui/StatusBadge";
 import { CardCode } from "./CardCode";
-import { isExpired } from "@/lib/data/mappers";
+import { isExpired, offerBadge } from "@/lib/data/mappers";
+import { ShareButton } from "./ShareButton";
 import { formatDate } from "@/lib/format";
 import type { OfferWithBusiness } from "@/lib/types";
 import { OfferImage } from "./OfferImage";
@@ -27,6 +28,7 @@ export function DealCard({
 }) {
   const href = `/deals/${offer.id}`;
   const isDemo = offer.status === "demo";
+  const badge = offerBadge(offer);
   const canClaim = !!codes && !isDemo && !isExpired(offer.validUntil);
 
   if (layout === "row") {
@@ -65,6 +67,15 @@ export function DealCard({
         <span className="absolute end-3 top-3 rounded-full bg-surface/90 px-2.5 py-1 text-xs font-semibold text-ink">
           {kindLabel[offer.kind]}
         </span>
+        {badge && (
+          <span
+            className={`absolute bottom-3 start-3 rounded-full px-2.5 py-1 text-xs font-bold shadow-[var(--shadow-soft)] ${
+              badge.tone === "hot" ? "bg-ink text-surface" : "bg-surface text-accent"
+            }`}
+          >
+            {badge.label}
+          </span>
+        )}
       </div>
 
       <div className="flex flex-1 flex-col p-5">
@@ -83,6 +94,14 @@ export function DealCard({
           <div className="mb-3 flex flex-wrap items-center gap-2 text-xs text-ink-soft">
             {isDemo && <StatusBadge status={offer.status} />}
             {offer.validUntil && <span>בתוקף עד {formatDate(offer.validUntil)}</span>}
+            {!isDemo && (
+              <ShareButton
+                path={href}
+                text={`${offer.valueLabel} ב${offer.business.name}: ${offer.title}`}
+                compact
+                className="relative z-10 ms-auto"
+              />
+            )}
           </div>
           {codes && canClaim && (
             <div className="relative z-10 mb-3">

@@ -56,37 +56,36 @@ language sql stable security definer set search_path = public as $$
   order by b.name;
 $$;
 
+create or replace function _business_offers(p_business uuid, p_from timestamptz) returns jsonb
+language sql stable security definer set search_path = public as $$
+  select coalesce(jsonb_agg(t order by t.views desc, t.title), '[]'::jsonb) from (
+    select o.id, o.title, o.value_label, o.status, o.valid_until,
+      (select count(*) from analytics_events e where e.offer_id = o.id and e.event_type = 'offer_view' and e.occurred_at >= p_from) as views,
+      (select count(*) from analytics_events e where e.offer_id = o.id and e.event_type = 'outbound_click' and e.occurred_at >= p_from) as clicks,
+      (select count(*) from code_claims c where c.offer_id = o.id and c.expires_at > now()) as live_codes
+    from offers o where o.business_id = p_business
+  ) t
+$$;
+
 create or replace function business_stats(p_business uuid, p_days integer default 30) returns jsonb
 language plpgsql stable security definer set search_path = public as $$
 declare
   v_days integer := greatest(1, least(coalesce(p_days, 30), 365));
   v_from timestamptz := now() - make_interval(days => v_days);
-  v jsonb;
 begin
   if auth.uid() is null
      or not (is_admin() or exists (select 1 from business_members where business_id = p_business and user_id = auth.uid())) then
     raise exception 'Not allowed' using errcode = '42501';
   end if;
-
-  select jsonb_build_object(
+  return jsonb_build_object(
     'days', v_days,
-    'business_views', (select count(*) from analytics_events
-                        where business_id = p_business and event_type = 'business_view' and occurred_at >= v_from),
-    'offers', (
-      select coalesce(jsonb_agg(t order by t.views desc, t.title), '[]') from (
-        select o.id, o.title, o.value_label, o.status, o.valid_until,
-               (select count(*) from analytics_events e
-                 where e.offer_id = o.id and e.event_type = 'offer_view' and e.occurred_at >= v_from) as views,
-               (select count(*) from analytics_events e
-                 where e.offer_id = o.id and e.event_type = 'outbound_click' and e.occurred_at >= v_from) as clicks,
-               (select count(*) from code_claims c where c.offer_id = o.id and c.expires_at > now()) as live_codes
-        from offers o where o.business_id = p_business
-      ) t
-    )
-  ) into v;
-  return v;
+    'business_views', (select count(*) from analytics_events where business_id = p_business and event_type = 'business_view' and occurred_at >= v_from),
+    'offers', _business_offers(p_business, v_from)
+  );
 end;
 $$;
+
+revoke all on function _business_offers(uuid, timestamptz) from public, anon, authenticated;
 
 revoke all on function admin_link_business_owner(uuid, text), admin_unlink_business_owner(uuid, uuid),
   my_businesses(), business_stats(uuid, integer) from public, anon, authenticated;

@@ -12,11 +12,14 @@ interface Props {
   problem?: string;
   /** She chose the WhatsApp group when signing up. */
   wantsWhatsApp: boolean;
+  /** A daily code: the same for every member, valid until midnight. */
+  daily?: boolean;
 }
 
 const problems: Record<string, string> = {
   limit: "אפשר להחזיק עד 3 קודים בו־זמנית, והם נמחקים אחרי 24 שעות. נסי שוב כשאחד מהם יפוג.",
   unavailable: "ההטבה הזאת כבר לא זמינה.",
+  nocode: "הקוד של היום עוד לא מוכן. נסי שוב בהמשך היום.",
   failed: "משהו השתבש. נסי שוב בעוד רגע.",
 };
 
@@ -27,17 +30,19 @@ function hoursLeft(expiresAt: string): string {
   return h > 0 ? `${h} שעות ו־${m} דקות` : `${m} דקות`;
 }
 
-export function PersonalCode({ offerId, signedIn, claim, problem, wantsWhatsApp }: Props) {
+export function PersonalCode({ offerId, signedIn, claim, problem, wantsWhatsApp, daily = false }: Props) {
   const whatsapp = siteConfig.community.whatsappUrl;
   return (
     <div className="rounded-[var(--radius-card)] bg-surface p-5 shadow-[var(--shadow-card)]">
-      <p className="font-display font-bold text-ink">הקוד האישי שלך</p>
+      <p className="font-display font-bold text-ink">{daily ? "הקוד של היום" : "הקוד האישי שלך"}</p>
 
       {claim ? (
         <div className="mt-3 space-y-3">
           <CopyCouponButton code={claim.code} />
           <p className="text-sm text-ink-soft">
-            הקוד אישי וחד־פעמי, ותקף עוד {hoursLeft(claim.expiresAt)}. אחרי זה הוא נמחק.
+            {daily
+              ? `הקוד תקף עד סוף היום (עוד ${hoursLeft(claim.expiresAt)}). מחר יהיה קוד חדש.`
+              : `הקוד אישי וחד־פעמי, ותקף עוד ${hoursLeft(claim.expiresAt)}. אחרי זה הוא נמחק.`}
           </p>
           {wantsWhatsApp && whatsapp && (
             <a
@@ -53,9 +58,13 @@ export function PersonalCode({ offerId, signedIn, claim, problem, wantsWhatsApp 
       ) : (
         <div className="mt-3 space-y-3">
           <p className="text-sm text-ink-soft">
-            {signedIn
-              ? "הקוד נוצר רק בשבילך, חד־פעמי, ותקף ל־24 שעות."
-              : "ההרשמה לוקחת דקה, ואחריה מקבלים קוד אישי וחד־פעמי, תקף ל־24 שעות."}
+            {daily
+              ? signedIn
+                ? "זה הקוד של העסק להיום, ותקף עד סוף היום."
+                : "ההרשמה לוקחת דקה, ואחריה רואים את הקוד של היום."
+              : signedIn
+                ? "הקוד נוצר רק בשבילך, חד־פעמי, ותקף ל־24 שעות."
+                : "ההרשמה לוקחת דקה, ואחריה מקבלים קוד אישי וחד־פעמי, תקף ל־24 שעות."}
           </p>
           {problem && problems[problem] && (
             <p role="alert" className="rounded-xl bg-accent-soft px-3 py-2 text-sm text-ink">
@@ -66,7 +75,7 @@ export function PersonalCode({ offerId, signedIn, claim, problem, wantsWhatsApp 
             <form action={claimCode}>
               <input type="hidden" name="offer_id" value={offerId} />
               <button type="submit" className="btn-primary w-full">
-                קבלי קוד אישי
+                {daily ? "קבלי את הקוד של היום" : "קבלי קוד אישי"}
               </button>
             </form>
           ) : (

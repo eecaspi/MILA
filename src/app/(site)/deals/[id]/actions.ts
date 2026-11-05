@@ -24,14 +24,22 @@ export async function claimCode(formData: FormData): Promise<void> {
   const { error } = await supabase.rpc("claim_offer_code", { p_offer_id: offerId });
   if (!error) redirect(here);
   redirect(
-    `${here}?claim=${error.code === "54000" ? "limit" : error.code === "P0002" ? "unavailable" : "failed"}`,
+    `${here}?claim=${claimProblem(error.code)}`,
   );
 }
 
 export interface CardCodeState {
   code?: string;
   expiresAt?: string;
-  error?: "limit" | "unavailable" | "failed" | "signin";
+  error?: "limit" | "unavailable" | "nocode" | "failed" | "signin";
+}
+
+/** Database error code from claim_offer_code -> the short problem name the pages understand. */
+function claimProblem(code: string | undefined): "limit" | "unavailable" | "nocode" | "failed" {
+  if (code === "54000") return "limit";
+  if (code === "P0002") return "unavailable";
+  if (code === "LK001") return "nocode";
+  return "failed";
 }
 
 /** Same as claimCode, but answers in place (no page change): used by the button on offer cards. */
@@ -47,7 +55,7 @@ export async function claimCodeInline(
   const supabase = await createClient();
   const { data, error } = await supabase.rpc("claim_offer_code", { p_offer_id: offerId });
   if (error) {
-    return { error: error.code === "54000" ? "limit" : error.code === "P0002" ? "unavailable" : "failed" };
+    return { error: claimProblem(error.code) };
   }
   const row = (Array.isArray(data) ? data[0] : data) as
     | { claim_code?: string; claim_expires_at?: string }

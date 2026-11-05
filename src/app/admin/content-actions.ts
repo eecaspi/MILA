@@ -169,7 +169,7 @@ export async function saveOffer(_prev: FormState, fd: FormData): Promise<FormSta
 
   const supabase = await createClient();
   let id = idFrom(fd);
-  const { coupon_code, ...values } = parsed.values;
+  const { coupon_code, daily, ...values } = parsed.values;
 
   if (id) {
     const { error } = await supabase.from("offers").update(values).eq("id", id);
@@ -185,6 +185,15 @@ export async function saveOffer(_prev: FormState, fd: FormData): Promise<FormSta
     await supabase.from("offer_codes").upsert({ offer_id: id, coupon_code });
   } else {
     await supabase.from("offer_codes").delete().eq("offer_id", id);
+  }
+
+  // Daily codes: replace everything from the first day of the pasted list onward.
+  if (daily.length > 0) {
+    await supabase.from("offer_daily_codes").delete().eq("offer_id", id).gte("day", daily[0]!.day);
+    const { error } = await supabase
+      .from("offer_daily_codes")
+      .insert(daily.map((d) => ({ offer_id: id, day: d.day, code: d.code })));
+    if (error) return { message: dbMessage(error.message) };
   }
 
   if (fd.get("remove_image") === "on") {

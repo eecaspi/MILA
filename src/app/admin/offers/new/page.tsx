@@ -37,6 +37,7 @@ export default async function NewOffer({
                   valid_until: null,
                   starts_on: null,
                   redeem_channel: null,
+                  code_mode: "personal",
                   price_label: null,
                   highlight: false,
                   likey_pick_note: null,

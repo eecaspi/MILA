@@ -72,6 +72,8 @@ export interface Offer {
   startsOn?: string;
   /** Where it can be redeemed. */
   redeemChannel?: "online" | "store" | "both";
+  /** "personal": a code made for each member. "daily": the business's code for the day, same for everyone. */
+  codeMode?: "personal" | "daily";
   status: VerificationStatus;
   /** ISO date the offer was added to the site (drives "מה חדש אצל ליקי?"). */
   addedAt: string;

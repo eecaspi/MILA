@@ -15,6 +15,7 @@ export interface OfferFormValues {
   valid_until: string | null;
   starts_on: string | null;
   redeem_channel: string | null;
+  code_mode: string;
   price_label: string | null;
   highlight: boolean;
   likey_pick_note: string | null;
@@ -27,9 +28,12 @@ export interface OfferFormValues {
 export function OfferForm({
   offer,
   businesses,
+  dailyUpcoming = [],
 }: {
   offer?: OfferFormValues;
   businesses: { id: string; name: string }[];
+  /** Daily codes already saved for today and later (admin-only data). */
+  dailyUpcoming?: { day: string; code: string }[];
 }) {
   const { state, pending, onSubmit } = useKeepValuesAction<FormState>(saveOffer, {});
   const e = state.errors ?? {};
@@ -150,6 +154,16 @@ export function OfferForm({
             className={inputClass}
           />
         </Field>
+        <Field
+          label="סוג הקוד"
+          name="code_mode"
+          hint="אישי: קוד שנוצר לכל חברה. יומי: הקוד של העסק לאותו יום, זהה לכל החברות ופג בחצות"
+        >
+          <select id="code_mode" name="code_mode" defaultValue={o?.code_mode ?? "personal"} className={inputClass}>
+            <option value="personal">אישי לכל חברה</option>
+            <option value="daily">קוד יומי (זהה לכולן)</option>
+          </select>
+        </Field>
         <ImageField
           label="תמונה"
           name="image"
@@ -157,6 +171,41 @@ export function OfferForm({
           removeName="remove_image"
           error={e.image}
         />
+      </section>
+
+      <section className="grid gap-5 rounded-[var(--radius-card)] bg-surface p-5 shadow-[var(--shadow-card)] sm:grid-cols-2">
+        <div className="sm:col-span-2">
+          <p className="font-semibold text-ink">קודים יומיים</p>
+          <p className="mt-1 text-sm text-ink-soft">
+            רק לסוג הקוד &quot;קוד יומי&quot;. הדביקי קוד בכל שורה: הראשון ליום ההתחלה, השני ליום
+            שאחריו, וכך הלאה. כדאי לבקש מהעסק להגדיר לכל קוד תוקף ליום אחד בלבד.
+          </p>
+        </div>
+        <Field label="היום הראשון" name="daily_start" error={e.daily_start} hint="ריק = היום">
+          <input id="daily_start" name="daily_start" type="date" className={inputClass} />
+        </Field>
+        <div className="sm:col-span-2">
+          <Field label="הקודים (שורה לכל יום)" name="daily_codes" error={e.daily_codes}>
+            <textarea
+              id="daily_codes"
+              name="daily_codes"
+              rows={5}
+              dir="ltr"
+              placeholder={"NOA-D1\nNOA-D2\nNOA-D3"}
+              className={inputClass}
+            />
+          </Field>
+          <p className="mt-1 text-xs text-ink-soft">
+            הדבקה חדשה מחליפה את הקודים מהיום הראשון שבה והלאה.
+          </p>
+        </div>
+        {dailyUpcoming.length > 0 && (
+          <p className="text-sm text-ink sm:col-span-2">
+            שמורים {dailyUpcoming.length} ימים קדימה, עד {dailyUpcoming[dailyUpcoming.length - 1]!.day}.
+            {` הקוד הקרוב: ${dailyUpcoming[0]!.day} · `}
+            <span className="ltr font-mono">{dailyUpcoming[0]!.code}</span>
+          </p>
+        )}
       </section>
 
       <section className="grid gap-5 rounded-[var(--radius-card)] bg-surface p-5 shadow-[var(--shadow-card)] sm:grid-cols-2">

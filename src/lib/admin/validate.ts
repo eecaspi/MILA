@@ -135,6 +135,50 @@ export function parseBusinessForm(fd: FormData): Parsed<BusinessValues> {
   };
 }
 
+export interface DailyCode {
+  day: string;
+  code: string;
+}
+
+const MAX_DAILY = 366;
+
+/** Adds days to a YYYY-MM-DD date (calendar arithmetic, no time zones involved). */
+export function addDays(isoDay: string, days: number): string {
+  const d = new Date(`${isoDay}T00:00:00Z`);
+  d.setUTCDate(d.getUTCDate() + days);
+  return d.toISOString().slice(0, 10);
+}
+
+/**
+ * One code per line, in order: the first is for `start`, the second for the next day, and so on.
+ * Returns an error message in Hebrew when a line is not a usable code.
+ */
+export function parseDailyCodes(
+  raw: string,
+  start: string,
+): { codes: DailyCode[] } | { error: string } {
+  const lines = raw
+    .split(/\r?\n/)
+    .map((l) => l.trim())
+    .filter(Boolean);
+  if (lines.length > MAX_DAILY) return { error: `אפשר עד ${MAX_DAILY} קודים בבת אחת` };
+  const codes: DailyCode[] = [];
+  const seen = new Set<string>();
+  for (const [i, line] of lines.entries()) {
+    if (!/^[A-Za-z0-9_-]{2,60}$/.test(line))
+      return { error: `שורה ${i + 1}: קוד באנגלית, ספרות ומקף בלבד` };
+    const code = line.toUpperCase();
+    if (seen.has(code)) return { error: `שורה ${i + 1}: הקוד ${code} מופיע פעמיים` };
+    seen.add(code);
+    codes.push({ day: addDays(start, i), code });
+  }
+  return { codes };
+}
+
+function israelToday(now = new Date()): string {
+  return new Intl.DateTimeFormat("en-CA", { timeZone: "Asia/Jerusalem" }).format(now);
+}
+
 export interface OfferValues {
   business_id: string;
   kind: "deal" | "coupon";
@@ -144,6 +188,9 @@ export interface OfferValues {
   valid_until: string | null;
   starts_on: string | null;
   redeem_channel: "online" | "store" | "both" | null;
+  code_mode: "personal" | "daily";
+  /** One code per day, from `daily_start`; empty when the box was left blank. */
+  daily: DailyCode[];
   price_label: string | null;
   highlight: boolean;
   likey_pick_note: string | null;
@@ -173,6 +220,19 @@ export function parseOfferForm(fd: FormData): Parsed<OfferValues> {
     errors.starts_on = "תאריך ההתחלה אחרי תאריך הסיום";
   }
   const channel = text(fd, "redeem_channel", 10);
+  const codeMode = text(fd, "code_mode", 10) === "daily" ? "daily" : "personal";
+  let daily: DailyCode[] = [];
+  const dailyRaw = (fd.get("daily_codes") as string | null) ?? "";
+  if (dailyRaw.trim()) {
+    const dailyStart = text(fd, "daily_start", 10) || israelToday();
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(dailyStart) || Number.isNaN(Date.parse(dailyStart))) {
+      errors.daily_start = "תאריך לא תקין";
+    } else {
+      const parsedDaily = parseDailyCodes(dailyRaw, dailyStart);
+      if ("error" in parsedDaily) errors.daily_codes = parsedDaily.error;
+      else daily = parsedDaily.codes;
+    }
+  }
   const code = text(fd, "coupon_code", 60);
   if (code && !/^[A-Za-z0-9_\-]{2,60}$/.test(code))
     errors.coupon_code = "קוד קופון: אותיות באנגלית, ספרות ומקף בלבד";
@@ -188,6 +248,8 @@ export function parseOfferForm(fd: FormData): Parsed<OfferValues> {
       description: text(fd, "description", 1000),
       valid_until: orNull(until),
       starts_on: orNull(starts),
+      code_mode: codeMode,
+      daily,
       redeem_channel: channel === "online" || channel === "store" || channel === "both" ? channel : null,
       price_label: orNull(text(fd, "price_label", 60)),
       highlight: fd.get("highlight") === "on",

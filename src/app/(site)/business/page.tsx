@@ -66,7 +66,7 @@ export default async function MyBusinessPage() {
             </Link>
           </div>
           {!s ? (
-            <p className="text-sm text-ink-soft">לא הצלחנו לטעון את הנתונים. נסי שוב בעוד רגע.</p>
+            <p className="text-sm text-ink-soft">לא הצלחנו לטעון את הנתונים. נסו שוב בעוד רגע.</p>
           ) : (
             <>
               <p className="text-sm text-ink-soft">נתונים מ־{s.days} הימים האחרונים</p>
@@ -97,7 +97,7 @@ export default async function MyBusinessPage() {
                 </ul>
               )}
               <p className="text-xs text-ink-soft">
-                הנתונים אנונימיים ומוצגים רק לעסק שלך. הצעת הטבה חדשה או שינוי בהטבה קיימת מתבצעים מול הצוות של ליקי.
+                הנתונים אנונימיים ומוצגים רק לעסק שלכם. הצעת הטבה חדשה או שינוי בהטבה קיימת מתבצעים מול הצוות של ליקי.
               </p>
             </>
           )}

@@ -27,7 +27,7 @@ export async function SiteHeader() {
               href="/for-businesses"
               className="hidden whitespace-nowrap rounded-full border border-accent/40 bg-accent-soft px-3.5 py-2 text-sm font-bold text-accent transition-colors hover:border-accent md:inline-block"
             >
-              בעלת עסק? פני אלינו
+              בעלי עסקים? פנו אלינו
             </Link>
           )}
           {session?.profile.role === "admin" && (
@@ -97,7 +97,7 @@ export async function SiteHeader() {
               <NavLinks
                 variant="mobile"
                 extra={extra}
-                cta={isOwner ? undefined : { href: "/for-businesses", label: "בעלת עסק? פני אלינו" }}
+                cta={isOwner ? undefined : { href: "/for-businesses", label: "בעלי עסקים? פנו אלינו" }}
               />
             </nav>
           </details>

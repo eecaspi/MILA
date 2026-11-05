@@ -39,6 +39,7 @@ export default async function Welcome({
         <div className="px-6 pb-8 text-center md:px-8 md:py-10 md:text-start">
           <p className="eyebrow">ליקי</p>
           <h1 className="mt-1 text-3xl text-ink md:text-4xl">ברוכה הבאה לליקי!</h1>
+          <p className="mt-1 text-2xl font-bold text-accent">את משלנו!</p>
           <p className="mt-3 text-lg text-ink-soft">
             החשבון שלך מוכן. מעכשיו קודי הקופון של העסקים מופיעים לך באתר, בכל הטבה.
           </p>

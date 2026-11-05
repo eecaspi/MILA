@@ -9,29 +9,30 @@ import { useEffect, useRef, useState } from "react";
  */
 const COOKIE = "liky_wa_done";
 
-function remember() {
+/** The cookie holds the member's id, so a new member on the same device still sees the window. */
+function remember(userId: string) {
   try {
-    document.cookie = `${COOKIE}=1; path=/; max-age=31536000; samesite=lax`;
+    document.cookie = `${COOKIE}=${encodeURIComponent(userId)}; path=/; max-age=31536000; samesite=lax`;
   } catch {
     /* the window just shows again after a reload */
   }
 }
 
-export function WhatsAppGate({ url }: { url: string }) {
+export function WhatsAppGate({ url, userId }: { url: string; userId: string }) {
   const [open, setOpen] = useState(true);
   const joinRef = useRef<HTMLAnchorElement>(null);
 
   // Back from WhatsApp (the phone often reloads this page): she already did this step.
   useEffect(() => {
     try {
-      if (document.cookie.split("; ").includes(`${COOKIE}=1`)) setOpen(false);
+      if (document.cookie.split("; ").includes(`${COOKIE}=${encodeURIComponent(userId)}`)) setOpen(false);
     } catch {
       /* ignore */
     }
-  }, []);
+  }, [userId]);
 
   function done() {
-    remember();
+    remember(userId);
     setOpen(false);
   }
 

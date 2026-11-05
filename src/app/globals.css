@@ -35,14 +35,15 @@
   --color-glow: #f7b5b8; /* decorative glow only */
 
   /* category tones: blush, cream and champagne, always with ink text */
-  --color-tone-rose: #fde4e4;
-  --color-tone-peach: #fdeadf;
-  --color-tone-lilac: #f8e5ee;
-  --color-tone-mint: #e6f1e6;
-  --color-tone-sky: #e6eff4;
-  --color-tone-sand: #fbefdc;
-  --color-tone-coral: #fdd9d6;
-  --color-tone-pearl: #fbf0ef;
+  /* one soft pink for every "tone": categories, placeholders and tiles all stay in the site's colors */
+  --color-tone-rose: #fdeaea;
+  --color-tone-peach: #fdeaea;
+  --color-tone-lilac: #fdeaea;
+  --color-tone-mint: #fdeaea;
+  --color-tone-sky: #fdeaea;
+  --color-tone-sand: #fdeaea;
+  --color-tone-coral: #fdeaea;
+  --color-tone-pearl: #fdeaea;
 
   /* states */
   --color-sage: #3f7556;

@@ -1,16 +1,14 @@
 import Link from "next/link";
 import { BusinessCard } from "@/components/business/BusinessCard";
 import { DealCard } from "@/components/deals/DealCard";
+import { CategoryTiles } from "@/components/home/CategoryTiles";
 import { CommunityInvite } from "@/components/home/CommunityInvite";
 import { HeroCarousel } from "@/components/home/HeroCarousel";
 import { HowItWorks } from "@/components/home/HowItWorks";
 import { NowTabs } from "@/components/home/NowTabs";
-import { CategoryIcon } from "@/components/ui/CategoryIcon";
 import { SearchBox } from "@/components/ui/SearchBox";
 import { SectionHeading } from "@/components/ui/SectionHeading";
-import { toneClasses } from "@/components/ui/tones";
 import { siteConfig } from "@/config/site";
-import { categories } from "@/data/categories";
 import { getSession } from "@/lib/auth/session";
 import { getBanners } from "@/lib/data/banners";
 import { getMyCodes } from "@/lib/data/my-codes";
@@ -86,23 +84,7 @@ export default async function HomePage() {
         {/* הקטגוריות */}
         <section aria-labelledby="cats">
           <SectionHeading id="cats" title="מה בא לך למצוא היום?" />
-          <ul className="flex flex-wrap gap-2.5">
-            {categories.map((c) => (
-              <li key={c.slug}>
-                <Link
-                  href={`/businesses?category=${c.slug}`}
-                  className="lift flex items-center gap-2 rounded-full border border-line bg-surface py-2 ps-2 pe-4 text-[15px] font-semibold text-ink hover:border-accent"
-                >
-                  <span
-                    className={`flex size-8 shrink-0 items-center justify-center rounded-full ${toneClasses[c.tone]}`}
-                  >
-                    <CategoryIcon slug={c.slug} className="size-4 text-accent" />
-                  </span>
-                  {c.name}
-                </Link>
-              </li>
-            ))}
-          </ul>
+          <CategoryTiles />
         </section>
 
         {/* העסקים שלנו */}

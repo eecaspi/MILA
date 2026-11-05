@@ -17,10 +17,10 @@
   --font-display: var(--font-heebo), ui-sans-serif, system-ui, sans-serif;
 
   /* surfaces: the whole site is the soft pink of the banner; cards stay white */
-  --color-canvas: #fff5f5;
+  --color-canvas: #fffafa;
   --color-surface: #ffffff;
-  --color-raised: #fffafa;
-  --color-line: #f8dede;
+  --color-raised: #fffdfd;
+  --color-line: #fbe8e8;
 
   /* text: warm cocoa */
   --color-ink: #3f1d20;
@@ -29,7 +29,7 @@
   /* brand: rose gold */
   --color-accent: #c4050b; /* the logo red — buttons, links (AA on white and blush) */
   --color-accent-bright: #a30409; /* hover/pressed */
-  --color-accent-soft: #fdeaea; /* blush, a step deeper than the page */
+  --color-accent-soft: #fff0f0; /* blush, a step deeper than the page */
   --color-on-accent: #ffffff;
   --color-gold: #eeb1b5; /* soft pink */
   --color-glow: #f7b5b8; /* decorative glow only */

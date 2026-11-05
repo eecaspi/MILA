@@ -162,8 +162,7 @@ export function DealCard({
             </div>
           )}
           <AdminShare
-            path={href}
-            text={`${offer.valueLabel} ב${offer.business.name}: ${offer.title}`}
+            offer={offer}
             compact
             className="relative z-10 mb-3"
           />

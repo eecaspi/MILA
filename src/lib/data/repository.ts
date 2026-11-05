@@ -68,7 +68,7 @@ const fetchContent = async (): Promise<Content> => {
   const businesses = ((b.data ?? []) as unknown as BusinessRow[])
     .map(mapBusinessRow)
     .filter((x): x is Business => x !== null);
-  const offers = ((o.data ?? []) as OfferRow[]).map(mapOfferRow);
+  const offers = ((o.data ?? []) as unknown as OfferRow[]).map(mapOfferRow);
 
   // Nothing published yet: keep the showcase alive with demo content.
   if (businesses.length === 0) return demo;

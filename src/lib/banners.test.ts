@@ -1,6 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { bannerStoragePath, parseBannerForm, safeLink } from "./banners.ts";
+import { isAllowedMedia, bannerStoragePath, parseBannerForm, safeLink } from "./banners.ts";
 
 const base = "https://abc.supabase.co";
 const file = `${base}/storage/v1/object/public/media/banners/x1.jpg`;
@@ -41,4 +41,23 @@ test("banner form: clean values and clear errors", () => {
   assert.equal(parseBannerForm(form({ media_url: file, media_type: "gif" }), base).ok, false);
   assert.equal(parseBannerForm(form({ media_url: file, media_type: "image", link_url: "ftp://x" }), base).ok, false);
   assert.equal(parseBannerForm(form({ media_url: file, media_type: "image", sort_order: "1.5" }), base).ok, false);
+});
+
+test("brand pictures and layouts", () => {
+  assert.equal(isAllowedMedia("/brand/liky-podcast.jpg", base), true);
+  assert.equal(isAllowedMedia("/brand/../secret.jpg", base), false);
+  assert.equal(isAllowedMedia("/other/x.jpg", base), false);
+  const ok = parseBannerForm(
+    form({ media_url: file, media_type: "image", layout: "character", headline: " היי ", body: "טקסט", button_label: "לחצי" }),
+    base,
+  );
+  assert.ok(ok.ok);
+  if (ok.ok) {
+    assert.equal(ok.values.layout, "character");
+    assert.equal(ok.values.headline, "היי");
+    assert.equal(ok.values.button_label, "לחצי");
+  }
+  assert.equal(parseBannerForm(form({ media_url: file, media_type: "image", layout: "wide" }), base).ok, false);
+  const def = parseBannerForm(form({ media_url: file, media_type: "image" }), base);
+  assert.ok(def.ok && def.values.layout === "photo");
 });

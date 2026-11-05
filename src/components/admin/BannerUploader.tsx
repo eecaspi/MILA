@@ -10,6 +10,7 @@ import {
   VIDEO_MIME,
 } from "@/lib/banners";
 import { createClient } from "@/lib/supabase/client";
+import { BannerTextFields } from "./BannerTextFields";
 import { inputClass } from "./styles";
 
 /**
@@ -63,9 +64,9 @@ export function BannerUploader() {
     const data = new FormData();
     data.set("media_url", url);
     data.set("media_type", isVideo ? "video" : "image");
-    data.set("title", String(fd.get("title") ?? ""));
-    data.set("link_url", String(fd.get("link_url") ?? ""));
-    data.set("sort_order", String(fd.get("sort_order") ?? ""));
+    for (const k of ["layout", "headline", "body", "button_label", "title", "link_url", "sort_order"]) {
+      data.set(k, String(fd.get(k) ?? ""));
+    }
     const result = await createBanner(data);
     setBusy(false);
     if (result.error) {
@@ -96,14 +97,7 @@ export function BannerUploader() {
           תמונה רחבה (למשל 1600×700) עד 5MB, או סרטון קצר MP4 / WEBM עד 20MB. הסרטון מתנגן בלי קול.
         </span>
       </label>
-      <label className="block">
-        <span className="mb-1 block text-sm font-semibold text-ink">כותרת על הבאנר (לא חובה)</span>
-        <input name="title" maxLength={80} className={inputClass} />
-      </label>
-      <label className="block">
-        <span className="mb-1 block text-sm font-semibold text-ink">קישור בלחיצה (לא חובה)</span>
-        <input name="link_url" dir="ltr" placeholder="/deals או https://..." className={inputClass} />
-      </label>
+      <BannerTextFields />
       <label className="block">
         <span className="mb-1 block text-sm font-semibold text-ink">סדר (מספר נמוך קודם)</span>
         <input name="sort_order" inputMode="numeric" placeholder="0" className={inputClass} />

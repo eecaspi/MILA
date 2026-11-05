@@ -68,6 +68,21 @@ export default async function AccountPage({ searchParams }: { searchParams: Sear
 
       {notice === "profile_saved" && <Alert tone="success">הפרופיל עודכן.</Alert>}
 
+      {(session.profile.role === "business_owner" || session.profile.role === "admin") && (
+        <Link
+          href="/business"
+          className="flex items-center justify-between gap-4 rounded-[var(--radius-card)] border border-line bg-surface p-5 hover:border-accent"
+        >
+          <div>
+            <p className="font-bold text-ink">העסק שלי</p>
+            <p className="text-sm text-ink-soft">צפיות, לחיצות וקודים של ההטבות שלך.</p>
+          </div>
+          <span aria-hidden className="text-xl text-accent">
+            ←
+          </span>
+        </Link>
+      )}
+
       <PointsSummary balance={rewards.balance} programEnabled={rewards.programEnabled} />
 
       {!profileComplete && (

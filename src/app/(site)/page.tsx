@@ -59,8 +59,8 @@ export default async function HomePage() {
       key="community"
       image="/brand/liky-podcast.jpg"
       alt="ליקי מספרת על ההטבות"
-      headline="מציאה שווה? משתפות חברות."
-      text="הקהילה שלנו בוואטסאפ מלאה בהמלצות אמיתיות מנשים כמוך."
+      headline="בואי להצטרף לקהילה של ליקי"
+      text="הקבוצה שלנו בוואטסאפ: הטבות חדשות והמלצות ישר לטלפון."
       href="#community"
       cta="הצטרפי לקהילה"
       imageFirst

@@ -21,7 +21,7 @@ export function CommunityInvite() {
       <div className="relative mx-auto max-w-xl">
         <p className="eyebrow">החברות של ליקי</p>
         <h2 id="community-title" className="mt-2 text-3xl text-ink md:text-4xl">
-          מציאה שווה? משתפים חברות.
+          הקהילה של ליקי בוואטסאפ
         </h2>
         <p className="mt-3 text-ink-soft">
           הטבות חדשות ישר לטלפון, והמלצות אמיתיות מנשים כמוך. בלי ספאם.

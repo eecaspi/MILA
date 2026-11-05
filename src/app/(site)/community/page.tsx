@@ -5,7 +5,7 @@ import { CommunityInvite } from "@/components/home/CommunityInvite";
 
 export const metadata: Metadata = {
   title: "החברות של ליקי",
-  description: "קהילת הנשים של ליקי: הטבות ראשונות, המלצות אמיתיות ושיתוף מציאות.",
+  description: "קהילת הנשים של ליקי: הטבות חדשות והמלצות ישר לוואטסאפ.",
 };
 
 export default function CommunityPage() {
@@ -16,8 +16,8 @@ export default function CommunityPage() {
           <p className="eyebrow">הקהילה</p>
           <h1 className="mt-1 text-3xl text-ink md:text-5xl">החברות של ליקי</h1>
           <p className="mt-4 max-w-xl text-lg text-ink-soft">
-            ליקי היא קודם כול חברה. כאן משתפות מציאות, ממליצות על עסקים טובים ושואלות את מי שכבר
-            ניסתה.
+            ליקי היא קודם כול חברה. הקהילה שלנו בוואטסאפ היא המקום לקבל הטבות חדשות והמלצות על עסקים
+            טובים.
           </p>
         </div>
         <Logo variant="full" height={220} className="mx-auto" />

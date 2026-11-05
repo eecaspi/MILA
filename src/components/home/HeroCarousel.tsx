@@ -33,6 +33,7 @@ export function HeroCarousel({
   const lead = leading.length;
   const total = lead + banners.length;
   const slideRefs = useRef<(HTMLElement | null)[]>([]);
+  const stripRef = useRef<HTMLDivElement | null>(null);
   const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
   const [active, setActive] = useState(0);
   const [paused, setPaused] = useState(false);
@@ -48,10 +49,13 @@ export function HeroCarousel({
   const goTo = useCallback(
     (i: number) => {
       const index = (i + total) % total;
-      slideRefs.current[index]?.scrollIntoView({
+      const slide = slideRefs.current[index];
+      const strip = stripRef.current;
+      if (!slide || !strip) return;
+      // Scroll the strip itself (works the same in RTL) and never the page.
+      strip.scrollBy({
+        left: slide.getBoundingClientRect().left - strip.getBoundingClientRect().left,
         behavior: reduced ? "auto" : "smooth",
-        inline: "start",
-        block: "nearest",
       });
     },
     [total, reduced],
@@ -95,11 +99,11 @@ export function HeroCarousel({
     <section
       aria-roledescription="carousel"
       aria-label="הבאנר הראשי"
-      className="relative"
+      className="relative w-full"
       onMouseEnter={() => setHovering(true)}
       onMouseLeave={() => setHovering(false)}
     >
-      <div className="flex h-[400px] snap-x snap-mandatory overflow-x-auto overscroll-x-contain [scrollbar-width:none] sm:h-[340px] md:aspect-[16/6] md:h-auto md:max-h-[520px] [&::-webkit-scrollbar]:hidden">
+      <div ref={stripRef} className="flex h-[400px] w-full snap-x snap-mandatory overflow-x-auto overscroll-x-contain [scrollbar-width:none] sm:h-[340px] md:aspect-[16/6] md:h-auto md:max-h-[520px] [&::-webkit-scrollbar]:hidden">
         {leading.map((slide, i) => (
           <div
             key={`lead-${i}`}

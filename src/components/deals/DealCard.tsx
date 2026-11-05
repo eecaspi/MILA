@@ -73,7 +73,7 @@ export function DealCard({
     <article className="lift group relative flex h-full flex-col overflow-hidden rounded-[var(--radius-card)] bg-surface shadow-[var(--shadow-card)]">
       <div className="relative">
         <OfferImage offer={offer} className="aspect-[4/3]" />
-        <span className="absolute start-3 top-3 max-w-[70%] rounded-2xl bg-accent px-4 py-2 text-xl font-extrabold leading-tight text-on-accent shadow-[var(--shadow-soft)] sm:text-2xl">
+        <span className="absolute start-2 top-2 max-w-[75%] rounded-xl bg-accent px-2.5 py-1 text-base font-extrabold leading-tight text-on-accent shadow-[var(--shadow-soft)] sm:start-3 sm:top-3 sm:rounded-2xl sm:px-4 sm:py-2 sm:text-2xl">
           {offer.valueLabel}
         </span>
         <span className="absolute end-3 top-3 rounded-full bg-surface/90 px-2.5 py-1 text-xs font-semibold text-ink">
@@ -91,7 +91,7 @@ export function DealCard({
         )}
       </div>
 
-      <div className="flex flex-1 flex-col p-5">
+      <div className="flex flex-1 flex-col p-3 sm:p-5">
         <p className="flex items-center gap-2 text-sm font-bold text-ink-soft">
           {offer.business.logoUrl && (
             // eslint-disable-next-line @next/next/no-img-element
@@ -103,7 +103,7 @@ export function DealCard({
           )}
           {offer.business.name}
         </p>
-        <h3 className="mt-1 text-xl text-ink">{offer.title}</h3>
+        <h3 className="mt-1 text-base leading-snug text-ink sm:text-xl">{offer.title}</h3>
         {offer.priceLabel && <p className="mt-1 font-bold text-ink">{offer.priceLabel}</p>}
 
         {showPickNote && offer.likeyPick && (
@@ -113,7 +113,7 @@ export function DealCard({
           </p>
         )}
 
-        <div className="mt-auto pt-5">
+        <div className="mt-auto pt-3 sm:pt-5">
           <div className="mb-3 flex flex-wrap items-center gap-x-3 gap-y-2 text-sm text-ink">
             {isDemo && <StatusBadge status={offer.status} />}
             {isUpcoming(offer.startsOn) && offer.startsOn ? (

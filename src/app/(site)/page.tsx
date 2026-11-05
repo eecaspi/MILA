@@ -62,9 +62,9 @@ export default async function HomePage() {
                 id: t.id,
                 label: t.label,
                 node: (
-                  <ul className="-mx-4 flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 pb-2 sm:mx-0 sm:grid sm:grid-cols-2 sm:overflow-visible sm:px-0 sm:pb-0 lg:grid-cols-4">
+                  <ul className="-mx-4 flex snap-x snap-mandatory gap-3 overflow-x-auto px-4 pb-2 sm:mx-0 sm:grid sm:grid-cols-2 sm:overflow-visible sm:px-0 sm:pb-0 lg:grid-cols-4">
                     {t.offers.map((offer) => (
-                      <li key={offer.id} className="w-[80%] shrink-0 snap-start sm:w-auto">
+                      <li key={offer.id} className="w-[47%] shrink-0 snap-start sm:w-auto">
                         <DealCard offer={offer} codes={codes} />
                       </li>
                     ))}

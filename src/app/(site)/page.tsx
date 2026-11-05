@@ -6,6 +6,7 @@ import { CommunityInvite } from "@/components/home/CommunityInvite";
 import { HeroCarousel } from "@/components/home/HeroCarousel";
 import { HowItWorks } from "@/components/home/HowItWorks";
 import { NowTabs } from "@/components/home/NowTabs";
+import { Reveal } from "@/components/ui/Reveal";
 import { SearchBox } from "@/components/ui/SearchBox";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { siteConfig } from "@/config/site";
@@ -79,7 +80,9 @@ export default async function HomePage() {
           )}
         </section>
 
-        <HowItWorks />
+        <Reveal>
+          <HowItWorks />
+        </Reveal>
 
         {/* הקטגוריות */}
         <section aria-labelledby="cats">
@@ -97,14 +100,20 @@ export default async function HomePage() {
             linkLabel="לכל העסקים"
           />
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-            {businesses.slice(0, 3).map((b) => (
-              <BusinessCard key={b.id} business={b} />
+            {businesses.slice(0, 3).map((b, i) => (
+              <Reveal key={b.id} delay={i * 120}>
+                <BusinessCard business={b} />
+              </Reveal>
             ))}
           </div>
         </section>
 
         {/* החברות של ליקי */}
-        {!session && <CommunityInvite />}
+        {!session && (
+          <Reveal>
+            <CommunityInvite />
+          </Reveal>
+        )}
       </div>
     </>
   );

@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { CategoryIcon } from "@/components/ui/CategoryIcon";
+import { Reveal } from "@/components/ui/Reveal";
 import { categories } from "@/data/categories";
 
 /**
@@ -10,8 +11,8 @@ import { categories } from "@/data/categories";
 export function CategoryTiles() {
   return (
     <ul className="grid gap-3 sm:grid-cols-2">
-      {categories.map((c) => (
-        <li key={c.slug}>
+      {categories.map((c, i) => (
+        <Reveal as="li" key={c.slug} delay={(i % 2) * 120}>
           <Link
             href={`/businesses?category=${c.slug}`}
             className="lift block overflow-hidden rounded-3xl bg-accent-soft"
@@ -32,7 +33,7 @@ export function CategoryTiles() {
               </span>
             )}
           </Link>
-        </li>
+        </Reveal>
       ))}
     </ul>
   );

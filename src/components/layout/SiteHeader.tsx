@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Logo } from "@/components/brand/Logo";
 import { siteConfig } from "@/config/site";
+import { signOut } from "@/app/(site)/login/actions";
 import { getSession } from "@/lib/auth/session";
 import { NavLinks } from "./NavLinks";
 
@@ -28,12 +29,23 @@ export async function SiteHeader() {
             </Link>
           )}
           {session ? (
-            <Link
-              href="/account"
-              className="btn-primary px-4 py-2 text-sm whitespace-nowrap shadow-none"
-            >
-              האזור שלי
-            </Link>
+            <>
+              <Link
+                href="/account"
+                className="btn-primary px-4 py-2 text-sm whitespace-nowrap shadow-none"
+              >
+                האזור שלי
+              </Link>
+              <form action={signOut}>
+                <button
+                  type="submit"
+                  className="btn-secondary px-3 py-2 text-sm whitespace-nowrap shadow-none sm:px-4"
+                >
+                  <span className="sm:hidden">יציאה</span>
+                  <span className="hidden sm:inline">התנתקות</span>
+                </button>
+              </form>
+            </>
           ) : siteConfig.features.memberSignup ? (
             <Link
               href="/login?mode=signup"

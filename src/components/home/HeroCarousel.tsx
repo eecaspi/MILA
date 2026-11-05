@@ -4,6 +4,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
 import type { HomeBanner } from "@/lib/data/banners";
+import { CharacterSlide } from "./CharacterSlide";
+import { FullImageSlide } from "./FullImageSlide";
 
 const IMAGE_MS = 6000;
 const VIDEO_MS = 10000;
@@ -18,20 +20,12 @@ function Chevron({ dir }: { dir: "next" | "prev" }) {
 }
 
 /**
- * The top of the home page: the Liky character slides first, then the banners from the back office.
+ * The top of the home page: the banners from the back office (the Liky slides are banners too).
  * Swipe or use the arrows/dots; it also advances by itself, with a pause button, and does not
  * move on its own for people who asked their device for less motion.
  */
-export function HeroCarousel({
-  leading,
-  banners,
-}: {
-  /** Built-in slides that always come first (the Liky character). */
-  leading: React.ReactNode[];
-  banners: HomeBanner[];
-}) {
-  const lead = leading.length;
-  const total = lead + banners.length;
+export function HeroCarousel({ banners }: { banners: HomeBanner[] }) {
+  const total = banners.length;
   const slideRefs = useRef<(HTMLElement | null)[]>([]);
   const stripRef = useRef<HTMLDivElement | null>(null);
   const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
@@ -90,7 +84,7 @@ export function HeroCarousel({
   // Advance by itself.
   useEffect(() => {
     if (total < 2 || paused || hovering) return;
-    const isVideo = banners[active - lead]?.type === "video";
+    const isVideo = banners[active]?.type === "video";
     const t = setTimeout(() => goTo(active + 1), isVideo ? VIDEO_MS : IMAGE_MS);
     return () => clearTimeout(t);
   }, [active, paused, hovering, total, banners, goTo]);
@@ -104,23 +98,30 @@ export function HeroCarousel({
       onMouseLeave={() => setHovering(false)}
     >
       <div ref={stripRef} className="flex h-[400px] w-full snap-x snap-mandatory overflow-x-auto overscroll-x-contain [scrollbar-width:none] sm:h-[340px] md:aspect-[16/6] md:h-auto md:max-h-[520px] [&::-webkit-scrollbar]:hidden">
-        {leading.map((slide, i) => (
-          <div
-            key={`lead-${i}`}
-            ref={(el) => {
-              slideRefs.current[i] = el;
-            }}
-            role="group"
-            aria-roledescription="שקופית"
-            aria-label={`${i + 1} מתוך ${total}`}
-            className="relative w-full shrink-0 snap-start overflow-hidden"
-          >
-            {slide}
-          </div>
-        ))}
-
         {banners.map((b, i) => {
-          const n = lead + i;
+          const n = i;
+          const href = b.link ?? "/deals";
+          const designed =
+            b.layout === "character" || b.layout === "character_reverse" ? (
+              <CharacterSlide
+                image={b.url}
+                alt={b.title ?? ""}
+                headline={b.headline ?? b.title ?? ""}
+                text={b.text ?? ""}
+                href={href}
+                cta={b.cta ?? "לפרטים נוספים"}
+                imageFirst={b.layout === "character_reverse"}
+                priority={i === 0}
+              />
+            ) : b.layout === "cover" ? (
+              <FullImageSlide
+                image={b.url}
+                alt={b.title ?? ""}
+                href={href}
+                cta={b.cta ?? "לפרטים נוספים"}
+                priority={i === 0}
+              />
+            ) : null;
           const media =
             b.type === "video" ? (
               <video
@@ -155,7 +156,6 @@ export function HeroCarousel({
                 />
               </>
             );
-          const href = b.link ?? "/deals";
           const external = /^https?:/.test(href);
           // Every banner says something and has a button: its title (if any) and "לפרטים נוספים".
           const caption = (
@@ -165,7 +165,7 @@ export function HeroCarousel({
                   {b.title}
                 </span>
               )}
-              <span className="btn-primary !px-5 !py-2 text-sm md:text-base">לפרטים נוספים</span>
+              <span className="btn-primary !px-5 !py-2 text-sm md:text-base">{b.cta ?? "לפרטים נוספים"}</span>
             </span>
           );
           return (
@@ -179,6 +179,7 @@ export function HeroCarousel({
               aria-label={`${n + 1} מתוך ${total}`}
               className="relative w-full shrink-0 snap-start overflow-hidden bg-surface"
             >
+              {designed ?? (
               <Link
                 href={href}
                 {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
@@ -188,6 +189,7 @@ export function HeroCarousel({
                 {media}
                 {caption}
               </Link>
+              )}
             </div>
           );
         })}

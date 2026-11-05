@@ -33,6 +33,10 @@ insert into auth.users (id, email) values
   ('aaaa0000-0000-0000-0000-00000000000b', 'member@example.com');
 update profiles set role = 'admin' where id = 'aaaa0000-0000-0000-0000-00000000000a';
 
+alter table banners disable trigger banners_audit;
+delete from banners;
+alter table banners enable trigger banners_audit;
+
 set role authenticated;
 select set_config('request.jwt.claim.sub', 'aaaa0000-0000-0000-0000-00000000000a', false);
 insert into banners (media_url, media_type, title, sort_order, is_published) values
@@ -57,5 +61,8 @@ update banners set title = 'שינוי' where true;
 select pg_temp.eq((select count(*)::int from banners where title = 'שינוי'), 0, 'members cannot edit banners');
 delete from banners where true;
 select pg_temp.eq((select count(*)::int from banners), 1, 'members cannot delete banners');
+
+reset role;
+select pg_temp.fails($$insert into banners (media_url, media_type, layout) values ('x', 'image', 'wide')$$, '23514', 'unknown layout rejected');
 
 \echo 'ALL BANNER DB TESTS PASSED'

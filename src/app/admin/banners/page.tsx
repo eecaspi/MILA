@@ -1,5 +1,7 @@
 import { BannerUploader } from "@/components/admin/BannerUploader";
+import { BannerTextFields } from "@/components/admin/BannerTextFields";
 import { inputClass } from "@/components/admin/styles";
+import type { BannerLayout } from "@/lib/banners";
 import { createClient } from "@/lib/supabase/server";
 import { deleteBanner, updateBanner } from "../banner-actions";
 
@@ -11,13 +13,17 @@ interface Row {
   link_url: string | null;
   sort_order: number;
   is_published: boolean;
+  layout: BannerLayout;
+  headline: string | null;
+  body: string | null;
+  button_label: string | null;
 }
 
 export default async function AdminBanners() {
   const supabase = await createClient();
   const { data, error } = await supabase
     .from("banners")
-    .select("id, media_url, media_type, title, link_url, sort_order, is_published")
+    .select("id, media_url, media_type, title, link_url, sort_order, is_published, layout, headline, body, button_label")
     .order("sort_order")
     .order("created_at", { ascending: false });
   const rows = (data ?? []) as Row[];
@@ -27,7 +33,7 @@ export default async function AdminBanners() {
       <div>
         <h1 className="text-2xl text-ink">באנרים בדף הבית</h1>
         <p className="mt-1 text-sm text-ink-soft">
-          בראש דף הבית מתחלפות קודם שקופיות הדמות של ליקי, ואחריהן הבאנרים שכאן, לפי הסדר.
+          כל מה שמתחלף בראש דף הבית נמצא כאן, כולל השקופיות של ליקי. אפשר לשנות כותרת, טקסט, כפתור, קישור, סדר (מספר נמוך קודם), להסתיר או למחוק.
         </p>
       </div>
 
@@ -59,14 +65,7 @@ export default async function AdminBanners() {
               <div className="space-y-3">
                 <form action={updateBanner} className="grid gap-3 sm:grid-cols-2">
                   <input type="hidden" name="id" value={b.id} />
-                  <label className="block">
-                    <span className="mb-1 block text-xs font-semibold text-ink-soft">כותרת</span>
-                    <input name="title" defaultValue={b.title ?? ""} maxLength={80} className={inputClass} />
-                  </label>
-                  <label className="block">
-                    <span className="mb-1 block text-xs font-semibold text-ink-soft">קישור</span>
-                    <input name="link_url" dir="ltr" defaultValue={b.link_url ?? ""} className={inputClass} />
-                  </label>
+                  <BannerTextFields values={b} />
                   <label className="block">
                     <span className="mb-1 block text-xs font-semibold text-ink-soft">סדר</span>
                     <input name="sort_order" inputMode="numeric" defaultValue={b.sort_order} className={inputClass} />

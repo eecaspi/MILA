@@ -50,8 +50,11 @@ export async function updateBanner(fd: FormData): Promise<void> {
   merged.set("media_type", current.media_type as string);
   const parsed = parseBannerForm(merged, supabaseUrl);
   if (!parsed.ok) return;
-  const { title, link_url, sort_order, is_published } = parsed.values;
-  await supabase.from("banners").update({ title, link_url, sort_order, is_published }).eq("id", id);
+  const { title, link_url, sort_order, is_published, layout, headline, body, button_label } = parsed.values;
+  await supabase
+    .from("banners")
+    .update({ title, link_url, sort_order, is_published, layout, headline, body, button_label })
+    .eq("id", id);
   refresh();
 }
 

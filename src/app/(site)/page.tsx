@@ -2,8 +2,6 @@ import Link from "next/link";
 import { BusinessCard } from "@/components/business/BusinessCard";
 import { DealCard } from "@/components/deals/DealCard";
 import { CommunityInvite } from "@/components/home/CommunityInvite";
-import { CharacterSlide } from "@/components/home/CharacterSlide";
-import { FullImageSlide } from "@/components/home/FullImageSlide";
 import { HeroCarousel } from "@/components/home/HeroCarousel";
 import { HowItWorks } from "@/components/home/HowItWorks";
 import { CategoryIcon } from "@/components/ui/CategoryIcon";
@@ -27,53 +25,14 @@ export default async function HomePage() {
     ? { signedIn: !!session, mine: await getMyCodes() }
     : undefined;
 
-  const joinHref = siteConfig.features.memberSignup ? "/login?mode=signup" : "#community";
-  const characterSlides = [
-    <CharacterSlide
-      key="hello"
-      image="/brand/liky-character-bag.jpg"
-      alt="ליקי עם שקית של האתר"
-      headline="היי, אני ליקי"
-      text="כאן לשירותך, עם ההטבות והמבצעים הכי שווים במקום אחד."
-      href="/deals"
-      cta="בואי לראות מה מצאתי לך"
-      priority
-    />,
-    <FullImageSlide
-      key="red"
-      image="/brand/liky-banner-red.jpg"
-      alt="ליקי, יש לי קישור בשבילך"
-      href="/deals"
-      cta="בואי לראות מה מצאתי לך"
-    />,
-    <CharacterSlide
-      key="presenting"
-      image="/brand/liky-presenting.jpg"
-      alt="ליקי מציגה שקית של האתר"
-      headline={siteConfig.brand.slogan}
-      text="מצטרפות בחינם ומקבלות קוד קופון להטבות של העסקים."
-      href={joinHref}
-      cta="אני רוצה להצטרף"
-    />,
-    <CharacterSlide
-      key="community"
-      image="/brand/liky-podcast.jpg"
-      alt="ליקי מספרת על ההטבות"
-      headline="בואי להצטרף לקהילה של ליקי"
-      text="הקבוצה שלנו בוואטסאפ: הטבות חדשות והמלצות ישר לטלפון."
-      href="#community"
-      cta="הצטרפי לקהילה"
-      imageFirst
-    />,
-  ];
 
   return (
     <>
-      {/* Hero: the Liky character slides, then the banners from the back office */}
+      {/* Hero: banners managed in the back office (the Liky slides included) */}
       <h1 className="sr-only">
         {siteConfig.brand.name} – {siteConfig.brand.slogan}
       </h1>
-      <HeroCarousel leading={characterSlides} banners={banners} />
+      <HeroCarousel banners={banners} />
       <div className="h-10" />
 
       <div className="mx-auto max-w-6xl space-y-16 px-4">

@@ -1,6 +1,14 @@
 /** Pure helpers for home banners (checked on the server, tested without a database). */
 
 export type BannerMedia = "image" | "video";
+export type BannerLayout = "photo" | "character" | "character_reverse" | "cover";
+
+export const LAYOUTS: { value: BannerLayout; label: string }[] = [
+  { value: "photo", label: "תמונה או סרטון (עם כותרת וכפתור)" },
+  { value: "character", label: "תמונה בצד, כותרת וטקסט בצד" },
+  { value: "character_reverse", label: "תמונה בצד השני, כותרת וטקסט" },
+  { value: "cover", label: "תמונה עיצובית על כל הבאנר + כפתור" },
+];
 
 export const IMAGE_MIME = ["image/jpeg", "image/png", "image/webp", "image/avif"];
 export const VIDEO_MIME = ["video/mp4", "video/webm"];
@@ -14,6 +22,10 @@ export interface BannerValues {
   link_url: string | null;
   sort_order: number;
   is_published: boolean;
+  layout: BannerLayout;
+  headline: string | null;
+  body: string | null;
+  button_label: string | null;
 }
 
 export type BannerParse =
@@ -29,6 +41,12 @@ export function bannerPrefix(supabaseUrl: string): string {
 export function bannerStoragePath(url: string, supabaseUrl: string): string | null {
   const prefix = bannerPrefix(supabaseUrl);
   return url.startsWith(prefix) ? `banners/${url.slice(prefix.length)}` : null;
+}
+
+/** Our own uploads, or one of the brand pictures shipped with the site. */
+export function isAllowedMedia(url: string, supabaseUrl: string): boolean {
+  if (url.includes("..")) return false;
+  return !!bannerStoragePath(url, supabaseUrl) || /^\/brand\/[\w.-]+$/.test(url);
 }
 
 /** A link target must stay on the site ("/deals") or be an https address. */
@@ -52,11 +70,13 @@ function field(fd: FormData, name: string, max: number): string {
 export function parseBannerForm(fd: FormData, supabaseUrl: string): BannerParse {
   const errors: Record<string, string> = {};
   const media_url = field(fd, "media_url", 600);
-  if (!media_url || !bannerStoragePath(media_url, supabaseUrl) || media_url.includes("..")) {
+  if (!media_url || !isAllowedMedia(media_url, supabaseUrl)) {
     errors.media = "לא הועלה קובץ";
   }
   const type = field(fd, "media_type", 10);
   if (type !== "image" && type !== "video") errors.media = "סוג הקובץ לא נתמך";
+  const layoutRaw = field(fd, "layout", 20) || "photo";
+  if (!LAYOUTS.some((l) => l.value === layoutRaw)) errors.layout = "סוג תצוגה לא מוכר";
   const link = safeLink(field(fd, "link_url", 300));
   if (link === undefined) errors.link_url = "הקישור צריך להתחיל ב־/ (עמוד באתר) או ב־https://";
   const sortRaw = field(fd, "sort_order", 6);
@@ -72,6 +92,10 @@ export function parseBannerForm(fd: FormData, supabaseUrl: string): BannerParse 
       link_url: link ?? null,
       sort_order: sort,
       is_published: fd.get("is_published") !== "off",
+      layout: layoutRaw as BannerLayout,
+      headline: field(fd, "headline", 80) || null,
+      body: field(fd, "body", 160) || null,
+      button_label: field(fd, "button_label", 30) || null,
     },
   };
 }

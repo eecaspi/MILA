@@ -9,6 +9,7 @@ import { toneClasses } from "@/components/ui/tones";
 import { siteConfig } from "@/config/site";
 import { categories } from "@/data/categories";
 import { getSession } from "@/lib/auth/session";
+import { getMyCodes } from "@/lib/data/my-codes";
 import { getBusinesses, getHighlightedOffers } from "@/lib/data/repository";
 
 export default async function HomePage() {
@@ -17,7 +18,9 @@ export default async function HomePage() {
     getBusinesses(),
     getSession(),
   ]);
-  const codes = siteConfig.features.personalCodes ? { signedIn: !!session } : undefined;
+  const codes = siteConfig.features.personalCodes
+    ? { signedIn: !!session, mine: await getMyCodes() }
+    : undefined;
 
   return (
     <>

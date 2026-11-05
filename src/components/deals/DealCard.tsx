@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { TagMark } from "@/components/brand/TagMark";
 import { StatusBadge } from "@/components/ui/StatusBadge";
-import { claimCode } from "@/app/(site)/deals/[id]/actions";
+import { CardCode } from "./CardCode";
 import { isExpired } from "@/lib/data/mappers";
 import { formatDate } from "@/lib/format";
 import type { OfferWithBusiness } from "@/lib/types";
@@ -22,8 +22,8 @@ export function DealCard({
   offer: OfferWithBusiness;
   layout?: "card" | "row";
   showPickNote?: boolean;
-  /** Pass when personal codes are on: shows "get a code" when the card is hovered. */
-  codes?: { signedIn: boolean };
+  /** Pass when personal codes are on: shows the "get a code" control on the card. */
+  codes?: { signedIn: boolean; mine?: Record<string, { code: string; expiresAt: string }> };
 }) {
   const href = `/deals/${offer.id}`;
   const isDemo = offer.status === "demo";
@@ -65,28 +65,6 @@ export function DealCard({
         <span className="absolute end-3 top-3 rounded-full bg-surface/90 px-2.5 py-1 text-xs font-semibold text-ink">
           {kindLabel[offer.kind]}
         </span>
-        {codes && canClaim && (
-          <div className="absolute inset-x-3 bottom-3 z-10 space-y-1.5">
-            <p className="rounded-full bg-white/90 px-3 py-1 text-center text-xs font-semibold text-ink">
-              קוד אישי וחד־פעמי · תקף ל־24 שעות
-            </p>
-            {codes.signedIn ? (
-              <form action={claimCode}>
-                <input type="hidden" name="offer_id" value={offer.id} />
-                <button type="submit" className="btn-primary w-full py-2.5 text-[15px]">
-                  קבלי קוד אישי
-                </button>
-              </form>
-            ) : (
-              <Link
-                href={`/login?mode=signup&next=${encodeURIComponent(href)}`}
-                className="inline-flex w-full items-center justify-center rounded-full border-2 border-accent bg-white py-2.5 text-[15px] font-bold text-accent shadow-[var(--shadow-card)] transition hover:bg-accent-soft"
-              >
-                הצטרפי וקבלי קוד
-              </Link>
-            )}
-          </div>
-        )}
       </div>
 
       <div className="flex flex-1 flex-col p-5">
@@ -106,6 +84,16 @@ export function DealCard({
             {isDemo && <StatusBadge status={offer.status} />}
             {offer.validUntil && <span>בתוקף עד {formatDate(offer.validUntil)}</span>}
           </div>
+          {codes && canClaim && (
+            <div className="relative z-10 mb-3">
+              <CardCode
+                offerId={offer.id}
+                signedIn={codes.signedIn}
+                signupHref={`/login?mode=signup&next=${encodeURIComponent(href)}`}
+                initial={codes.mine?.[offer.id]}
+              />
+            </div>
+          )}
           <Link
             href={href}
             className="btn-secondary w-full py-2.5 text-[15px] after:absolute after:inset-0"

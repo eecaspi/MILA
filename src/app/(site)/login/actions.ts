@@ -51,13 +51,23 @@ export async function signUp(formData: FormData): Promise<void> {
   const channel = field(formData, "channel");
   if (channel !== "whatsapp" && channel !== "email") back("signup", "channel_required", next);
 
+  if (formData.get("terms") !== "yes") back("signup", "terms_required", next);
+  const marketing = formData.get("marketing") === "yes";
+  if (channel === "email" && !marketing) back("signup", "marketing_required", next);
+
   const origin = (await headers()).get("origin") ?? process.env.NEXT_PUBLIC_SITE_URL ?? "";
   const supabase = await createClient();
   const { data, error } = await supabase.auth.signUp({
     email,
     password,
     options: {
-      data: { display_name: displayName, community_channel: channel },
+      data: {
+        display_name: displayName,
+        community_channel: channel,
+        terms_accepted: "true",
+        terms_version: siteConfig.legal.termsVersion,
+        marketing_consent: marketing ? "true" : "false",
+      },
       emailRedirectTo: `${origin}/auth/callback?next=${encodeURIComponent(next)}`,
     },
   });

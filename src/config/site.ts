@@ -24,6 +24,22 @@ export const siteConfig = {
   contact: {
     email: "hello@example.com",
   },
+  /**
+   * Details the legal pages (/terms, /privacy, /accessibility, /disclosure) read.
+   * TEMPORARY placeholders until the operator's real details are known: set them here
+   * and every page updates. While `draft` is true each legal page shows a "טיוטה" notice.
+   */
+  legal: {
+    draft: true as boolean,
+    operatorName: "[שם מפעילת האתר – להשלמה]",
+    contactEmail: "hello@example.com",
+    /** City whose courts have jurisdiction (to be set with the lawyer). */
+    courtCity: "[עיר – להשלמה]",
+    /** Bump when terms/privacy text changes materially; stored with each sign-up consent. */
+    termsVersion: "2026-11-05",
+    lastUpdated: "5 בנובמבר 2026",
+    accessibilityCoordinator: "[שם רכזת הנגישות – להשלמה]",
+  },
   nav: [
     { href: "/", label: "ראשי" },
     { href: "/deals", label: "ליקי מצאה לך" },

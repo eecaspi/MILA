@@ -7,6 +7,7 @@ type Member = {
   display_name: string | null;
   email: string | null;
   community_channel: string | null;
+  marketing_consent: boolean;
   created_at: string;
 };
 
@@ -27,7 +28,7 @@ export default async function Members({
   const supabase = await createClient();
   const { data } = await supabase
     .from("profiles")
-    .select("id, display_name, email, community_channel, created_at")
+    .select("id, display_name, email, community_channel, marketing_consent, created_at")
     .order("created_at", { ascending: false })
     .limit(1000);
   const all = (data ?? []) as Member[];
@@ -42,6 +43,9 @@ export default async function Members({
           הורדה כקובץ (CSV)
         </a>
       </div>
+      <p className="text-sm text-ink-soft">
+        לשליחת דיוור שיווקי במייל, להשתמש רק במי שמסומן &quot;אישרה דיוור: כן&quot;.
+      </p>
 
       <div className="grid grid-cols-3 gap-3">
         {[
@@ -84,6 +88,7 @@ export default async function Members({
                 <th className="p-3 text-start font-semibold">שם</th>
                 <th className="p-3 text-start font-semibold">אימייל</th>
                 <th className="p-3 text-start font-semibold">ערוץ</th>
+                <th className="p-3 text-start font-semibold">אישרה דיוור</th>
                 <th className="p-3 text-start font-semibold">הצטרפה</th>
               </tr>
             </thead>
@@ -93,6 +98,7 @@ export default async function Members({
                   <td className="p-3 font-semibold text-ink">{m.display_name ?? "—"}</td>
                   <td className="ltr p-3 text-ink-soft">{m.email}</td>
                   <td className="p-3">{labels[m.community_channel ?? ""] ?? "לא נבחר"}</td>
+                  <td className="p-3">{m.marketing_consent ? "כן" : "לא"}</td>
                   <td className="p-3 text-ink-soft">{m.created_at.slice(0, 10)}</td>
                 </tr>
               ))}

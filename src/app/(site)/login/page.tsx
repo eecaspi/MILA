@@ -137,6 +137,46 @@ export default async function LoginPage({ searchParams }: { searchParams: Search
               )}
             </fieldset>
           )}
+          {mode === "signup" && (
+            <div className="space-y-2 text-sm text-ink">
+              <label className="flex cursor-pointer items-start gap-3">
+                <input
+                  type="checkbox"
+                  name="terms"
+                  value="yes"
+                  required
+                  disabled={disabled}
+                  className="mt-1 accent-[var(--color-accent)]"
+                />
+                <span>
+                  קראתי ואני מסכימה ל
+                  <Link href="/terms" target="_blank" className="font-semibold text-accent hover:underline">
+                    תנאי השימוש
+                  </Link>{" "}
+                  ול
+                  <Link href="/privacy" target="_blank" className="font-semibold text-accent hover:underline">
+                    מדיניות הפרטיות
+                  </Link>
+                  .
+                </span>
+              </label>
+              <label className="flex cursor-pointer items-start gap-3">
+                <input
+                  type="checkbox"
+                  name="marketing"
+                  value="yes"
+                  disabled={disabled}
+                  className="mt-1 accent-[var(--color-accent)]"
+                />
+                <span>
+                  אני מאשרת לקבל עדכונים והטבות מליקי באימייל. אפשר להסיר בכל עת.
+                  <span className="block text-xs text-ink-soft">
+                    (נדרש למי שבחרה ברשימת העדכונים באימייל)
+                  </span>
+                </span>
+              </label>
+            </div>
+          )}
           <SubmitButton disabled={disabled}>
             {mode === "signup" ? "אני מצטרפת" : "כניסה"}
           </SubmitButton>

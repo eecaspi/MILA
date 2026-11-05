@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Logo } from "@/components/brand/Logo";
+import { getSession } from "@/lib/auth/session";
 import { CommunityInvite } from "@/components/home/CommunityInvite";
 import { siteConfig } from "@/config/site";
 
@@ -9,7 +10,8 @@ export const metadata: Metadata = {
   description: "מי אנחנו, מה עומד מאחורי ליקי, ואיך מצטרפות לקבוצת הוואטסאפ.",
 };
 
-export default function AboutPage() {
+export default async function AboutPage() {
+  const session = await getSession();
   const { legal } = siteConfig;
   return (
     <div className="mx-auto max-w-4xl space-y-12 px-4 py-10">
@@ -59,7 +61,7 @@ export default function AboutPage() {
         </p>
       </section>
 
-      <CommunityInvite />
+      {!session && <CommunityInvite />}
     </div>
   );
 }

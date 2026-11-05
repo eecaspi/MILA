@@ -28,29 +28,8 @@ export default async function Welcome({
       <h1 className="mt-6 text-3xl text-ink md:text-4xl">ברוכה הבאה לליקי!</h1>
       <p className="mt-3 text-lg text-ink-soft">החשבון שלך מוכן. מעכשיו קודי הקופון של העסקים מופיעים לך באתר, בכל הטבה.</p>
 
-      <div className="mt-8 w-full rounded-[var(--radius-card)] bg-accent-soft p-6 md:p-8">
-        {viaWhatsApp ? (
-          <>
-            <h2 className="text-2xl text-ink">עוד צעד קטן: מצטרפות לקבוצה</h2>
-            <p className="mt-2 text-ink-soft">
-              ככה את מקבלת הטבות חדשות ישר לטלפון, והמלצות מנשים כמוך.
-            </p>
-            {whatsapp ? (
-              <a
-                href={whatsapp}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn-primary mt-6 w-full py-4 text-lg"
-              >
-                הצטרפי לקבוצת הוואטסאפ
-              </a>
-            ) : (
-              <p className="mt-6 rounded-full bg-surface px-6 py-3 font-bold text-ink-soft">
-                הקבוצה נפתחת בקרוב
-              </p>
-            )}
-          </>
-        ) : (
+      {!viaWhatsApp && (
+        <div className="mt-8 w-full rounded-[var(--radius-card)] bg-accent-soft p-6 md:p-8">
           <>
             <h2 className="text-2xl text-ink">נשארות בקשר במייל</h2>
             <p className="mt-2 text-ink-soft">
@@ -67,12 +46,12 @@ export default async function Welcome({
               </a>
             )}
           </>
-        )}
-      </div>
+        </div>
+      )}
 
       <Link
         href={to}
-        className={`mt-6 w-full py-3 text-base ${viaWhatsApp ? "btn-secondary" : "btn-primary"}`}
+        className="btn-primary mt-8 w-full py-4 text-lg"
       >
         המשיכי להטבות
       </Link>

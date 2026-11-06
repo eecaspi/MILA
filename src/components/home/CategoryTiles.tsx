@@ -16,8 +16,7 @@ function Chevron({ dir }: { dir: "prev" | "next" }) {
 }
 
 /**
- * Square category cards in a row that slides sideways, with arrows. Each card is shown whole: the
- * picture with its icon and name.
+ * Square category cards in a row that slides sideways, with arrows: picture, then icon and name.
  */
 export function CategoryTiles() {
   const strip = useRef<HTMLUListElement>(null);
@@ -49,22 +48,25 @@ export function CategoryTiles() {
       >
         {categories.map((c) => (
           <li key={c.slug} className="w-[46%] shrink-0 snap-start sm:w-[31%] md:w-[23%] lg:w-[19%]">
-            <Link href={`/businesses?category=${c.slug}`} className="lift block overflow-hidden rounded-3xl bg-accent-soft">
+            <Link href={`/businesses?category=${c.slug}`} className="lift group block text-center">
               {c.image ? (
                 <Image
                   src={c.image}
-                  alt={c.name}
-                  width={640}
-                  height={730}
+                  alt=""
+                  width={520}
+                  height={540}
                   sizes="(min-width: 1024px) 19vw, (min-width: 768px) 23vw, (min-width: 640px) 31vw, 46vw"
-                  className="aspect-[7/8] w-full object-cover"
+                  className="aspect-[26/27] w-full rounded-3xl bg-accent-soft object-cover"
                 />
               ) : (
-                <span className="flex items-center justify-end gap-3 p-6 font-display text-xl font-bold text-ink">
-                  <CategoryIcon slug={c.slug} className="size-8 text-accent" />
-                  {c.name}
+                <span className="flex aspect-[26/27] items-center justify-center rounded-3xl bg-accent-soft">
+                  <CategoryIcon slug={c.slug} className="size-10 text-accent" />
                 </span>
               )}
+              <span className="mt-2 flex items-center justify-center gap-1.5 font-display text-base font-bold text-ink">
+                <CategoryIcon slug={c.slug} className="size-5 text-accent" />
+                {c.name}
+              </span>
             </Link>
           </li>
         ))}

@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { RewardsComingSoon } from "@/components/rewards/RewardsComingSoon";
 import { PointsSummary } from "@/components/rewards/PointsSummary";
 import { TransactionList } from "@/components/rewards/TransactionList";
 import { Alert } from "@/components/ui/Alert";
-import { toneClasses } from "@/components/ui/tones";
 import { requireSession } from "@/lib/auth/session";
 import { formatDate } from "@/lib/format";
 import { getMemberRewards } from "@/lib/rewards/queries";
@@ -20,19 +20,16 @@ const ways = [
     icon: "🛍️",
     title: "קונות דרך ליקי",
     text: "נקודות על קניות מאומתות דרך הקישורים שלנו.",
-    tone: "rose" as const,
   },
   {
     icon: "💜",
     title: "משתתפות בפעילויות הקהילה",
     text: "השלמת פרופיל, סקרים ואתגרים.",
-    tone: "lilac" as const,
   },
   {
     icon: "🎁",
     title: "צוברות נקודות ופותחות הטבות",
     text: "חנות ההטבות של ליקי בדרך.",
-    tone: "mint" as const,
   },
 ];
 
@@ -85,7 +82,11 @@ export default async function AccountPage({ searchParams }: { searchParams: Sear
         </Link>
       )}
 
-      <PointsSummary balance={rewards.balance} programEnabled={rewards.programEnabled} />
+      {rewards.programEnabled ? (
+        <PointsSummary balance={rewards.balance} programEnabled={rewards.programEnabled} />
+      ) : (
+        <RewardsComingSoon />
+      )}
 
       {!profileComplete && (
         <Link
@@ -106,18 +107,20 @@ export default async function AccountPage({ searchParams }: { searchParams: Sear
         </Link>
       )}
 
+      {rewards.programEnabled && (
+        <>
       <section aria-labelledby="how" className="space-y-4">
         <h2 id="how" className="text-xl text-ink">
           איך צוברים נקודות?
         </h2>
         <ul className="grid gap-3 sm:grid-cols-3">
           {ways.map((w) => (
-            <li key={w.title} className={`rounded-[var(--radius-card)] p-5 ${toneClasses[w.tone]}`}>
+            <li key={w.title} className="rounded-[var(--radius-card)] border border-line bg-surface p-5">
               <span aria-hidden className="text-2xl">
                 {w.icon}
               </span>
               <p className="mt-2 font-display text-lg font-bold">{w.title}</p>
-              <p className="mt-1 text-sm font-medium opacity-80">{w.text}</p>
+              <p className="mt-1 text-sm text-ink-soft">{w.text}</p>
             </li>
           ))}
         </ul>
@@ -135,6 +138,9 @@ export default async function AccountPage({ searchParams }: { searchParams: Sear
           הצטרפת למועדון ב־{formatDate(session.profile.created_at)}
         </p>
       </section>
+
+        </>
+      )}
 
       <section className="flex flex-wrap items-center justify-between gap-3 rounded-2xl bg-surface p-5">
         <div>

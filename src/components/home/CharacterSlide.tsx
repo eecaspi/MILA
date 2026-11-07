@@ -28,20 +28,20 @@ export function CharacterSlide({
 }) {
   return (
     <div
-      className={`relative flex size-full flex-col items-center gap-1 overflow-hidden bg-surface px-5 pb-12 pt-3 sm:gap-6 sm:px-10 sm:py-4 md:px-20 ${
-        imageFirst ? "sm:flex-row-reverse" : "sm:flex-row"
+      className={`relative flex size-full items-center gap-2 overflow-hidden bg-surface px-3 py-2 sm:gap-6 sm:px-10 sm:py-4 md:px-20 ${
+        imageFirst ? "flex-row-reverse" : "flex-row"
       }`}
     >
-      <div className="space-y-1.5 text-center sm:w-[44%] sm:space-y-4 sm:text-start">
-        <p className="font-display text-xl font-bold leading-tight text-ink sm:text-4xl md:text-5xl">
+      <div className="w-[58%] space-y-1 text-start sm:w-[44%] sm:space-y-4">
+        <p className="font-display text-base font-bold leading-tight text-ink sm:text-4xl md:text-5xl">
           {headline}
         </p>
-        <p className="text-sm text-ink-soft sm:text-lg">{text}</p>
-        <Link href={href} className="btn-primary mt-1 !px-5 !py-2 text-sm sm:!px-7 sm:!py-3 sm:text-base">
+        <p className="line-clamp-2 text-xs text-ink-soft sm:text-lg">{text}</p>
+        <Link href={href} className="btn-primary mt-0.5 !px-3 !py-1 text-xs sm:!px-7 sm:!py-3 sm:text-base">
           {cta}
         </Link>
       </div>
-      <div className="relative order-first min-h-0 w-full flex-1 sm:order-none sm:h-full sm:w-[56%] sm:flex-none">
+      <div className="relative h-full w-[42%] sm:w-[56%]">
         <Image
           src={image}
           alt={alt}

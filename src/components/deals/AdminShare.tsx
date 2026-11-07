@@ -14,7 +14,7 @@ function buildMessage(offer: OfferWithBusiness, url: string, fixedCode: string |
     offer.title,
     until ? `⏰ בתוקף עד ${until}` : null,
     "",
-    fixedCode ? `🏷️ קוד קופון (לחיצה ארוכה להעתקה):\n\`\`\`${fixedCode}\`\`\`` : null,
+    fixedCode ? `🏷️ קוד קופון: ${fixedCode}` : null,
     "",
     `👇 לפרטים ולמימוש באתר ליקי`,
     url,

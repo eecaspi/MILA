@@ -60,7 +60,7 @@ export function parseCodeMode(v: string | null | undefined): CodeMode {
 
 /** Short line under a code control: what kind of code it is and how long it lasts. */
 export const codeModeNote: Record<"fixed" | "personal" | "daily", string> = {
-  fixed: "קוד קבוע של העסק",
+  fixed: "הקוד של העסק",
   personal: "קוד אישי וחד־פעמי · תקף ל־24 שעות",
   daily: "קוד היום · תקף עד סוף היום",
 };

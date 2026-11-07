@@ -70,7 +70,7 @@ export function CardCode({
         <CopyCouponButton code={state.code} />
         {state.expiresAt && (
           <p className="text-center text-xs text-ink-soft">
-            {mode === "daily" ? "קוד היום" : mode === "fixed" ? "קוד קבוע" : "אישי וחד־פעמי"}
+            {mode === "daily" ? "קוד היום" : mode === "fixed" ? "הקוד של העסק" : "אישי וחד־פעמי"}
             {new Date(state.expiresAt).getTime() - Date.now() < 300 * 86_400_000 &&
               ` · תקף עד ${until(state.expiresAt)}`}
           </p>

@@ -74,26 +74,7 @@ export default async function DealsPage({ searchParams }: { searchParams: Search
   const showBusinesses = !kind && !channel;
   const total = offers.length + (showBusinesses ? matchingBusinesses.length : 0);
 
-  return (
-    <div className="mx-auto max-w-6xl px-4 py-10">
-      <header className="mb-8">
-        <p className="eyebrow">מבצעים, קופונים והטבות</p>
-        <h1 className="mt-1 text-3xl text-ink md:text-4xl">ליקי מצאה לך</h1>
-        <p className="mt-2 text-ink-soft">כל מה ששווה לדעת עליו, במקום אחד.</p>
-      </header>
-
-      {offers.some((o) => o.status === "demo") && (
-        <div className="mb-6">
-          <DemoNotice>
-            הצעות שמסומנות <strong>&quot;לדוגמה&quot;</strong> שייכות לעסקים פיקטיביים ואינן ניתנות
-            למימוש. הצעות אמיתיות מופיעות עם התג &quot;הצעה מאומתת ✓&quot;.
-          </DemoNotice>
-        </div>
-      )}
-
-      <div className="mb-8 space-y-5 rounded-[var(--radius-card)] bg-surface p-4 shadow-[var(--shadow-card)] md:p-6">
-        <SearchBox suggestions={suggestions} defaultValue={q} hidden={{ category, kind, channel, sort }} />
-
+  const filters = (
         <div className="space-y-3">
           <FilterChips
             basePath="/deals"
@@ -146,6 +127,38 @@ export default async function DealsPage({ searchParams }: { searchParams: Search
             />
           )}
         </div>
+  );
+
+  return (
+    <div className="mx-auto max-w-6xl px-4 py-6 sm:py-10">
+      <header className="mb-4 sm:mb-8">
+        <p className="eyebrow">מבצעים, קופונים והטבות</p>
+        <h1 className="mt-1 text-2xl text-ink sm:text-3xl md:text-4xl">ליקי מצאה לך</h1>
+        <p className="mt-2 hidden text-ink-soft sm:block">כל מה ששווה לדעת עליו, במקום אחד.</p>
+      </header>
+
+      {offers.some((o) => o.status === "demo") && (
+        <div className="mb-6">
+          <DemoNotice>
+            הצעות שמסומנות <strong>&quot;לדוגמה&quot;</strong> שייכות לעסקים פיקטיביים ואינן ניתנות
+            למימוש. הצעות אמיתיות מופיעות עם התג &quot;הצעה מאומתת ✓&quot;.
+          </DemoNotice>
+        </div>
+      )}
+
+      <div className="mb-6 space-y-3 rounded-[var(--radius-card)] bg-surface p-3 sm:mb-8 sm:space-y-5 sm:p-4 shadow-[var(--shadow-card)] md:p-6">
+        <SearchBox suggestions={suggestions} defaultValue={q} hidden={{ category, kind, channel, sort }} />
+
+        <details className="group md:hidden" open={!!(category || kind || channel || sort)}>
+          <summary className="flex cursor-pointer list-none items-center justify-between rounded-full bg-raised px-4 py-2 text-sm font-semibold text-accent [&::-webkit-details-marker]:hidden">
+            <span>סינון ומיון</span>
+            <span aria-hidden className="transition-transform group-open:rotate-180">⌄</span>
+          </summary>
+          <div className="pt-3">
+            {filters}
+          </div>
+        </details>
+        <div className="hidden md:block">{filters}</div>
         {filtered && (
           <p className="flex flex-wrap items-center gap-3 text-sm text-ink-soft">
             <span>

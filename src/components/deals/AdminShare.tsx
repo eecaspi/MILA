@@ -41,8 +41,16 @@ export async function AdminShare({
   const path = `/deals/${offer.id}`;
   const url = `${siteConfig.url.replace(/\/$/, "")}${path}`;
   const fixedCode = offer.codeMode === "fixed" || offer.codeMode === undefined ? offer.couponCode : undefined;
+  const mode = offer.codeMode ?? "fixed";
+  const warning =
+    mode === "fixed" && !offer.couponCode
+      ? "אין קוד קופון להטבה, ולכן ההודעה יוצאת בלי קוד. אפשר להוסיף קוד בעריכת ההטבה."
+      : mode === "personal" || mode === "daily"
+        ? "ההטבה מוגדרת כקוד אישי או יומי, ולכן הקוד לא נכלל בהודעה. כדי שהקוד יופיע בהודעה: עריכת ההטבה ← איך מממשים ← קוד קבוע."
+        : undefined;
   return (
     <ShareDialog
+      warning={warning}
       imagePath={`${path}/share-image`}
       message={buildMessage(offer, url)}
       code={fixedCode}

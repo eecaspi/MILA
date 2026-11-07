@@ -88,9 +88,11 @@ export default async function HomePage() {
           )}
         </section>
 
-        <Reveal>
-          <HowItWorks />
-        </Reveal>
+        {!session && (
+          <Reveal>
+            <HowItWorks />
+          </Reveal>
+        )}
 
         {/* העסקים שלנו */}
         <section aria-labelledby="biz">

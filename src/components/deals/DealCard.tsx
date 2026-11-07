@@ -168,7 +168,7 @@ export function DealCard({
           />
           <Link
             href={href}
-            className={`${codes && canClaim ? "btn-secondary" : "btn-primary"} w-full py-2.5 text-[15px] after:absolute after:inset-0`}
+            className={`${codes && canClaim ? "btn-secondary max-sm:!border-0 max-sm:!bg-transparent max-sm:!py-1 max-sm:!shadow-none" : "btn-primary"} w-full py-2.5 text-[15px] after:absolute after:inset-0 max-sm:text-sm`}
           >
             {codes && canClaim ? "לפרטי ההטבה" : "למימוש ההטבה"}
           </Link>

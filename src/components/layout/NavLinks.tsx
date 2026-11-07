@@ -31,7 +31,7 @@ export function NavLinks({
               href={item.href}
               aria-current={active ? "page" : undefined}
               className={[
-                "block rounded-full px-4 py-2 text-[15px] font-semibold transition-colors",
+                "block whitespace-nowrap rounded-full px-4 py-2 text-[15px] font-semibold transition-colors",
                 active
                   ? "bg-accent-soft text-accent"
                   : "text-ink-soft hover:bg-accent-soft/60 hover:text-accent",

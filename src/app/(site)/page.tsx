@@ -101,13 +101,15 @@ export default async function HomePage() {
             href="/businesses"
             linkLabel="לכל העסקים"
           />
-          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+          <ul className="-mx-4 flex snap-x snap-mandatory gap-3 overflow-x-auto px-4 pb-2 [scrollbar-width:none] md:mx-0 md:grid md:grid-cols-2 md:gap-4 md:overflow-visible md:px-0 md:pb-0 lg:grid-cols-3 [&::-webkit-scrollbar]:hidden">
             {businesses.slice(0, 3).map((b, i) => (
-              <Reveal key={b.id} delay={i * 120}>
-                <BusinessCard business={b} />
-              </Reveal>
+              <li key={b.id} className="w-[66%] shrink-0 snap-start md:w-auto">
+                <Reveal delay={i * 120} className="h-full">
+                  <BusinessCard business={b} />
+                </Reveal>
+              </li>
             ))}
-          </div>
+          </ul>
         </section>
 
         {/* החברות של ליקי */}

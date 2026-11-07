@@ -222,3 +222,15 @@
     animation: likey-float 6s ease-in-out infinite;
   }
 }
+
+/* On phones and tablets scrolling is by touch: no scrollbars, neither on the page nor in sideways strips. */
+@media (hover: none) and (pointer: coarse) {
+  html,
+  body,
+  * {
+    scrollbar-width: none;
+  }
+  *::-webkit-scrollbar {
+    display: none;
+  }
+}

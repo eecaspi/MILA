@@ -3,6 +3,7 @@ import { Logo } from "@/components/brand/Logo";
 import { siteConfig } from "@/config/site";
 import { signOut } from "@/app/(site)/login/actions";
 import { getSession } from "@/lib/auth/session";
+import { MobileMenu } from "./MobileMenu";
 import { NavLinks } from "./NavLinks";
 
 export async function SiteHeader() {
@@ -77,30 +78,13 @@ export async function SiteHeader() {
             </Link>
           )}
 
-          {/* Mobile menu: native <details>, no JS needed. */}
-          <details className="group relative lg:hidden">
-            <summary className="flex size-10 cursor-pointer list-none items-center justify-center rounded-full bg-surface shadow-[var(--shadow-card)] [&::-webkit-details-marker]:hidden">
-              <span className="sr-only">תפריט</span>
-              <svg aria-hidden viewBox="0 0 24 24" className="size-5 text-ink">
-                <path
-                  d="M4 7h16M4 12h16M4 17h16"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                />
-              </svg>
-            </summary>
-            <nav
-              aria-label="ניווט ראשי"
-              className="absolute end-0 mt-2 w-60 rounded-2xl bg-surface shadow-[var(--shadow-soft)]"
-            >
-              <NavLinks
-                variant="mobile"
-                extra={extra}
-                cta={isOwner ? undefined : { href: "/for-businesses", label: "בעלי עסקים? פנו אלינו" }}
-              />
-            </nav>
-          </details>
+          <MobileMenu>
+            <NavLinks
+              variant="mobile"
+              extra={extra}
+              cta={isOwner ? undefined : { href: "/for-businesses", label: "בעלי עסקים? פנו אלינו" }}
+            />
+          </MobileMenu>
         </div>
       </div>
     </header>

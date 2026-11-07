@@ -17,13 +17,13 @@ export function HowItWorks() {
         {steps.map((s) => (
           <li
             key={s.n}
-            className="rounded-2xl bg-surface p-3 shadow-[var(--shadow-card)] sm:rounded-[var(--radius-card)] sm:p-5"
+            className="rounded-2xl bg-surface p-3 shadow-[var(--shadow-card)] sm:rounded-[var(--radius-card)] sm:p-5 max-sm:flex max-sm:flex-col max-sm:items-center max-sm:py-4 max-sm:text-center"
           >
             <span className="flex size-7 items-center justify-center rounded-full bg-accent-soft font-display text-base font-bold text-accent sm:size-9 sm:text-lg">
               {s.n}
             </span>
-            <h3 className="mt-2 text-sm leading-snug text-ink sm:mt-3 sm:text-lg">{s.title}</h3>
-            <p className="mt-1 text-xs leading-snug text-ink-soft sm:text-sm">{s.text}</p>
+            <h3 className="mt-2 text-[15px] font-bold leading-snug text-ink sm:mt-3 sm:text-lg">{s.title}</h3>
+            <p className="mt-1 hidden text-sm leading-snug text-ink-soft sm:block">{s.text}</p>
           </li>
         ))}
       </ol>

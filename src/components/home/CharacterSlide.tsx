@@ -28,11 +28,11 @@ export function CharacterSlide({
 }) {
   return (
     <div
-      className={`relative flex size-full items-stretch gap-2 overflow-hidden bg-surface px-3 pt-2 pb-0 sm:items-center sm:gap-6 sm:px-10 sm:py-4 md:px-20 ${
+      className={`relative flex size-full items-stretch gap-1 overflow-hidden bg-surface px-3 pt-0 pb-0 sm:items-center sm:gap-6 sm:px-10 sm:py-4 md:px-20 ${
         imageFirst ? "flex-row-reverse" : "flex-row"
       }`}
     >
-      <div className="my-auto w-[54%] space-y-1 text-start sm:my-0 sm:w-[44%] sm:space-y-4">
+      <div className="my-auto w-[50%] space-y-1 text-start sm:my-0 sm:w-[44%] sm:space-y-4">
         <p className="font-display text-base font-bold leading-tight text-ink sm:text-4xl md:text-5xl">
           {headline}
         </p>
@@ -41,14 +41,14 @@ export function CharacterSlide({
           {cta}
         </Link>
       </div>
-      <div className="relative h-[82%] w-[46%] self-end sm:h-full sm:w-[56%] sm:self-auto">
+      <div className="relative h-full w-[50%] self-end sm:h-full sm:w-[56%] sm:self-auto">
         <Image
           src={image}
           alt={alt}
           fill
           sizes="(min-width: 640px) 56vw, 100vw"
           priority={priority}
-          className="object-contain object-bottom sm:scale-100 sm:object-center"
+          className="origin-bottom scale-110 object-contain object-bottom sm:scale-100 sm:object-center"
         />
       </div>
     </div>

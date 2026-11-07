@@ -97,7 +97,7 @@ export function HeroCarousel({ banners }: { banners: HomeBanner[] }) {
       onMouseEnter={() => setHovering(true)}
       onMouseLeave={() => setHovering(false)}
     >
-      <div ref={stripRef} className={`flex w-full ${banners[active]?.layout === "cover" ? "aspect-[1600/630] sm:aspect-auto" : "h-[330px]"} snap-x snap-mandatory overflow-x-auto overscroll-x-contain [scrollbar-width:none] sm:h-[340px] md:aspect-[16/6] md:h-auto md:max-h-[520px] [&::-webkit-scrollbar]:hidden`}>
+      <div ref={stripRef} className={`flex h-[250px] w-full snap-x snap-mandatory overflow-x-auto overscroll-x-contain [scrollbar-width:none] sm:h-[340px] md:aspect-[16/6] md:h-auto md:max-h-[520px] [&::-webkit-scrollbar]:hidden`}>
         {banners.map((b, i) => {
           const n = i;
           const href = b.link ?? "/deals";

@@ -18,7 +18,7 @@ export async function SiteHeader() {
           <Logo variant="wordmark" height={48} priority />
         </Link>
 
-        <nav aria-label="ניווט ראשי" className="hidden lg:block">
+        <nav aria-label="ניווט ראשי" className="hidden xl:block">
           <NavLinks variant="desktop" extra={extra} />
         </nav>
 

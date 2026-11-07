@@ -30,7 +30,7 @@ export function MobileMenu({ children }: { children: React.ReactNode }) {
   }, [pathname]);
 
   return (
-    <details ref={ref} className="group relative lg:hidden">
+    <details ref={ref} className="group relative xl:hidden">
       <summary className="flex size-10 cursor-pointer list-none items-center justify-center rounded-full bg-surface shadow-[var(--shadow-card)] [&::-webkit-details-marker]:hidden">
         <span className="sr-only">תפריט</span>
         <svg aria-hidden viewBox="0 0 24 24" className="size-5 text-ink">

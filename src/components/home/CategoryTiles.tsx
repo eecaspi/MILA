@@ -47,24 +47,24 @@ export function CategoryTiles() {
         className="-mx-4 flex snap-x snap-mandatory gap-3 overflow-x-auto scroll-smooth px-4 pb-2 md:mx-0 md:px-0 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
       >
         {categories.map((c) => (
-          <li key={c.slug} className="w-[46%] shrink-0 snap-start sm:w-[31%] md:w-[23%] lg:w-[19%]">
+          <li key={c.slug} className="w-[31%] shrink-0 snap-start sm:w-[22%] md:w-[17%] lg:w-[13.5%]">
             <Link href={`/businesses?category=${c.slug}`} className="lift group block text-center">
               {c.image ? (
                 <Image
                   src={c.image}
                   alt=""
-                  width={520}
-                  height={540}
-                  sizes="(min-width: 1024px) 19vw, (min-width: 768px) 23vw, (min-width: 640px) 31vw, 46vw"
-                  className="aspect-[26/27] w-full rounded-3xl bg-accent-soft object-cover"
+                  width={480}
+                  height={480}
+                  sizes="(min-width: 1024px) 14vw, (min-width: 768px) 17vw, (min-width: 640px) 22vw, 31vw"
+                  className="aspect-square w-full rounded-3xl bg-accent-soft object-cover"
                 />
               ) : (
-                <span className="flex aspect-[26/27] items-center justify-center rounded-3xl bg-accent-soft">
-                  <CategoryIcon slug={c.slug} className="size-10 text-accent" />
+                <span className="flex aspect-square items-center justify-center rounded-3xl bg-accent-soft">
+                  <CategoryIcon slug={c.slug} className="size-8 text-accent" />
                 </span>
               )}
-              <span className="mt-2 flex items-center justify-center gap-1.5 font-display text-base font-bold text-ink">
-                <CategoryIcon slug={c.slug} className="size-5 text-accent" />
+              <span className="mt-2 flex items-center justify-center gap-1.5 font-display text-sm font-bold text-ink">
+                <CategoryIcon slug={c.slug} className="size-4 text-accent" />
                 {c.name}
               </span>
             </Link>

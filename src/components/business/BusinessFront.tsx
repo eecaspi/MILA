@@ -6,7 +6,7 @@ import { BusinessImage } from "./BusinessImage";
 export function BusinessFront({ business }: { business: Business }) {
   return (
     <div className="flex flex-1 flex-col">
-      <div className="relative aspect-[16/10] shrink-0 overflow-hidden">
+      <div className="relative aspect-[4/3] shrink-0 md:aspect-[16/10] overflow-hidden">
         <BusinessImage
           business={business}
           sizes="(min-width: 1024px) 380px, (min-width: 768px) 45vw, 92vw"
@@ -17,11 +17,11 @@ export function BusinessFront({ business }: { business: Business }) {
         </span>
       </div>
 
-      <div className="flex-1 p-5">
-        <h3 className="text-xl leading-tight text-ink">{business.name}</h3>
-        <p className="mt-2 text-[15px] text-ink-soft">{business.shortDescription}</p>
+      <div className="flex-1 p-3 sm:p-5">
+        <h3 className="text-lg leading-tight text-ink sm:text-xl">{business.name}</h3>
+        <p className="mt-1 line-clamp-2 text-sm text-ink-soft sm:mt-2 sm:line-clamp-none sm:text-[15px]">{business.shortDescription}</p>
         {business.tags.length > 0 && (
-          <ul className="mt-4 flex flex-wrap gap-1.5" aria-label="תגיות">
+          <ul className="mt-3 flex flex-wrap gap-1.5 sm:mt-4" aria-label="תגיות">
             {business.tags.map((tag) => (
               <li
                 key={tag}

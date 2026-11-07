@@ -5,15 +5,15 @@ import { siteConfig } from "@/config/site";
 export function SiteFooter() {
   return (
     <footer className="mt-12 border-t sm:mt-24 border-line bg-accent-soft text-ink">
-      <div className="mx-auto grid max-w-6xl gap-6 px-4 py-8 sm:gap-10 sm:py-12 md:grid-cols-3">
+      <div className="mx-auto grid max-w-6xl gap-4 px-4 py-5 sm:gap-10 sm:py-12 md:grid-cols-3">
         <div>
-          <Logo variant="full" height={80} />
-          <p className="mt-4 max-w-xs text-sm text-ink-soft">{siteConfig.brand.tagline}</p>
+          <Logo variant="full" height={64} />
+          <p className="mt-2 max-w-xs text-xs text-ink-soft sm:mt-4 sm:text-sm">{siteConfig.brand.tagline}</p>
         </div>
 
         <nav aria-label="ניווט תחתון">
-          <p className="mb-3 font-display font-bold">לאן ממשיכים?</p>
-          <ul className="space-y-2 text-sm">
+          <p className="mb-2 font-display font-bold sm:mb-3">לאן ממשיכים?</p>
+          <ul className="flex flex-wrap gap-x-4 gap-y-1.5 text-sm sm:block sm:space-y-2">
             {siteConfig.nav.map((item) => (
               <li key={item.href}>
                 <Link href={item.href} className="text-ink-soft hover:text-accent">
@@ -35,8 +35,8 @@ export function SiteFooter() {
           </ul>
         </nav>
 
-        <div className="text-sm text-ink-soft">
-          <p className="mb-3 font-display font-bold text-ink">שקיפות מלאה</p>
+        <div className="text-xs text-ink-soft sm:text-sm">
+          <p className="mb-1 font-display font-bold text-ink sm:mb-3">שקיפות מלאה</p>
           <p>
             האתר בשלב הרצה. העסקים במדריך מוצגים על סמך מידע פומבי ובלי קשר מסחרי. הצעות שמסומנות
             &quot;לדוגמה&quot; שייכות לעסקים פיקטיביים ואינן ניתנות למימוש.

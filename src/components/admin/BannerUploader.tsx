@@ -95,7 +95,7 @@ export function BannerUploader({ linkOptions }: { linkOptions: LinkOption[] }) {
           className={inputClass}
         />
         <span className="mt-1 block text-xs text-ink-soft">
-          תמונה רחבה (למשל 1600×700) עד 5MB, או סרטון קצר MP4 / WEBM עד 20MB. הסרטון מתנגן בלי קול.
+          תמונה רחבה בגודל 1600×630 (כך היא נראית שלמה גם בפלאפון) עד 5MB, או סרטון קצר MP4 / WEBM עד 20MB. הסרטון מתנגן בלי קול.
         </span>
       </label>
       <BannerTextFields linkOptions={linkOptions} />

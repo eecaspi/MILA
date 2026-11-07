@@ -105,7 +105,7 @@ for (const vp of viewports) {
 
     // Interaction states worth reviewing: the business card details (hover / tap).
     if (path === "/businesses") {
-      const card = page.locator("main .group\\/biz").first();
+      const card = page.locator("main article").first();
       await card.scrollIntoViewIfNeeded();
       await page.evaluate(() => window.scrollBy(0, -120));
       if (vp.isMobile) {

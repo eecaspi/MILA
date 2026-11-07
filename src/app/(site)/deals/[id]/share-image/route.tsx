@@ -98,14 +98,16 @@ export async function GET(req: Request, { params }: { params: Promise<{ id: stri
     category: category?.name ?? "",
     business: offer.business.name,
     title: offer.title,
-    value: offer.valueLabel,
+    value: /^\d+%$/.test(offer.valueLabel.trim()) ? `${offer.valueLabel.trim()} הנחה` : offer.valueLabel,
     channel: offer.redeemChannel ? (CHANNEL[offer.redeemChannel] ?? "") : "",
     until: until ? `בתוקף עד ${until}` : "",
     usage: offer.usageLimit ?? "",
-    brand: "ליקי",
-    slogan: "יש לי קישור בשבילך",
+    header: "הטבה חדשה בליקי",
+    sub: [offer.business.name, category?.name].filter(Boolean).join(" · "),
+    cta: "קוד הקופון מתחת לתמונה",
     host: hostname(siteConfig.url),
   };
+  const showCodeNote = (offer.codeMode ?? "fixed") === "fixed";
   const all = Object.values(lines).join("") + "0123456789%₪-";
   const [bold, regular, logo, photo, bizLogo] = await Promise.all([
     loadFont(all, 800),
@@ -126,9 +128,9 @@ export async function GET(req: Request, { params }: { params: Promise<{ id: stri
           display: "flex",
           background: "#fff0f0",
           color: "#3f1d20",
-          fontSize: 34,
-          fontWeight: 500,
-          padding: "10px 26px",
+          fontSize: 36,
+          fontWeight: 700,
+          padding: "10px 28px",
           borderRadius: 999,
         }}
       >
@@ -144,8 +146,8 @@ export async function GET(req: Request, { params }: { params: Promise<{ id: stri
           height: "100%",
           display: "flex",
           flexDirection: "column",
-          background: "#fdeaea",
-          padding: 56,
+          background: "#b8201b",
+          padding: 48,
           fontFamily: "Heebo",
         }}
       >
@@ -156,104 +158,96 @@ export async function GET(req: Request, { params }: { params: Promise<{ id: stri
             flex: 1,
             background: "#ffffff",
             borderRadius: 56,
-            padding: "52px 56px",
+            padding: "48px 52px",
             justifyContent: "space-between",
           }}
         >
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-            {lines.category ? (
-              <div style={{ display: "flex", fontSize: 32, fontWeight: 500, color: "#7a5558" }}>
-                {visual(lines.category)}
-              </div>
-            ) : (
-              <div style={{ display: "flex" }} />
-            )}
-            <div style={{ display: "flex", alignItems: "center", gap: 18 }}>
-              <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end" }}>
-                <div style={{ display: "flex", fontSize: 54, fontWeight: 800, color: "#c4050b" }}>{visual(lines.brand)}</div>
-                <div style={{ display: "flex", fontSize: 28, fontWeight: 500, color: "#7a5558" }}>{visual(lines.slogan)}</div>
-              </div>
-              {logo ? <img src={logo} width={84} height={84} alt="" /> : null}
-            </div>
+            <div style={{ display: "flex", fontSize: 34, fontWeight: 500, color: "#7a5558" }}>{visual(lines.header)}</div>
+            {logo ? <img src={logo} width={110} height={110} alt="" /> : <div style={{ display: "flex" }} />}
           </div>
 
-          <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 22 }}>
+          <div style={{ display: "flex", position: "relative", width: "100%", height: 480 }}>
             {photo ? (
-              <div style={{ display: "flex", position: "relative", width: "100%", height: 390 }}>
-                <img
-                  src={photo}
-                  width={916}
-                  height={390}
-                  alt=""
-                  style={{ width: "100%", height: 390, objectFit: "cover", borderRadius: 36 }}
-                />
-                <div
-                  style={{
-                    display: "flex",
-                    position: "absolute",
-                    top: 18,
-                    right: 18,
-                    background: "#b8201b",
-                    color: "#ffffff",
-                    fontSize: lines.value.length > 9 ? 56 : 90,
-                    fontWeight: 800,
-                    padding: "6px 36px 14px",
-                    borderRadius: 40,
-                    lineHeight: 1.1,
-                  }}
-                >
-                  {visual(lines.value)}
-                </div>
-              </div>
+              <img
+                src={photo}
+                width={928}
+                height={480}
+                alt=""
+                style={{ width: "100%", height: 480, objectFit: "cover", borderRadius: 36 }}
+              />
             ) : (
               <div
                 style={{
                   display: "flex",
-                  background: "#b8201b",
-                  color: "#ffffff",
-                  fontSize: lines.value.length > 9 ? 120 : bizLogo ? 150 : 190,
-                  fontWeight: 800,
-                  padding: "10px 64px 22px",
-                  borderRadius: 64,
-                  lineHeight: 1.1,
+                  width: "100%",
+                  height: 480,
+                  borderRadius: 36,
+                  background: "#fdeaea",
+                  alignItems: "center",
+                  justifyContent: "center",
                 }}
               >
-                {visual(lines.value)}
+                {bizLogo ? (
+                  <img src={bizLogo} width={260} height={260} alt="" style={{ objectFit: "contain", borderRadius: 999 }} />
+                ) : logo ? (
+                  <img src={logo} width={220} height={220} alt="" />
+                ) : null}
               </div>
             )}
-            <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 22 }}>
-              <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-                {visualLines(lines.business, photo ? 22 : 18).map((l, i) => (
-                  <div key={i} style={{ display: "flex", fontSize: photo ? 60 : 76, fontWeight: 800, color: "#3f1d20" }}>
-                    {l}
-                  </div>
-                ))}
+            <div
+              style={{
+                display: "flex",
+                position: "absolute",
+                top: 20,
+                right: 20,
+                background: "#b8201b",
+                color: "#ffffff",
+                fontSize: lines.value.length > 9 ? 54 : 72,
+                fontWeight: 800,
+                padding: "6px 34px 14px",
+                borderRadius: 36,
+                lineHeight: 1.1,
+              }}
+            >
+              {visual(lines.value)}
+            </div>
+          </div>
+
+          <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: 14 }}>
+            <div style={{ display: "flex", fontSize: 40, fontWeight: 500, color: "#7a5558" }}>
+              {visual(lines.sub)}
+            </div>
+            {visualLines(lines.title, 22).slice(0, 2).map((l, i) => (
+              <div key={i} style={{ display: "flex", fontSize: 76, fontWeight: 800, color: "#3f1d20", lineHeight: 1.1 }}>
+                {l}
               </div>
-              {bizLogo ? (
-                <img
-                  src={bizLogo}
-                  width={photo ? 110 : 130}
-                  height={photo ? 110 : 130}
-                  alt=""
-                  style={{ objectFit: "contain", borderRadius: 999, border: "4px solid #fbe8e8", background: "#ffffff" }}
-                />
-              ) : null}
-            </div>
-            <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-              {visualLines(lines.title, 26).slice(0, photo ? 2 : 3).map((l, i) => (
-                <div key={i} style={{ display: "flex", fontSize: 46, fontWeight: 500, color: "#7a5558" }}>
-                  {l}
-                </div>
-              ))}
-            </div>
-            <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: 14, marginTop: 8 }}>
+            ))}
+            <div style={{ display: "flex", flexDirection: "row-reverse", flexWrap: "wrap", gap: 14, marginTop: 8 }}>
               {pill(lines.channel, "c")}
               {pill(lines.until, "u")}
               {pill(lines.usage, "l")}
             </div>
           </div>
 
-          <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 10 }}>
+          <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 14 }}>
+            {showCodeNote ? (
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  width: "100%",
+                  background: "#b8201b",
+                  color: "#ffffff",
+                  fontSize: 54,
+                  fontWeight: 800,
+                  padding: "18px 0 26px",
+                  borderRadius: 999,
+                }}
+              >
+                {visual(lines.cta)}
+              </div>
+            ) : null}
             <div style={{ display: "flex", fontSize: 30, fontWeight: 500, color: "#7a5558" }}>{lines.host}</div>
           </div>
         </div>

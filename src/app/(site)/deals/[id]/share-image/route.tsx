@@ -62,18 +62,35 @@ function visualLines(text: string, max: number): string[] {
   return out.slice(0, 3).map(visual);
 }
 
-/** A picture from our own storage as an inline image (PNG or JPEG only), or null. */
-async function remoteImage(url: string | undefined): Promise<string | null> {
+/**
+ * A picture from our own storage as an inline image. The site's image optimizer turns any upload
+ * (WebP, AVIF, big files) into a JPEG the picture maker can use; the original is the fallback.
+ */
+async function remoteImage(url: string | undefined, origin: string, width = 1080): Promise<string | null> {
   if (!url) return null;
   try {
     const u = new URL(url);
     if (u.protocol !== "https:" || !u.hostname.endsWith(".supabase.co")) return null;
-    const res = await fetch(u, { signal: AbortSignal.timeout(4000) });
-    const type = res.headers.get("content-type")?.split(";")[0] ?? "";
-    if (!res.ok || (type !== "image/png" && type !== "image/jpeg")) return null;
-    const bytes = Buffer.from(await res.arrayBuffer());
-    if (bytes.length > 2_000_000) return null;
-    return `data:${type};base64,${bytes.toString("base64")}`;
+    const tries: { href: string; headers: Record<string, string> }[] = [
+      {
+        href: `${origin}/_next/image?url=${encodeURIComponent(url)}&w=${width}&q=85`,
+        headers: { Accept: "image/jpeg" },
+      },
+      { href: u.href, headers: {} },
+    ];
+    for (const t of tries) {
+      try {
+        const res = await fetch(t.href, { headers: t.headers, signal: AbortSignal.timeout(5000) });
+        const type = res.headers.get("content-type")?.split(";")[0] ?? "";
+        if (!res.ok || (type !== "image/png" && type !== "image/jpeg")) continue;
+        const bytes = Buffer.from(await res.arrayBuffer());
+        if (bytes.length > 3_000_000) continue;
+        return `data:${type};base64,${bytes.toString("base64")}`;
+      } catch {
+        /* try the next way */
+      }
+    }
+    return null;
   } catch {
     return null;
   }
@@ -113,8 +130,8 @@ export async function GET(req: Request, { params }: { params: Promise<{ id: stri
     loadFont(all, 800),
     loadFont(all, 500),
     dataUri(origin, "/brand/liky-icon.png", "image/png"),
-    remoteImage(offer.imageUrl),
-    remoteImage(offer.business.logoUrl),
+    remoteImage(offer.imageUrl, origin),
+    remoteImage(offer.business.logoUrl, origin, 400),
   ]);
   const fonts: { name: string; data: ArrayBuffer; weight: 500 | 800 }[] = [];
   if (bold) fonts.push({ name: "Heebo", data: bold, weight: 800 });

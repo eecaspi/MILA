@@ -10,6 +10,8 @@ export async function SiteHeader() {
   const session = await getSession();
   const isOwner = session?.profile.role === "business_owner";
   const extra = isOwner ? [{ href: "/business", label: "העסק שלי" }] : [];
+  const isAdmin = session?.profile.role === "admin";
+  const menuExtra = isAdmin ? [...extra, { href: "/admin", label: "ניהול" }] : extra;
 
   return (
     <header className="sticky top-0 z-40 border-b border-line/70 bg-canvas/90 backdrop-blur">
@@ -81,7 +83,7 @@ export async function SiteHeader() {
           <MobileMenu>
             <NavLinks
               variant="mobile"
-              extra={extra}
+              extra={menuExtra}
               cta={isOwner ? undefined : { href: "/for-businesses", label: "בעלי עסקים? פנו אלינו" }}
             />
           </MobileMenu>

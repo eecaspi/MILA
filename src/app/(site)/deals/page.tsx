@@ -9,7 +9,7 @@ import { getSession } from "@/lib/auth/session";
 import { getMyCodes } from "@/lib/data/my-codes";
 import { BusinessCard } from "@/components/business/BusinessCard";
 import { SearchBox } from "@/components/ui/SearchBox";
-import { getBusinesses, getOffers, getSearchHints, getSearchSuggestions } from "@/lib/data/repository";
+import { getBusinesses, getOffers, getSearchSuggestions } from "@/lib/data/repository";
 import { searchBusinesses, searchOffers } from "@/lib/data/search";
 import type { OfferKind } from "@/lib/types";
 
@@ -52,7 +52,7 @@ export default async function DealsPage({ searchParams }: { searchParams: Search
     ? searchBusinesses(await getBusinesses({ category }), q, (x) => getCategory(x.category).name)
     : { items: [], approximate: false };
   const matchingBusinesses = foundBusinesses.items;
-  const [suggestions, hints] = await Promise.all([getSearchSuggestions(), getSearchHints()]);
+  const suggestions = await getSearchSuggestions();
   const signedIn = !!(await getSession());
   const codes = siteConfig.features.personalCodes
     ? { signedIn, mine: await getMyCodes() }
@@ -84,7 +84,7 @@ export default async function DealsPage({ searchParams }: { searchParams: Search
       )}
 
       <div className="mb-8 space-y-5 rounded-[var(--radius-card)] bg-surface p-4 shadow-[var(--shadow-card)] md:p-6">
-        <SearchBox suggestions={suggestions} hints={q ? [] : hints} defaultValue={q} hidden={{ category, kind, channel }} />
+        <SearchBox suggestions={suggestions} defaultValue={q} hidden={{ category, kind, channel }} />
 
         <div className="space-y-3">
           <FilterChips

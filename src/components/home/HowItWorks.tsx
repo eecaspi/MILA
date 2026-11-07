@@ -13,17 +13,17 @@ export function HowItWorks() {
   return (
     <section aria-labelledby="how">
       <SectionHeading id="how" title="איך זה עובד?" subtitle="שלושה צעדים וזהו" />
-      <ol className="grid gap-4 sm:grid-cols-3">
+      <ol className="grid grid-cols-3 gap-2 sm:gap-4">
         {steps.map((s) => (
           <li
             key={s.n}
-            className="rounded-[var(--radius-card)] bg-surface p-5 shadow-[var(--shadow-card)]"
+            className="rounded-2xl bg-surface p-3 shadow-[var(--shadow-card)] sm:rounded-[var(--radius-card)] sm:p-5"
           >
-            <span className="flex size-9 items-center justify-center rounded-full bg-accent-soft font-display text-lg font-bold text-accent">
+            <span className="flex size-7 items-center justify-center rounded-full bg-accent-soft font-display text-base font-bold text-accent sm:size-9 sm:text-lg">
               {s.n}
             </span>
-            <h3 className="mt-3 text-lg text-ink">{s.title}</h3>
-            <p className="mt-1 text-sm text-ink-soft">{s.text}</p>
+            <h3 className="mt-2 text-sm leading-snug text-ink sm:mt-3 sm:text-lg">{s.title}</h3>
+            <p className="mt-1 text-xs leading-snug text-ink-soft sm:text-sm">{s.text}</p>
           </li>
         ))}
       </ol>

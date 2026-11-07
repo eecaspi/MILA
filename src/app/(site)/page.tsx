@@ -42,6 +42,12 @@ export default async function HomePage() {
       <div className="h-10" />
 
       <div className="mx-auto max-w-6xl space-y-16 px-4">
+        {/* הקטגוריות */}
+        <section aria-labelledby="cats">
+          <SectionHeading id="cats" title="מה בא לך למצוא היום?" />
+          <CategoryTiles />
+        </section>
+
         {/* מה שווה עכשיו? */}
         <section aria-labelledby="best">
           <SectionHeading
@@ -83,12 +89,6 @@ export default async function HomePage() {
         <Reveal>
           <HowItWorks />
         </Reveal>
-
-        {/* הקטגוריות */}
-        <section aria-labelledby="cats">
-          <SectionHeading id="cats" title="מה בא לך למצוא היום?" />
-          <CategoryTiles />
-        </section>
 
         {/* העסקים שלנו */}
         <section aria-labelledby="biz">

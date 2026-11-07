@@ -48,25 +48,26 @@ export function CategoryTiles() {
       >
         {categories.map((c) => (
           <li key={c.slug} className="w-[31%] shrink-0 snap-start sm:w-[22%] md:w-[17%] lg:w-[13.5%]">
-            <Link href={`/businesses?category=${c.slug}`} className="lift group block text-center">
+            <Link
+              href={`/businesses?category=${c.slug}`}
+              aria-label={c.name}
+              className="lift block overflow-hidden rounded-3xl border border-line bg-surface"
+            >
               {c.image ? (
                 <Image
                   src={c.image}
-                  alt=""
-                  width={480}
-                  height={480}
+                  alt={c.name}
+                  width={400}
+                  height={400}
                   sizes="(min-width: 1024px) 14vw, (min-width: 768px) 17vw, (min-width: 640px) 22vw, 31vw"
-                  className="aspect-square w-full rounded-3xl bg-accent-soft object-cover"
+                  className="aspect-square w-full object-cover"
                 />
               ) : (
-                <span className="flex aspect-square items-center justify-center rounded-3xl bg-accent-soft">
+                <span className="flex aspect-square flex-col items-center justify-center gap-2 font-display text-sm font-bold text-ink">
                   <CategoryIcon slug={c.slug} className="size-8 text-accent" />
+                  {c.name}
                 </span>
               )}
-              <span className="mt-2 flex items-center justify-center gap-1.5 font-display text-sm font-bold text-ink">
-                <CategoryIcon slug={c.slug} className="size-4 text-accent" />
-                {c.name}
-              </span>
             </Link>
           </li>
         ))}

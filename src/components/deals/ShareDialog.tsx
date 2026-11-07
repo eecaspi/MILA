@@ -12,6 +12,7 @@ export function ShareDialog({
   code,
   url,
   compact,
+  warning,
   className = "",
 }: {
   imagePath: string;
@@ -19,6 +20,8 @@ export function ShareDialog({
   code?: string;
   url: string;
   compact: boolean;
+  /** Shown above the message when the code is not part of it, and why. */
+  warning?: string;
   className?: string;
 }) {
   const ref = useRef<HTMLDialogElement>(null);
@@ -125,6 +128,9 @@ export function ShareDialog({
             loading="lazy"
             className="w-full rounded-2xl border border-line bg-canvas"
           />
+          {warning && (
+            <p className="rounded-2xl bg-accent-soft p-3 text-sm font-semibold text-ink">{warning}</p>
+          )}
           <textarea
             readOnly
             value={message}

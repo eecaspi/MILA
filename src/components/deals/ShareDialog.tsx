@@ -161,6 +161,16 @@ export function ShareDialog({
             >
               וואטסאפ (טקסט)
             </a>
+            {code ? (
+              <a
+                href={`https://wa.me/?text=${encodeURIComponent(code)}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-secondary col-span-2 py-2 text-sm"
+              >
+                שליחת הקוד לבדו בהודעה נפרדת (קל להעתקה)
+              </a>
+            ) : null}
             <button type="button" onClick={() => copy(url, "הקישור הועתק")} className="btn-secondary py-2 text-sm">
               העתקת הקישור
             </button>

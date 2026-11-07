@@ -102,7 +102,6 @@ export async function GET(req: Request, { params }: { params: Promise<{ id: stri
     channel: offer.redeemChannel ? (CHANNEL[offer.redeemChannel] ?? "") : "",
     until: until ? `בתוקף עד ${until}` : "",
     usage: offer.usageLimit ?? "",
-    cta: offer.couponCode && (offer.codeMode ?? "fixed") === "fixed" ? "קוד הקופון מתחת לתמונה" : "הקוד והפרטים באתר",
     brand: "ליקי",
     slogan: "יש לי קישור בשבילך",
     host: hostname(siteConfig.url),
@@ -255,19 +254,6 @@ export async function GET(req: Request, { params }: { params: Promise<{ id: stri
           </div>
 
           <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 10 }}>
-            <div
-              style={{
-                display: "flex",
-                background: "#c4050b",
-                color: "#ffffff",
-                fontSize: 50,
-                fontWeight: 800,
-                padding: "16px 70px 22px",
-                borderRadius: 999,
-              }}
-            >
-              {visual(lines.cta)}
-            </div>
             <div style={{ display: "flex", fontSize: 30, fontWeight: 500, color: "#7a5558" }}>{lines.host}</div>
           </div>
         </div>

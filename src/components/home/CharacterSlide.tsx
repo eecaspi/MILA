@@ -32,7 +32,7 @@ export function CharacterSlide({
         imageFirst ? "flex-row-reverse" : "flex-row"
       }`}
     >
-      <div className="self-end pb-3 w-[54%] space-y-1 text-start sm:self-auto sm:pb-0 sm:w-[44%] sm:space-y-4">
+      <div className="my-auto w-[54%] space-y-1 text-start sm:my-0 sm:w-[44%] sm:space-y-4">
         <p className="font-display text-base font-bold leading-tight text-ink sm:text-4xl md:text-5xl">
           {headline}
         </p>
@@ -41,7 +41,7 @@ export function CharacterSlide({
           {cta}
         </Link>
       </div>
-      <div className="relative h-[74%] w-[46%] self-end sm:h-full sm:w-[56%] sm:self-auto">
+      <div className="relative h-[82%] w-[46%] self-end sm:h-full sm:w-[56%] sm:self-auto">
         <Image
           src={image}
           alt={alt}

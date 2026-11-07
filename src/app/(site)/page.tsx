@@ -36,6 +36,9 @@ export default async function HomePage() {
       </h1>
       <HeroCarousel banners={banners} />
       <div className="mx-auto max-w-3xl px-4 pt-8">
+        <p className="mb-4 text-center font-display text-lg font-bold text-ink md:text-xl">
+          הטבות מעסקים מהקהילה, במקום אחד
+        </p>
         <SearchBox suggestions={suggestions} raised />
       </div>
       <div className="h-10" />

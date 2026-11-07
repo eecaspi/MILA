@@ -24,7 +24,7 @@ export function CommunityInvite() {
           הקהילה של ליקי בוואטסאפ
         </h2>
         <p className="mt-2 text-sm text-ink-soft sm:mt-3 sm:text-base">
-          הטבות חדשות ישר לטלפון, והמלצות אמיתיות מנשים כמוך. בלי ספאם.
+          הטבות חדשות ישר לטלפון, בלי ספאם.
         </p>
         <div className="mt-4 sm:mt-6">
           {url ? (

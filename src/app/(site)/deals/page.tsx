@@ -18,7 +18,7 @@ export const metadata: Metadata = {
   description: "מבצעים, קופונים והטבות שליקי מצאה בשבילך.",
 };
 
-type SearchParams = Promise<{ category?: string; kind?: string; q?: string; channel?: string }>;
+type SearchParams = Promise<{ category?: string; kind?: string; q?: string; channel?: string; sort?: string }>;
 
 type Channel = "online" | "store";
 
@@ -36,6 +36,7 @@ export default async function DealsPage({ searchParams }: { searchParams: Search
   const kind = parseKind(params.kind);
   const q = (params.q ?? "").trim().slice(0, 60) || undefined;
   const channel = parseChannel(params.channel);
+  const sort = params.sort === "ending" ? "ending" : undefined;
   const catName = (o: { business: { category: Parameters<typeof getCategory>[0] } }) =>
     getCategory(o.business.category).name;
   const found = searchOffers(
@@ -46,7 +47,14 @@ export default async function DealsPage({ searchParams }: { searchParams: Search
     q,
     catName,
   );
-  const offers = found.items;
+  const offers = sort
+    ? [...found.items].sort((a, b) => {
+        // Offers with an end date first, soonest first; open-ended ones last.
+        const av = a.validUntil ? Date.parse(a.validUntil) : Infinity;
+        const bv = b.validUntil ? Date.parse(b.validUntil) : Infinity;
+        return av - bv;
+      })
+    : found.items;
   // A search also looks at businesses, so a business name never ends in an empty page.
   const foundBusinesses = q
     ? searchBusinesses(await getBusinesses({ category }), q, (x) => getCategory(x.category).name)
@@ -62,7 +70,7 @@ export default async function DealsPage({ searchParams }: { searchParams: Search
   const allOffers = await getOffers();
   const usedCategories = new Set(allOffers.map((o) => o.business.category));
   const hasChannels = allOffers.some((o) => o.redeemChannel);
-  const filtered = !!(category || kind || channel || q);
+  const filtered = !!(category || kind || channel || q || sort);
   const showBusinesses = !kind && !channel;
   const total = offers.length + (showBusinesses ? matchingBusinesses.length : 0);
 
@@ -84,7 +92,7 @@ export default async function DealsPage({ searchParams }: { searchParams: Search
       )}
 
       <div className="mb-8 space-y-5 rounded-[var(--radius-card)] bg-surface p-4 shadow-[var(--shadow-card)] md:p-6">
-        <SearchBox suggestions={suggestions} defaultValue={q} hidden={{ category, kind, channel }} />
+        <SearchBox suggestions={suggestions} defaultValue={q} hidden={{ category, kind, channel, sort }} />
 
         <div className="space-y-3">
           <FilterChips
@@ -92,7 +100,7 @@ export default async function DealsPage({ searchParams }: { searchParams: Search
             param="category"
             label="מה בא לך למצוא היום?"
             current={category}
-            otherParams={{ kind, channel, q }}
+            otherParams={{ kind, channel, q, sort }}
             options={[
               { value: undefined, label: "כל הקטגוריות" },
               ...categories
@@ -105,11 +113,22 @@ export default async function DealsPage({ searchParams }: { searchParams: Search
             param="kind"
             label="סוג הטבה"
             current={kind}
-            otherParams={{ category, channel, q }}
+            otherParams={{ category, channel, q, sort }}
             options={[
               { value: undefined, label: "כל ההטבות" },
               { value: "deal", label: "מבצעים" },
               { value: "coupon", label: "קופונים" },
+            ]}
+          />
+          <FilterChips
+            basePath="/deals"
+            param="sort"
+            label="מיון"
+            current={sort}
+            otherParams={{ category, kind, channel, q }}
+            options={[
+              { value: undefined, label: "החדשות קודם" },
+              { value: "ending", label: "מסתיימות בקרוב" },
             ]}
           />
           {hasChannels && (
@@ -118,7 +137,7 @@ export default async function DealsPage({ searchParams }: { searchParams: Search
               param="channel"
               label="איפה ממשים"
               current={channel}
-              otherParams={{ category, kind, q }}
+              otherParams={{ category, kind, q, sort }}
               options={[
                 { value: undefined, label: "אונליין ובחנות" },
                 { value: "online", label: "אונליין" },

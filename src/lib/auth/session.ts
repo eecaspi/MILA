@@ -62,7 +62,7 @@ export async function requireAdmin(): Promise<Session> {
 }
 
 /** Only allow relative in-site redirects after login (prevents open redirects). */
-export function safeNextPath(value: unknown, fallback = "/account"): string {
+export function safeNextPath(value: unknown, fallback = "/"): string {
   if (typeof value !== "string") return fallback;
   if (!value.startsWith("/") || value.startsWith("//") || value.includes("\\")) return fallback;
   return value;

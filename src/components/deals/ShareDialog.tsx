@@ -22,6 +22,12 @@ export function ShareDialog({
   className?: string;
 }) {
   const ref = useRef<HTMLDialogElement>(null);
+  // WhatsApp on a computer garbles emoji that arrive through a link (they show as �),
+  // so the link version of the message goes without them. Copying the message keeps them.
+  const linkText = message
+    .replace(/[\p{Extended_Pictographic}\uFE0F\u200D]/gu, "")
+    .replace(/^[ \t]+/gm, "");
+  const waLink = `https://wa.me/?text=${encodeURIComponent(linkText)}`;
   const [note, setNote] = useState("");
 
   const say = (text: string) => {
@@ -59,11 +65,11 @@ export function ShareDialog({
       const write = navigator.clipboard.write([
         new ClipboardItem({ "image/png": fetch(imagePath).then((r) => r.blob()) }),
       ]);
-      window.open(`https://wa.me/?text=${encodeURIComponent(message)}`, "_blank", "noopener,noreferrer");
+      window.open(waLink, "_blank", "noopener,noreferrer");
       await write;
       copied = true;
     } catch {
-      window.open(`https://wa.me/?text=${encodeURIComponent(message)}`, "_blank", "noopener,noreferrer");
+      window.open(waLink, "_blank", "noopener,noreferrer");
     }
     say(
       copied
@@ -142,7 +148,7 @@ export function ShareDialog({
               הורדת התמונה
             </a>
             <a
-              href={`https://wa.me/?text=${encodeURIComponent(message)}`}
+              href={waLink}
               target="_blank"
               rel="noopener noreferrer"
               className="btn-secondary py-2 text-sm"

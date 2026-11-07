@@ -72,7 +72,7 @@ export default async function HomePage() {
                 node: (
                   <ul className="-mx-4 flex snap-x snap-mandatory gap-3 overflow-x-auto px-4 pb-2 sm:mx-0 sm:grid sm:grid-cols-2 sm:overflow-visible sm:px-0 sm:pb-0 lg:grid-cols-4">
                     {t.offers.map((offer) => (
-                      <li key={offer.id} className="w-[47%] shrink-0 snap-start sm:w-auto">
+                      <li key={offer.id} className="w-[64%] shrink-0 snap-start sm:w-auto">
                         <DealCard offer={offer} codes={codes} />
                       </li>
                     ))}
@@ -103,7 +103,7 @@ export default async function HomePage() {
           />
           <ul className="-mx-4 flex snap-x snap-mandatory gap-3 overflow-x-auto px-4 pb-2 [scrollbar-width:none] md:mx-0 md:grid md:grid-cols-2 md:gap-4 md:overflow-visible md:px-0 md:pb-0 lg:grid-cols-3 [&::-webkit-scrollbar]:hidden">
             {businesses.slice(0, 3).map((b, i) => (
-              <li key={b.id} className="w-[66%] shrink-0 snap-start md:w-auto">
+              <li key={b.id} className="w-[64%] shrink-0 snap-start md:w-auto">
                 <Reveal delay={i * 120} className="h-full">
                   <BusinessCard business={b} />
                 </Reveal>

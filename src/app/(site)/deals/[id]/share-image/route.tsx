@@ -71,7 +71,7 @@ async function remoteImage(url: string | undefined, origin: string, width = 1080
   try {
     const u = new URL(url);
     if (u.protocol !== "https:" || !u.hostname.endsWith(".supabase.co")) return null;
-    const tries = [
+    const tries: { href: string; headers: Record<string, string> }[] = [
       {
         href: `${origin}/_next/image?url=${encodeURIComponent(url)}&w=${width}&q=85`,
         headers: { Accept: "image/jpeg" },

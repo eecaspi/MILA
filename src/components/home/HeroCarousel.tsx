@@ -151,7 +151,7 @@ export function HeroCarousel({ banners }: { banners: HomeBanner[] }) {
                   alt={b.title ?? ""}
                   fill
                   sizes="100vw"
-                  className="object-contain"
+                  className="object-cover sm:object-contain"
                   priority={false}
                 />
               </>

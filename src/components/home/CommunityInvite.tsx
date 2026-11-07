@@ -8,7 +8,7 @@ export function CommunityInvite() {
     <section
       id="community"
       aria-labelledby="community-title"
-      className="relative overflow-hidden rounded-[var(--radius-card)] bg-accent-soft px-6 py-10 text-center md:px-12 md:py-14"
+      className="relative overflow-hidden rounded-[var(--radius-card)] bg-accent-soft px-4 py-6 text-center sm:px-6 sm:py-10 md:px-12 md:py-14"
     >
       <div
         aria-hidden
@@ -20,19 +20,19 @@ export function CommunityInvite() {
       />
       <div className="relative mx-auto max-w-xl">
         <p className="eyebrow">החברות של ליקי</p>
-        <h2 id="community-title" className="mt-2 text-3xl text-ink md:text-4xl">
+        <h2 id="community-title" className="mt-1 text-xl text-ink sm:mt-2 sm:text-3xl md:text-4xl">
           הקהילה של ליקי בוואטסאפ
         </h2>
-        <p className="mt-3 text-ink-soft">
+        <p className="mt-2 text-sm text-ink-soft sm:mt-3 sm:text-base">
           הטבות חדשות ישר לטלפון, והמלצות אמיתיות מנשים כמוך. בלי ספאם.
         </p>
-        <div className="mt-6">
+        <div className="mt-4 sm:mt-6">
           {url ? (
             <a
               href={url}
               target="_blank"
               rel="noopener noreferrer"
-              className="btn-primary"
+              className="btn-primary !px-5 !py-2 text-sm sm:!px-7 sm:!py-3 sm:text-base"
             >
               הצטרפי לקהילה בוואטסאפ
             </a>

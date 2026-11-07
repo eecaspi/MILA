@@ -4,10 +4,10 @@ import { siteConfig } from "@/config/site";
 
 export function SiteFooter() {
   return (
-    <footer className="mt-24 border-t border-line bg-accent-soft text-ink">
-      <div className="mx-auto grid max-w-6xl gap-10 px-4 py-12 md:grid-cols-3">
+    <footer className="mt-12 border-t sm:mt-24 border-line bg-accent-soft text-ink">
+      <div className="mx-auto grid max-w-6xl gap-6 px-4 py-8 sm:gap-10 sm:py-12 md:grid-cols-3">
         <div>
-          <Logo variant="full" height={120} />
+          <Logo variant="full" height={80} />
           <p className="mt-4 max-w-xs text-sm text-ink-soft">{siteConfig.brand.tagline}</p>
         </div>
 

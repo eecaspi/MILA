@@ -1,5 +1,5 @@
 import { siteConfig } from "@/config/site";
-import { MailingListForm } from "./MailingListForm";
+import { MailingListButton } from "./MailingListForm";
 
 /** "החברות של ליקי" — invitation to the WhatsApp community. */
 export function CommunityInvite() {
@@ -29,7 +29,7 @@ export function CommunityInvite() {
           הטבות חדשות ישר לטלפון, בלי ספאם.
         </p>
         </div>
-        <div className="mt-3 md:mt-0 md:shrink-0">
+        <div className="mt-3 flex flex-wrap items-center justify-center gap-2 md:mt-0 md:shrink-0">
           {url ? (
             <a
               href={url}
@@ -47,10 +47,8 @@ export function CommunityInvite() {
               הקבוצות נפתחות בקרוב
             </span>
           )}
+          <MailingListButton />
         </div>
-      </div>
-      <div className="relative mt-4 border-t border-accent/15 pt-4">
-        <MailingListForm />
       </div>
     </section>
   );

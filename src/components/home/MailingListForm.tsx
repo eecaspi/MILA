@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useActionState } from "react";
+import { useActionState, useRef } from "react";
 import { joinMailingList, type MailingState } from "./mailing-actions";
 
 const initial: MailingState = { status: "idle" };
@@ -22,7 +22,6 @@ export function MailingListForm() {
 
   return (
     <form action={action} className="mx-auto w-full max-w-xl space-y-2 text-start">
-      <p className="text-center text-sm font-bold text-ink">אפשר גם לקבל הטבות למייל</p>
       <div className="grid gap-2 sm:grid-cols-2">
         <input name="name" required maxLength={80} autoComplete="name" placeholder="שם" aria-label="שם" className={field} />
         <input
@@ -53,5 +52,36 @@ export function MailingListForm() {
         {pending ? "רגע…" : "הצטרפות לדיוור במייל"}
       </button>
     </form>
+  );
+}
+
+/** A button beside the WhatsApp one; the form opens in a small dialog. */
+export function MailingListButton() {
+  const ref = useRef<HTMLDialogElement>(null);
+  return (
+    <>
+      <button
+        type="button"
+        onClick={() => ref.current?.showModal()}
+        className="btn-secondary !px-5 !py-2 text-sm sm:!px-7 sm:!py-3 sm:text-base"
+      >
+        הטבות גם למייל
+      </button>
+      <dialog
+        ref={ref}
+        onClick={(e) => {
+          if (e.target === ref.current) ref.current?.close();
+        }}
+        className="m-auto w-[min(92vw,30rem)] rounded-[var(--radius-card)] bg-surface p-5 text-ink shadow-[var(--shadow-card)] backdrop:bg-black/40"
+      >
+        <div className="mb-3 flex items-center justify-between">
+          <h2 className="text-lg font-bold">קבלת הטבות למייל</h2>
+          <button type="button" onClick={() => ref.current?.close()} aria-label="סגירה" className="size-8 rounded-full text-xl text-ink-soft">
+            ×
+          </button>
+        </div>
+        <MailingListForm />
+      </dialog>
+    </>
   );
 }

@@ -23,10 +23,10 @@ export function CommunityInvite() {
         <div>
         <p className="eyebrow">החברות של ליקי</p>
         <h2 id="community-title" className="mt-1 text-xl text-ink sm:mt-1 sm:text-2xl md:text-2xl">
-          הקהילה של ליקי בוואטסאפ
+          הקהילה של ליקי: וואטסאפ ומייל
         </h2>
         <p className="mt-1 text-sm text-ink-soft sm:text-base">
-          הטבות חדשות ישר לטלפון, בלי ספאם.
+          הטבות חדשות ישר לוואטסאפ או למייל, בלי ספאם.
         </p>
         </div>
         <div className="mt-3 flex flex-wrap items-center justify-center gap-2 md:mt-0 md:shrink-0">

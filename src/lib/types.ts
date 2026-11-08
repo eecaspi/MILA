@@ -93,6 +93,8 @@ export interface Offer {
   addedAt: string;
   /** Shown in "המבצעים הכי שווים". */
   highlight?: boolean;
+  /** Published but left out of lists and search: reachable by its direct link only. */
+  unlisted?: boolean;
   /** Hand-picked for "ליקי ממליצה", with a one-line reason in ליקי's voice. */
   likeyPick?: { note: string };
   /** Real price information, only when the business provided it. Never invented. */

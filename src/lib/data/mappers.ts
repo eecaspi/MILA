@@ -42,6 +42,7 @@ export interface OfferRow {
   status: VerificationStatus;
   created_at: string;
   highlight: boolean | null;
+  unlisted?: boolean | null;
   likey_pick_note: string | null;
   price_label: string | null;
   image_url: string | null;
@@ -50,7 +51,7 @@ export interface OfferRow {
 export const BUSINESS_COLUMNS =
   "id, slug, name, category_slug, short_description, description, area, city, website, phone, source_url, logo_url, cover_url, gallery_urls, tags, status, is_real_business";
 export const OFFER_COLUMNS =
-  "id, business_id, kind, title, description, value_label, valid_until, starts_on, redeem_channel, code_mode, redeem_url, terms, usage_limit, status, created_at, highlight, likey_pick_note, price_label, image_url";
+  "id, business_id, kind, title, description, value_label, valid_until, starts_on, redeem_channel, code_mode, redeem_url, terms, usage_limit, status, created_at, highlight, likey_pick_note, price_label, image_url, unlisted";
 
 const opt = (v: string | null | undefined) => (v && v.trim() ? v.trim() : undefined);
 
@@ -111,6 +112,7 @@ export function mapOfferRow(row: OfferRow): Offer {
     status: row.status,
     addedAt: row.created_at.slice(0, 10),
     highlight: Boolean(row.highlight),
+    unlisted: Boolean(row.unlisted),
     likeyPick: note ? { note } : undefined,
     priceLabel: opt(row.price_label),
     imageUrl: opt(row.image_url),

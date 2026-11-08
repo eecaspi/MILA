@@ -21,6 +21,7 @@ export interface OfferFormValues {
   usage_limit: string | null;
   price_label: string | null;
   highlight: boolean;
+  unlisted?: boolean;
   likey_pick_note: string | null;
   status: string;
   is_published: boolean;
@@ -259,6 +260,11 @@ export function OfferForm({
         <div className="flex flex-col justify-end gap-3 pb-1">
           <Check name="highlight" label="להבליט בעמוד הבית" defaultChecked={o?.highlight} />
           <Check name="is_published" label="מפורסם באתר" defaultChecked={o?.is_published} />
+          <Check
+            name="unlisted"
+            label="לקבוצה בלבד: לא מופיע ברשימות, נפתח רק מהקישור (סמני גם ״מפורסם״)"
+            defaultChecked={o?.unlisted}
+          />
         </div>
       </section>
 

@@ -50,6 +50,7 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
         title: `${offer.title} – ${offer.business.name}`,
         description: offer.description || `${offer.valueLabel} ב${offer.business.name}`,
         alternates: { canonical: `/deals/${offer.id}` },
+        robots: offer.unlisted ? { index: false, follow: false } : undefined,
         openGraph: {
           title: `${offer.valueLabel} ב${offer.business.name}`,
           description: offer.title,

@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { siteConfig } from "@/config/site";
+import { WhatsAppIcon } from "@/components/ui/ChannelIcons";
 import { MailingListButton } from "./MailingListForm";
 
 /** "החברות של ליקי" — invitation to the WhatsApp community. */
@@ -45,8 +46,9 @@ export function CommunityInvite() {
               href={url}
               target="_blank"
               rel="noopener noreferrer"
-              className="btn-primary !px-5 !py-2 text-sm sm:!px-7 sm:!py-3 sm:text-base"
+              className="btn-primary inline-flex items-center gap-2 !px-5 !py-2 text-sm sm:!px-7 sm:!py-3 sm:text-base"
             >
+              <WhatsAppIcon className="size-5" />
               הצטרפי לקהילה בוואטסאפ
             </a>
           ) : (

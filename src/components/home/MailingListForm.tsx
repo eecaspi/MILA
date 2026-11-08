@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useActionState, useRef } from "react";
+import { MailIcon } from "@/components/ui/ChannelIcons";
 import { joinMailingList, type MailingState } from "./mailing-actions";
 
 const initial: MailingState = { status: "idle" };
@@ -63,8 +64,9 @@ export function MailingListButton() {
       <button
         type="button"
         onClick={() => ref.current?.showModal()}
-        className="btn-primary !px-5 !py-2 text-sm sm:!px-7 sm:!py-3 sm:text-base"
+        className="btn-primary inline-flex items-center gap-2 !px-5 !py-2 text-sm sm:!px-7 sm:!py-3 sm:text-base"
       >
+        <MailIcon className="size-5" />
         הצטרפי לקהילה במייל
       </button>
       <dialog
@@ -75,7 +77,10 @@ export function MailingListButton() {
         className="m-auto w-[min(92vw,30rem)] rounded-[var(--radius-card)] bg-surface p-5 text-ink shadow-[var(--shadow-card)] backdrop:bg-black/40"
       >
         <div className="mb-3 flex items-center justify-between">
-          <h2 className="text-lg font-bold">הצטרפות לקהילה של ליקי במייל</h2>
+          <h2 className="flex items-center gap-2 text-lg font-bold">
+            <MailIcon className="size-6 text-accent" />
+            הצטרפות לקהילה של ליקי במייל
+          </h2>
           <button type="button" onClick={() => ref.current?.close()} aria-label="סגירה" className="size-8 rounded-full text-xl text-ink-soft">
             ×
           </button>

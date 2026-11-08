@@ -22,8 +22,7 @@ export function OfferImage({
   if (offer.imageUrl) {
     return (
       <div className={`relative overflow-hidden ${className}`}>
-        <Image src={offer.imageUrl} alt="" aria-hidden fill sizes="64px" className="scale-125 object-cover opacity-80 blur-2xl" />
-        <Image src={offer.imageUrl} alt={offer.title} fill sizes={sizes} className="object-contain" />
+        <Image src={offer.imageUrl} alt={offer.title} fill sizes={sizes} className="object-cover" />
       </div>
     );
   }

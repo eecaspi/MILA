@@ -16,8 +16,7 @@ export function BusinessImage({ business, sizes }: { business: Business; sizes: 
   if (picture) {
     return (
       <>
-        <Image src={picture} alt="" aria-hidden fill sizes="64px" className="scale-125 object-cover opacity-80 blur-2xl" />
-        <Image src={picture} alt="" fill sizes={sizes} className="object-contain" />
+        <Image src={picture} alt="" fill sizes={sizes} className="object-cover" />
       </>
     );
   }

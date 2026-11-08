@@ -14,7 +14,12 @@ export function BusinessImage({ business, sizes }: { business: Business; sizes: 
   // Cover photo, or the logo when there is no cover: either one fills the whole frame.
   const picture = business.coverUrl ?? business.logoUrl;
   if (picture) {
-    return <Image src={picture} alt="" fill sizes={sizes} className="object-cover" />;
+    return (
+      <>
+        <Image src={picture} alt="" aria-hidden fill sizes="64px" className="scale-125 object-cover opacity-80 blur-2xl" />
+        <Image src={picture} alt="" fill sizes={sizes} className="object-contain" />
+      </>
+    );
   }
   const category = getCategory(business.category);
   return (

@@ -1,9 +1,12 @@
+import { EntryPopup } from "@/components/layout/EntryPopup";
+import { getPopup } from "@/lib/data/popup";
 import { Tracker } from "@/components/analytics/Tracker";
 import { SiteFooter } from "@/components/layout/SiteFooter";
 import { WhatsAppFloat } from "@/components/layout/WhatsAppFloat";
 import { SiteHeader } from "@/components/layout/SiteHeader";
 
-export default function SiteLayout({ children }: { children: React.ReactNode }) {
+export default async function SiteLayout({ children }: { children: React.ReactNode }) {
+  const popup = await getPopup();
   return (
     <>
       <a
@@ -16,6 +19,7 @@ export default function SiteLayout({ children }: { children: React.ReactNode }) 
       <main id="main">{children}</main>
       <SiteFooter />
       <WhatsAppFloat />
+      {popup && <EntryPopup popup={popup} />}
       <Tracker />
     </>
   );

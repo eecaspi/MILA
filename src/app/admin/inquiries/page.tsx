@@ -53,28 +53,9 @@ export default async function Inquiries() {
     .limit(300);
   const reports = (reportData ?? []) as Report[];
 
-  const { data: mailData } = await supabase
-    .from("mailing_list")
-    .select("id, created_at, name, email")
-    .order("created_at", { ascending: false })
-    .limit(1000);
-  const subscribers = (mailData ?? []) as { id: string; created_at: string; name: string; email: string }[];
-
   return (
     <div className="max-w-3xl space-y-6">
-      <h1 id="subscribers" className="scroll-mt-24 text-2xl text-ink">נרשמות לדיוור במייל ({subscribers.length})</h1>
-      {subscribers.length === 0 && <p className="text-ink-soft">עוד אין נרשמות.</p>}
-      <ul className="space-y-2">
-        {subscribers.map((m) => (
-          <li key={m.id} className="flex flex-wrap items-center justify-between gap-2 rounded-2xl bg-surface px-4 py-3 text-sm">
-            <span className="font-bold text-ink">{m.name}</span>
-            <a href={`mailto:${m.email}`} className="ltr text-accent">{m.email}</a>
-            <span className="text-xs text-ink-soft">{formatDate(m.created_at)}</span>
-          </li>
-        ))}
-      </ul>
-
-      <h2 className="pt-6 text-2xl text-ink">פניות מעסקים</h2>
+      <h1 className="text-2xl text-ink">פניות מעסקים</h1>
       {rows.length === 0 && <p className="text-ink-soft">עוד לא הגיעו פניות.</p>}
       <ul className="space-y-3">
         {rows.map((r) => (

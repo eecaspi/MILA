@@ -15,7 +15,7 @@ export function MailingListForm() {
   if (state.status === "sent") {
     return (
       <p role="status" className="rounded-2xl bg-surface px-4 py-3 text-center font-bold text-ink">
-        תודה! נרשמת לדיוור של ליקי.
+        תודה! הצטרפת לקבוצת המייל של ליקי.
       </p>
     );
   }
@@ -41,7 +41,7 @@ export function MailingListForm() {
       <label className="flex items-start gap-2 text-xs text-ink-soft">
         <input type="checkbox" name="consent" value="yes" required className="mt-0.5 size-4 accent-[var(--color-accent)]" />
         <span>
-          אני מאשרת קבלת דיוור והטבות במייל מליקי, ואפשר להסיר את עצמי בכל עת. פרטים ב
+          אני מאשרת הצטרפות לקבוצת המייל של ליקי וקבלת דיוור והטבות במייל, ואפשר להסיר את עצמי בכל עת. פרטים ב
           <Link href="/privacy" className="font-semibold text-accent underline">מדיניות הפרטיות</Link>.
         </span>
       </label>
@@ -49,7 +49,7 @@ export function MailingListForm() {
         <p role="alert" className="text-sm font-semibold text-danger">{state.message}</p>
       )}
       <button disabled={pending} className="btn-secondary w-full !py-2 text-sm disabled:opacity-60">
-        {pending ? "רגע…" : "הצטרפות לדיוור במייל"}
+        {pending ? "רגע…" : "הצטרפות לקבוצת המייל"}
       </button>
     </form>
   );
@@ -65,7 +65,7 @@ export function MailingListButton() {
         onClick={() => ref.current?.showModal()}
         className="btn-secondary !px-5 !py-2 text-sm sm:!px-7 sm:!py-3 sm:text-base"
       >
-        הטבות גם למייל
+        הצטרפי לקבוצת המייל
       </button>
       <dialog
         ref={ref}
@@ -75,11 +75,14 @@ export function MailingListButton() {
         className="m-auto w-[min(92vw,30rem)] rounded-[var(--radius-card)] bg-surface p-5 text-ink shadow-[var(--shadow-card)] backdrop:bg-black/40"
       >
         <div className="mb-3 flex items-center justify-between">
-          <h2 className="text-lg font-bold">קבלת הטבות למייל</h2>
+          <h2 className="text-lg font-bold">הצטרפות לקבוצת המייל של ליקי</h2>
           <button type="button" onClick={() => ref.current?.close()} aria-label="סגירה" className="size-8 rounded-full text-xl text-ink-soft">
             ×
           </button>
         </div>
+        <p className="mb-3 text-sm text-ink-soft">
+          חברות בקבוצת המייל מקבלות הטבות חדשות ישר לתיבת המייל, בלי ספאם.
+        </p>
         <MailingListForm />
       </dialog>
     </>

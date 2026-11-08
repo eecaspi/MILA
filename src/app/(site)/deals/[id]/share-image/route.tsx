@@ -184,21 +184,37 @@ export async function GET(req: Request, { params }: { params: Promise<{ id: stri
             {logo ? <img src={logo} width={110} height={110} alt="" /> : <div style={{ display: "flex" }} />}
           </div>
 
-          <div style={{ display: "flex", position: "relative", width: "100%", height: 480 }}>
+          <div style={{ display: "flex", justifyContent: "flex-end" }}>
+            <div
+              style={{
+                display: "flex",
+                background: "#b8201b",
+                color: "#ffffff",
+                fontSize: lines.value.length > 9 ? 54 : 72,
+                fontWeight: 800,
+                padding: "6px 34px 14px",
+                borderRadius: 36,
+                lineHeight: 1.1,
+              }}
+            >
+              {visual(lines.value)}
+            </div>
+          </div>
+          <div style={{ display: "flex", position: "relative", width: "100%", height: 440 }}>
             {photo ? (
               <img
                 src={photo}
                 width={928}
-                height={480}
+                height={440}
                 alt=""
-                style={{ width: "100%", height: 480, objectFit: "cover", borderRadius: 36 }}
+                style={{ width: "100%", height: 440, objectFit: "cover", borderRadius: 36 }}
               />
             ) : (
               <div
                 style={{
                   display: "flex",
                   width: "100%",
-                  height: 480,
+                  height: 440,
                   borderRadius: 36,
                   background: "#fdeaea",
                   alignItems: "center",
@@ -212,23 +228,6 @@ export async function GET(req: Request, { params }: { params: Promise<{ id: stri
                 ) : null}
               </div>
             )}
-            <div
-              style={{
-                display: "flex",
-                position: "absolute",
-                top: 20,
-                right: 20,
-                background: "#b8201b",
-                color: "#ffffff",
-                fontSize: lines.value.length > 9 ? 54 : 72,
-                fontWeight: 800,
-                padding: "6px 34px 14px",
-                borderRadius: 36,
-                lineHeight: 1.1,
-              }}
-            >
-              {visual(lines.value)}
-            </div>
           </div>
 
           <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: 14 }}>
@@ -254,11 +253,12 @@ export async function GET(req: Request, { params }: { params: Promise<{ id: stri
                   display: "flex",
                   justifyContent: "center",
                   width: "100%",
-                  background: "#b8201b",
-                  color: "#ffffff",
-                  fontSize: 54,
+                  background: "#ffffff",
+                  color: "#b8201b",
+                  border: "6px solid #b8201b",
+                  fontSize: 52,
                   fontWeight: 800,
-                  padding: "18px 0 26px",
+                  padding: "12px 0 22px",
                   borderRadius: 999,
                 }}
               >

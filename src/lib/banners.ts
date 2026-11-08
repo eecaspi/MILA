@@ -10,6 +10,22 @@ export const LAYOUTS: { value: BannerLayout; label: string }[] = [
   { value: "cover", label: "תמונה עיצובית על כל הבאנר + כפתור" },
 ];
 
+export type CaptionPos = `${"right" | "left" | "center"}-${"top" | "middle" | "bottom"}`;
+export const CAPTION_SIDES = [
+  { value: "right", label: "ימין" },
+  { value: "center", label: "אמצע" },
+  { value: "left", label: "שמאל" },
+] as const;
+export const CAPTION_VERTS = [
+  { value: "top", label: "למעלה" },
+  { value: "middle", label: "באמצע" },
+  { value: "bottom", label: "למטה" },
+] as const;
+
+export function toCaptionPos(raw: unknown): CaptionPos {
+  return typeof raw === "string" && /^(right|left|center)-(top|middle|bottom)$/.test(raw) ? (raw as CaptionPos) : "right-top";
+}
+
 export const IMAGE_MIME = ["image/jpeg", "image/png", "image/webp", "image/avif"];
 export const VIDEO_MIME = ["video/mp4", "video/webm"];
 export const MAX_BANNER_IMAGE_BYTES = 5 * 1024 * 1024;
@@ -26,6 +42,7 @@ export interface BannerValues {
   headline: string | null;
   body: string | null;
   button_label: string | null;
+  caption_pos: CaptionPos;
 }
 
 export type BannerParse =
@@ -96,6 +113,7 @@ export function parseBannerForm(fd: FormData, supabaseUrl: string): BannerParse 
       headline: field(fd, "headline", 80) || null,
       body: field(fd, "body", 160) || null,
       button_label: field(fd, "button_label", 30) || null,
+      caption_pos: toCaptionPos(`${field(fd, "caption_side", 10)}-${field(fd, "caption_vert", 10)}`),
     },
   };
 }

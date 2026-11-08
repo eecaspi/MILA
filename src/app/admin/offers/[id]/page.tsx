@@ -2,6 +2,8 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { DangerZone } from "@/components/admin/DangerZone";
 import { OfferForm, type OfferFormValues } from "@/components/admin/OfferForm";
+import { AdminShare } from "@/components/deals/AdminShare";
+import { getOfferById } from "@/lib/data/repository";
 import { createClient } from "@/lib/supabase/server";
 import { deleteOffer } from "../../content-actions";
 import { businessOptions } from "../business-options";
@@ -32,6 +34,7 @@ export default async function EditOffer({ params }: { params: Promise<{ id: stri
   const { offer_codes, ...rest } = offer.data as unknown as Omit<OfferFormValues, "coupon_code"> & {
     offer_codes: { coupon_code: string } | null;
   };
+  const publicOffer = Boolean((offer.data as { is_published?: boolean }).is_published) ? await getOfferById(id) : undefined;
   const values: OfferFormValues = { ...rest, coupon_code: offer_codes?.coupon_code ?? null };
 
   return (
@@ -51,6 +54,16 @@ export default async function EditOffer({ params }: { params: Promise<{ id: stri
           </Link>
         )}
       </div>
+      {publicOffer ? (
+        <div className="rounded-[var(--radius-card)] bg-surface p-4 shadow-[var(--shadow-card)]">
+          <p className="mb-2 font-semibold text-ink">שיתוף בקבוצת הוואטסאפ</p>
+          <AdminShare offer={publicOffer} />
+        </div>
+      ) : (
+        <p className="rounded-2xl bg-accent-soft p-3 text-sm font-semibold text-ink">
+          כדי לשתף בוואטסאפ, סמני &quot;מפורסם באתר&quot; ו&quot;לקבוצה בלבד&quot; (אם עוד לא רוצות לפרסם לכולן), ושמרי. אז יופיע כאן כפתור שיתוף.
+        </p>
+      )}
       <OfferForm offer={values} businesses={businesses} dailyUpcoming={dailyUpcoming} />
       <DangerZone
         action={deleteOffer}

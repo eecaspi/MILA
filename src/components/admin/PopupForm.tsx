@@ -92,7 +92,7 @@ export function PopupForm({ values }: { values: Values }) {
         <input name="button_label" maxLength={40} defaultValue={values.button_label} className={inputClass} />
       </label>
       <label className="block">
-        <span className="mb-1 block text-xs font-semibold text-ink-soft">קישור הכפתור, למשל /deals</span>
+        <span className="mb-1 block text-xs font-semibold text-ink-soft">קישור הכפתור (לא חובה, בלי קישור הכפתור רק סוגר), למשל /deals</span>
         <input name="link_url" dir="ltr" maxLength={300} defaultValue={values.link_url} className={inputClass} />
       </label>
       <div className="flex flex-wrap items-center gap-3">

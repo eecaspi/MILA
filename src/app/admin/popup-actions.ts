@@ -27,7 +27,6 @@ export async function savePopup(_prev: PopupState, fd: FormData): Promise<PopupS
   if (imageUrl && !isAllowedMedia(imageUrl, supabaseUrl)) return { error: "התמונה לא תקינה. נסי להעלות שוב." };
   if (active && !title && !body && !imageUrl) return { error: "כדי להפעיל את הפופאפ צריך לכתוב כותרת, טקסט או תמונה." };
   if (linkUrl && !/^(\/|https?:\/\/)/.test(linkUrl)) return { error: "הקישור צריך להתחיל ב- / או ב- https://" };
-  if (buttonLabel && !linkUrl) return { error: "לכפתור צריך להוסיף גם קישור." };
   const supabase = await createClient();
   const { error } = await supabase
     .from("site_popup")

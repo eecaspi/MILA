@@ -144,7 +144,7 @@ export function HeroCarousel({ banners }: { banners: HomeBanner[] }) {
                   aria-hidden
                   fill
                   sizes="50vw"
-                  className="scale-125 object-cover opacity-70 blur-2xl"
+                  className="scale-150 object-cover blur-3xl"
                 />
                 <Image
                   src={b.url}
@@ -159,7 +159,7 @@ export function HeroCarousel({ banners }: { banners: HomeBanner[] }) {
           const external = /^https?:/.test(href);
           // Every banner says something and has a button: its title (if any) and "לפרטים נוספים".
           const caption = (
-            <span className="absolute inset-x-4 bottom-14 flex flex-col items-start gap-2 md:inset-x-10">
+            <span className="absolute left-[27%] top-[73%] flex w-max max-w-[50%] -translate-x-1/2 flex-col items-center gap-2 text-center sm:left-[34%] sm:top-[72%]">
               {(b.headline ?? b.title) && (
                 <span className="max-w-[80%] rounded-2xl bg-surface/90 px-4 py-2 text-base font-bold text-ink shadow-[var(--shadow-card)] md:text-2xl">
                   {b.headline ?? b.title}

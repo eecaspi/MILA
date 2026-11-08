@@ -1,60 +1,76 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import type { SitePopup } from "@/lib/data/popup";
 
-const KEY = "liky-popup-seen";
-
-/** Opens once per visitor (per popup version) right after the site loads. */
+/** Opens right after the site loads (every time the site is opened), and closes with the X. */
 export function EntryPopup({ popup }: { popup: SitePopup }) {
   const ref = useRef<HTMLDialogElement>(null);
 
   useEffect(() => {
-    let seen: string | null = null;
-    try {
-      seen = localStorage.getItem(KEY);
-    } catch {}
-    if (seen === popup.version) return;
     const t = setTimeout(() => ref.current?.showModal(), 600);
     return () => clearTimeout(t);
-  }, [popup.version]);
+  }, []);
 
-  const close = () => {
-    try {
-      localStorage.setItem(KEY, popup.version);
-    } catch {}
-    ref.current?.close();
-  };
+  const close = () => ref.current?.close();
 
   const external = /^https?:\/\//.test(popup.linkUrl);
 
   return (
     <dialog
       ref={ref}
-      onClose={close}
       onClick={(e) => e.target === ref.current && close()}
       aria-labelledby="entry-popup-title"
-      className="m-auto w-[min(92vw,26rem)] rounded-3xl border border-line bg-surface p-0 text-ink shadow-2xl backdrop:bg-black/50"
+      className="m-auto w-[min(92vw,26rem)] overflow-hidden rounded-3xl border-4 border-accent bg-surface p-0 text-ink shadow-2xl backdrop:bg-black/50"
     >
-      <div className="relative p-6 pt-12 text-center">
+      <div className="relative text-center">
         <button
           type="button"
           onClick={close}
           aria-label="סגירה"
-          className="absolute end-3 top-3 grid size-9 place-items-center rounded-full bg-accent-soft text-lg font-bold text-ink"
+          className="absolute end-3 top-3 z-10 grid size-9 place-items-center rounded-full bg-surface text-lg font-bold text-accent shadow"
         >
           ✕
         </button>
-        {popup.title && (
-          <h2 id="entry-popup-title" className="text-2xl font-bold leading-snug">
-            {popup.title}
+        <div className="bg-accent px-6 pb-5 pt-12 text-on-accent">
+          <h2 id="entry-popup-title" className="text-3xl font-extrabold leading-tight">
+            {popup.title || "חדש בליקי"}
           </h2>
-        )}
-        {popup.body && <p className="mt-3 whitespace-pre-line text-base leading-relaxed text-ink-soft">{popup.body}</p>}
-        {popup.buttonLabel && popup.linkUrl && (
+        </div>
+        <div className="flex items-center justify-center gap-4 bg-accent-soft px-5 py-5">
+          {popup.imageUrl && (
+            <div className="grid size-32 shrink-0 place-items-center rounded-2xl border-2 border-accent bg-surface p-2 shadow-sm">
+              <Image
+                src={popup.imageUrl}
+                alt="לוגו העסק"
+                width={240}
+                height={240}
+                sizes="8rem"
+                className="h-full w-full object-contain"
+              />
+            </div>
+          )}
+          <Image
+            src="/brand/liky-character-bag.jpg"
+            alt="ליקי"
+            width={400}
+            height={400}
+            sizes="9rem"
+            priority
+            className="h-36 w-auto rounded-2xl object-contain mix-blend-multiply"
+          />
+        </div>
+        <div className="px-6 pb-6 pt-4">
+        {popup.body && <p className="whitespace-pre-line text-base leading-relaxed text-ink">{popup.body}</p>}
+        {popup.buttonLabel && (
           <div className="mt-5">
-            {external ? (
+            {!popup.linkUrl ? (
+              <button type="button" onClick={close} className="btn-primary px-6 py-2.5">
+                {popup.buttonLabel}
+              </button>
+            ) : external ? (
               <a href={popup.linkUrl} target="_blank" rel="noopener noreferrer" onClick={close} className="btn-primary px-6 py-2.5">
                 {popup.buttonLabel}
               </a>
@@ -65,6 +81,7 @@ export function EntryPopup({ popup }: { popup: SitePopup }) {
             )}
           </div>
         )}
+        </div>
       </div>
     </dialog>
   );

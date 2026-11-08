@@ -1,6 +1,8 @@
 "use server";
 
 import { revalidatePath, revalidateTag } from "next/cache";
+import { isAllowedMedia } from "@/lib/banners";
+import { supabaseUrl } from "@/lib/supabase/env";
 import { requireAdmin } from "@/lib/auth/session";
 import { createClient } from "@/lib/supabase/server";
 
@@ -21,15 +23,17 @@ export async function savePopup(_prev: PopupState, fd: FormData): Promise<PopupS
   const body = text(fd, "body", 300);
   const buttonLabel = text(fd, "button_label", 40);
   const linkUrl = text(fd, "link_url", 300);
-  if (active && !title && !body) return { error: "כדי להפעיל את הפופאפ צריך לכתוב כותרת או טקסט." };
+  const imageUrl = text(fd, "image_url", 400);
+  if (imageUrl && !isAllowedMedia(imageUrl, supabaseUrl)) return { error: "התמונה לא תקינה. נסי להעלות שוב." };
+  if (active && !title && !body && !imageUrl) return { error: "כדי להפעיל את הפופאפ צריך לכתוב כותרת, טקסט או תמונה." };
   if (linkUrl && !/^(\/|https?:\/\/)/.test(linkUrl)) return { error: "הקישור צריך להתחיל ב- / או ב- https://" };
-  if (buttonLabel && !linkUrl) return { error: "לכפתור צריך להוסיף גם קישור." };
   const supabase = await createClient();
   const { error } = await supabase
     .from("site_popup")
     .update({
       is_active: active,
       title,
+      image_url: imageUrl,
       body,
       button_label: buttonLabel,
       link_url: linkUrl,

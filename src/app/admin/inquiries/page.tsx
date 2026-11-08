@@ -62,7 +62,7 @@ export default async function Inquiries() {
 
   return (
     <div className="max-w-3xl space-y-6">
-      <h1 className="text-2xl text-ink">נרשמות לדיוור במייל ({subscribers.length})</h1>
+      <h1 id="subscribers" className="scroll-mt-24 text-2xl text-ink">נרשמות לדיוור במייל ({subscribers.length})</h1>
       {subscribers.length === 0 && <p className="text-ink-soft">עוד אין נרשמות.</p>}
       <ul className="space-y-2">
         {subscribers.map((m) => (

@@ -36,7 +36,7 @@ export function FullImageSlide({
           fill
           sizes="100vw"
           priority={priority}
-          className="object-contain sm:object-cover sm:object-[30%_top] md:object-top"
+          className="object-contain sm:object-cover sm:object-[30%_center] md:object-center"
         />
         <span className="btn-primary absolute bottom-[10%] left-[28%] -translate-x-1/2 whitespace-nowrap !px-3.5 !py-1.5 text-xs sm:bottom-14 sm:left-[27%] sm:!px-7 sm:!py-3 sm:text-base md:bottom-[14%] md:left-[28%]">
           {cta}

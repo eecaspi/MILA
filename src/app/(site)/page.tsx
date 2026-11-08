@@ -95,7 +95,7 @@ export default async function HomePage() {
         )}
 
         {/* העסקים שלנו */}
-        <section aria-labelledby="biz">
+        <section aria-labelledby="biz" className="relative z-20 md:pb-16">
           <SectionHeading
             id="biz"
             title="העסקים שלנו"

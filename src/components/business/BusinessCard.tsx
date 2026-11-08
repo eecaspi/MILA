@@ -4,7 +4,7 @@ import { BusinessMore, hasMoreToShow } from "./BusinessMore";
 
 /**
  * Outside: picture, name, short description and tags.
- * Inside (hover on desktop, "עוד על העסק" on phones): three product photos and the website.
+ * Inside (hover on desktop, replacing the picture; "עוד על העסק" on phones): three product photos and the website.
  */
 export function BusinessCard({ business }: { business: Business }) {
   const more = hasMoreToShow(business);
@@ -34,13 +34,11 @@ export function BusinessCard({ business }: { business: Business }) {
         )}
       </article>
 
-      {/* Larger screens: on hover (or keyboard focus) the card grows downward to show the inside. */}
+      {/* Larger screens: on hover (or keyboard focus) the picture is replaced, inside the same card, by the
+          product photos and the website link. The card keeps its size, so nothing covers other blocks. */}
       {more && (
-        <div className="invisible absolute inset-x-0 top-0 z-30 hidden flex-col overflow-hidden rounded-[var(--radius-card)] bg-surface opacity-0 shadow-[var(--shadow-soft)] ring-1 ring-line transition duration-200 group-focus-within/biz:visible group-focus-within/biz:opacity-100 group-hover/biz:visible group-hover/biz:opacity-100 group-hover/biz:delay-150 md:flex">
-          <BusinessFront business={business} />
-          <div className="px-5 pb-5">
-            <BusinessMore business={business} />
-          </div>
+        <div className="invisible absolute inset-x-0 top-0 z-10 hidden aspect-[16/10] flex-col justify-center overflow-hidden rounded-t-[var(--radius-card)] bg-surface p-4 opacity-0 transition duration-200 group-focus-within/biz:visible group-focus-within/biz:opacity-100 group-hover/biz:visible group-hover/biz:opacity-100 md:flex">
+          <BusinessMore business={business} />
         </div>
       )}
     </div>

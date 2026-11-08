@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import type { SitePopup } from "@/lib/data/popup";
 
@@ -46,6 +47,16 @@ export function EntryPopup({ popup }: { popup: SitePopup }) {
         >
           ✕
         </button>
+        {popup.imageUrl && (
+          <Image
+            src={popup.imageUrl}
+            alt={popup.title}
+            width={800}
+            height={800}
+            sizes="26rem"
+            className="mx-auto mb-4 h-auto max-h-[50vh] w-full rounded-2xl object-contain"
+          />
+        )}
         {popup.title && (
           <h2 id="entry-popup-title" className="text-2xl font-bold leading-snug">
             {popup.title}

@@ -196,6 +196,7 @@ export interface OfferValues {
   daily: DailyCode[];
   price_label: string | null;
   highlight: boolean;
+  unlisted: boolean;
   likey_pick_note: string | null;
   status: "listed" | "verified";
   is_published: boolean;
@@ -270,6 +271,7 @@ export function parseOfferForm(fd: FormData): Parsed<OfferValues> {
       redeem_channel: channel === "online" || channel === "store" || channel === "both" ? channel : null,
       price_label: orNull(text(fd, "price_label", 60)),
       highlight: fd.get("highlight") === "on",
+      unlisted: fd.get("unlisted") === "on",
       likey_pick_note: orNull(text(fd, "likey_pick_note", 200)),
       status: text(fd, "status", 20) === "verified" ? "verified" : "listed",
       is_published: fd.get("is_published") === "on",

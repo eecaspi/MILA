@@ -54,7 +54,9 @@ const fetchContent = async (): Promise<Content> => {
   let o = firstOffers;
   // Newer offer columns whose migration hasn't been run yet: show the offers without them.
   if (o.error?.code === "42703") {
-    o = await offersQuery(OFFER_COLUMNS.replace(", redeem_url, terms, usage_limit", ""));
+    o = await offersQuery(
+      OFFER_COLUMNS.replace(", unlisted", "").replace(", redeem_url, terms, usage_limit", ""),
+    );
   }
   // A newer column whose migration hasn't been run yet: show everything else instead of demo content.
   if (b.error?.code === "42703") {
@@ -116,11 +118,13 @@ export interface OfferFilter {
   kind?: OfferKind;
   /** Hide offers whose validUntil is in the past. Defaults to true. */
   activeOnly?: boolean;
+  /** Offers meant for the community group only. Left out of every list unless asked for. */
+  includeUnlisted?: boolean;
   now?: Date;
 }
 
 export async function getOffers(filter: OfferFilter = {}): Promise<OfferWithBusiness[]> {
-  const { activeOnly = true, now = new Date() } = filter;
+  const { activeOnly = true, includeUnlisted = false, now = new Date() } = filter;
   const content = await loadContent();
   const businesses = new Map(content.businesses.map((b) => [b.id, b]));
 
@@ -128,6 +132,7 @@ export async function getOffers(filter: OfferFilter = {}): Promise<OfferWithBusi
   for (const offer of content.offers) {
     const business = businesses.get(offer.businessId);
     if (!business) continue;
+    if (offer.unlisted && !includeUnlisted) continue;
     if (filter.kind && offer.kind !== filter.kind) continue;
     if (filter.category && business.category !== filter.category) continue;
     if (activeOnly && isExpired(offer.validUntil, now)) continue;
@@ -197,5 +202,5 @@ export async function getLikeyPicks(limit = 3): Promise<OfferWithBusiness[]> {
 }
 
 export async function getOfferById(id: string): Promise<OfferWithBusiness | undefined> {
-  return (await getOffers({ activeOnly: false })).find((o) => o.id === id);
+  return (await getOffers({ activeOnly: false, includeUnlisted: true })).find((o) => o.id === id);
 }

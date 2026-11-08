@@ -94,6 +94,7 @@ test("offer form: valid input, code is upper-cased", () => {
   if (r.ok) {
     assert.equal(r.values.coupon_code, "NOA20");
     assert.equal(r.values.highlight, true);
+    assert.equal(r.values.unlisted, false);
     assert.equal(r.values.is_published, false);
   }
 });

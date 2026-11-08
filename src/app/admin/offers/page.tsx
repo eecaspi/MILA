@@ -13,6 +13,7 @@ interface Row {
   valid_until: string | null;
   is_published: boolean;
   highlight: boolean;
+  unlisted?: boolean;
   businesses: { name: string; is_published: boolean } | null;
   offer_codes: { coupon_code: string } | null;
 }
@@ -25,7 +26,7 @@ export default async function AdminOffers({ searchParams }: { searchParams: Sear
   let query = supabase
     .from("offers")
     .select(
-      "id, title, value_label, kind, valid_until, is_published, highlight, businesses!inner(name, is_published, is_real_business), offer_codes(coupon_code)",
+      "id, title, value_label, kind, valid_until, is_published, highlight, unlisted, businesses!inner(name, is_published, is_real_business), offer_codes(coupon_code)",
     )
     .eq("businesses.is_real_business", true)
     .order("created_at", { ascending: false });
@@ -101,6 +102,7 @@ export default async function AdminOffers({ searchParams }: { searchParams: Sear
                       </>
                     )}
                     {o.highlight && " · מובלטת"}
+                    {o.unlisted && " · לקבוצה בלבד"}
                   </p>
                 </div>
                 <span

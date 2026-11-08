@@ -50,6 +50,7 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
         title: `${offer.title} – ${offer.business.name}`,
         description: offer.description || `${offer.valueLabel} ב${offer.business.name}`,
         alternates: { canonical: `/deals/${offer.id}` },
+        robots: offer.unlisted ? { index: false, follow: false } : undefined,
         openGraph: {
           title: `${offer.valueLabel} ב${offer.business.name}`,
           description: offer.title,
@@ -99,6 +100,11 @@ export default async function OfferPage({
         <div className="flex flex-col gap-5">
           <div className="flex flex-wrap items-center gap-2 text-sm text-ink-soft">
             <StatusBadge status={offer.status} />
+            {offer.unlisted && (
+              <span className="rounded-full border-2 border-accent bg-surface px-3 py-0.5 font-semibold text-accent">
+                לחברות הקבוצה בלבד · עוד לא פורסם באתר
+              </span>
+            )}
             <span>{category.name}</span>
           </div>
           <div>

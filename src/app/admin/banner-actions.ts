@@ -37,25 +37,27 @@ export async function createBanner(fd: FormData): Promise<BannerState> {
 }
 
 /** Title, link, order and visibility of an existing banner (the file itself is not replaced). */
-export async function updateBanner(fd: FormData): Promise<void> {
+export async function updateBanner(_prev: BannerState, fd: FormData): Promise<BannerState> {
   await requireAdmin();
   const id = idFrom(fd);
-  if (!id) return;
+  if (!id) return { error: "הבאנר לא נמצא." };
   const supabase = await createClient();
   const { data: current } = await supabase.from("banners").select("media_url, media_type").eq("id", id).maybeSingle();
-  if (!current) return;
+  if (!current) return { error: "הבאנר לא נמצא." };
   const merged = new FormData();
   for (const [k, v] of fd.entries()) merged.append(k, v);
   merged.set("media_url", current.media_url as string);
   merged.set("media_type", current.media_type as string);
   const parsed = parseBannerForm(merged, supabaseUrl);
-  if (!parsed.ok) return;
+  if (!parsed.ok) return { error: Object.values(parsed.errors)[0] };
   const { title, link_url, sort_order, is_published, layout, headline, body, button_label } = parsed.values;
-  await supabase
+  const { error } = await supabase
     .from("banners")
     .update({ title, link_url, sort_order, is_published, layout, headline, body, button_label })
     .eq("id", id);
+  if (error) return { error: "השמירה נכשלה. נסי שוב בעוד רגע." };
   refresh();
+  return { ok: true };
 }
 
 export async function deleteBanner(fd: FormData): Promise<void> {

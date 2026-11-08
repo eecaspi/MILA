@@ -1,5 +1,6 @@
 import { Tracker } from "@/components/analytics/Tracker";
 import { SiteFooter } from "@/components/layout/SiteFooter";
+import { WhatsAppFloat } from "@/components/layout/WhatsAppFloat";
 import { SiteHeader } from "@/components/layout/SiteHeader";
 
 export default function SiteLayout({ children }: { children: React.ReactNode }) {
@@ -14,6 +15,7 @@ export default function SiteLayout({ children }: { children: React.ReactNode }) 
       <SiteHeader />
       <main id="main">{children}</main>
       <SiteFooter />
+      <WhatsAppFloat />
       <Tracker />
     </>
   );

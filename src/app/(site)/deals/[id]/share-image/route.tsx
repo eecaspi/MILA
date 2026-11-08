@@ -121,7 +121,7 @@ export async function GET(req: Request, { params }: { params: Promise<{ id: stri
     usage: offer.usageLimit ?? "",
     header: offer.unlisted ? "לחברות הקבוצה בלבד · עוד לא באתר" : "הטבה חדשה בליקי",
     sub: [offer.business.name, category?.name].filter(Boolean).join(" · "),
-    cta: "קוד הקופון מתחת לתמונה",
+    cta: "קוד הקופון כתוב בהודעה שמתחת לתמונה",
     host: hostname(siteConfig.url),
   };
   const showCodeNote = (offer.codeMode ?? "fixed") === "fixed";
@@ -253,13 +253,10 @@ export async function GET(req: Request, { params }: { params: Promise<{ id: stri
                   display: "flex",
                   justifyContent: "center",
                   width: "100%",
-                  background: "#ffffff",
                   color: "#b8201b",
-                  border: "6px solid #b8201b",
-                  fontSize: 52,
+                  fontSize: 40,
                   fontWeight: 800,
-                  padding: "12px 0 22px",
-                  borderRadius: 999,
+                  textAlign: "center",
                 }}
               >
                 {visual(lines.cta)}

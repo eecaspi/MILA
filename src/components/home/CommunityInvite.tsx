@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { siteConfig } from "@/config/site";
 import { MailingListButton } from "./MailingListForm";
 
@@ -19,14 +20,23 @@ export function CommunityInvite() {
         aria-hidden
         className="pointer-events-none absolute -start-12 -bottom-20 size-52 rounded-full bg-gold/30 blur-3xl"
       />
-      <div className="relative mx-auto flex max-w-3xl flex-col items-center md:flex-row md:justify-between md:gap-8 md:text-start">
-        <div>
-        <p className="eyebrow">החברות של ליקי</p>
+      <div className="relative mx-auto flex max-w-4xl flex-col items-center md:flex-row md:justify-between md:gap-8 md:text-start">
+        <div className="relative hidden aspect-[4/3] w-44 shrink-0 overflow-hidden rounded-2xl bg-white md:block lg:w-52">
+          <Image
+            src="/brand/liky-community.jpg"
+            alt="ליקי מחזיקה שקית של האתר"
+            fill
+            sizes="208px"
+            className="object-cover object-[50%_20%]"
+          />
+        </div>
+        <div className="md:flex-1">
+        <p className="eyebrow">הקהילה של ליקי</p>
         <h2 id="community-title" className="mt-1 text-xl text-ink sm:mt-1 sm:text-2xl md:text-2xl">
-          הקהילה של ליקי: וואטסאפ ומייל
+          הטבות חדשות ישר אלייך
         </h2>
         <p className="mt-1 text-sm text-ink-soft sm:text-base">
-          הטבות חדשות ישר לוואטסאפ או למייל, בלי ספאם.
+          בוואטסאפ או במייל, בלי ספאם. את בוחרת איפה נוח לך.
         </p>
         </div>
         <div className="mt-3 flex flex-wrap items-center justify-center gap-2 md:mt-0 md:shrink-0">

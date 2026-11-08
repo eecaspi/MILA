@@ -23,29 +23,30 @@ export function EntryPopup({ popup }: { popup: SitePopup }) {
       ref={ref}
       onClick={(e) => e.target === ref.current && close()}
       aria-labelledby="entry-popup-title"
-      className="m-auto w-[min(92vw,26rem)] rounded-3xl border border-line bg-surface p-0 text-ink shadow-2xl backdrop:bg-black/50"
+      className="m-auto w-[min(92vw,26rem)] overflow-hidden rounded-3xl border-4 border-accent bg-surface p-0 text-ink shadow-2xl backdrop:bg-black/50"
     >
-      <div className="relative p-6 pt-12 text-center">
+      <div className="relative p-6 pt-14 text-center">
         <button
           type="button"
           onClick={close}
           aria-label="סגירה"
-          className="absolute end-3 top-3 grid size-9 place-items-center rounded-full bg-accent-soft text-lg font-bold text-ink"
+          className="absolute end-3 top-3 z-10 grid size-9 place-items-center rounded-full bg-accent text-lg font-bold text-on-accent shadow"
         >
           ✕
         </button>
-        {popup.imageUrl && (
+        <div className="-mx-6 -mt-14 mb-4 bg-accent-soft px-6 pb-4 pt-14">
           <Image
-            src={popup.imageUrl}
-            alt={popup.title}
+            src={popup.imageUrl || "/brand/liky-character-bag.jpg"}
+            alt={popup.title || "ליקי"}
             width={800}
             height={800}
             sizes="26rem"
-            className="mx-auto mb-4 h-auto max-h-[50vh] w-full rounded-2xl object-contain"
+            priority
+            className="mx-auto h-auto max-h-[40vh] w-auto max-w-full rounded-2xl object-contain"
           />
-        )}
+        </div>
         {popup.title && (
-          <h2 id="entry-popup-title" className="text-2xl font-bold leading-snug">
+          <h2 id="entry-popup-title" className="text-2xl font-bold leading-snug text-accent">
             {popup.title}
           </h2>
         )}

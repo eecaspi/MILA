@@ -10,6 +10,8 @@ function buildMessage(offer: OfferWithBusiness, url: string, fixedCode: string |
     ? new Intl.DateTimeFormat("he-IL", { day: "numeric", month: "long" }).format(new Date(offer.validUntil))
     : null;
   return [
+    offer.unlisted ? "⭐ בלעדי לחברות הקבוצה! ההטבה עוד לא באתר, ואתן הראשונות לקבל אותה" : null,
+    offer.unlisted ? "" : null,
     `🎁 ${offer.valueLabel} ב${offer.business.name}`,
     offer.title,
     until ? `⏰ בתוקף עד ${until}` : null,

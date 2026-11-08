@@ -116,14 +116,16 @@ export async function GET(req: Request, { params }: { params: Promise<{ id: stri
     business: offer.business.name,
     title: offer.title,
     value: /^\d+%$/.test(offer.valueLabel.trim()) ? `${offer.valueLabel.trim()} הנחה` : offer.valueLabel,
-    channel: offer.redeemChannel ? (CHANNEL[offer.redeemChannel] ?? "") : "",
+    channel: offer.redeemChannel ? `אופן מימוש: ${CHANNEL[offer.redeemChannel] ?? ""}` : "",
     until: until ? `בתוקף עד ${until}` : "",
     usage: offer.usageLimit ?? "",
-    header: offer.unlisted ? "לחברות הקבוצה בלבד · עוד לא באתר" : "הטבה חדשה בליקי",
+    header: "הטבה חדשה בליקי",
+    exclusive: offer.unlisted ? "בלעדי לחברות הקבוצה · עוד לא באתר" : "",
     sub: [offer.business.name, category?.name].filter(Boolean).join(" · "),
-    cta: "קוד הקופון כתוב בהודעה שמתחת לתמונה",
+    cta: "קוד הקופון מופיע בהודעה שמתחת לתמונה",
     host: hostname(siteConfig.url),
   };
+  const photoH = offer.unlisted ? 420 : 500;
   const showCodeNote = (offer.codeMode ?? "fixed") === "fixed";
   const all = Object.values(lines).join("") + "0123456789%₪-";
   const [bold, regular, logo, photo, bizLogo] = await Promise.all([
@@ -179,6 +181,23 @@ export async function GET(req: Request, { params }: { params: Promise<{ id: stri
             justifyContent: "space-between",
           }}
         >
+          {lines.exclusive ? (
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                width: "100%",
+                background: "#b8201b",
+                color: "#ffffff",
+                fontSize: 44,
+                fontWeight: 800,
+                padding: "6px 0 16px",
+                borderRadius: 999,
+              }}
+            >
+              {visual(lines.exclusive)}
+            </div>
+          ) : null}
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
             <div style={{ display: "flex", fontSize: 34, fontWeight: 500, color: "#7a5558" }}>{visual(lines.header)}</div>
             <div style={{ display: "flex", alignItems: "center", gap: 22 }}>
@@ -200,21 +219,21 @@ export async function GET(req: Request, { params }: { params: Promise<{ id: stri
             </div>
           </div>
 
-          <div style={{ display: "flex", position: "relative", width: "100%", height: 500 }}>
+          <div style={{ display: "flex", position: "relative", width: "100%", height: photoH }}>
             {photo ? (
               <img
                 src={photo}
                 width={928}
-                height={500}
+                height={photoH}
                 alt=""
-                style={{ width: "100%", height: 500, objectFit: "cover", borderRadius: 36 }}
+                style={{ width: "100%", height: photoH, objectFit: "cover", borderRadius: 36 }}
               />
             ) : (
               <div
                 style={{
                   display: "flex",
                   width: "100%",
-                  height: 500,
+                  height: photoH,
                   borderRadius: 36,
                   background: "#fdeaea",
                   alignItems: "center",

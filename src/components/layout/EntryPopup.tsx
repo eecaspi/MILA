@@ -25,32 +25,45 @@ export function EntryPopup({ popup }: { popup: SitePopup }) {
       aria-labelledby="entry-popup-title"
       className="m-auto w-[min(92vw,26rem)] overflow-hidden rounded-3xl border-4 border-accent bg-surface p-0 text-ink shadow-2xl backdrop:bg-black/50"
     >
-      <div className="relative p-6 pt-14 text-center">
+      <div className="relative text-center">
         <button
           type="button"
           onClick={close}
           aria-label="סגירה"
-          className="absolute end-3 top-3 z-10 grid size-9 place-items-center rounded-full bg-accent text-lg font-bold text-on-accent shadow"
+          className="absolute end-3 top-3 z-10 grid size-9 place-items-center rounded-full bg-surface text-lg font-bold text-accent shadow"
         >
           ✕
         </button>
-        <div className="-mx-6 -mt-14 mb-4 bg-accent-soft px-6 pb-4 pt-14">
+        <div className="bg-accent px-6 pb-5 pt-12 text-on-accent">
+          <h2 id="entry-popup-title" className="text-3xl font-extrabold leading-tight">
+            {popup.title || "חדש בליקי"}
+          </h2>
+        </div>
+        <div className="flex items-center justify-center gap-4 bg-accent-soft px-5 py-5">
+          {popup.imageUrl && (
+            <div className="grid size-32 shrink-0 place-items-center rounded-2xl border-2 border-accent bg-surface p-2 shadow-sm">
+              <Image
+                src={popup.imageUrl}
+                alt="לוגו העסק"
+                width={240}
+                height={240}
+                sizes="8rem"
+                className="h-full w-full object-contain"
+              />
+            </div>
+          )}
           <Image
-            src={popup.imageUrl || "/brand/liky-character-bag.jpg"}
-            alt={popup.title || "ליקי"}
-            width={800}
-            height={800}
-            sizes="26rem"
+            src="/brand/liky-character-bag.jpg"
+            alt="ליקי"
+            width={400}
+            height={400}
+            sizes="9rem"
             priority
-            className="mx-auto h-auto max-h-[40vh] w-auto max-w-full rounded-2xl object-contain"
+            className="h-36 w-auto rounded-2xl object-contain mix-blend-multiply"
           />
         </div>
-        {popup.title && (
-          <h2 id="entry-popup-title" className="text-2xl font-bold leading-snug text-accent">
-            {popup.title}
-          </h2>
-        )}
-        {popup.body && <p className="mt-3 whitespace-pre-line text-base leading-relaxed text-ink-soft">{popup.body}</p>}
+        <div className="px-6 pb-6 pt-4">
+        {popup.body && <p className="whitespace-pre-line text-base leading-relaxed text-ink">{popup.body}</p>}
         {popup.buttonLabel && (
           <div className="mt-5">
             {!popup.linkUrl ? (
@@ -68,6 +81,7 @@ export function EntryPopup({ popup }: { popup: SitePopup }) {
             )}
           </div>
         )}
+        </div>
       </div>
     </dialog>
   );

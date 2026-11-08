@@ -64,23 +64,23 @@ export function PopupForm({ values }: { values: Values }) {
         הפופאפ פעיל (מוצג בכניסה לאתר)
       </label>
       <div className="block">
-        <span className="mb-1 block text-xs font-semibold text-ink-soft">תמונה (לא חובה)</span>
+        <span className="mb-1 block text-xs font-semibold text-ink-soft">לוגו העסק (לא חובה)</span>
         {image && (
           <div className="mb-2 flex items-center gap-3">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src={image} alt="" className="h-24 rounded-xl border border-line object-contain" />
             <button type="button" onClick={() => setImage("")} className="text-sm font-semibold text-danger">
-              הסרת התמונה
+              הסרת הלוגו
             </button>
           </div>
         )}
         <input type="file" name="file" accept="image/jpeg,image/png,image/webp" className={inputClass} />
         <span className="mt-1 block text-xs text-ink-soft">
-          כדי להחליף, בחרי קובץ חדש ושמרי. תמונה מרובעת או לאורך מתאימה הכי טוב.
+          כדי להחליף, בחרי קובץ חדש ושמרי. מומלץ לוגו מרובע על רקע לבן. ליקי מופיעה בפופאפ אוטומטית.
         </span>
       </div>
       <label className="block">
-        <span className="mb-1 block text-xs font-semibold text-ink-soft">כותרת</span>
+        <span className="mb-1 block text-xs font-semibold text-ink-soft">כותרת המבצע</span>
         <input name="title" maxLength={80} defaultValue={values.title} className={inputClass} />
       </label>
       <label className="block">

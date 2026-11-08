@@ -163,7 +163,7 @@ export function HeroCarousel({ banners }: { banners: HomeBanner[] }) {
               className={
                 b.headline
                   ? "absolute end-[5%] top-1/2 flex w-[40%] -translate-y-1/2 flex-col items-start gap-3 text-start md:w-[34%]"
-                  : "absolute left-[27%] top-[73%] flex w-max max-w-[50%] -translate-x-1/2 flex-col items-center gap-2 text-center sm:left-[34%] sm:top-[72%]"
+                  : "absolute left-[4%] top-[8%] flex w-max max-w-[46%] flex-col items-start gap-2 text-start sm:top-[10%] md:max-w-[40%]"
               }
             >
               {(b.headline ?? b.title) && (

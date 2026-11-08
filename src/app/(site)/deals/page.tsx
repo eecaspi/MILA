@@ -149,7 +149,7 @@ export default async function DealsPage({ searchParams }: { searchParams: Search
       <div className="mb-6 space-y-3 rounded-[var(--radius-card)] bg-surface p-3 sm:mb-8 sm:space-y-5 sm:p-4 shadow-[var(--shadow-card)] md:p-6">
         <SearchBox suggestions={suggestions} defaultValue={q} hidden={{ category, kind, channel, sort }} />
 
-        <details className="group md:hidden" open={!!(category || kind || channel || sort)}>
+        <details className="group" open={!!(category || kind || channel || sort)}>
           <summary className="flex cursor-pointer list-none items-center justify-between rounded-full bg-raised px-4 py-2 text-sm font-semibold text-accent [&::-webkit-details-marker]:hidden">
             <span>סינון ומיון</span>
             <span aria-hidden className="transition-transform group-open:rotate-180">⌄</span>
@@ -158,7 +158,6 @@ export default async function DealsPage({ searchParams }: { searchParams: Search
             {filters}
           </div>
         </details>
-        <div className="hidden md:block">{filters}</div>
         {filtered && (
           <p className="flex flex-wrap items-center gap-3 text-sm text-ink-soft">
             <span>

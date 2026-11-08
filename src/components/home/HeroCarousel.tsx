@@ -144,7 +144,7 @@ export function HeroCarousel({ banners }: { banners: HomeBanner[] }) {
                   aria-hidden
                   fill
                   sizes="50vw"
-                  className="scale-125 object-cover opacity-70 blur-2xl"
+                  className="scale-150 object-cover blur-3xl"
                 />
                 <Image
                   src={b.url}

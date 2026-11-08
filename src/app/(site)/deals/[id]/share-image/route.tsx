@@ -121,7 +121,7 @@ export async function GET(req: Request, { params }: { params: Promise<{ id: stri
     usage: offer.usageLimit ?? "",
     header: offer.unlisted ? "לחברות הקבוצה בלבד · עוד לא באתר" : "הטבה חדשה בליקי",
     sub: [offer.business.name, category?.name].filter(Boolean).join(" · "),
-    cta: "קוד הקופון כתוב בהודעה שמתחת לתמונה",
+    cta: "קוד הקופון מופיע בהודעה שמתחת לתמונה",
     host: hostname(siteConfig.url),
   };
   const showCodeNote = (offer.codeMode ?? "fixed") === "fixed";

@@ -179,7 +179,7 @@ export default async function DealsPage({ searchParams }: { searchParams: Search
       )}
 
       {offers.length > 0 && (
-        <div className="grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-3">
+        <div className="grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-3 xl:grid-cols-4">
           {offers.map((offer) => (
             <DealCard key={offer.id} offer={offer} codes={codes} />
           ))}
@@ -191,7 +191,7 @@ export default async function DealsPage({ searchParams }: { searchParams: Search
           <h2 id="biz-results" className="mb-4 text-2xl text-ink">
             עסקים שמתאימים ל&quot;{q}&quot;
           </h2>
-          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {matchingBusinesses.map((b) => (
               <BusinessCard key={b.id} business={b} />
             ))}

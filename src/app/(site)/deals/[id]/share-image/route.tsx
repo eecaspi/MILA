@@ -119,7 +119,7 @@ export async function GET(req: Request, { params }: { params: Promise<{ id: stri
     channel: offer.redeemChannel ? (CHANNEL[offer.redeemChannel] ?? "") : "",
     until: until ? `בתוקף עד ${until}` : "",
     usage: offer.usageLimit ?? "",
-    header: "הטבה חדשה בליקי",
+    header: offer.unlisted ? "לחברות הקבוצה בלבד · עוד לא באתר" : "הטבה חדשה בליקי",
     sub: [offer.business.name, category?.name].filter(Boolean).join(" · "),
     cta: "קוד הקופון מתחת לתמונה",
     host: hostname(siteConfig.url),
@@ -181,40 +181,40 @@ export async function GET(req: Request, { params }: { params: Promise<{ id: stri
         >
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
             <div style={{ display: "flex", fontSize: 34, fontWeight: 500, color: "#7a5558" }}>{visual(lines.header)}</div>
-            {logo ? <img src={logo} width={110} height={110} alt="" /> : <div style={{ display: "flex" }} />}
-          </div>
-
-          <div style={{ display: "flex", justifyContent: "flex-end" }}>
-            <div
-              style={{
-                display: "flex",
-                background: "#b8201b",
-                color: "#ffffff",
-                fontSize: lines.value.length > 9 ? 54 : 72,
-                fontWeight: 800,
-                padding: "6px 34px 14px",
-                borderRadius: 36,
-                lineHeight: 1.1,
-              }}
-            >
-              {visual(lines.value)}
+            <div style={{ display: "flex", alignItems: "center", gap: 22 }}>
+              <div
+                style={{
+                  display: "flex",
+                  background: "#b8201b",
+                  color: "#ffffff",
+                  fontSize: lines.value.length > 9 ? 44 : 56,
+                  fontWeight: 800,
+                  padding: "4px 28px 12px",
+                  borderRadius: 32,
+                  lineHeight: 1.1,
+                }}
+              >
+                {visual(lines.value)}
+              </div>
+              {logo ? <img src={logo} width={110} height={110} alt="" /> : null}
             </div>
           </div>
-          <div style={{ display: "flex", position: "relative", width: "100%", height: 440 }}>
+
+          <div style={{ display: "flex", position: "relative", width: "100%", height: 500 }}>
             {photo ? (
               <img
                 src={photo}
                 width={928}
-                height={440}
+                height={500}
                 alt=""
-                style={{ width: "100%", height: 440, objectFit: "cover", borderRadius: 36 }}
+                style={{ width: "100%", height: 500, objectFit: "cover", borderRadius: 36 }}
               />
             ) : (
               <div
                 style={{
                   display: "flex",
                   width: "100%",
-                  height: 440,
+                  height: 500,
                   borderRadius: 36,
                   background: "#fdeaea",
                   alignItems: "center",

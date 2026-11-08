@@ -1,7 +1,7 @@
 import { requireAdmin } from "@/lib/auth/session";
 import { formatDate } from "@/lib/format";
 import { createClient } from "@/lib/supabase/server";
-import { setInquiryHandled, setReportHandled } from "./actions";
+import { setInquiryStatus, setReportHandled } from "./actions";
 
 type Inquiry = {
   id: string;
@@ -13,6 +13,16 @@ type Inquiry = {
   website: string | null;
   message: string | null;
   handled: boolean;
+  status: string;
+  admin_note: string | null;
+};
+
+const STATUS_LABELS: Record<string, string> = {
+  new: "חדשה",
+  in_progress: "בטיפול",
+  closed_ok: "נסגרה בהצלחה (העסק הצטרף)",
+  closed_no: "נסגרה, לא מתקדמים",
+  problem: "יש בעיה",
 };
 
 type Report = {
@@ -30,7 +40,7 @@ export default async function Inquiries() {
   const supabase = await createClient();
   const { data } = await supabase
     .from("business_inquiries")
-    .select("id, created_at, business_name, contact_name, phone, email, website, message, handled")
+    .select("id, created_at, business_name, contact_name, phone, email, website, message, handled, status, admin_note")
     .order("handled")
     .order("created_at", { ascending: false })
     .limit(300);
@@ -88,10 +98,30 @@ export default async function Inquiries() {
               )}
             </p>
             {r.message && <p className="whitespace-pre-line text-sm text-ink-soft">{r.message}</p>}
-            <form action={setInquiryHandled}>
+            <form action={setInquiryStatus} className="space-y-2">
               <input type="hidden" name="id" value={r.id} />
-              <input type="hidden" name="handled" value={String(!r.handled)} />
-              <button className="btn-secondary px-4 py-1.5 text-sm">{r.handled ? "החזרה לטיפול" : "סימון כטופל"}</button>
+              <div className="flex flex-wrap items-center gap-2">
+                <select
+                  name="status"
+                  defaultValue={r.status}
+                  aria-label="סטטוס הפנייה"
+                  className="rounded-full border border-line bg-surface px-3 py-1.5 text-sm text-ink"
+                >
+                  {Object.entries(STATUS_LABELS).map(([v, l]) => (
+                    <option key={v} value={v}>{l}</option>
+                  ))}
+                </select>
+                <button className="btn-secondary px-4 py-1.5 text-sm">שמירה</button>
+              </div>
+              <textarea
+                name="note"
+                defaultValue={r.admin_note ?? ""}
+                maxLength={1000}
+                rows={2}
+                placeholder="הערה פנימית: איך נסגר, מה הבעיה, מה הצעד הבא"
+                aria-label="הערה פנימית"
+                className="w-full rounded-2xl border border-line bg-surface px-3 py-2 text-sm text-ink"
+              />
             </form>
           </li>
         ))}

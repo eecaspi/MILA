@@ -40,6 +40,7 @@ export function DealCard({
   const href = `/deals/${offer.id}`;
   const isDemo = offer.status === "demo";
   const badge = offerBadge(offer);
+  const notYetOrOver = isExpired(offer.validUntil) || isUpcoming(offer.startsOn);
   const canClaim =
     !!codes && !isDemo && !isExpired(offer.validUntil) && !isUpcoming(offer.startsOn);
 
@@ -168,9 +169,9 @@ export function DealCard({
           />
           <Link
             href={href}
-            className={`${codes && canClaim ? "btn-secondary max-sm:!border-0 max-sm:!bg-transparent max-sm:!py-1 max-sm:!shadow-none" : "btn-primary"} w-full py-2.5 text-[15px] after:absolute after:inset-0 max-sm:text-sm`}
+            className={`${(codes && canClaim) || notYetOrOver ? "btn-secondary max-sm:!border-0 max-sm:!bg-transparent max-sm:!py-1 max-sm:!shadow-none" : "btn-primary"} w-full py-2.5 text-[15px] after:absolute after:inset-0 max-sm:text-sm`}
           >
-            {codes && canClaim ? "לפרטי ההטבה" : "למימוש ההטבה"}
+            {(codes && canClaim) || notYetOrOver ? "לפרטי ההטבה" : "למימוש ההטבה"}
           </Link>
         </div>
       </div>

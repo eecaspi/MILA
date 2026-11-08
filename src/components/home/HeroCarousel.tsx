@@ -159,9 +159,15 @@ export function HeroCarousel({ banners }: { banners: HomeBanner[] }) {
           const external = /^https?:/.test(href);
           // Every banner says something and has a button: its title (if any) and "לפרטים נוספים".
           const caption = (
-            <span className="absolute left-[27%] top-[73%] flex w-max max-w-[50%] -translate-x-1/2 flex-col items-center gap-2 text-center sm:left-[34%] sm:top-[72%]">
+            <span
+              className={
+                b.headline
+                  ? "absolute end-[5%] top-1/2 flex w-[40%] -translate-y-1/2 flex-col items-start gap-3 text-start md:w-[34%]"
+                  : "absolute left-[27%] top-[73%] flex w-max max-w-[50%] -translate-x-1/2 flex-col items-center gap-2 text-center sm:left-[34%] sm:top-[72%]"
+              }
+            >
               {(b.headline ?? b.title) && (
-                <span className="max-w-[80%] rounded-2xl bg-surface/90 px-4 py-2 text-base font-bold text-ink shadow-[var(--shadow-card)] md:text-2xl">
+                <span className="rounded-2xl bg-surface/90 px-3 py-2 text-base font-bold leading-snug text-ink shadow-[var(--shadow-card)] sm:px-4 md:text-3xl">
                   {b.headline ?? b.title}
                 </span>
               )}

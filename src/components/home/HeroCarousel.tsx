@@ -160,11 +160,7 @@ export function HeroCarousel({ banners }: { banners: HomeBanner[] }) {
           // Every banner says something and has a button: its title (if any) and "לפרטים נוספים".
           const caption = (
             <span
-              className={
-                b.headline
-                  ? "absolute end-[5%] top-1/2 flex w-[40%] -translate-y-1/2 flex-col items-start gap-3 text-start md:w-[34%]"
-                  : "absolute start-[4%] top-[12%] flex w-max max-w-[44%] flex-col items-start gap-2 text-start sm:top-[28%] md:max-w-[32%]"
-              }
+              className={`absolute flex w-max max-w-[44%] flex-col gap-2 md:max-w-[32%] ${captionClass(b.pos)}`}
             >
               {(b.headline ?? b.title) && (
                 <span className="rounded-2xl bg-surface/90 px-3 py-2 text-base font-bold leading-snug text-ink shadow-[var(--shadow-card)] sm:px-4 md:text-3xl">
@@ -251,4 +247,20 @@ export function HeroCarousel({ banners }: { banners: HomeBanner[] }) {
       )}
     </section>
   );
+}
+
+const SIDE_CLASS = {
+  right: "start-[4%] items-start text-start",
+  left: "end-[4%] items-start text-start",
+  center: "start-1/2 -translate-x-1/2 items-center text-center",
+} as const;
+const VERT_CLASS = {
+  top: "top-[12%] sm:top-[16%]",
+  middle: "top-1/2 -translate-y-1/2",
+  bottom: "bottom-[16%]",
+} as const;
+
+function captionClass(pos: string | undefined): string {
+  const [side, vert] = (pos ?? "right-top").split("-") as [keyof typeof SIDE_CLASS, keyof typeof VERT_CLASS];
+  return `${SIDE_CLASS[side] ?? SIDE_CLASS.right} ${VERT_CLASS[vert] ?? VERT_CLASS.top}`;
 }

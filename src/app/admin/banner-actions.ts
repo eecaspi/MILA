@@ -50,10 +50,10 @@ export async function updateBanner(_prev: BannerState, fd: FormData): Promise<Ba
   merged.set("media_type", current.media_type as string);
   const parsed = parseBannerForm(merged, supabaseUrl);
   if (!parsed.ok) return { error: Object.values(parsed.errors)[0] };
-  const { title, link_url, sort_order, is_published, layout, headline, body, button_label } = parsed.values;
+  const { title, link_url, sort_order, is_published, layout, headline, body, button_label, caption_pos } = parsed.values;
   const { error } = await supabase
     .from("banners")
-    .update({ title, link_url, sort_order, is_published, layout, headline, body, button_label })
+    .update({ title, link_url, sort_order, is_published, layout, headline, body, button_label, caption_pos })
     .eq("id", id);
   if (error) return { error: "השמירה נכשלה. נסי שוב בעוד רגע." };
   refresh();

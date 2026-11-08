@@ -65,7 +65,7 @@ export function BannerUploader({ linkOptions }: { linkOptions: LinkOption[] }) {
     const data = new FormData();
     data.set("media_url", url);
     data.set("media_type", isVideo ? "video" : "image");
-    for (const k of ["layout", "headline", "body", "button_label", "title", "link_url", "sort_order"]) {
+    for (const k of ["layout", "headline", "body", "button_label", "title", "link_url", "sort_order", "caption_side", "caption_vert"]) {
       data.set(k, String(fd.get(k) ?? ""));
     }
     const result = await createBanner(data);

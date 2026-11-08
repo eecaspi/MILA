@@ -114,6 +114,7 @@ export default async function OfferPage({
               <p className="mt-2 text-xl font-bold text-ink">{offer.priceLabel}</p>
             )}
           </div>
+          <AdminShare offer={offer} />
           <p className="text-lg text-ink-soft">{offer.description}</p>
 
           {offer.likeyPick && (
@@ -231,9 +232,6 @@ export default async function OfferPage({
               <FavoriteButton offerId={offer.id} className="!bg-surface border border-line" />
               <span className="text-sm text-ink-soft">שמרי במועדפים</span>
             </div>
-          )}
-          {!expired && !upcoming && !isDemo && (
-            <AdminShare offer={offer} />
           )}
         </div>
       </div>

@@ -133,7 +133,7 @@ export function HeroCarousel({ banners }: { banners: HomeBanner[] }) {
                 loop
                 playsInline
                 preload="metadata"
-                className="absolute inset-0 size-full object-cover"
+                className="absolute inset-0 size-full object-cover object-top"
               />
             ) : (
               <>

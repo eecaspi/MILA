@@ -19,13 +19,15 @@ interface Row {
   button_label: string | null;
   caption_pos: string | null;
   media_scale: number | null;
+  mobile_url: string | null;
+  mobile_scale: number | null;
 }
 
 export default async function AdminBanners() {
   const supabase = await createClient();
   const { data, error } = await supabase
     .from("banners")
-    .select("id, media_url, media_type, title, link_url, sort_order, is_published, layout, headline, body, button_label, caption_pos, media_scale")
+    .select("id, media_url, media_type, title, link_url, sort_order, is_published, layout, headline, body, button_label, caption_pos, media_scale, mobile_url, mobile_scale")
     .order("sort_order")
     .order("created_at", { ascending: false });
   const rows = (data ?? []) as Row[];

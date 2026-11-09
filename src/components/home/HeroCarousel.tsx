@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
+import { isVideoUrl } from "@/lib/banners";
 import type { HomeBanner } from "@/lib/data/banners";
 import { CharacterSlide } from "./CharacterSlide";
 import { FullImageSlide } from "./FullImageSlide";
@@ -29,6 +30,7 @@ export function HeroCarousel({ banners }: { banners: HomeBanner[] }) {
   const slideRefs = useRef<(HTMLElement | null)[]>([]);
   const stripRef = useRef<HTMLDivElement | null>(null);
   const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
+  const mobileVideoRefs = useRef<(HTMLVideoElement | null)[]>([]);
   const [active, setActive] = useState(0);
   const [paused, setPaused] = useState(false);
   const [hovering, setHovering] = useState(false);
@@ -74,11 +76,13 @@ export function HeroCarousel({ banners }: { banners: HomeBanner[] }) {
 
   // Videos play only while their slide is showing.
   useEffect(() => {
-    videoRefs.current.forEach((v, i) => {
-      if (!v) return;
-      if (i === active) void v.play().catch(() => {});
-      else v.pause();
-    });
+    for (const list of [videoRefs.current, mobileVideoRefs.current]) {
+      list.forEach((v, i) => {
+        if (!v) return;
+        if (i === active) void v.play().catch(() => {});
+        else v.pause();
+      });
+    }
   }, [active]);
 
   // Advance by itself.
@@ -122,25 +126,30 @@ export function HeroCarousel({ banners }: { banners: HomeBanner[] }) {
                 priority={i === 0}
               />
             ) : null;
-          const media =
-            b.type === "video" ? (
+          const renderMedia = (
+            url: string,
+            video: boolean,
+            scale: number | undefined,
+            refs: { current: (HTMLVideoElement | null)[] },
+          ) =>
+            video ? (
               <video
                 ref={(el) => {
-                  videoRefs.current[n] = el;
+                  refs.current[n] = el;
                 }}
-                src={b.url}
+                src={url}
                 muted
                 loop
                 playsInline
                 preload="metadata"
-                className={`absolute inset-0 size-full ${shrunk(b.scale) ? "object-contain" : "object-cover object-top"}`}
-                style={shrunk(b.scale) ? { transform: `scale(${b.scale! / 90})` } : undefined}
+                className={`absolute inset-0 size-full ${shrunk(scale) ? "object-contain" : "object-cover object-top"}`}
+                style={shrunk(scale) ? { transform: `scale(${scale! / 90})` } : undefined}
               />
             ) : (
               <>
                 {/* The picture is shown whole; the same picture, blurred, fills the space around it. */}
                 <Image
-                  src={b.url}
+                  src={url}
                   alt=""
                   aria-hidden
                   fill
@@ -148,16 +157,28 @@ export function HeroCarousel({ banners }: { banners: HomeBanner[] }) {
                   className="scale-150 object-cover blur-3xl"
                 />
                 <Image
-                  src={b.url}
+                  src={url}
                   alt={b.title ?? ""}
                   fill
                   sizes="100vw"
-                  className={shrunk(b.scale) ? "object-contain" : "object-cover sm:object-contain"}
-                  style={shrunk(b.scale) ? { transform: `scale(${b.scale! / 90})` } : undefined}
+                  className={shrunk(scale) ? "object-contain" : "object-cover sm:object-contain"}
+                  style={shrunk(scale) ? { transform: `scale(${scale! / 90})` } : undefined}
                   priority={false}
                 />
               </>
             );
+          const media = b.mobileUrl ? (
+            <>
+              <div className="absolute inset-0 hidden sm:block">
+                {renderMedia(b.url, b.type === "video", b.scale, videoRefs)}
+              </div>
+              <div className="absolute inset-0 sm:hidden">
+                {renderMedia(b.mobileUrl, isVideoUrl(b.mobileUrl), b.mobileScale, mobileVideoRefs)}
+              </div>
+            </>
+          ) : (
+            renderMedia(b.url, b.type === "video", b.scale, videoRefs)
+          );
           const external = /^https?:/.test(href);
           // Every banner says something and has a button: its title (if any) and "לפרטים נוספים".
           const caption = (
@@ -182,7 +203,7 @@ export function HeroCarousel({ banners }: { banners: HomeBanner[] }) {
               aria-roledescription="שקופית"
               aria-label={`${n + 1} מתוך ${total}`}
               className="relative w-full shrink-0 snap-start overflow-hidden bg-surface"
-              style={b.type === "video" && b.scale && b.scale < 100 ? { backgroundColor: "#f3f1f1" } : undefined}
+              style={(b.type === "video" && shrunk(b.scale)) || (b.mobileUrl && shrunk(b.mobileScale)) ? { backgroundColor: "#f3f1f1" } : undefined}
             >
               {designed ?? (
               <Link

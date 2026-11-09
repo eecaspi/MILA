@@ -39,6 +39,10 @@ export function toMediaScale(raw: unknown): number {
   return Number.isInteger(n) && n >= 40 && n <= 100 ? n : 100;
 }
 
+export function isVideoUrl(url: string | undefined): boolean {
+  return !!url && /\.(mp4|webm)$/i.test(url);
+}
+
 export const IMAGE_MIME = ["image/jpeg", "image/png", "image/webp", "image/avif"];
 export const VIDEO_MIME = ["video/mp4", "video/webm"];
 export const MAX_BANNER_IMAGE_BYTES = 5 * 1024 * 1024;
@@ -57,6 +61,8 @@ export interface BannerValues {
   button_label: string | null;
   caption_pos: CaptionPos;
   media_scale: number;
+  mobile_url: string;
+  mobile_scale: number;
 }
 
 export type BannerParse =
@@ -106,6 +112,8 @@ export function parseBannerForm(fd: FormData, supabaseUrl: string): BannerParse 
   }
   const type = field(fd, "media_type", 10);
   if (type !== "image" && type !== "video") errors.media = "סוג הקובץ לא נתמך";
+  const mobile_url = field(fd, "mobile_url", 600);
+  if (mobile_url && !isAllowedMedia(mobile_url, supabaseUrl)) errors.media = "הקובץ לפלאפון לא תקין";
   const layoutRaw = field(fd, "layout", 20) || "photo";
   if (!LAYOUTS.some((l) => l.value === layoutRaw)) errors.layout = "סוג תצוגה לא מוכר";
   const link = safeLink(field(fd, "link_url", 300));
@@ -128,6 +136,8 @@ export function parseBannerForm(fd: FormData, supabaseUrl: string): BannerParse 
       body: field(fd, "body", 160) || null,
       button_label: field(fd, "button_label", 30) || null,
       media_scale: toMediaScale(field(fd, "media_scale", 3) || 100),
+      mobile_url,
+      mobile_scale: toMediaScale(field(fd, "mobile_scale", 3) || 100),
       caption_pos: toCaptionPos(`${field(fd, "caption_side", 10)}-${field(fd, "caption_vert", 10)}`),
     },
   };

@@ -11,6 +11,8 @@ export interface HomeBanner {
   layout: BannerLayout;
   pos?: CaptionPos;
   scale?: number;
+  mobileUrl?: string;
+  mobileScale?: number;
   title?: string;
   headline?: string;
   text?: string;
@@ -54,6 +56,8 @@ function toBanner(r: Row): HomeBanner {
     title: s("title"),
     pos: toCaptionPos(r.caption_pos),
     scale: toMediaScale(r.media_scale),
+    mobileUrl: s("mobile_url"),
+    mobileScale: toMediaScale(r.mobile_scale),
     headline: s("headline"),
     text: s("body"),
     cta: s("button_label"),
@@ -67,7 +71,7 @@ async function fetchBanners(): Promise<HomeBanner[]> {
   const order = { ascending: true };
   const full = await supabase
     .from("banners")
-    .select("id, media_url, media_type, title, link_url, layout, headline, body, button_label, caption_pos, media_scale")
+    .select("id, media_url, media_type, title, link_url, layout, headline, body, button_label, caption_pos, media_scale, mobile_url, mobile_scale")
     .order("sort_order", order)
     .order("created_at", { ascending: false })
     .limit(12);

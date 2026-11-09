@@ -17,6 +17,7 @@ export function BannerTextFields({
     link_url: string | null;
     caption_pos?: string | null;
     media_scale?: number | null;
+    mobile_scale?: number | null;
   };
 }) {
   const listId = useId();
@@ -90,8 +91,16 @@ export function BannerTextFields({
         </select>
       </label>
       <label className="block sm:col-span-2">
-        <span className="mb-1 block text-xs font-semibold text-ink-soft">גודל הסרטון או התמונה בתוך הבאנר</span>
+        <span className="mb-1 block text-xs font-semibold text-ink-soft">גודל התמונה או הסרטון במחשב</span>
         <select name="media_scale" defaultValue={toMediaScale(values?.media_scale)} className={inputClass}>
+          {MEDIA_SCALES.map((o) => (
+            <option key={o.value} value={o.value}>{o.label}</option>
+          ))}
+        </select>
+      </label>
+      <label className="block sm:col-span-2">
+        <span className="mb-1 block text-xs font-semibold text-ink-soft">גודל התמונה או הסרטון בפלאפון</span>
+        <select name="mobile_scale" defaultValue={toMediaScale(values?.mobile_scale)} className={inputClass}>
           {MEDIA_SCALES.map((o) => (
             <option key={o.value} value={o.value}>{o.label}</option>
           ))}

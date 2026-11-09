@@ -2,7 +2,7 @@
 
 import { useState, type FormEvent } from "react";
 import { savePopup, type PopupState } from "@/app/admin/popup-actions";
-import { IMAGE_MIME, MAX_BANNER_IMAGE_BYTES } from "@/lib/banners";
+import { IMAGE_MIME, MAX_BANNER_IMAGE_BYTES, MAX_BANNER_VIDEO_BYTES, VIDEO_MIME } from "@/lib/banners";
 import { createClient } from "@/lib/supabase/client";
 import { inputClass } from "./styles";
 
@@ -13,6 +13,7 @@ interface Values {
   button_label: string;
   link_url: string;
   image_url: string;
+  liky_url: string;
 }
 
 export function PopupForm({ values }: { values: Values }) {
@@ -20,41 +21,60 @@ export function PopupForm({ values }: { values: Values }) {
   const [pending, setPending] = useState(false);
   const [image, setImage] = useState(values.image_url);
 
+  const [liky, setLiky] = useState(values.liky_url);
+
+  async function upload(file: File, allowVideo: boolean): Promise<string | { error: string }> {
+    const isImage = IMAGE_MIME.includes(file.type);
+    const isVideo = allowVideo && VIDEO_MIME.includes(file.type);
+    if (!isImage && !isVideo) return { error: allowVideo ? "אפשר להעלות תמונה (JPG, PNG, WEBP) או סרטון (MP4, WEBM)." : "אפשר להעלות תמונה בפורמט JPG, PNG או WEBP." };
+    if (isImage && file.size > MAX_BANNER_IMAGE_BYTES) return { error: "התמונה גדולה מדי (עד 5MB)." };
+    if (isVideo && file.size > MAX_BANNER_VIDEO_BYTES) return { error: "הסרטון גדול מדי (עד 20MB)." };
+    const ext = file.type === "video/webm" ? "webm" : file.type === "video/mp4" ? "mp4" : file.type.split("/")[1]!.replace("jpeg", "jpg");
+    const path = `banners/${crypto.randomUUID()}.${ext}`;
+    const supabase = createClient();
+    const { error } = await supabase.storage.from("media").upload(path, file, { contentType: file.type });
+    if (error) return { error: "ההעלאה נכשלה. נסי שוב." };
+    return supabase.storage.from("media").getPublicUrl(path).data.publicUrl;
+  }
+
   async function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const fd = new FormData(e.currentTarget);
     const file = fd.get("file");
+    const likyFile = fd.get("liky_file");
+    fd.delete("file");
+    fd.delete("liky_file");
     setPending(true);
     setState({});
     let url = image;
+    let likyUrl = liky;
     if (file instanceof File && file.size > 0) {
-      if (!IMAGE_MIME.includes(file.type)) {
+      const r = await upload(file, false);
+      if (typeof r !== "string") {
         setPending(false);
-        setState({ error: "אפשר להעלות תמונה בפורמט JPG, PNG או WEBP." });
+        setState(r);
         return;
       }
-      if (file.size > MAX_BANNER_IMAGE_BYTES) {
-        setPending(false);
-        setState({ error: "התמונה גדולה מדי (עד 5MB)." });
-        return;
-      }
-      const ext = file.type.split("/")[1]!.replace("jpeg", "jpg");
-      const path = `banners/${crypto.randomUUID()}.${ext}`;
-      const supabase = createClient();
-      const { error } = await supabase.storage.from("media").upload(path, file, { contentType: file.type });
-      if (error) {
-        setPending(false);
-        setState({ error: "ההעלאה נכשלה. נסי שוב." });
-        return;
-      }
-      url = supabase.storage.from("media").getPublicUrl(path).data.publicUrl;
+      url = r;
     }
-    fd.delete("file");
+    if (likyFile instanceof File && likyFile.size > 0) {
+      const r = await upload(likyFile, true);
+      if (typeof r !== "string") {
+        setPending(false);
+        setState(r);
+        return;
+      }
+      likyUrl = r;
+    }
     fd.set("image_url", url);
+    fd.set("liky_url", likyUrl);
     const result = await savePopup({}, fd);
     setPending(false);
     setState(result);
-    if (result.ok) setImage(url);
+    if (result.ok) {
+      setImage(url);
+      setLiky(likyUrl);
+    }
   }
 
   return (
@@ -78,6 +98,24 @@ export function PopupForm({ values }: { values: Values }) {
         <span className="mt-1 block text-xs text-ink-soft">
           כדי להחליף, בחרי קובץ חדש ושמרי. מומלץ לוגו מרובע על רקע לבן. ליקי מופיעה בפופאפ אוטומטית.
         </span>
+      </div>
+      <div className="block">
+        <span className="mb-1 block text-xs font-semibold text-ink-soft">תמונה או סרטון של ליקי (לא חובה)</span>
+        {liky && (
+          <div className="mb-2 flex items-center gap-3">
+            {/\.(mp4|webm)$/i.test(liky) ? (
+              <video src={liky} muted playsInline className="h-24 rounded-xl border border-line object-contain" />
+            ) : (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img src={liky} alt="" className="h-24 rounded-xl border border-line object-contain" />
+            )}
+            <button type="button" onClick={() => setLiky("")} className="text-sm font-semibold text-danger">
+              חזרה לתמונה הרגילה של ליקי
+            </button>
+          </div>
+        )}
+        <input type="file" name="liky_file" accept="image/jpeg,image/png,image/webp,video/mp4,video/webm" className={inputClass} />
+        <span className="mt-1 block text-xs text-ink-soft">בלי קובץ מוצגת תמונה רגילה של ליקי. סרטון (עד 20MB) מתנגן בלי קול.</span>
       </div>
       <label className="block">
         <span className="mb-1 block text-xs font-semibold text-ink-soft">כותרת המבצע</span>

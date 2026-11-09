@@ -52,15 +52,26 @@ export function EntryPopup({ popup }: { popup: SitePopup }) {
               />
             </div>
           )}
-          <Image
-            src="/brand/liky-character-bag.jpg"
-            alt="ליקי"
-            width={400}
-            height={400}
-            sizes="9rem"
-            priority
-            className="h-36 w-auto rounded-2xl object-contain mix-blend-multiply"
-          />
+          {/\.(mp4|webm)$/i.test(popup.likyUrl) ? (
+            <video
+              src={popup.likyUrl}
+              autoPlay
+              muted
+              loop
+              playsInline
+              className="h-40 w-auto max-w-[60%] rounded-2xl object-contain"
+            />
+          ) : (
+            <Image
+              src={popup.likyUrl || "/brand/liky-character-bag.jpg"}
+              alt="ליקי"
+              width={400}
+              height={400}
+              sizes="9rem"
+              priority
+              className="h-40 w-auto max-w-[60%] rounded-2xl object-contain"
+            />
+          )}
         </div>
         <div className="px-6 pb-6 pt-4">
         {popup.body && <p className="whitespace-pre-line text-base leading-relaxed text-ink">{popup.body}</p>}

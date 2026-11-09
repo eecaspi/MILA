@@ -6,6 +6,7 @@ import { createPublicClient } from "@/lib/supabase/public";
 export interface SitePopup {
   title: string;
   imageUrl: string;
+  likyUrl: string;
   body: string;
   buttonLabel: string;
   linkUrl: string;
@@ -20,13 +21,14 @@ async function fetchPopup(): Promise<SitePopup | null> {
   if (!supabase) return null;
   const { data, error } = await supabase
     .from("site_popup")
-    .select("is_active, title, body, button_label, link_url, image_url, updated_at")
+    .select("is_active, title, body, button_label, link_url, image_url, liky_url, updated_at")
     .eq("id", 1)
     .maybeSingle();
   if (error || !data || !data.is_active || !(data.title || data.body || data.image_url)) return null;
   return {
     title: data.title,
     imageUrl: data.image_url ?? "",
+    likyUrl: data.liky_url ?? "",
     body: data.body,
     buttonLabel: data.button_label,
     linkUrl: data.link_url,

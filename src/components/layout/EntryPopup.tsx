@@ -52,15 +52,15 @@ export function EntryPopup({ popup }: { popup: SitePopup }) {
         >
           ✕
         </button>
-        <div className="mt-8 flex items-end gap-2">
+        {popup.logoUrl && (
+          <div className="mx-auto mt-6 flex h-16 w-fit max-w-[70%] items-center justify-center">
+            <Image src={popup.logoUrl} alt="" width={320} height={120} sizes="10rem" className="h-full w-auto object-contain" />
+          </div>
+        )}
+        {popup.body && <p className="mt-3 whitespace-pre-line text-center text-base leading-snug text-ink-soft">{popup.body}</p>}
+        <div className="mt-2 flex items-end gap-2">
           <div className="min-w-0 flex-1 text-start">
-            {popup.logoUrl && (
-              <div className="flex h-16 w-fit max-w-full items-center">
-                <Image src={popup.logoUrl} alt="" width={320} height={120} sizes="10rem" className="h-full w-auto object-contain" />
-              </div>
-            )}
-            {popup.body && <p className="mt-3 whitespace-pre-line text-base leading-snug text-ink-soft">{popup.body}</p>}
-            <h2 id="entry-popup-title" className="mt-1 text-3xl font-extrabold leading-tight text-[#3f1d20]">
+            <h2 id="entry-popup-title" className="text-3xl font-extrabold leading-tight text-[#3f1d20]">
               <Title text={popup.title || "חדש בליקי"} />
             </h2>
           </div>

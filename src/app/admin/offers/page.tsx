@@ -3,7 +3,8 @@ import { Alert } from "@/components/ui/Alert";
 import { isExpired } from "@/lib/data/mappers";
 import { formatDate } from "@/lib/format";
 import { createClient } from "@/lib/supabase/server";
-import { setOfferPublished } from "../content-actions";
+import { RowDelete } from "@/components/admin/RowDelete";
+import { deleteOffer, setOfferPublished } from "../content-actions";
 
 interface Row {
   id: string;
@@ -130,6 +131,7 @@ export default async function AdminOffers({ searchParams }: { searchParams: Sear
                 >
                   עריכה
                 </Link>
+                <RowDelete action={deleteOffer} id={o.id} name={o.title} warning="אי אפשר לבטל. כדי רק להוריד מהאתר, לחצי על הסתרה." />
               </li>
             );
           })}

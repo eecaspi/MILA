@@ -2,7 +2,8 @@ import Link from "next/link";
 import { Alert } from "@/components/ui/Alert";
 import { getCategory, isCategorySlug } from "@/data/categories";
 import { createClient } from "@/lib/supabase/server";
-import { setBusinessPublished } from "../content-actions";
+import { RowDelete } from "@/components/admin/RowDelete";
+import { deleteBusiness, setBusinessPublished } from "../content-actions";
 
 interface Row {
   id: string;
@@ -122,6 +123,7 @@ export default async function AdminBusinesses({ searchParams }: { searchParams: 
               >
                 עריכה
               </Link>
+              <RowDelete action={deleteBusiness} id={b.id} name={b.name} warning="יימחקו גם כל ההטבות של העסק, ואי אפשר לבטל. כדי רק להוריד מהאתר, לחצי על הסתרה." />
             </li>
           ))}
         </ul>

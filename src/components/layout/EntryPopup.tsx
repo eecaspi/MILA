@@ -35,6 +35,11 @@ export function EntryPopup({ popup }: { popup: SitePopup }) {
           ✕
         </button>
         <div className="bg-accent px-6 pb-5 pt-12 text-on-accent">
+          {popup.logoUrl && (
+            <div className="mx-auto mb-3 grid h-16 w-fit max-w-[60%] place-items-center rounded-2xl bg-surface px-4 py-2">
+              <Image src={popup.logoUrl} alt="" width={240} height={96} sizes="10rem" className="h-full w-auto object-contain" />
+            </div>
+          )}
           <h2 id="entry-popup-title" className="text-3xl font-extrabold leading-tight">
             {popup.title || "חדש בליקי"}
           </h2>
@@ -47,8 +52,7 @@ export function EntryPopup({ popup }: { popup: SitePopup }) {
               muted
               loop
               playsInline
-              className="absolute inset-0 size-full origin-left object-cover object-left"
-              style={{ transform: "scale(0.82)" }}
+              className="absolute inset-0 size-full object-cover"
             />
           ) : (
             <Image
@@ -57,19 +61,18 @@ export function EntryPopup({ popup }: { popup: SitePopup }) {
               fill
               sizes="26rem"
               priority
-              className="origin-left object-cover object-left"
-              style={{ transform: "scale(0.82)" }}
+              className="object-cover"
             />
           )}
           {popup.imageUrl && (
-            <div className="absolute left-[73%] top-1/2 grid size-44 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-2xl border-2 border-accent bg-surface p-3 shadow-md">
+            <div className="absolute left-[75%] top-1/2 size-36 -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-2xl border-2 border-accent bg-surface shadow-md">
               <Image
                 src={popup.imageUrl}
-                alt="לוגו העסק"
-                width={200}
-                height={200}
-                sizes="11rem"
-                className="h-full w-full object-contain"
+                alt=""
+                width={300}
+                height={300}
+                sizes="9rem"
+                className="h-full w-full object-cover"
               />
             </div>
           )}

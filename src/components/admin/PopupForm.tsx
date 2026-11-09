@@ -13,6 +13,7 @@ interface Values {
   button_label: string;
   link_url: string;
   image_url: string;
+  logo_url: string;
   liky_url: string;
 }
 
@@ -20,6 +21,7 @@ export function PopupForm({ values }: { values: Values }) {
   const [state, setState] = useState<PopupState>({});
   const [pending, setPending] = useState(false);
   const [image, setImage] = useState(values.image_url);
+  const [logo, setLogo] = useState(values.logo_url);
 
   const [liky, setLiky] = useState(values.liky_url);
 
@@ -42,12 +44,24 @@ export function PopupForm({ values }: { values: Values }) {
     const fd = new FormData(e.currentTarget);
     const file = fd.get("file");
     const likyFile = fd.get("liky_file");
+    const logoFile = fd.get("logo_file");
+    fd.delete("logo_file");
     fd.delete("file");
     fd.delete("liky_file");
     setPending(true);
     setState({});
     let url = image;
     let likyUrl = liky;
+    let logoUrl = logo;
+    if (logoFile instanceof File && logoFile.size > 0) {
+      const r = await upload(logoFile, false);
+      if (typeof r !== "string") {
+        setPending(false);
+        setState(r);
+        return;
+      }
+      logoUrl = r;
+    }
     if (file instanceof File && file.size > 0) {
       const r = await upload(file, false);
       if (typeof r !== "string") {
@@ -68,12 +82,14 @@ export function PopupForm({ values }: { values: Values }) {
     }
     fd.set("image_url", url);
     fd.set("liky_url", likyUrl);
+    fd.set("logo_url", logoUrl);
     const result = await savePopup({}, fd);
     setPending(false);
     setState(result);
     if (result.ok) {
       setImage(url);
       setLiky(likyUrl);
+      setLogo(logoUrl);
     }
   }
 
@@ -84,20 +100,32 @@ export function PopupForm({ values }: { values: Values }) {
         הפופאפ פעיל (מוצג בכניסה לאתר)
       </label>
       <div className="block">
-        <span className="mb-1 block text-xs font-semibold text-ink-soft">לוגו העסק (לא חובה)</span>
+        <span className="mb-1 block text-xs font-semibold text-ink-soft">לוגו העסק, מופיע בכותרת האדומה למעלה (לא חובה)</span>
+        {logo && (
+          <div className="mb-2 flex items-center gap-3">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={logo} alt="" className="h-24 rounded-xl border border-line object-contain" />
+            <button type="button" onClick={() => setLogo("")} className="text-sm font-semibold text-danger">
+              הסרת הלוגו
+            </button>
+          </div>
+        )}
+        <input type="file" name="logo_file" accept="image/jpeg,image/png,image/webp" className={inputClass} />
+        <span className="mt-1 block text-xs text-ink-soft">כדי להחליף, בחרי קובץ חדש ושמרי. מומלץ לוגו על רקע שקוף או לבן, בגודל 600×300.</span>
+      </div>
+      <div className="block">
+        <span className="mb-1 block text-xs font-semibold text-ink-soft">תמונה של המבצע, מופיעה ליד ליקי (לא חובה)</span>
         {image && (
           <div className="mb-2 flex items-center gap-3">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src={image} alt="" className="h-24 rounded-xl border border-line object-contain" />
             <button type="button" onClick={() => setImage("")} className="text-sm font-semibold text-danger">
-              הסרת הלוגו
+              הסרת התמונה
             </button>
           </div>
         )}
         <input type="file" name="file" accept="image/jpeg,image/png,image/webp" className={inputClass} />
-        <span className="mt-1 block text-xs text-ink-soft">
-          כדי להחליף, בחרי קובץ חדש ושמרי. מומלץ לוגו מרובע על רקע לבן. ליקי מופיעה בפופאפ אוטומטית.
-        </span>
+        <span className="mt-1 block text-xs text-ink-soft">כדי להחליף, בחרי קובץ חדש ושמרי. מומלץ תמונה מרובעת, 800×800.</span>
       </div>
       <div className="block">
         <span className="mb-1 block text-xs font-semibold text-ink-soft">תמונה או סרטון של ליקי (לא חובה)</span>

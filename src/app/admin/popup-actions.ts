@@ -25,7 +25,9 @@ export async function savePopup(_prev: PopupState, fd: FormData): Promise<PopupS
   const linkUrl = text(fd, "link_url", 300);
   const imageUrl = text(fd, "image_url", 400);
   const likyUrl = text(fd, "liky_url", 400);
+  const logoUrl = text(fd, "logo_url", 400);
   if (likyUrl && !isAllowedMedia(likyUrl, supabaseUrl)) return { error: "הקובץ של ליקי לא תקין. נסי להעלות שוב." };
+  if (logoUrl && !isAllowedMedia(logoUrl, supabaseUrl)) return { error: "הלוגו לא תקין. נסי להעלות שוב." };
   if (imageUrl && !isAllowedMedia(imageUrl, supabaseUrl)) return { error: "התמונה לא תקינה. נסי להעלות שוב." };
   if (active && !title && !body && !imageUrl) return { error: "כדי להפעיל את הפופאפ צריך לכתוב כותרת, טקסט או תמונה." };
   if (linkUrl && !/^(\/|https?:\/\/)/.test(linkUrl)) return { error: "הקישור צריך להתחיל ב- / או ב- https://" };
@@ -36,6 +38,7 @@ export async function savePopup(_prev: PopupState, fd: FormData): Promise<PopupS
       is_active: active,
       title,
       image_url: imageUrl,
+      logo_url: logoUrl,
       liky_url: likyUrl,
       body,
       button_label: buttonLabel,

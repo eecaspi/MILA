@@ -150,7 +150,7 @@ export function PopupForm({ values }: { values: Values }) {
         <input name="title" maxLength={80} defaultValue={values.title} className={inputClass} />
       </label>
       <label className="block">
-        <span className="mb-1 block text-xs font-semibold text-ink-soft">שורה קטנה מעל הכותרת, למשל "הטבה על נעלי ילדים"</span>
+        <span className="mb-1 block text-xs font-semibold text-ink-soft">שורה קטנה מעל הכותרת, למשל &quot;הטבה על נעלי ילדים&quot;</span>
         <textarea name="body" rows={4} maxLength={300} defaultValue={values.body} className={inputClass} />
       </label>
       <label className="block">

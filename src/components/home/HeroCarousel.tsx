@@ -134,6 +134,7 @@ export function HeroCarousel({ banners }: { banners: HomeBanner[] }) {
                 playsInline
                 preload="metadata"
                 className="absolute inset-0 size-full object-cover object-top"
+                style={b.scale && b.scale < 100 ? { transform: `scale(${b.scale / 100})` } : undefined}
               />
             ) : (
               <>
@@ -152,6 +153,7 @@ export function HeroCarousel({ banners }: { banners: HomeBanner[] }) {
                   fill
                   sizes="100vw"
                   className="object-cover sm:object-contain"
+                  style={b.scale && b.scale < 100 ? { transform: `scale(${b.scale / 100})` } : undefined}
                   priority={false}
                 />
               </>
@@ -180,6 +182,7 @@ export function HeroCarousel({ banners }: { banners: HomeBanner[] }) {
               aria-roledescription="שקופית"
               aria-label={`${n + 1} מתוך ${total}`}
               className="relative w-full shrink-0 snap-start overflow-hidden bg-surface"
+              style={b.type === "video" && b.scale && b.scale < 100 ? { backgroundColor: "#f3f1f1" } : undefined}
             >
               {designed ?? (
               <Link

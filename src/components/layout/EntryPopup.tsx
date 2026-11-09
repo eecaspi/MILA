@@ -52,34 +52,39 @@ export function EntryPopup({ popup }: { popup: SitePopup }) {
         >
           ✕
         </button>
-        {popup.logoUrl && (
-          <div className="mx-auto mt-2 flex h-20 w-fit max-w-[70%] items-center justify-center">
-            <Image src={popup.logoUrl} alt="" width={320} height={120} sizes="12rem" className="h-full w-auto object-contain" />
+        <div className="mt-8 flex items-end gap-2">
+          <div className="min-w-0 flex-1 text-start">
+            {popup.logoUrl && (
+              <div className="flex h-16 w-fit max-w-full items-center">
+                <Image src={popup.logoUrl} alt="" width={320} height={120} sizes="10rem" className="h-full w-auto object-contain" />
+              </div>
+            )}
+            {popup.body && <p className="mt-3 whitespace-pre-line text-base leading-snug text-ink-soft">{popup.body}</p>}
+            <h2 id="entry-popup-title" className="mt-1 text-3xl font-extrabold leading-tight text-[#3f1d20]">
+              <Title text={popup.title || "חדש בליקי"} />
+            </h2>
+          </div>
+          {/* Liky stands small next to the text (a video or a picture without a background looks best). */}
+          <div className="relative h-40 w-[34%] shrink-0">
+            {/\.(mp4|webm)$/i.test(popup.likyUrl) ? (
+              <video src={popup.likyUrl} autoPlay muted loop playsInline className="absolute inset-0 size-full object-contain object-bottom" />
+            ) : (
+              <Image
+                src={popup.likyUrl || "/brand/liky-character-bag.jpg"}
+                alt="ליקי"
+                fill
+                sizes="9rem"
+                priority
+                className="object-contain object-bottom"
+              />
+            )}
+          </div>
+        </div>
+        {popup.imageUrl && (
+          <div className="relative mt-4 aspect-[16/10] overflow-hidden rounded-3xl bg-[#f3f1f1]">
+            <Image src={popup.imageUrl} alt="" fill sizes="26rem" className="object-cover" />
           </div>
         )}
-        {popup.body && <p className="mt-4 whitespace-pre-line text-lg leading-snug text-ink-soft">{popup.body}</p>}
-        <h2 id="entry-popup-title" className="mt-2 text-4xl font-extrabold leading-tight text-[#3f1d20]">
-          <Title text={popup.title || "חדש בליקי"} />
-        </h2>
-        <div className="relative mt-5 aspect-[16/10] overflow-hidden rounded-3xl bg-[#f3f1f1]">
-          {/\.(mp4|webm)$/i.test(popup.likyUrl) ? (
-            <video src={popup.likyUrl} autoPlay muted loop playsInline className="absolute inset-0 size-full object-cover" />
-          ) : (
-            <Image
-              src={popup.likyUrl || "/brand/liky-character-bag.jpg"}
-              alt="ליקי"
-              fill
-              sizes="26rem"
-              priority
-              className="object-cover"
-            />
-          )}
-          {popup.imageUrl && (
-            <div className="absolute left-[75%] top-1/2 size-32 -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-2xl border-2 border-accent bg-surface shadow-md">
-              <Image src={popup.imageUrl} alt="" width={300} height={300} sizes="8rem" className="h-full w-full object-cover" />
-            </div>
-          )}
-        </div>
         {popup.buttonLabel &&
           (!popup.linkUrl ? (
             <button type="button" onClick={close} className={btn}>

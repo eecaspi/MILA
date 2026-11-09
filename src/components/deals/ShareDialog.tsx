@@ -124,7 +124,7 @@ export function ShareDialog({
             src={imagePath}
             alt="תמונת ההטבה לשיתוף"
             width={1080}
-            height={1350}
+            height={1550}
             loading="lazy"
             className="w-full rounded-2xl border border-line bg-canvas"
           />

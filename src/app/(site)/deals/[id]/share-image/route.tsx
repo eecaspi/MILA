@@ -125,7 +125,7 @@ export async function GET(req: Request, { params }: { params: Promise<{ id: stri
     cta: "קוד הקופון מופיע בהודעה שמתחת לתמונה",
     host: hostname(siteConfig.url),
   };
-  const photoH = offer.unlisted ? 420 : 500;
+  const photoH = offer.unlisted ? 600 : 696;
   const showCodeNote = (offer.codeMode ?? "fixed") === "fixed";
   const all = Object.values(lines).join("") + "0123456789%₪-";
   const [bold, regular, logo, photo, bizLogo] = await Promise.all([
@@ -288,7 +288,7 @@ export async function GET(req: Request, { params }: { params: Promise<{ id: stri
     ),
     {
       width: 1080,
-      height: 1350,
+      height: 1550,
       fonts,
       headers: { "Cache-Control": "public, max-age=300, s-maxage=300" },
     },

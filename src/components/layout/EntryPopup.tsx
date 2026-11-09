@@ -39,19 +39,7 @@ export function EntryPopup({ popup }: { popup: SitePopup }) {
             {popup.title || "חדש בליקי"}
           </h2>
         </div>
-        <div className="flex items-center justify-center gap-4 bg-accent-soft px-5 py-5">
-          {popup.imageUrl && (
-            <div className="grid size-32 shrink-0 place-items-center rounded-2xl border-2 border-accent bg-surface p-2 shadow-sm">
-              <Image
-                src={popup.imageUrl}
-                alt="לוגו העסק"
-                width={240}
-                height={240}
-                sizes="8rem"
-                className="h-full w-full object-contain"
-              />
-            </div>
-          )}
+        <div className="relative h-60 overflow-hidden bg-[#f3f1f1]">
           {/\.(mp4|webm)$/i.test(popup.likyUrl) ? (
             <video
               src={popup.likyUrl}
@@ -59,18 +47,29 @@ export function EntryPopup({ popup }: { popup: SitePopup }) {
               muted
               loop
               playsInline
-              className="h-40 w-auto max-w-[60%] rounded-2xl object-contain"
+              className="absolute inset-0 size-full object-cover"
             />
           ) : (
             <Image
               src={popup.likyUrl || "/brand/liky-character-bag.jpg"}
               alt="ליקי"
-              width={400}
-              height={400}
-              sizes="9rem"
+              fill
+              sizes="26rem"
               priority
-              className="h-40 w-auto max-w-[60%] rounded-2xl object-contain"
+              className="object-cover"
             />
+          )}
+          {popup.imageUrl && (
+            <div className="absolute end-4 top-1/2 grid size-24 -translate-y-1/2 place-items-center rounded-2xl border-2 border-accent bg-surface p-2 shadow-md">
+              <Image
+                src={popup.imageUrl}
+                alt="לוגו העסק"
+                width={200}
+                height={200}
+                sizes="6rem"
+                className="h-full w-full object-contain"
+              />
+            </div>
           )}
         </div>
         <div className="px-6 pb-6 pt-4">

@@ -62,7 +62,30 @@ export function EntryPopup({ popup }: { popup: SitePopup }) {
           <Title text={popup.title || "חדש בליקי"} />
         </h2>
         <div className="relative mt-5 aspect-[16/10] overflow-hidden rounded-3xl bg-[#f3f1f1]">
-          {/\.(mp4|webm)$/i.test(popup.likyUrl) ? (
+          {popup.imageUrl ? (
+            <>
+              {/* The picture fills the whole square; Liky (a video or picture without a background) stands on top of it. */}
+              <Image src={popup.imageUrl} alt="" fill sizes="26rem" priority className="object-cover" />
+              {/\.(mp4|webm)$/i.test(popup.likyUrl) ? (
+                <video
+                  src={popup.likyUrl}
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  className="absolute bottom-0 start-0 h-full w-[58%] object-contain object-left-bottom"
+                />
+              ) : (
+                <Image
+                  src={popup.likyUrl || "/brand/liky-character-bag.jpg"}
+                  alt="ליקי"
+                  fill
+                  sizes="16rem"
+                  className="!w-[58%] object-contain object-left-bottom"
+                />
+              )}
+            </>
+          ) : /\.(mp4|webm)$/i.test(popup.likyUrl) ? (
             <video src={popup.likyUrl} autoPlay muted loop playsInline className="absolute inset-0 size-full object-cover" />
           ) : (
             <Image
@@ -73,11 +96,6 @@ export function EntryPopup({ popup }: { popup: SitePopup }) {
               priority
               className="object-cover"
             />
-          )}
-          {popup.imageUrl && (
-            <div className="absolute left-[75%] top-1/2 size-32 -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-2xl border-2 border-accent bg-surface shadow-md">
-              <Image src={popup.imageUrl} alt="" width={300} height={300} sizes="8rem" className="h-full w-full object-cover" />
-            </div>
           )}
         </div>
         {popup.buttonLabel &&

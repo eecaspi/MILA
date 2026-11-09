@@ -114,7 +114,7 @@ export function PopupForm({ values }: { values: Values }) {
         <span className="mt-1 block text-xs text-ink-soft">כדי להחליף, בחרי קובץ חדש ושמרי. מומלץ לוגו על רקע שקוף או לבן, בגודל 600×300.</span>
       </div>
       <div className="block">
-        <span className="mb-1 block text-xs font-semibold text-ink-soft">תמונה קטנה מעל המדיה (לא חובה, אפשר להשאיר ריק)</span>
+        <span className="mb-1 block text-xs font-semibold text-ink-soft">תמונת הרקע, ממלאת את כל הריבוע (לא חובה)</span>
         {image && (
           <div className="mb-2 flex items-center gap-3">
             {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -128,7 +128,7 @@ export function PopupForm({ values }: { values: Values }) {
         <span className="mt-1 block text-xs text-ink-soft">כדי להחליף, בחרי קובץ חדש ושמרי.</span>
       </div>
       <div className="block">
-        <span className="mb-1 block text-xs font-semibold text-ink-soft">תמונה או סרטון של המבצע, עם ליקי (לא חובה)</span>
+        <span className="mb-1 block text-xs font-semibold text-ink-soft">ליקי: סרטון או תמונה בלי רקע, עומדת מעל תמונת הרקע (לא חובה)</span>
         {liky && (
           <div className="mb-2 flex items-center gap-3">
             {/\.(mp4|webm)$/i.test(liky) ? (
@@ -143,7 +143,7 @@ export function PopupForm({ values }: { values: Values }) {
           </div>
         )}
         <input type="file" name="liky_file" accept="image/jpeg,image/png,image/webp,video/mp4,video/webm" className={inputClass} />
-        <span className="mt-1 block text-xs text-ink-soft">מומלץ יחס 16:10, למשל 1200×750. בלי קובץ מוצגת תמונה רגילה של ליקי. סרטון (עד 20MB) מתנגן בלי קול.</span>
+        <span className="mt-1 block text-xs text-ink-soft">עם תמונת רקע: מומלץ ליקי בלי רקע (PNG שקוף או WEBM שקוף), גוף מלא בגובה. בלי תמונת רקע מומלץ יחס 16:10. בלי קובץ מוצגת תמונה רגילה של ליקי. סרטון (עד 20MB) מתנגן בלי קול.</span>
       </div>
       <label className="block">
         <span className="mb-1 block text-xs font-semibold text-ink-soft">כותרת המבצע</span>

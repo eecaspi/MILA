@@ -47,7 +47,8 @@ export function EntryPopup({ popup }: { popup: SitePopup }) {
               muted
               loop
               playsInline
-              className="absolute inset-0 size-full object-cover"
+              className="absolute inset-0 size-full origin-left object-cover object-left"
+              style={{ transform: "scale(0.82)" }}
             />
           ) : (
             <Image
@@ -56,17 +57,18 @@ export function EntryPopup({ popup }: { popup: SitePopup }) {
               fill
               sizes="26rem"
               priority
-              className="object-cover"
+              className="origin-left object-cover object-left"
+              style={{ transform: "scale(0.82)" }}
             />
           )}
           {popup.imageUrl && (
-            <div className="absolute left-[75%] top-1/2 grid size-28 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-2xl border-2 border-accent bg-surface p-2 shadow-md">
+            <div className="absolute left-[73%] top-1/2 grid size-44 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-2xl border-2 border-accent bg-surface p-3 shadow-md">
               <Image
                 src={popup.imageUrl}
                 alt="לוגו העסק"
                 width={200}
                 height={200}
-                sizes="6rem"
+                sizes="11rem"
                 className="h-full w-full object-contain"
               />
             </div>

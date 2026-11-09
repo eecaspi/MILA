@@ -60,7 +60,7 @@ export function EntryPopup({ popup }: { popup: SitePopup }) {
             />
           )}
           {popup.imageUrl && (
-            <div className="absolute end-4 top-1/2 grid size-24 -translate-y-1/2 place-items-center rounded-2xl border-2 border-accent bg-surface p-2 shadow-md">
+            <div className="absolute start-4 top-1/2 grid size-24 -translate-y-1/2 place-items-center rounded-2xl border-2 border-accent bg-surface p-2 shadow-md">
               <Image
                 src={popup.imageUrl}
                 alt="לוגו העסק"

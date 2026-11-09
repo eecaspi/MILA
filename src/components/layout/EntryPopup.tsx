@@ -58,24 +58,24 @@ export function EntryPopup({ popup }: { popup: SitePopup }) {
           </div>
         )}
         {popup.body && <p className="mt-3 whitespace-pre-line text-center text-base leading-snug text-ink-soft">{popup.body}</p>}
-        <div className="mt-2 flex items-end gap-2">
+        <div className="mt-4 flex items-center gap-3">
           <div className="min-w-0 flex-1 text-start">
             <h2 id="entry-popup-title" className="text-3xl font-extrabold leading-tight text-[#3f1d20]">
               <Title text={popup.title || "חדש בליקי"} />
             </h2>
           </div>
           {/* Liky stands small next to the text (a video or a picture without a background looks best). */}
-          <div className="relative h-40 w-[34%] shrink-0">
+          <div className="relative size-28 shrink-0 overflow-hidden rounded-2xl bg-[#f3f1f1]">
             {/\.(mp4|webm)$/i.test(popup.likyUrl) ? (
-              <video src={popup.likyUrl} autoPlay muted loop playsInline className="absolute inset-0 size-full object-contain object-bottom" />
+              <video src={popup.likyUrl} autoPlay muted loop playsInline className="absolute inset-0 size-full object-cover object-top" />
             ) : (
               <Image
                 src={popup.likyUrl || "/brand/liky-character-bag.jpg"}
                 alt="ליקי"
                 fill
-                sizes="9rem"
+                sizes="7rem"
                 priority
-                className="object-contain object-bottom"
+                className="object-cover object-top"
               />
             )}
           </div>

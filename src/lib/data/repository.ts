@@ -168,11 +168,13 @@ export interface NowOffers {
   best: OfferWithBusiness[];
   fresh: OfferWithBusiness[];
   ending: OfferWithBusiness[];
+  soon: OfferWithBusiness[];
 }
 
 /** "מה שווה עכשיו?": the best offers, the newest (last 14 days) and the ones ending within a week. */
 export async function getNowOffers(limit = 4, now = new Date()): Promise<NowOffers> {
-  const all = (await getOffers({ now })).filter((o) => !isUpcoming(o.startsOn, now));
+  const everything = await getOffers({ now });
+  const all = everything.filter((o) => !isUpcoming(o.startsOn, now));
   const best = await getHighlightedOffers(limit);
   const fresh = all
     .filter((o) => {
@@ -188,7 +190,11 @@ export async function getNowOffers(limit = 4, now = new Date()): Promise<NowOffe
     })
     .sort((a, b) => (a.validUntil ?? "").localeCompare(b.validUntil ?? ""))
     .slice(0, limit);
-  return { best, fresh, ending };
+  const soon = everything
+    .filter((o) => isUpcoming(o.startsOn, now))
+    .sort((a, b) => (a.startsOn ?? "").localeCompare(b.startsOn ?? ""))
+    .slice(0, limit);
+  return { best, fresh, ending, soon };
 }
 
 /** "מה חדש אצל ליקי?" — most recently added first. */

@@ -10,6 +10,7 @@ import { getMyCodes } from "@/lib/data/my-codes";
 import { BusinessCard } from "@/components/business/BusinessCard";
 import { SearchBox } from "@/components/ui/SearchBox";
 import { getBusinesses, getOffers, getSearchSuggestions } from "@/lib/data/repository";
+import { isUpcoming } from "@/lib/data/mappers";
 import { searchBusinesses, searchOffers } from "@/lib/data/search";
 import type { OfferKind } from "@/lib/types";
 
@@ -36,7 +37,7 @@ export default async function DealsPage({ searchParams }: { searchParams: Search
   const kind = parseKind(params.kind);
   const q = (params.q ?? "").trim().slice(0, 60) || undefined;
   const channel = parseChannel(params.channel);
-  const sort = params.sort === "ending" ? "ending" : undefined;
+  const sort = params.sort === "ending" || params.sort === "soon" ? params.sort : undefined;
   const catName = (o: { business: { category: Parameters<typeof getCategory>[0] } }) =>
     getCategory(o.business.category).name;
   const found = searchOffers(
@@ -47,7 +48,11 @@ export default async function DealsPage({ searchParams }: { searchParams: Search
     q,
     catName,
   );
-  const offers = sort
+  const offers = sort === "soon"
+    ? found.items
+        .filter((o) => isUpcoming(o.startsOn))
+        .sort((a, b) => (a.startsOn ?? "").localeCompare(b.startsOn ?? ""))
+    : sort
     ? [...found.items].sort((a, b) => {
         // Offers with an end date first, soonest first; open-ended ones last.
         const av = a.validUntil ? Date.parse(a.validUntil) : Infinity;
@@ -110,6 +115,7 @@ export default async function DealsPage({ searchParams }: { searchParams: Search
             options={[
               { value: undefined, label: "החדשות קודם" },
               { value: "ending", label: "מסתיימות בקרוב" },
+              { value: "soon", label: "בקרוב (עוד לא התחילו)" },
             ]}
           />
           {hasChannels && (

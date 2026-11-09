@@ -3,15 +3,8 @@
 import { useRouter } from "next/navigation";
 import { useState, type FormEvent } from "react";
 import { updateBanner, type BannerState } from "@/app/admin/banner-actions";
-import {
-  IMAGE_MIME,
-  MAX_BANNER_IMAGE_BYTES,
-  MAX_BANNER_VIDEO_BYTES,
-  VIDEO_MIME,
-  type BannerLayout,
-  type LinkOption,
-} from "@/lib/banners";
-import { createClient } from "@/lib/supabase/client";
+import { uploadBannerFile, removeUploaded } from "@/lib/banner-upload";
+import type { BannerLayout, LinkOption } from "@/lib/banners";
 import { BannerTextFields } from "./BannerTextFields";
 import { inputClass } from "./styles";
 
@@ -25,6 +18,10 @@ interface Row {
   headline: string | null;
   body: string | null;
   button_label: string | null;
+  caption_pos?: string | null;
+  media_scale?: number | null;
+  mobile_url?: string | null;
+  mobile_scale?: number | null;
 }
 
 /** Edits a banner and says clearly whether the save worked. */
@@ -37,47 +34,34 @@ export function BannerEditForm({ row, linkOptions }: { row: Row; linkOptions: Li
     e.preventDefault();
     const form = e.currentTarget;
     const fd = new FormData(form);
-    const file = fd.get("file");
-    fd.delete("file");
     setPending(true);
     setState({});
-    let uploaded: string | null = null;
-    const supabase = createClient();
-    if (file instanceof File && file.size > 0) {
-      const isImage = IMAGE_MIME.includes(file.type);
-      const isVideo = VIDEO_MIME.includes(file.type);
-      if (!isImage && !isVideo) {
+    const uploaded: string[] = [];
+    const file = fd.get("file");
+    const mobileFile = fd.get("mobile_file");
+    fd.delete("file");
+    fd.delete("mobile_file");
+    for (const [f, key, typeKey] of [
+      [file, "new_media_url", "media_type"],
+      [mobileFile, "new_mobile_url", null],
+    ] as const) {
+      if (!(f instanceof File) || f.size === 0) continue;
+      const r = await uploadBannerFile(f);
+      if ("error" in r) {
+        await Promise.all(uploaded.map(removeUploaded));
         setPending(false);
-        setState({ error: "אפשר להעלות תמונה (JPG, PNG, WEBP) או סרטון (MP4, WEBM)." });
+        setState({ error: r.error });
         return;
       }
-      if (isImage && file.size > MAX_BANNER_IMAGE_BYTES) {
-        setPending(false);
-        setState({ error: "התמונה גדולה מדי (עד 5MB)." });
-        return;
-      }
-      if (isVideo && file.size > MAX_BANNER_VIDEO_BYTES) {
-        setPending(false);
-        setState({ error: "הסרטון גדול מדי (עד 20MB)." });
-        return;
-      }
-      const ext = file.type === "video/webm" ? "webm" : file.type === "video/mp4" ? "mp4" : file.type.split("/")[1]!.replace("jpeg", "jpg");
-      const path = `banners/${crypto.randomUUID()}.${ext}`;
-      const { error } = await supabase.storage.from("media").upload(path, file, { contentType: file.type, upsert: false });
-      if (error) {
-        setPending(false);
-        setState({ error: "ההעלאה נכשלה. בדקי את גודל הקובץ ונסי שוב." });
-        return;
-      }
-      uploaded = path;
-      fd.set("new_media_url", supabase.storage.from("media").getPublicUrl(path).data.publicUrl);
-      fd.set("media_type", isVideo ? "video" : "image");
+      uploaded.push(r.path);
+      fd.set(key, r.url);
+      if (typeKey) fd.set(typeKey, r.type);
     }
     const result = await updateBanner({}, fd);
-    if (result.error && uploaded) await supabase.storage.from("media").remove([uploaded]);
+    if (result.error) await Promise.all(uploaded.map(removeUploaded));
     setPending(false);
     setState(result);
-    if (result.ok && uploaded) {
+    if (result.ok && uploaded.length) {
       form.reset();
       router.refresh();
     }
@@ -87,9 +71,24 @@ export function BannerEditForm({ row, linkOptions }: { row: Row; linkOptions: Li
     <form onSubmit={onSubmit} className="grid gap-3 sm:grid-cols-2">
       <input type="hidden" name="id" value={row.id} />
       <label className="block sm:col-span-2">
-        <span className="mb-1 block text-xs font-semibold text-ink-soft">להחלפת התמונה או הסרטון (לא חובה)</span>
+        <span className="mb-1 block text-xs font-semibold text-ink-soft">להחלפת התמונה או הסרטון של המחשב (לא חובה)</span>
         <input type="file" name="file" accept="image/jpeg,image/png,image/webp,image/avif,video/mp4,video/webm" className={inputClass} />
         <span className="mt-1 block text-xs text-ink-soft">בוחרים קובץ חדש ולוחצים שמירה. כל שאר ההגדרות נשארות.</span>
+      </label>
+      <label className="block sm:col-span-2">
+        <span className="mb-1 block text-xs font-semibold text-ink-soft">
+          תמונה או סרטון לפלאפון (לא חובה){row.mobile_url ? " — כבר הועלה קובץ לפלאפון, בחירת קובץ חדש תחליף אותו" : ""}
+        </span>
+        <input type="file" name="mobile_file" accept="image/jpeg,image/png,image/webp,image/avif,video/mp4,video/webm" className={inputClass} />
+        <span className="mt-1 block text-xs text-ink-soft">
+          בלי קובץ לפלאפון, אותו קובץ מוצג בשני המכשירים. מומלץ לפלאפון תמונה ביחס 2:1 או מרובעת יותר.
+        </span>
+        {row.mobile_url && (
+          <label className="mt-1 flex items-center gap-2 text-sm text-ink">
+            <input type="checkbox" name="remove_mobile" value="1" />
+            הסרת הקובץ של הפלאפון (חזרה לאותו קובץ כמו במחשב)
+          </label>
+        )}
       </label>
       <BannerTextFields values={row} linkOptions={linkOptions} />
       <label className="block">

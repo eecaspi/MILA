@@ -101,6 +101,8 @@ export interface Offer {
   priceLabel?: string;
   /** Product/offer image supplied by the business. A category illustration is shown otherwise. */
   imageUrl?: string;
+  /** How the image sits in its frame: filled (cropped from the middle, top or bottom) or shown whole. */
+  imageFit?: "cover" | "top" | "bottom" | "contain";
   /** Reserved for the affiliate phase: commission rate on this offer (0–1). */
   commissionRate?: number;
 }

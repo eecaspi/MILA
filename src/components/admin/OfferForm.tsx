@@ -26,6 +26,7 @@ export interface OfferFormValues {
   status: string;
   is_published: boolean;
   image_url: string | null;
+  image_fit?: string | null;
   coupon_code: string | null;
 }
 
@@ -194,6 +195,14 @@ export function OfferForm({
           removeName="remove_image"
           error={e.image}
         />
+        <Field label="איך התמונה מוצגת בכרטיס" name="image_fit" hint="אם חלק מהתמונה נחתך, אפשר ליישר למעלה או להציג שלמה">
+          <select id="image_fit" name="image_fit" defaultValue={o?.image_fit ?? "cover"} className={inputClass}>
+            <option value="cover">ממלא את הכרטיס (חותך מהקצוות)</option>
+            <option value="top">ממלא, מיושר למעלה (חותך מלמטה)</option>
+            <option value="bottom">ממלא, מיושר למטה (חותך מלמעלה)</option>
+            <option value="contain">מוצג שלם, בלי חיתוך</option>
+          </select>
+        </Field>
       </section>
 
       <section className="grid gap-5 rounded-[var(--radius-card)] bg-surface p-5 shadow-[var(--shadow-card)] sm:grid-cols-2">

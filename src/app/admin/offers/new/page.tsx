@@ -47,6 +47,7 @@ export default async function NewOffer({
                   status: "listed",
                   is_published: false,
                   image_url: null,
+                  image_fit: "cover",
                   coupon_code: null,
                 }
               : undefined

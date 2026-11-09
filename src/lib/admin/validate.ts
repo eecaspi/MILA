@@ -197,6 +197,7 @@ export interface OfferValues {
   price_label: string | null;
   highlight: boolean;
   unlisted: boolean;
+  image_fit: "cover" | "top" | "bottom" | "contain";
   likey_pick_note: string | null;
   status: "listed" | "verified";
   is_published: boolean;
@@ -272,6 +273,9 @@ export function parseOfferForm(fd: FormData): Parsed<OfferValues> {
       price_label: orNull(text(fd, "price_label", 60)),
       highlight: fd.get("highlight") === "on",
       unlisted: fd.get("unlisted") === "on",
+      image_fit: ["top", "bottom", "contain"].includes(text(fd, "image_fit", 10))
+        ? (text(fd, "image_fit", 10) as "top" | "bottom" | "contain")
+        : "cover",
       likey_pick_note: orNull(text(fd, "likey_pick_note", 200)),
       status: text(fd, "status", 20) === "verified" ? "verified" : "listed",
       is_published: fd.get("is_published") === "on",

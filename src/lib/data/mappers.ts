@@ -46,12 +46,13 @@ export interface OfferRow {
   likey_pick_note: string | null;
   price_label: string | null;
   image_url: string | null;
+  image_fit?: string | null;
 }
 
 export const BUSINESS_COLUMNS =
   "id, slug, name, category_slug, short_description, description, area, city, website, phone, source_url, logo_url, cover_url, gallery_urls, tags, status, is_real_business";
 export const OFFER_COLUMNS =
-  "id, business_id, kind, title, description, value_label, valid_until, starts_on, redeem_channel, code_mode, redeem_url, terms, usage_limit, status, created_at, highlight, likey_pick_note, price_label, image_url, unlisted";
+  "id, business_id, kind, title, description, value_label, valid_until, starts_on, redeem_channel, code_mode, redeem_url, terms, usage_limit, status, created_at, highlight, likey_pick_note, price_label, image_url, image_fit, unlisted";
 
 const opt = (v: string | null | undefined) => (v && v.trim() ? v.trim() : undefined);
 
@@ -116,6 +117,7 @@ export function mapOfferRow(row: OfferRow): Offer {
     likeyPick: note ? { note } : undefined,
     priceLabel: opt(row.price_label),
     imageUrl: opt(row.image_url),
+    imageFit: row.image_fit === "top" || row.image_fit === "bottom" || row.image_fit === "contain" ? row.image_fit : "cover",
   };
 }
 

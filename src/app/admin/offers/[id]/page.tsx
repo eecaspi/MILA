@@ -16,7 +16,7 @@ export default async function EditOffer({ params }: { params: Promise<{ id: stri
     supabase
       .from("offers")
       .select(
-        "id, business_id, kind, title, value_label, description, valid_until, starts_on, redeem_channel, code_mode, redeem_url, terms, usage_limit, price_label, highlight, unlisted, likey_pick_note, status, is_published, image_url, offer_codes(coupon_code)",
+        "id, business_id, kind, title, value_label, description, valid_until, starts_on, redeem_channel, code_mode, redeem_url, terms, usage_limit, price_label, highlight, unlisted, likey_pick_note, status, is_published, image_url, image_fit, offer_codes(coupon_code)",
       )
       .eq("id", id)
       .maybeSingle(),

@@ -1,7 +1,7 @@
 import "server-only";
 
 import { unstable_cache } from "next/cache";
-import { toCaptionPos, type BannerLayout, type CaptionPos } from "@/lib/banners";
+import { toCaptionPos, toMediaScale, type BannerLayout, type CaptionPos } from "@/lib/banners";
 import { createPublicClient } from "@/lib/supabase/public";
 
 export interface HomeBanner {
@@ -10,6 +10,7 @@ export interface HomeBanner {
   type: "image" | "video";
   layout: BannerLayout;
   pos?: CaptionPos;
+  scale?: number;
   title?: string;
   headline?: string;
   text?: string;
@@ -52,6 +53,7 @@ function toBanner(r: Row): HomeBanner {
     layout: layout === "character" || layout === "character_reverse" || layout === "cover" ? layout : "photo",
     title: s("title"),
     pos: toCaptionPos(r.caption_pos),
+    scale: toMediaScale(r.media_scale),
     headline: s("headline"),
     text: s("body"),
     cta: s("button_label"),
@@ -65,7 +67,7 @@ async function fetchBanners(): Promise<HomeBanner[]> {
   const order = { ascending: true };
   const full = await supabase
     .from("banners")
-    .select("id, media_url, media_type, title, link_url, layout, headline, body, button_label, caption_pos")
+    .select("id, media_url, media_type, title, link_url, layout, headline, body, button_label, caption_pos, media_scale")
     .order("sort_order", order)
     .order("created_at", { ascending: false })
     .limit(12);

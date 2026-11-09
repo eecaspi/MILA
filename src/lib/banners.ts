@@ -26,6 +26,19 @@ export function toCaptionPos(raw: unknown): CaptionPos {
   return typeof raw === "string" && /^(right|left|center)-(top|middle|bottom)$/.test(raw) ? (raw as CaptionPos) : "right-top";
 }
 
+export const MEDIA_SCALES = [
+  { value: 100, label: "מלא (ממלא את כל הבאנר)" },
+  { value: 90, label: "מוקטן קצת (90%)" },
+  { value: 80, label: "מוקטן (80%)" },
+  { value: 70, label: "מוקטן יותר (70%)" },
+  { value: 60, label: "קטן (60%)" },
+] as const;
+
+export function toMediaScale(raw: unknown): number {
+  const n = Number(raw);
+  return Number.isInteger(n) && n >= 40 && n <= 100 ? n : 100;
+}
+
 export const IMAGE_MIME = ["image/jpeg", "image/png", "image/webp", "image/avif"];
 export const VIDEO_MIME = ["video/mp4", "video/webm"];
 export const MAX_BANNER_IMAGE_BYTES = 5 * 1024 * 1024;
@@ -43,6 +56,7 @@ export interface BannerValues {
   body: string | null;
   button_label: string | null;
   caption_pos: CaptionPos;
+  media_scale: number;
 }
 
 export type BannerParse =
@@ -113,6 +127,7 @@ export function parseBannerForm(fd: FormData, supabaseUrl: string): BannerParse 
       headline: field(fd, "headline", 80) || null,
       body: field(fd, "body", 160) || null,
       button_label: field(fd, "button_label", 30) || null,
+      media_scale: toMediaScale(field(fd, "media_scale", 3) || 100),
       caption_pos: toCaptionPos(`${field(fd, "caption_side", 10)}-${field(fd, "caption_vert", 10)}`),
     },
   };

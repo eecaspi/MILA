@@ -46,16 +46,26 @@ export async function updateBanner(_prev: BannerState, fd: FormData): Promise<Ba
   if (!current) return { error: "הבאנר לא נמצא." };
   const merged = new FormData();
   for (const [k, v] of fd.entries()) merged.append(k, v);
-  merged.set("media_url", current.media_url as string);
-  merged.set("media_type", current.media_type as string);
+  const newUrl = fd.get("new_media_url");
+  const replacing = typeof newUrl === "string" && newUrl !== "" && newUrl !== current.media_url;
+  if (!replacing) {
+    merged.set("media_url", current.media_url as string);
+    merged.set("media_type", current.media_type as string);
+  } else {
+    merged.set("media_url", newUrl as string);
+  }
   const parsed = parseBannerForm(merged, supabaseUrl);
   if (!parsed.ok) return { error: Object.values(parsed.errors)[0] };
-  const { title, link_url, sort_order, is_published, layout, headline, body, button_label, caption_pos, media_scale } = parsed.values;
+  const { media_url, media_type, title, link_url, sort_order, is_published, layout, headline, body, button_label, caption_pos, media_scale } = parsed.values;
   const { error } = await supabase
     .from("banners")
-    .update({ title, link_url, sort_order, is_published, layout, headline, body, button_label, caption_pos, media_scale })
+    .update({ ...(replacing ? { media_url, media_type } : {}), title, link_url, sort_order, is_published, layout, headline, body, button_label, caption_pos, media_scale })
     .eq("id", id);
   if (error) return { error: "השמירה נכשלה. נסי שוב בעוד רגע." };
+  if (replacing) {
+    const oldPath = bannerStoragePath(current.media_url as string, supabaseUrl);
+    if (oldPath) await supabase.storage.from("media").remove([oldPath]); // best effort
+  }
   refresh();
   return { ok: true };
 }

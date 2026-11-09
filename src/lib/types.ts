@@ -53,6 +53,8 @@ export interface Business {
   phone?: string;
   logoUrl?: string;
   coverUrl?: string;
+  /** How the picture sits in the business card: filled (cropped from the middle, top or bottom) or shown whole. */
+  imageFit?: "cover" | "top" | "bottom" | "contain";
   /** A few photos from the business (products, the shop). */
   galleryUrls?: string[];
 }
@@ -101,6 +103,8 @@ export interface Offer {
   priceLabel?: string;
   /** Product/offer image supplied by the business. A category illustration is shown otherwise. */
   imageUrl?: string;
+  /** How the image sits in its frame: filled (cropped from the middle, top or bottom) or shown whole. */
+  imageFit?: "cover" | "top" | "bottom" | "contain";
   /** Reserved for the affiliate phase: commission rate on this offer (0–1). */
   commissionRate?: number;
 }

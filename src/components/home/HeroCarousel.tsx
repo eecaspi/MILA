@@ -133,8 +133,8 @@ export function HeroCarousel({ banners }: { banners: HomeBanner[] }) {
                 loop
                 playsInline
                 preload="metadata"
-                className="absolute inset-0 size-full object-cover object-top"
-                style={b.scale && b.scale < 100 ? { transform: `scale(${b.scale / 100})` } : undefined}
+                className={`absolute inset-0 size-full ${shrunk(b.scale) ? "object-contain" : "object-cover object-top"}`}
+                style={shrunk(b.scale) ? { transform: `scale(${b.scale! / 90})` } : undefined}
               />
             ) : (
               <>
@@ -152,8 +152,8 @@ export function HeroCarousel({ banners }: { banners: HomeBanner[] }) {
                   alt={b.title ?? ""}
                   fill
                   sizes="100vw"
-                  className="object-cover sm:object-contain"
-                  style={b.scale && b.scale < 100 ? { transform: `scale(${b.scale / 100})` } : undefined}
+                  className={shrunk(b.scale) ? "object-contain" : "object-cover sm:object-contain"}
+                  style={shrunk(b.scale) ? { transform: `scale(${b.scale! / 90})` } : undefined}
                   priority={false}
                 />
               </>
@@ -266,4 +266,8 @@ const VERT_CLASS = {
 function captionClass(pos: string | undefined): string {
   const [side, vert] = (pos ?? "right-top").split("-") as [keyof typeof SIDE_CLASS, keyof typeof VERT_CLASS];
   return `${SIDE_CLASS[side] ?? SIDE_CLASS.right} ${VERT_CLASS[vert] ?? VERT_CLASS.top}`;
+}
+
+function shrunk(scale: number | undefined): boolean {
+  return !!scale && scale < 100;
 }

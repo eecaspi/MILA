@@ -27,11 +27,11 @@ export function toCaptionPos(raw: unknown): CaptionPos {
 }
 
 export const MEDIA_SCALES = [
-  { value: 100, label: "מלא (ממלא את כל הבאנר)" },
-  { value: 90, label: "מוקטן קצת (90%)" },
-  { value: 80, label: "מוקטן (80%)" },
-  { value: 70, label: "מוקטן יותר (70%)" },
-  { value: 60, label: "קטן (60%)" },
+  { value: 100, label: "ממלא את כל הבאנר (חותך את הקצוות)" },
+  { value: 90, label: "מוצג שלם, בלי חיתוך" },
+  { value: 80, label: "שלם ומוקטן קצת" },
+  { value: 70, label: "שלם ומוקטן" },
+  { value: 60, label: "שלם וקטן" },
 ] as const;
 
 export function toMediaScale(raw: unknown): number {

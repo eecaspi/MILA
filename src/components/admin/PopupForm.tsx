@@ -100,7 +100,7 @@ export function PopupForm({ values }: { values: Values }) {
         הפופאפ פעיל (מוצג בכניסה לאתר)
       </label>
       <div className="block">
-        <span className="mb-1 block text-xs font-semibold text-ink-soft">לוגו העסק, מופיע בכותרת האדומה למעלה (לא חובה)</span>
+        <span className="mb-1 block text-xs font-semibold text-ink-soft">לוגו העסק, מופיע למעלה במרכז (לא חובה)</span>
         {logo && (
           <div className="mb-2 flex items-center gap-3">
             {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -114,7 +114,7 @@ export function PopupForm({ values }: { values: Values }) {
         <span className="mt-1 block text-xs text-ink-soft">כדי להחליף, בחרי קובץ חדש ושמרי. מומלץ לוגו על רקע שקוף או לבן, בגודל 600×300.</span>
       </div>
       <div className="block">
-        <span className="mb-1 block text-xs font-semibold text-ink-soft">תמונה של המבצע, מופיעה ליד ליקי (לא חובה)</span>
+        <span className="mb-1 block text-xs font-semibold text-ink-soft">תמונה קטנה מעל המדיה (לא חובה, אפשר להשאיר ריק)</span>
         {image && (
           <div className="mb-2 flex items-center gap-3">
             {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -125,10 +125,10 @@ export function PopupForm({ values }: { values: Values }) {
           </div>
         )}
         <input type="file" name="file" accept="image/jpeg,image/png,image/webp" className={inputClass} />
-        <span className="mt-1 block text-xs text-ink-soft">כדי להחליף, בחרי קובץ חדש ושמרי. מומלץ תמונה מרובעת, 800×800.</span>
+        <span className="mt-1 block text-xs text-ink-soft">כדי להחליף, בחרי קובץ חדש ושמרי.</span>
       </div>
       <div className="block">
-        <span className="mb-1 block text-xs font-semibold text-ink-soft">תמונה או סרטון של ליקי (לא חובה)</span>
+        <span className="mb-1 block text-xs font-semibold text-ink-soft">תמונה או סרטון של המבצע, עם ליקי (לא חובה)</span>
         {liky && (
           <div className="mb-2 flex items-center gap-3">
             {/\.(mp4|webm)$/i.test(liky) ? (
@@ -143,14 +143,14 @@ export function PopupForm({ values }: { values: Values }) {
           </div>
         )}
         <input type="file" name="liky_file" accept="image/jpeg,image/png,image/webp,video/mp4,video/webm" className={inputClass} />
-        <span className="mt-1 block text-xs text-ink-soft">בלי קובץ מוצגת תמונה רגילה של ליקי. סרטון (עד 20MB) מתנגן בלי קול.</span>
+        <span className="mt-1 block text-xs text-ink-soft">מומלץ יחס 16:10, למשל 1200×750. בלי קובץ מוצגת תמונה רגילה של ליקי. סרטון (עד 20MB) מתנגן בלי קול.</span>
       </div>
       <label className="block">
         <span className="mb-1 block text-xs font-semibold text-ink-soft">כותרת המבצע</span>
         <input name="title" maxLength={80} defaultValue={values.title} className={inputClass} />
       </label>
       <label className="block">
-        <span className="mb-1 block text-xs font-semibold text-ink-soft">טקסט</span>
+        <span className="mb-1 block text-xs font-semibold text-ink-soft">שורה קטנה מעל הכותרת, למשל &quot;הטבה על נעלי ילדים&quot;</span>
         <textarea name="body" rows={4} maxLength={300} defaultValue={values.body} className={inputClass} />
       </label>
       <label className="block">

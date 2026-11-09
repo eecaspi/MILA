@@ -5,7 +5,7 @@ export default async function AdminPopup() {
   const supabase = await createClient();
   const { data, error } = await supabase
     .from("site_popup")
-    .select("is_active, title, body, button_label, link_url, image_url")
+    .select("is_active, title, body, button_label, link_url, image_url, liky_url")
     .eq("id", 1)
     .maybeSingle();
   return (
@@ -23,6 +23,7 @@ export default async function AdminPopup() {
           button_label: data?.button_label ?? "",
           link_url: data?.link_url ?? "",
           image_url: data?.image_url ?? "",
+          liky_url: data?.liky_url ?? "",
         }}
       />
     </div>

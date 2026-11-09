@@ -20,7 +20,7 @@ export default async function EditBusiness({
   const { data } = await supabase
     .from("businesses")
     .select(
-      "id, slug, name, category_slug, short_description, description, area, city, website, phone, tags, status, is_published, sort_order, logo_url, cover_url, gallery_urls",
+      "id, slug, name, category_slug, short_description, description, area, city, website, phone, tags, status, is_published, sort_order, logo_url, cover_url, gallery_urls, image_fit",
     )
     .eq("id", id)
     .maybeSingle();

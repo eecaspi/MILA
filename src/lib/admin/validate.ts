@@ -95,6 +95,7 @@ export interface BusinessValues {
   status: "listed" | "verified";
   is_published: boolean;
   sort_order: number;
+  image_fit: "cover" | "top" | "bottom" | "contain";
 }
 
 export function parseBusinessForm(fd: FormData): Parsed<BusinessValues> {
@@ -131,6 +132,9 @@ export function parseBusinessForm(fd: FormData): Parsed<BusinessValues> {
       is_published: fd.get("is_published") === "on",
       // "להציג ראשון": pinned businesses sort before the rest (then by name)
       sort_order: fd.get("pin_first") === "on" ? -1 : 0,
+      image_fit: ["top", "bottom", "contain"].includes(text(fd, "image_fit", 10))
+        ? (text(fd, "image_fit", 10) as "top" | "bottom" | "contain")
+        : "cover",
     },
   };
 }

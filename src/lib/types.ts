@@ -53,6 +53,8 @@ export interface Business {
   phone?: string;
   logoUrl?: string;
   coverUrl?: string;
+  /** How the picture sits in the business card: filled (cropped from the middle, top or bottom) or shown whole. */
+  imageFit?: "cover" | "top" | "bottom" | "contain";
   /** A few photos from the business (products, the shop). */
   galleryUrls?: string[];
 }

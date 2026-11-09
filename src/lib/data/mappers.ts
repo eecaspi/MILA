@@ -23,6 +23,7 @@ export interface BusinessRow {
   tags: string[] | null;
   status: VerificationStatus;
   is_real_business: boolean;
+  image_fit?: string | null;
 }
 
 export interface OfferRow {
@@ -50,7 +51,7 @@ export interface OfferRow {
 }
 
 export const BUSINESS_COLUMNS =
-  "id, slug, name, category_slug, short_description, description, area, city, website, phone, source_url, logo_url, cover_url, gallery_urls, tags, status, is_real_business";
+  "id, slug, name, category_slug, short_description, description, area, city, website, phone, source_url, logo_url, cover_url, gallery_urls, tags, status, is_real_business, image_fit";
 export const OFFER_COLUMNS =
   "id, business_id, kind, title, description, value_label, valid_until, starts_on, redeem_channel, code_mode, redeem_url, terms, usage_limit, status, created_at, highlight, likey_pick_note, price_label, image_url, image_fit, unlisted";
 
@@ -83,6 +84,7 @@ export function mapBusinessRow(row: BusinessRow): Business | null {
     sourceUrl: opt(row.source_url),
     logoUrl: opt(row.logo_url),
     coverUrl: opt(row.cover_url),
+    imageFit: row.image_fit === "top" || row.image_fit === "bottom" || row.image_fit === "contain" ? row.image_fit : "cover",
     galleryUrls: (row.gallery_urls ?? []).filter((u) => u.trim()),
     tags: (row.tags ?? []).filter((t) => t.trim()),
     status: row.status,

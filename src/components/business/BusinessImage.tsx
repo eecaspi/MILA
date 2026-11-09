@@ -16,7 +16,24 @@ export function BusinessImage({ business, sizes }: { business: Business; sizes: 
   if (picture) {
     return (
       <>
-        <Image src={picture} alt="" fill sizes={sizes} className="object-cover" />
+        {business.imageFit === "contain" && (
+          <Image src={picture} alt="" aria-hidden fill sizes="25vw" className="scale-150 object-cover blur-3xl" />
+        )}
+        <Image
+          src={picture}
+          alt=""
+          fill
+          sizes={sizes}
+          className={
+            business.imageFit === "contain"
+              ? "object-contain"
+              : business.imageFit === "top"
+                ? "object-cover object-top"
+                : business.imageFit === "bottom"
+                  ? "object-cover object-bottom"
+                  : "object-cover"
+          }
+        />
       </>
     );
   }

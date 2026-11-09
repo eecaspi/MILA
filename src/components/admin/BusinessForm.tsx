@@ -22,6 +22,7 @@ export interface BusinessFormValues {
   sort_order: number;
   logo_url: string | null;
   cover_url: string | null;
+  image_fit?: string | null;
   gallery_urls?: string[] | null;
 }
 
@@ -131,6 +132,14 @@ export function BusinessForm({ business }: { business?: BusinessFormValues }) {
           removeName="remove_cover"
           error={e.cover}
         />
+        <Field label="איך התמונה מוצגת בכרטיס" name="image_fit" hint="אם חלק מהתמונה נחתך, אפשר ליישר למעלה או להציג שלמה">
+          <select id="image_fit" name="image_fit" defaultValue={b?.image_fit ?? "cover"} className={inputClass}>
+            <option value="cover">ממלא את הכרטיס (חותך מהקצוות)</option>
+            <option value="top">ממלא, מיושר למעלה (חותך מלמטה)</option>
+            <option value="bottom">ממלא, מיושר למטה (חותך מלמעלה)</option>
+            <option value="contain">מוצג שלם, בלי חיתוך</option>
+          </select>
+        </Field>
         <GalleryField current={b?.gallery_urls ?? []} error={e.gallery} />
       </section>
 

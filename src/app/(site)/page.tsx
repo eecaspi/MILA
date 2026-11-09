@@ -64,6 +64,7 @@ export default async function HomePage() {
               { id: "best", label: "הכי שווים", offers: now.best },
               { id: "fresh", label: "חדש", offers: now.fresh },
               { id: "ending", label: "מסתיים בקרוב", offers: now.ending },
+              { id: "soon", label: "בקרוב", offers: now.soon },
             ]
               .filter((t) => t.offers.length > 0)
               .map((t) => ({
@@ -80,7 +81,7 @@ export default async function HomePage() {
                 ),
               }))}
           />
-          {[...now.best, ...now.fresh, ...now.ending].some((o) => o.status === "demo") && (
+          {[...now.best, ...now.fresh, ...now.ending, ...now.soon].some((o) => o.status === "demo") && (
             <p className="mt-3 text-xs text-ink-soft">
               הצעות שמסומנות &quot;לדוגמה&quot; הן להמחשה בלבד. הצעות אמיתיות מסומנות &quot;הצעה
               מאומתת&quot; אחרי אישור ישיר מול העסק.

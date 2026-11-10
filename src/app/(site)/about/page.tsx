@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Logo } from "@/components/brand/Logo";
 import { getSession } from "@/lib/auth/session";
+import { HowItWorks } from "@/components/home/HowItWorks";
 import { CommunityInvite } from "@/components/home/CommunityInvite";
 import { siteConfig } from "@/config/site";
 
@@ -49,24 +50,7 @@ export default async function AboutPage() {
         </p>
       </section>
 
-      <section aria-labelledby="how" className="rounded-[var(--radius-card)] bg-surface p-6 shadow-[var(--shadow-card)] md:p-8">
-        <h2 id="how" className="text-2xl text-ink">
-          איך זה עובד
-        </h2>
-        <p className="mt-3 text-ink-soft">בשלושה צעדים בלבד.</p>
-        <ol className="mt-3 list-decimal space-y-2 ps-5 text-ink-soft">
-          <li>
-            <strong className="text-ink">מצטרפות בחינם.</strong> נרשמות בקלות, ללא אף התחייבות.
-          </li>
-          <li>
-            <strong className="text-ink">לוחצות על קוד קופון.</strong> בכל הטבה מקבלות קוד קופון להעתקה.
-          </li>
-          <li>
-            <strong className="text-ink">מממשות אצל העסק.</strong> מימוש ההטבה מתבצע ישירות בבית העסק,
-            באמצעות הצגת הקוד או הזנתו, בהתאם לתנאי המימוש.
-          </li>
-        </ol>
-      </section>
+      <HowItWorks />
 
       {!session && <CommunityInvite />}
     </div>

@@ -72,16 +72,26 @@ export default async function LoginPage({ searchParams }: { searchParams: Search
       )}
 
       <div
-        className={`relative space-y-4 rounded-[var(--radius-card)] bg-surface p-6 shadow-[var(--shadow-card)] ${mode === "signup" ? "mt-32" : ""}`}
+        className={`relative space-y-4 rounded-[var(--radius-card)] bg-surface p-6 shadow-[var(--shadow-card)] ${mode === "signup" ? "mt-28 pt-20" : "mt-36"}`}
       >
-        {mode === "signup" && (
+        {mode === "login" && (
           <Image
-            src="/brand/liky-box.webp"
-            alt="ליקי פותחת קופסת הפתעה"
-            width={314}
+            src="/brand/liky-boxes-stack.webp"
+            alt="ליקי עם ערימת קופסאות"
+            width={474}
             height={900}
             priority
-            className="pointer-events-none absolute bottom-[calc(100%-6px)] right-10 mb-0! h-36 w-auto"
+            className="pointer-events-none absolute bottom-full left-6 z-10 mb-0! h-44 w-auto"
+          />
+        )}
+        {mode === "signup" && (
+          <Image
+            src="/brand/liky-sit.webp"
+            alt="ליקי יושבת על הכרטיס"
+            width={506}
+            height={840}
+            priority
+            className="pointer-events-none absolute bottom-full left-3 z-10 mb-0! h-40 w-auto translate-y-[41%] sm:left-6"
           />
         )}
         {signupOpen && (

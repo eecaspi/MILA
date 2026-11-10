@@ -81,7 +81,7 @@ export default async function HomePage() {
           />
           <p className="mt-5 text-center">
             <Link href="/deals" className="btn-secondary !px-8 !py-3 text-lg">
-              בואי לראות הכול ←
+              בואי לראות את כל ההטבות ←
             </Link>
           </p>
           {[...now.best, ...now.fresh, ...now.ending, ...now.soon].some((o) => o.status === "demo") && (

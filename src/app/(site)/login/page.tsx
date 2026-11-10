@@ -81,7 +81,7 @@ export default async function LoginPage({ searchParams }: { searchParams: Search
             width={474}
             height={900}
             priority
-            className="pointer-events-none absolute bottom-full right-6 z-10 mb-0! h-44 w-auto"
+            className="pointer-events-none absolute bottom-full left-6 z-10 mb-0! h-44 w-auto"
           />
         )}
         {mode === "signup" && (

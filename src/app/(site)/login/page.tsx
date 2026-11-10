@@ -45,7 +45,7 @@ export default async function LoginPage({ searchParams }: { searchParams: Search
   return (
     <div className="mx-auto max-w-md px-4 py-12">
       <div className={mode === "login" ? "flex items-end gap-2" : "mb-8 text-center"}>
-       <div className={mode === "login" ? "min-w-0 flex-1 self-center pb-6 text-start" : ""}>
+       <div className={mode === "login" ? "min-w-0 flex-1 self-center pb-6 text-center" : ""}>
         <p className="eyebrow">{signupOpen ? "מועדון ליקי" : "כניסה לצוות ליקי"}</p>
         <h1 className="mt-2 text-3xl text-ink">
           {mode === "signup" ? "בואי להיות חברה שלנו" : "איזה כיף שחזרת!"}

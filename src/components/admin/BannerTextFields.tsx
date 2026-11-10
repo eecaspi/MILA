@@ -39,7 +39,7 @@ export function BannerTextFields({
         <input name="headline" defaultValue={values?.headline ?? ""} maxLength={80} className={inputClass} />
       </label>
       <label className="block sm:col-span-2">
-        <span className="mb-1 block text-xs font-semibold text-ink-soft">טקסט (עד 600 תווים; בטלפון יוצגו עד 3 שורות)</span>
+        <span className="mb-1 block text-xs font-semibold text-ink-soft">טקסט (עד 600 תווים; בטלפון הטקסט מוצג כולו, בגופן קטן)</span>
         <textarea name="body" defaultValue={values?.body ?? ""} maxLength={600} rows={4} className={inputClass} />
       </label>
       <label className="block">

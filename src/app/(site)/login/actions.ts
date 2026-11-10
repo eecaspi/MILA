@@ -43,7 +43,10 @@ export async function signUp(formData: FormData): Promise<void> {
   if (!isSupabaseConfigured) back("signup", "not_configured", next);
   if (!siteConfig.features.memberSignup) back("login", "signup_closed", next);
 
-  const displayName = field(formData, "display_name");
+  const firstName = field(formData, "first_name");
+  const lastName = field(formData, "last_name");
+  if (firstName.length < 2 || lastName.length < 2) back("signup", "name_required", next);
+  const displayName = `${firstName} ${lastName}`;
   const email = field(formData, "email");
   const password = rawField(formData, "password");
   if (!email || !password) back("signup", "missing_fields", next);

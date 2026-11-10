@@ -110,13 +110,26 @@ export default async function LoginPage({ searchParams }: { searchParams: Search
         <form action={mode === "signup" ? signUp : signIn} className="space-y-4">
           <input type="hidden" name="next" value={next} />
           {mode === "signup" && (
-            <Field
-              id="display_name"
-              label="שם פרטי"
-              autoComplete="given-name"
-              placeholder="איך לקרוא לך?"
-              disabled={disabled}
-            />
+            <div className="grid grid-cols-2 gap-3">
+              <Field
+                id="first_name"
+                label="שם פרטי"
+                autoComplete="given-name"
+                required
+                minLength={2}
+                maxLength={40}
+                disabled={disabled}
+              />
+              <Field
+                id="last_name"
+                label="שם משפחה"
+                autoComplete="family-name"
+                required
+                minLength={2}
+                maxLength={40}
+                disabled={disabled}
+              />
+            </div>
           )}
           <Field
             id="email"

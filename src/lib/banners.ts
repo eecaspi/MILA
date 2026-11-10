@@ -133,7 +133,7 @@ export function parseBannerForm(fd: FormData, supabaseUrl: string): BannerParse 
       is_published: fd.get("is_published") !== "off",
       layout: layoutRaw as BannerLayout,
       headline: field(fd, "headline", 80) || null,
-      body: field(fd, "body", 160) || null,
+      body: field(fd, "body", 600) || null,
       button_label: field(fd, "button_label", 30) || null,
       media_scale: toMediaScale(field(fd, "media_scale", 3) || 100),
       mobile_url,

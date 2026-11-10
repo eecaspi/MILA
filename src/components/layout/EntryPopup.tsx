@@ -36,16 +36,16 @@ export function EntryPopup({ popup }: { popup: SitePopup }) {
   // No file uploaded in the admin: Liky (without a background) looking at her phone.
   const likyMedia = popup.likyUrl || "/brand/liky-phone.webm";
   const external = /^https?:\/\//.test(popup.linkUrl);
-  const btn = "mt-5 block w-full rounded-full bg-accent px-6 py-4 text-center text-xl font-bold text-on-accent hover:opacity-90";
+  const btn = "mt-3 block w-full rounded-full bg-accent px-5 py-3 text-center text-base sm:mt-5 sm:px-6 sm:py-4 sm:text-xl font-bold text-on-accent hover:opacity-90";
 
   return (
     <dialog
       ref={ref}
       onClick={(e) => e.target === ref.current && close()}
       aria-labelledby="entry-popup-title"
-      className="m-auto w-[min(92vw,26rem)] overflow-hidden rounded-[2rem] bg-[#fbf1ec] p-0 text-ink shadow-2xl backdrop:bg-black/50"
+      className="m-auto w-[min(84vw,21rem)] max-h-[88dvh] overflow-y-auto rounded-[1.5rem] sm:w-[min(92vw,26rem)] sm:rounded-[2rem] bg-[#fbf1ec] p-0 text-ink shadow-2xl backdrop:bg-black/50"
     >
-      <div className="relative px-5 pb-6 pt-5 text-center">
+      <div className="relative px-4 pb-4 pt-4 text-center sm:px-5 sm:pb-6 sm:pt-5">
         <button
           type="button"
           onClick={close}
@@ -55,16 +55,16 @@ export function EntryPopup({ popup }: { popup: SitePopup }) {
           ✕
         </button>
         {popup.logoUrl && (
-          <div className="mx-auto mt-6 flex h-16 w-fit max-w-[70%] items-center justify-center">
+          <div className="mx-auto mt-5 flex h-11 w-fit max-w-[60%] sm:mt-6 sm:h-16 sm:max-w-[70%] items-center justify-center">
             <Image src={popup.logoUrl} alt="" width={320} height={120} sizes="10rem" className="h-full w-auto object-contain" />
           </div>
         )}
-        <h2 id="entry-popup-title" className="mt-5 text-2xl font-extrabold leading-tight text-[#3f1d20]">
+        <h2 id="entry-popup-title" className="mt-3 text-xl font-extrabold leading-tight text-[#3f1d20] sm:mt-5 sm:text-2xl">
           <Title text={popup.title || "חדש בליקי"} />
         </h2>
-        {popup.body && <p className="mt-1 whitespace-pre-line text-center text-sm leading-snug text-ink-soft">{popup.body}</p>}
+        {popup.body && <p className="mt-1 whitespace-pre-line text-center text-xs leading-snug text-ink-soft sm:text-sm">{popup.body}</p>}
         {/* Liky stands on the picture (a video or a picture without a background looks best). */}
-        <div className={`relative mx-auto mt-2 h-36 w-40 ${popup.imageUrl ? "-mb-6" : ""}`}>
+        <div className={`relative mx-auto mt-1 h-24 w-28 sm:mt-2 sm:h-36 sm:w-40 ${popup.imageUrl ? "-mb-4 sm:-mb-6" : ""}`}>
           {/\.(mp4|webm)$/i.test(likyMedia) ? (
             <video src={likyMedia} autoPlay muted loop playsInline className="absolute inset-0 size-full object-contain object-bottom" />
           ) : (
@@ -72,7 +72,7 @@ export function EntryPopup({ popup }: { popup: SitePopup }) {
           )}
         </div>
         {popup.imageUrl && (
-          <div className="relative z-10 aspect-[16/10] overflow-hidden rounded-3xl border border-[#3f1d20] bg-[#f3f1f1]">
+          <div className="relative z-10 aspect-[16/9] sm:aspect-[16/10] overflow-hidden rounded-3xl border border-[#3f1d20] bg-[#f3f1f1]">
             <Image src={popup.imageUrl} alt="" fill sizes="26rem" className="object-cover" />
           </div>
         )}

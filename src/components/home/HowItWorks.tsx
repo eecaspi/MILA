@@ -14,7 +14,7 @@ export function HowItWorks() {
   return (
     <section aria-labelledby="how">
       <SectionHeading id="how" title="איך זה עובד?" subtitle="שלושה צעדים וזהו" />
-      <ol className="grid grid-cols-3 gap-2 pt-16 sm:gap-4 sm:pt-20 px-9 sm:px-16 xl:pl-[14rem] xl:pr-32 xl:pt-32">
+      <ol className="grid grid-cols-3 gap-2 pt-16 sm:gap-4 sm:pt-20 px-12 sm:px-20 xl:pl-[14rem] xl:pr-32 xl:pt-32">
         {steps.map((s) => (
           <li key={s.n} className="relative">
             {/* Liky holds the step's number. Wide screens: 1 and 3 stand beside the cards, 2 sits on the middle card. */}
@@ -25,7 +25,7 @@ export function HowItWorks() {
                 width={322}
                 height={570}
                 sizes="9rem"
-                className="pointer-events-none absolute bottom-0 left-full -ml-3 h-28 w-auto sm:h-36 xl:ml-2.5 xl:h-[170px]"
+                className="pointer-events-none absolute bottom-0 left-full -ml-3 h-24 w-auto sm:h-36 xl:ml-2.5 xl:h-[170px]"
               />
             )}
             {s.n === "2" && (
@@ -45,7 +45,7 @@ export function HowItWorks() {
                 width={352}
                 height={568}
                 sizes="14rem"
-                className="pointer-events-none absolute bottom-0 right-full -mr-3 h-28 w-auto sm:h-36 xl:mr-1 xl:h-[170px]"
+                className="pointer-events-none absolute bottom-0 right-full -mr-3 h-24 w-auto sm:h-36 xl:mr-1 xl:h-[170px]"
               />
             )}
             <div

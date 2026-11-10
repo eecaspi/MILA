@@ -176,16 +176,6 @@ export default async function LoginPage({ searchParams }: { searchParams: Search
                   </span>
                 </label>
               ))}
-              {siteConfig.community.whatsappUrl && (
-                <a
-                  href={siteConfig.community.whatsappUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="block text-center text-sm font-semibold text-accent hover:underline"
-                >
-                  רוצה להיכנס לקבוצה כבר עכשיו? פתחי בוואטסאפ ←
-                </a>
-              )}
             </fieldset>
           )}
           {mode === "signup" && (

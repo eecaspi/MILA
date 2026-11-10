@@ -14,7 +14,7 @@ export function HowItWorks() {
   return (
     <section aria-labelledby="how">
       <SectionHeading id="how" title="איך זה עובד?" subtitle="שלושה צעדים וזהו" />
-      <ol className="grid grid-cols-3 gap-2 pt-16 sm:gap-4 sm:pt-20 xl:pl-[14rem] xl:pr-32 xl:pt-32">
+      <ol className="grid grid-cols-3 gap-2 pt-16 sm:gap-4 sm:pt-20 px-9 sm:px-16 xl:pl-[14rem] xl:pr-32 xl:pt-32">
         {steps.map((s) => (
           <li key={s.n} className="relative">
             {/* Liky holds the step's number. Wide screens: 1 and 3 stand beside the cards, 2 sits on the middle card. */}
@@ -25,7 +25,7 @@ export function HowItWorks() {
                 width={322}
                 height={570}
                 sizes="9rem"
-                className="pointer-events-none absolute bottom-0 left-full ml-2.5 hidden h-[170px] w-auto xl:block"
+                className="pointer-events-none absolute bottom-0 left-full -ml-3 h-28 w-auto sm:h-36 xl:ml-2.5 xl:h-[170px]"
               />
             )}
             {s.n === "2" && (
@@ -45,20 +45,15 @@ export function HowItWorks() {
                 width={352}
                 height={568}
                 sizes="14rem"
-                className="pointer-events-none absolute bottom-0 right-full mr-1 hidden h-[170px] w-auto xl:block"
+                className="pointer-events-none absolute bottom-0 right-full -mr-3 h-28 w-auto sm:h-36 xl:mr-1 xl:h-[170px]"
               />
             )}
             <div
-              className={`relative z-10 flex h-full flex-col justify-center rounded-2xl bg-surface p-3 text-center shadow-[var(--shadow-card)] sm:rounded-[var(--radius-card)] sm:p-5 max-sm:items-center max-sm:py-4 xl:min-h-[9.5rem] ${
+              className={`relative z-10 flex h-full flex-col justify-center rounded-2xl bg-surface p-3 text-center shadow-[var(--shadow-card)] sm:rounded-[var(--radius-card)] sm:p-5 max-sm:items-center max-sm:py-4 min-h-[6.75rem] sm:min-h-[8rem] xl:min-h-[9.5rem] ${
                 s.n === "2" ? "pt-10 sm:pt-12 xl:justify-end xl:pt-5" : ""
               }`}
             >
-              {s.n !== "2" && (
-                <span className="mx-auto flex size-7 items-center justify-center rounded-full bg-accent-soft font-display text-base font-bold text-accent sm:size-9 sm:text-lg xl:hidden">
-                  {s.n}
-                </span>
-              )}
-              <h3 className="mt-2 text-[15px] font-bold leading-snug text-ink sm:mt-3 sm:text-lg xl:mt-0">{s.title}</h3>
+              <h3 className="text-[14px] font-bold leading-snug text-ink sm:text-lg">{s.title}</h3>
               <p className="mt-1 hidden text-sm leading-snug text-ink-soft sm:block">{s.text}</p>
             </div>
           </li>

@@ -151,11 +151,11 @@ export default async function LoginPage({ searchParams }: { searchParams: Search
           />
           {mode === "signup" && (
             <fieldset className="space-y-2">
-              <legend className="mb-1 text-sm font-semibold text-ink">איך נשארות בקשר?</legend>
+              <legend className="mb-1 text-sm font-semibold text-ink">בואי נשמור על קשר</legend>
               {(
                 [
-                  ["whatsapp", "קבוצת הוואטסאפ של ליקי", "הטבות חדשות ישר לטלפון"],
-                  ["email", "אימייל", "למי שאין וואטסאפ. נוסיף אותך לרשימת העדכונים"],
+                  ["whatsapp", "קבוצת הוואטסאפ של ליקי", "הטבות חדשות ישירות לנייד"],
+                  ["email", "קבוצת המייל של ליקי", "הטבות חדשות ישירות למחשב"],
                 ] as const
               ).map(([value, title, hint]) => (
                 <label

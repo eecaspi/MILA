@@ -104,8 +104,6 @@ export default async function HomePage() {
             id="biz"
             title="המותגים המועדפים על ליקי"
             subtitle="מותגים ועסקים שכדאי לכן להכיר."
-            href="/businesses"
-            linkLabel="לכל העסקים"
           />
           <ul className="-mx-4 flex snap-x snap-mandatory gap-3 overflow-x-auto px-4 pb-2 [scrollbar-width:none] md:mx-0 md:grid md:grid-cols-2 md:gap-4 md:overflow-visible md:px-0 md:pb-0 lg:grid-cols-3 [&::-webkit-scrollbar]:hidden">
             {businesses.slice(0, 3).map((b, i) => (
@@ -116,6 +114,11 @@ export default async function HomePage() {
               </li>
             ))}
           </ul>
+          <p className="mt-5 text-center">
+            <Link href="/businesses" className="btn-secondary !px-8 !py-3 text-lg">
+              בואי לראות את כל העסקים ←
+            </Link>
+          </p>
         </section>
 
         {/* החברות של ליקי */}

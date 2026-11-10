@@ -21,17 +21,16 @@ export function CommunityInvite() {
         aria-hidden
         className="pointer-events-none absolute -start-12 -bottom-20 size-52 rounded-full bg-gold/30 blur-3xl"
       />
-      <div className="relative mx-auto flex max-w-4xl flex-col items-center md:flex-row md:justify-between md:gap-8 md:text-start">
-        <div className="relative hidden aspect-[4/3] w-44 shrink-0 overflow-hidden rounded-2xl bg-white md:block lg:w-52">
-          <Image
-            src="/brand/liky-community.jpg"
-            alt="ליקי מחזיקה שקית של האתר"
-            fill
-            sizes="208px"
-            className="object-cover object-[50%_20%]"
-          />
-        </div>
-        <div className="md:flex-1">
+      <div className="relative mx-auto flex max-w-5xl flex-col items-center md:flex-row md:items-center md:justify-between md:gap-8 md:text-start">
+        <Image
+          src="/brand/liky-community-icons.webp"
+          alt="ליקי עם סמל של וואטסאפ וסמל של מייל"
+          width={640}
+          height={474}
+          sizes="224px"
+          className="hidden h-auto w-44 shrink-0 self-end md:-mb-6 md:block lg:w-56"
+        />
+        <div className="min-w-0 md:flex-1">
         <p className="eyebrow">הקהילה של ליקי</p>
         <h2 id="community-title" className="mt-1 text-xl text-ink sm:mt-1 sm:text-2xl md:text-2xl">
           הטבות חדשות ישר אלייך
@@ -40,13 +39,13 @@ export function CommunityInvite() {
           בוואטסאפ או במייל, בלי ספאם. את בוחרת איפה נוח לך.
         </p>
         </div>
-        <div className="mt-3 flex flex-wrap items-center justify-center gap-2 md:mt-0 md:shrink-0">
+        <div className="mt-3 flex flex-wrap items-center justify-center gap-2 md:mt-0 md:w-64 md:shrink-0 md:flex-col md:items-stretch">
           {url ? (
             <a
               href={url}
               target="_blank"
               rel="noopener noreferrer"
-              className="btn-primary inline-flex items-center gap-2 !px-5 !py-2 text-sm sm:!px-7 sm:!py-3 sm:text-base"
+              className="btn-primary inline-flex items-center justify-center gap-2 !px-5 !py-2 text-sm sm:!px-7 sm:!py-3 sm:text-base"
             >
               <WhatsAppIcon className="size-5" />
               הצטרפי לקהילה בוואטסאפ

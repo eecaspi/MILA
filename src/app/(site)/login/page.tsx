@@ -71,9 +71,9 @@ export default async function LoginPage({ searchParams }: { searchParams: Search
       </div>
 
       {mode === "signup" && (
-        <ol className="mb-2 flex justify-center gap-4 text-center text-xs text-ink-soft">
+        <ol className="mb-3 flex items-start gap-2 pe-24 text-center text-[11px] leading-tight text-ink-soft sm:pe-32 sm:text-xs">
           {["נרשמות", "מצטרפות לקבוצה (אם בחרת וואטסאפ)", "הקודים מופיעים באתר"].map((t, i) => (
-            <li key={t} className="flex flex-1 flex-col items-center gap-1">
+            <li key={t} className="flex flex-1 flex-col items-center gap-1.5">
               <span className="flex size-7 items-center justify-center rounded-full bg-accent text-sm font-bold text-on-accent">
                 {i + 1}
               </span>
@@ -84,7 +84,7 @@ export default async function LoginPage({ searchParams }: { searchParams: Search
       )}
 
       <div
-        className={`relative space-y-4 rounded-[var(--radius-card)] bg-surface p-6 shadow-[var(--shadow-card)] ${mode === "signup" ? "mt-28 pt-20" : ""}`}
+        className={`relative space-y-4 rounded-[var(--radius-card)] bg-surface p-6 shadow-[var(--shadow-card)] ${mode === "signup" ? "pt-20" : ""}`}
       >
         {mode === "signup" && (
           <Image
@@ -93,7 +93,7 @@ export default async function LoginPage({ searchParams }: { searchParams: Search
             width={506}
             height={840}
             priority
-            className="pointer-events-none absolute bottom-full left-3 z-10 mb-0! h-40 w-auto translate-y-[41%] sm:left-6"
+            className="pointer-events-none absolute bottom-full left-3 z-10 mb-0! h-36 w-auto translate-y-[41%] sm:left-6 sm:h-40"
           />
         )}
         {signupOpen && (

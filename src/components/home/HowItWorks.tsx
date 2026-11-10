@@ -14,7 +14,7 @@ export function HowItWorks() {
   return (
     <section aria-labelledby="how">
       <SectionHeading id="how" title="איך זה עובד?" subtitle="שלושה צעדים וזהו" />
-      <ol className="grid grid-cols-3 gap-2 pt-16 sm:gap-4 sm:pt-20 xl:pl-[13.5rem] xl:pr-36">
+      <ol className="grid grid-cols-3 gap-2 pt-16 sm:gap-4 sm:pt-20 xl:pl-[14rem] xl:pr-32 xl:pt-32">
         {steps.map((s) => (
           <li key={s.n} className="relative">
             {/* Liky holds the step's number. Wide screens: 1 and 3 stand beside the cards, 2 sits on the middle card. */}
@@ -25,7 +25,7 @@ export function HowItWorks() {
                 width={444}
                 height={800}
                 sizes="9rem"
-                className="pointer-events-none absolute bottom-0 left-full ml-3 hidden h-56 w-auto xl:block"
+                className="pointer-events-none absolute bottom-0 left-full ml-2.5 hidden h-[190px] w-auto xl:block"
               />
             )}
             {s.n === "2" && (
@@ -35,7 +35,7 @@ export function HowItWorks() {
                 width={418}
                 height={800}
                 sizes="8rem"
-                className="pointer-events-none absolute bottom-full right-3 z-20 h-28 w-auto translate-y-[38%] sm:right-6 sm:h-36 xl:right-8 xl:h-40"
+                className="pointer-events-none absolute bottom-full right-3 z-20 h-28 w-auto translate-y-[34%] sm:right-6 sm:h-36 xl:right-6 xl:h-[184px]"
               />
             )}
             {s.n === "3" && (
@@ -45,12 +45,12 @@ export function HowItWorks() {
                 width={800}
                 height={583}
                 sizes="14rem"
-                className="pointer-events-none absolute bottom-0 right-full mr-3 hidden h-36 w-auto xl:block"
+                className="pointer-events-none absolute bottom-0 right-full mr-1 hidden h-[155px] w-auto xl:block"
               />
             )}
             <div
-              className={`relative z-10 flex h-full flex-col justify-center rounded-2xl bg-surface p-3 text-center shadow-[var(--shadow-card)] sm:rounded-[var(--radius-card)] sm:p-5 max-sm:items-center max-sm:py-4 ${
-                s.n === "2" ? "pt-10 sm:pt-12 xl:pt-12" : ""
+              className={`relative z-10 flex h-full flex-col justify-center rounded-2xl bg-surface p-3 text-center shadow-[var(--shadow-card)] sm:rounded-[var(--radius-card)] sm:p-5 max-sm:items-center max-sm:py-4 xl:min-h-[9.5rem] ${
+                s.n === "2" ? "pt-10 sm:pt-12 xl:justify-end xl:pt-5" : ""
               }`}
             >
               {s.n !== "2" && (

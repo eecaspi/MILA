@@ -43,27 +43,7 @@ export default async function LoginPage({ searchParams }: { searchParams: Search
   );
 
   return (
-    <div className="relative mx-auto max-w-md px-4 py-12">
-      {mode === "signup" && (
-        <Image
-          src="/brand/liky-box-bust.webp"
-          alt="ליקי פותחת קופסת הפתעה"
-          width={333}
-          height={400}
-          priority
-          className="pointer-events-none mx-auto -mb-4 h-auto w-36 lg:hidden"
-        />
-      )}
-      {mode === "signup" && (
-        <Image
-          src="/brand/liky-box.webp"
-          alt=""
-          aria-hidden
-          width={314}
-          height={900}
-          className="pointer-events-none absolute left-full top-40 ml-8 hidden h-[26rem] w-auto lg:block"
-        />
-      )}
+    <div className="mx-auto max-w-md px-4 py-12">
       <div className="mb-8 text-center">
         <p className="eyebrow">{signupOpen ? "מועדון ליקי" : "כניסה לצוות ליקי"}</p>
         <h1 className="mt-2 text-3xl text-ink">
@@ -79,7 +59,7 @@ export default async function LoginPage({ searchParams }: { searchParams: Search
       </div>
 
       {mode === "signup" && (
-        <ol className="mb-4 flex justify-center gap-4 text-center text-xs text-ink-soft">
+        <ol className="mb-2 flex justify-center gap-4 text-center text-xs text-ink-soft">
           {["נרשמות", "מצטרפות לקבוצה (אם בחרת וואטסאפ)", "הקודים מופיעים באתר"].map((t, i) => (
             <li key={t} className="flex flex-1 flex-col items-center gap-1">
               <span className="flex size-7 items-center justify-center rounded-full bg-accent text-sm font-bold text-on-accent">
@@ -91,7 +71,19 @@ export default async function LoginPage({ searchParams }: { searchParams: Search
         </ol>
       )}
 
-      <div className="space-y-4 rounded-[var(--radius-card)] bg-surface p-6 shadow-[var(--shadow-card)]">
+      <div
+        className={`relative space-y-4 rounded-[var(--radius-card)] bg-surface p-6 shadow-[var(--shadow-card)] ${mode === "signup" ? "mt-32" : ""}`}
+      >
+        {mode === "signup" && (
+          <Image
+            src="/brand/liky-box.webp"
+            alt="ליקי פותחת קופסת הפתעה"
+            width={314}
+            height={900}
+            priority
+            className="pointer-events-none absolute bottom-[calc(100%-6px)] right-10 mb-0! h-36 w-auto"
+          />
+        )}
         {signupOpen && (
           <nav aria-label="סוג כניסה" className="flex gap-1 rounded-full bg-raised p-1">
             {tab("login", "כניסה")}

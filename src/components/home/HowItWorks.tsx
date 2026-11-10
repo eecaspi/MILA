@@ -25,7 +25,7 @@ export function HowItWorks() {
                 width={444}
                 height={800}
                 sizes="9rem"
-                className="pointer-events-none absolute bottom-0 left-full ml-2.5 hidden h-[190px] w-auto xl:block"
+                className="pointer-events-none absolute bottom-0 left-full ml-2.5 hidden h-[150px] w-auto xl:block"
               />
             )}
             {s.n === "2" && (
@@ -45,7 +45,7 @@ export function HowItWorks() {
                 width={800}
                 height={583}
                 sizes="14rem"
-                className="pointer-events-none absolute bottom-0 right-full mr-1 hidden h-[155px] w-auto xl:block"
+                className="pointer-events-none absolute bottom-0 right-full mr-1 hidden h-[122px] w-auto xl:block"
               />
             )}
             <div

@@ -44,7 +44,8 @@ export default async function LoginPage({ searchParams }: { searchParams: Search
 
   return (
     <div className="mx-auto max-w-md px-4 py-12">
-      <div className="mb-8 text-center">
+      <div className={mode === "login" ? "flex items-end gap-2" : "mb-8 text-center"}>
+       <div className={mode === "login" ? "min-w-0 flex-1 self-center pb-6 text-start" : ""}>
         <p className="eyebrow">{signupOpen ? "מועדון ליקי" : "כניסה לצוות ליקי"}</p>
         <h1 className="mt-2 text-3xl text-ink">
           {mode === "signup" ? "בואי להיות חברה שלנו" : "איזה כיף שחזרת!"}
@@ -56,6 +57,17 @@ export default async function LoginPage({ searchParams }: { searchParams: Search
               ? "התחברי ואני אראה לך מה חדש."
               : "מועדון הלקוחות עדיין בעבודה. הכניסה כרגע לצוות בלבד."}
         </p>
+       </div>
+        {mode === "login" && (
+          <Image
+            src="/brand/liky-boxes-stack.webp"
+            alt="ליקי עם ערימת קופסאות"
+            width={474}
+            height={900}
+            priority
+            className="pointer-events-none -mb-px h-44 w-auto shrink-0 self-end"
+          />
+        )}
       </div>
 
       {mode === "signup" && (
@@ -72,18 +84,8 @@ export default async function LoginPage({ searchParams }: { searchParams: Search
       )}
 
       <div
-        className={`relative space-y-4 rounded-[var(--radius-card)] bg-surface p-6 shadow-[var(--shadow-card)] ${mode === "signup" ? "mt-28 pt-20" : "mt-36"}`}
+        className={`relative space-y-4 rounded-[var(--radius-card)] bg-surface p-6 shadow-[var(--shadow-card)] ${mode === "signup" ? "mt-28 pt-20" : ""}`}
       >
-        {mode === "login" && (
-          <Image
-            src="/brand/liky-boxes-stack.webp"
-            alt="ליקי עם ערימת קופסאות"
-            width={474}
-            height={900}
-            priority
-            className="pointer-events-none absolute bottom-full left-6 z-10 mb-0! h-44 w-auto"
-          />
-        )}
         {mode === "signup" && (
           <Image
             src="/brand/liky-sit.webp"

@@ -64,7 +64,7 @@ export function EntryPopup({ popup }: { popup: SitePopup }) {
         </h2>
         {popup.body && <p className="mt-1 whitespace-pre-line text-center text-sm leading-snug text-ink-soft">{popup.body}</p>}
         {/* Liky stands on the picture (a video or a picture without a background looks best). */}
-        <div className={`relative z-10 mx-auto mt-2 h-36 w-40 ${popup.imageUrl ? "-mb-1" : ""}`}>
+        <div className={`relative mx-auto mt-2 h-36 w-40 ${popup.imageUrl ? "-mb-6" : ""}`}>
           {/\.(mp4|webm)$/i.test(likyMedia) ? (
             <video src={likyMedia} autoPlay muted loop playsInline className="absolute inset-0 size-full object-contain object-bottom" />
           ) : (
@@ -72,7 +72,7 @@ export function EntryPopup({ popup }: { popup: SitePopup }) {
           )}
         </div>
         {popup.imageUrl && (
-          <div className="relative aspect-[16/10] overflow-hidden rounded-3xl border border-[#3f1d20] bg-[#f3f1f1]">
+          <div className="relative z-10 aspect-[16/10] overflow-hidden rounded-3xl border border-[#3f1d20] bg-[#f3f1f1]">
             <Image src={popup.imageUrl} alt="" fill sizes="26rem" className="object-cover" />
           </div>
         )}

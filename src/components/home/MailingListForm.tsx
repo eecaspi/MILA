@@ -64,7 +64,7 @@ export function MailingListButton() {
       <button
         type="button"
         onClick={() => ref.current?.showModal()}
-        className="btn-primary inline-flex items-center justify-center gap-2 !px-5 !py-2 text-sm sm:!px-7 sm:!py-3 sm:text-base"
+        className="btn-primary inline-flex items-center justify-center gap-2 whitespace-nowrap !px-5 !py-2 text-sm sm:!px-7 sm:!py-3 sm:text-base md:!px-4"
       >
         <MailIcon className="size-5" />
         הצטרפי לקהילה במייל

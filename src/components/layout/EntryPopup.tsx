@@ -65,17 +65,17 @@ export function EntryPopup({ popup }: { popup: SitePopup }) {
             </h2>
           </div>
           {/* Liky stands small next to the text (a video or a picture without a background looks best). */}
-          <div className="relative size-28 shrink-0 overflow-hidden rounded-2xl bg-[#f3f1f1]">
+          <div className="relative h-36 w-28 shrink-0">
             {/\.(mp4|webm)$/i.test(popup.likyUrl) ? (
-              <video src={popup.likyUrl} autoPlay muted loop playsInline className="absolute inset-0 size-full object-cover object-top" />
+              <video src={popup.likyUrl} autoPlay muted loop playsInline className="absolute inset-0 size-full object-contain object-bottom" />
             ) : (
               <Image
-                src={popup.likyUrl || "/brand/liky-character-bag.jpg"}
+                src={popup.likyUrl || "/brand/liky-pointing.webp"}
                 alt="ליקי"
                 fill
                 sizes="7rem"
                 priority
-                className="object-cover object-top"
+                className="object-contain object-bottom"
               />
             )}
           </div>

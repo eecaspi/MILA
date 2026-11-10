@@ -133,7 +133,8 @@ export function OfferForm({
           >
             <option value="">לא צוין</option>
             <option value="online">אונליין</option>
-            <option value="store">בחנות</option>
+            <option value="store">בחנות בלבד</option>
+            <option value="stores">בחנויות בלבד</option>
             <option value="both">אונליין ובחנות</option>
           </select>
         </Field>

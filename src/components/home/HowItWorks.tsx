@@ -4,16 +4,16 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 import { siteConfig } from "@/config/site";
 
 const steps = [
-  { n: "1", title: "מצטרפות בחינם", text: "נרשמות בדקה, בלי כרטיס אשראי." },
+  { n: "1", title: "מצטרפות בחינם", text: "נרשמות בקלות, ללא אף התחייבות." },
   { n: "2", title: "לוחצות על קוד קופון", text: "בכל הטבה מקבלות קוד קופון להעתקה." },
-  { n: "3", title: "מממשות אצל העסק", text: "מראות או מקלידות את הקוד אצל העסק, לפי התנאים שלו." },
+  { n: "3", title: "מממשות אצל העסק", text: "מימוש ההטבה מתבצע ישירות בבית העסק, באמצעות הצגת הקוד או הזנתו, בהתאם לתנאי המימוש." },
 ] as const;
 
 /** Three plain steps that explain the club to someone who has never seen it. */
 export function HowItWorks() {
   return (
     <section aria-labelledby="how">
-      <SectionHeading id="how" title="איך זה עובד?" subtitle="שלושה צעדים וזהו" />
+      <SectionHeading id="how" title="איך זה עובד?" subtitle="בשלושה צעדים בלבד." />
       <ol className="grid grid-cols-3 gap-2 pt-16 sm:gap-4 sm:pt-20 pr-12 pl-14 sm:px-20 xl:pl-[14rem] xl:pr-32 xl:pt-32">
         {steps.map((s) => (
           <li key={s.n} className="relative">

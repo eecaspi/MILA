@@ -13,6 +13,7 @@ export interface BusinessRow {
   short_description: string | null;
   description: string | null;
   area: string | null;
+  branches?: string | null;
   city: string | null;
   website: string | null;
   phone: string | null;
@@ -51,7 +52,7 @@ export interface OfferRow {
 }
 
 export const BUSINESS_COLUMNS =
-  "id, slug, name, category_slug, short_description, description, area, city, website, phone, source_url, logo_url, cover_url, gallery_urls, tags, status, is_real_business, image_fit";
+  "id, slug, name, category_slug, short_description, description, area, branches, city, website, phone, source_url, logo_url, cover_url, gallery_urls, tags, status, is_real_business, image_fit";
 export const OFFER_COLUMNS =
   "id, business_id, kind, title, description, value_label, valid_until, starts_on, redeem_channel, code_mode, redeem_url, terms, usage_limit, status, created_at, highlight, likey_pick_note, price_label, image_url, image_fit, unlisted";
 
@@ -79,6 +80,7 @@ export function mapBusinessRow(row: BusinessRow): Business | null {
     shortDescription: row.short_description ?? "",
     description: opt(row.description),
     area: opt(row.area) ?? opt(row.city) ?? "",
+    branches: (row.branches ?? "").split("\n").map((b) => b.trim()).filter(Boolean),
     website: opt(row.website),
     phone: opt(row.phone),
     sourceUrl: opt(row.source_url),
@@ -109,7 +111,7 @@ export function mapOfferRow(row: OfferRow): Offer {
     terms: opt(row.terms),
     usageLimit: opt(row.usage_limit),
     redeemChannel:
-      row.redeem_channel === "online" || row.redeem_channel === "store" || row.redeem_channel === "both"
+      row.redeem_channel === "online" || row.redeem_channel === "store" || row.redeem_channel === "stores" || row.redeem_channel === "both"
         ? row.redeem_channel
         : undefined,
     status: row.status,
@@ -165,7 +167,8 @@ export function isUpcoming(startsOn: string | undefined | null, now = new Date()
 
 export const redeemChannelLabel = {
   online: "אונליין",
-  store: "בחנות",
+  store: "בחנות בלבד",
+  stores: "בחנויות בלבד",
   both: "אונליין ובחנות",
 } as const;
 

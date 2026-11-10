@@ -88,6 +88,7 @@ export interface BusinessValues {
   short_description: string;
   description: string;
   area: string;
+  branches: string;
   city: string | null;
   website: string | null;
   phone: string | null;
@@ -120,6 +121,7 @@ export function parseBusinessForm(fd: FormData): Parsed<BusinessValues> {
       short_description: short,
       description: text(fd, "description", 2000),
       area: text(fd, "area", 80),
+      branches: text(fd, "branches", 2000),
       city: orNull(text(fd, "city", 60)),
       website,
       phone: orNull(phone),
@@ -191,7 +193,7 @@ export interface OfferValues {
   description: string;
   valid_until: string | null;
   starts_on: string | null;
-  redeem_channel: "online" | "store" | "both" | null;
+  redeem_channel: "online" | "store" | "stores" | "both" | null;
   code_mode: "fixed" | "personal" | "daily" | "link" | "store";
   redeem_url: string | null;
   terms: string | null;
@@ -273,7 +275,7 @@ export function parseOfferForm(fd: FormData): Parsed<OfferValues> {
       redeem_url: orNull(redeemUrl),
       terms: orNull(text(fd, "terms", 600)),
       usage_limit: orNull(text(fd, "usage_limit", 100)),
-      redeem_channel: channel === "online" || channel === "store" || channel === "both" ? channel : null,
+      redeem_channel: channel === "online" || channel === "store" || channel === "stores" || channel === "both" ? channel : null,
       price_label: orNull(text(fd, "price_label", 60)),
       highlight: fd.get("highlight") === "on",
       unlisted: fd.get("unlisted") === "on",

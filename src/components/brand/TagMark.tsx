@@ -9,6 +9,7 @@ export function TagMark({ size = 40, className }: { size?: number; className?: s
       aria-hidden
       width={size}
       height={size}
+      style={{ objectFit: "contain" }}
       className={className}
     />
   );

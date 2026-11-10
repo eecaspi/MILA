@@ -8,8 +8,8 @@ const files = {
   icon: "/brand/liky-icon.png",
 } as const;
 
-// The full artwork is 900 × 756.
-const FULL_RATIO = 900 / 756;
+// The full artwork is 900 × 719.
+const FULL_RATIO = 900 / 719;
 
 /**
  * The official Liky logo (the red shopping bag), background removed.
@@ -39,7 +39,7 @@ export function Logo({
       <Image
         src={files.icon}
         alt={name}
-        width={height}
+        width={Math.round(height * FULL_RATIO)}
         height={height}
         priority={priority}
         className={className}

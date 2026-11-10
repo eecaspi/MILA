@@ -43,7 +43,7 @@ export default async function DealsPage({ searchParams }: { searchParams: Search
   const found = searchOffers(
     (await getOffers({ category, kind })).filter(
       // "both" can be redeemed either way.
-      (o) => !channel || o.redeemChannel === channel || o.redeemChannel === "both",
+      (o) => !channel || o.redeemChannel === channel || o.redeemChannel === "both" || (channel === "store" && o.redeemChannel === "stores"),
     ),
     q,
     catName,

@@ -13,6 +13,7 @@ export interface BusinessFormValues {
   short_description: string;
   description: string;
   area: string;
+  branches?: string | null;
   city: string | null;
   website: string | null;
   phone: string | null;
@@ -88,6 +89,11 @@ export function BusinessForm({ business }: { business?: BusinessFormValues }) {
         <Field label="אזור" name="area" hint="למשל: בני ברק, ירושלים, משלוחים לכל הארץ">
           <input id="area" name="area" defaultValue={b?.area} className={inputClass} />
         </Field>
+        <div className="sm:col-span-2">
+          <Field label="רשימת סניפים" name="branches" hint="אם יש כמה סניפים: שורה לכל סניף. בעמוד ההטבה תופיע כפתור 'לרשימת הסניפים'">
+            <textarea id="branches" name="branches" rows={5} defaultValue={b?.branches ?? ""} className={inputClass} />
+          </Field>
+        </div>
         <Field label="עיר" name="city">
           <input id="city" name="city" defaultValue={b?.city ?? ""} className={inputClass} />
         </Field>

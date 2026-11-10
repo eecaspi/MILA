@@ -24,7 +24,7 @@ export default async function FavoritesPage() {
         <p className="eyebrow">שמורות אצלך</p>
         <h1 className="mt-1 text-3xl text-ink md:text-4xl">המועדפים שלי</h1>
         <p className="mt-2 text-ink-soft">
-          ההטבות שסימנת בלב. הן נשמרות במכשיר הזה, ואין צורך בחשבון.
+          כל ההטבות שבחרת לשמור, מרוכזות כאן לגישה נוחה בכל רגע.
         </p>
       </header>
       <FavoritesGrid

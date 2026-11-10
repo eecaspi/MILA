@@ -52,7 +52,7 @@ export default async function LoginPage({ searchParams }: { searchParams: Search
         </h1>
         <p className="mt-2 text-ink-soft">
           {mode === "signup"
-            ? "דקה אחת, בלי עלות. אחרי ההרשמה קודי הקופון של העסקים מופיעים לך באתר."
+            ? "דקה אחת, ללא עלות, לאחר ההרשמה קודי הקופון של העסקים יופיעו עבורך באתר."
             : signupOpen
               ? "התחברי ואני אראה לך מה חדש."
               : "מועדון הלקוחות עדיין בעבודה. הכניסה כרגע לצוות בלבד."}
@@ -110,13 +110,26 @@ export default async function LoginPage({ searchParams }: { searchParams: Search
         <form action={mode === "signup" ? signUp : signIn} className="space-y-4">
           <input type="hidden" name="next" value={next} />
           {mode === "signup" && (
-            <Field
-              id="display_name"
-              label="שם פרטי"
-              autoComplete="given-name"
-              placeholder="איך לקרוא לך?"
-              disabled={disabled}
-            />
+            <div className="grid grid-cols-2 gap-3">
+              <Field
+                id="first_name"
+                label="שם פרטי"
+                autoComplete="given-name"
+                required
+                minLength={2}
+                maxLength={40}
+                disabled={disabled}
+              />
+              <Field
+                id="last_name"
+                label="שם משפחה"
+                autoComplete="family-name"
+                required
+                minLength={2}
+                maxLength={40}
+                disabled={disabled}
+              />
+            </div>
           )}
           <Field
             id="email"
@@ -138,11 +151,11 @@ export default async function LoginPage({ searchParams }: { searchParams: Search
           />
           {mode === "signup" && (
             <fieldset className="space-y-2">
-              <legend className="mb-1 text-sm font-semibold text-ink">איך נשארות בקשר?</legend>
+              <legend className="mb-1 text-sm font-semibold text-ink">בואי נשמור על קשר</legend>
               {(
                 [
-                  ["whatsapp", "קבוצת הוואטסאפ של ליקי", "הטבות חדשות ישר לטלפון"],
-                  ["email", "אימייל", "למי שאין וואטסאפ. נוסיף אותך לרשימת העדכונים"],
+                  ["whatsapp", "קבוצת הוואטסאפ של ליקי", "הטבות חדשות ישירות לנייד"],
+                  ["email", "קבוצת המייל של ליקי", "הטבות חדשות ישירות למחשב"],
                 ] as const
               ).map(([value, title, hint]) => (
                 <label
@@ -163,16 +176,6 @@ export default async function LoginPage({ searchParams }: { searchParams: Search
                   </span>
                 </label>
               ))}
-              {siteConfig.community.whatsappUrl && (
-                <a
-                  href={siteConfig.community.whatsappUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="block text-center text-sm font-semibold text-accent hover:underline"
-                >
-                  רוצה להיכנס לקבוצה כבר עכשיו? פתחי בוואטסאפ ←
-                </a>
-              )}
             </fieldset>
           )}
           {mode === "signup" && (
@@ -223,7 +226,7 @@ export default async function LoginPage({ searchParams }: { searchParams: Search
 
       {signupOpen && (
         <p className="mt-6 text-center text-xs text-ink-soft">
-          ההצטרפות חינמית. לא נשלח לך הודעות בוואטסאפ או ב־SMS בלי שאישרת זאת.
+          ההצטרפות חינמית. הודעות וואטסאפ / SMS ישלחו במידה ואישרת.
         </p>
       )}
     </div>

@@ -24,9 +24,10 @@ export function FavoritesGrid({ items }: { items: { id: string; node: React.Reac
   if (mine.length === 0) {
     return (
       <div className="rounded-2xl bg-surface p-8 text-center text-ink-soft">
-        <p>עוד לא שמרת הטבות. לחצי על הלב בכרטיס של הטבה כדי לשמור אותה כאן.</p>
+        <p className="font-display text-lg font-bold text-ink">עוד לא הוספת הטבות למועדפים.</p>
+        <p className="mt-1">ראית הטבה שמצאה חן בעינייך? לחצי על הלב ושמרי אותה כאן לפעם הבאה.</p>
         <Link href="/deals" className="btn-primary mt-5">
-          לכל ההטבות
+          לגלות את ההטבות
         </Link>
       </div>
     );

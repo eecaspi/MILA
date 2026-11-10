@@ -36,7 +36,7 @@ export function CharacterSlide({
         <p className="font-display text-base font-bold leading-tight text-ink sm:text-4xl md:text-5xl">
           {headline}
         </p>
-        <p className="line-clamp-2 text-xs text-ink-soft sm:text-lg">{text}</p>
+        <p className="line-clamp-3 whitespace-pre-line text-xs text-ink-soft sm:line-clamp-none sm:text-lg">{text}</p>
         <Link href={href} className="btn-primary mt-0.5 !px-3 !py-1 text-xs sm:!px-7 sm:!py-3 sm:text-base">
           {cta}
         </Link>

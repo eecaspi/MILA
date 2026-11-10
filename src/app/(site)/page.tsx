@@ -55,9 +55,7 @@ export default async function HomePage() {
           <SectionHeading
             id="best"
             title="מה שווה עכשיו?"
-            subtitle="ההטבות הבולטות, החדשות והאחרונות לפני שהן נגמרות"
-            href="/deals"
-            linkLabel="בואי לראות הכול"
+            subtitle="הטבות שכדאי להכיר, מבצעים חדשים והזדמנויות לזמן מוגבל"
           />
           <NowTabs
             tabs={[
@@ -81,6 +79,11 @@ export default async function HomePage() {
                 ),
               }))}
           />
+          <p className="mt-5 text-center">
+            <Link href="/deals" className="btn-secondary !px-8 !py-3 text-lg">
+              בואי לראות הכול ←
+            </Link>
+          </p>
           {[...now.best, ...now.fresh, ...now.ending, ...now.soon].some((o) => o.status === "demo") && (
             <p className="mt-3 text-xs text-ink-soft">
               הצעות שמסומנות &quot;לדוגמה&quot; הן להמחשה בלבד. הצעות אמיתיות מסומנות &quot;הצעה
@@ -99,8 +102,8 @@ export default async function HomePage() {
         <section aria-labelledby="biz">
           <SectionHeading
             id="biz"
-            title="העסקים שלנו"
-            subtitle="עסקים וארגונים שכדאי להכיר"
+            title="המותגים המועדפים על ליקי"
+            subtitle="מותגים ועסקים שכדאי לכן להכיר."
             href="/businesses"
             linkLabel="לכל העסקים"
           />

@@ -98,7 +98,8 @@ async function remoteImage(url: string | undefined, origin: string, width = 1080
 
 const CHANNEL: Record<string, string> = {
   online: "אונליין",
-  store: "בחנות",
+  store: "בחנות בלבד",
+  stores: "בחנויות בלבד",
   both: "אונליין ובחנות",
 };
 

@@ -51,7 +51,7 @@ export default async function Welcome({
             <div className="mt-5 rounded-2xl bg-accent-soft p-4 text-start">
               <h2 className="text-lg text-ink">נשארות בקשר במייל</h2>
               <p className="mt-1 text-sm text-ink-soft">
-                הוספנו אותך לרשימת העדכונים במייל. תקבלי הטבות חדשות והמלצות, בלי ספאם.
+                הוספנו אותך לרשימת העדכונים במייל. תקבלי הטבות חדשות והמלצות, ללא ספאם.
               </p>
               {whatsapp && (
                 <a

@@ -41,6 +41,8 @@ export interface Business {
   shortDescription: string;
   /** Free-text service area, e.g. "פריסה ארצית" or a city name. */
   area: string;
+  /** Branch list for businesses with several branches, one per entry. */
+  branches?: string[];
   website?: string;
   /** Where the public facts on this listing came from (for internal checking). */
   sourceUrl?: string;
@@ -81,7 +83,7 @@ export interface Offer {
   /** ISO date the offer starts; before it the offer shows as "בקרוב" and gives no code. */
   startsOn?: string;
   /** Where it can be redeemed. */
-  redeemChannel?: "online" | "store" | "both";
+  redeemChannel?: "online" | "store" | "stores" | "both";
   /** "personal": a code made for each member. "daily": the business's code for the day, same for everyone. */
   codeMode?: CodeMode;
   /** For "link" offers: where to go (the business website when empty). */

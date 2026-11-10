@@ -9,6 +9,7 @@ import { AdminShare } from "@/components/deals/AdminShare";
 import { FavoriteButton } from "@/components/deals/FavoriteButton";
 import { OfferImage } from "@/components/deals/OfferImage";
 import { PersonalCode } from "@/components/deals/PersonalCode";
+import { BranchesDialog } from "@/components/deals/BranchesDialog";
 import { RedeemInfo } from "@/components/deals/RedeemInfo";
 import { DemoNotice } from "@/components/ui/DemoNotice";
 import { StatusBadge } from "@/components/ui/StatusBadge";
@@ -82,7 +83,7 @@ export default async function OfferPage({
     <div className="mx-auto max-w-5xl px-4 py-8 md:py-12">
       <TrackView type="offer_view" offerId={offer.id} businessId={offer.business.id} />
       <Link href="/deals" className="text-sm font-semibold text-accent hover:underline">
-        → לכל מה שליקי מצאה
+        → להטבות של ליקי
       </Link>
 
       <div className="mt-6 grid gap-8 md:grid-cols-2">
@@ -178,7 +179,7 @@ export default async function OfferPage({
           <dl className="grid gap-3 rounded-[var(--radius-card)] bg-surface p-5 text-sm shadow-[var(--shadow-card)]">
             {offer.redeemChannel && (
               <div className="flex justify-between gap-3">
-                <dt className="text-ink-soft">מימוש</dt>
+                <dt className="text-ink-soft">אופן מימוש ההטבה</dt>
                 <dd className="font-semibold text-ink">{redeemChannelLabel[offer.redeemChannel]}</dd>
               </div>
             )}
@@ -198,8 +199,14 @@ export default async function OfferPage({
               </div>
             )}
             <div className="flex justify-between gap-3">
-              <dt className="text-ink-soft">איפה</dt>
-              <dd className="font-semibold text-ink">{offer.business.area}</dd>
+              <dt className="text-ink-soft">מיקום המימוש</dt>
+              <dd className="font-semibold text-ink">
+                {offer.business.branches && offer.business.branches.length > 0 ? (
+                  <BranchesDialog branches={offer.business.branches} name={offer.business.name} />
+                ) : (
+                  offer.business.area
+                )}
+              </dd>
             </div>
             {offer.business.website && (
               <div className="flex justify-between gap-3">

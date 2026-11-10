@@ -226,7 +226,7 @@ export default async function LoginPage({ searchParams }: { searchParams: Search
 
       {signupOpen && (
         <p className="mt-6 text-center text-xs text-ink-soft">
-          ההצטרפות חינמית. לא נשלח לך הודעות בוואטסאפ או ב־SMS בלי שאישרת זאת.
+          ההצטרפות חינמית. הודעות וואטסאפ / SMS ישלחו במידה ואישרת.
         </p>
       )}
     </div>

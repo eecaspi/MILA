@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { Logo } from "@/components/brand/Logo";
 import { getSession } from "@/lib/auth/session";
 import { CommunityInvite } from "@/components/home/CommunityInvite";
@@ -54,18 +53,19 @@ export default async function AboutPage() {
         <h2 id="how" className="text-2xl text-ink">
           איך זה עובד
         </h2>
+        <p className="mt-3 text-ink-soft">בשלושה צעדים בלבד.</p>
         <ol className="mt-3 list-decimal space-y-2 ps-5 text-ink-soft">
-          <li>נרשמות בחינם, בלי כרטיס אשראי.</li>
-          <li>קודי הקופון של העסקים מופיעים רק לחברות רשומות.</li>
-          <li>משתמשות בקוד ישירות מול העסק. אנחנו לא מוכרות את המוצרים.</li>
+          <li>
+            <strong className="text-ink">מצטרפות בחינם.</strong> נרשמות בקלות, ללא אף התחייבות.
+          </li>
+          <li>
+            <strong className="text-ink">לוחצות על קוד קופון.</strong> בכל הטבה מקבלות קוד קופון להעתקה.
+          </li>
+          <li>
+            <strong className="text-ink">מממשות אצל העסק.</strong> מימוש ההטבה מתבצע ישירות בבית העסק,
+            באמצעות הצגת הקוד או הזנתו, בהתאם לתנאי המימוש.
+          </li>
         </ol>
-        <p className="mt-4 text-sm text-ink-soft">
-          איך אנחנו פועלות מול העסקים, ומתי ייתכן שיש לנו עמלה, כתוב ב
-          <Link href="/disclosure" className="font-semibold text-accent hover:underline">
-            גילוי הנאות
-          </Link>
-          .
-        </p>
       </section>
 
       {!session && <CommunityInvite />}

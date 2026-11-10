@@ -20,8 +20,7 @@ export default async function AboutPage() {
           <p className="eyebrow">קצת עלינו</p>
           <h1 className="mt-1 text-3xl text-ink md:text-5xl">{siteConfig.brand.slogan}</h1>
           <p className="mt-4 max-w-xl text-lg text-ink-soft">
-            ליקי היא אתר שמרכז במקום אחד הטבות, מבצעים ועסקים מומלצים, וקבוצת וואטסאפ שבה מקבלים עדכונים
-            והמלצות ישר לטלפון.
+            ליקי היא פלטפורמה דיגיטלית למבצעים והטבות, הפונה בעיקר לנשים בציבור החרדי והדתי ופתוחה לכולן.
           </p>
         </div>
         <Logo variant="full" height={200} className="mx-auto" />
@@ -29,17 +28,25 @@ export default async function AboutPage() {
 
       <section aria-labelledby="who" className="rounded-[var(--radius-card)] bg-surface p-6 shadow-[var(--shadow-card)] md:p-8">
         <h2 id="who" className="text-2xl text-ink">
-          מי עומדת מאחורי האתר
+          נעים להכיר, ליקי
         </h2>
         <p className="mt-3 text-ink-soft">
-          את ליקי מובילות אסתי ואסתר תחיה. אנחנו בונות אותה צעד אחרי צעד, כדי שיהיה קל למצוא הטבות
-          טובות מעסקים שכדאי להכיר.
+          באמצעות מערך הפצה בוואטסאפ, בסטטוסים, במייל ובאתר ייעודי, ליקי מרכזת הטבות ממותגים ועסקים
+          נבחרים ומנגישה אותן לקהל צרכני ממוקד.
         </p>
-        <p className="mt-3 text-sm text-ink-soft">
-          מאחורינו עומדת {legal.operatorName} (ח.פ. {legal.companyId}).
+        <h2 id="who-liky" className="mt-8 text-2xl text-ink">
+          ומי זאת ליקי?
+        </h2>
+        <p className="mt-3 text-ink-soft">
+          ליקי היא הדמות שמלווה את הפלטפורמה ומעניקה לה זהות אישית, נגישה ומזוהה. הבחירה בדמות
+          וירטואלית שנוצרה באמצעות AI מאפשרת ליצור פרזנטורית קבועה, תוך שמירה על שפה חזותית צנועה
+          ומותאמת לערכי הקהל החרדי והדתי.
         </p>
         <p className="mt-3 text-ink-soft">
-          ליקי עצמה, הדמות עם השקית האדומה שמלווה אותך באתר, היא דמות שנוצרה בעזרת בינה מלאכותית.
+          כך נוצר שילוב בין חדשנות טכנולוגית, חוויית צרכנות עדכנית ותקשורת אישית בגובה העיניים.
+        </p>
+        <p className="mt-6 text-sm text-ink-soft">
+          מאחורינו עומדת {legal.operatorName} (ח.פ. {legal.companyId}).
         </p>
       </section>
 

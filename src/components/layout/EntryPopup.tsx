@@ -36,7 +36,7 @@ export function EntryPopup({ popup }: { popup: SitePopup }) {
   // No file uploaded in the admin: Liky (without a background) looking at her phone.
   const likyMedia = popup.likyUrl || "/brand/liky-phone.webp";
   const external = /^https?:\/\//.test(popup.linkUrl);
-  const btn = "mt-3 block w-full rounded-full bg-accent px-5 py-3 text-center text-base sm:mt-5 sm:px-6 sm:py-4 sm:text-xl font-bold text-on-accent hover:opacity-90";
+  const btn = "mt-3 block w-full rounded-full border-2 border-accent bg-white px-5 py-3 text-center text-base sm:mt-5 sm:px-6 sm:py-4 sm:text-xl font-bold text-accent hover:bg-accent-soft";
 
   return (
     <dialog

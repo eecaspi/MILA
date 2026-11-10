@@ -59,31 +59,20 @@ export function EntryPopup({ popup }: { popup: SitePopup }) {
             <Image src={popup.logoUrl} alt="" width={320} height={120} sizes="10rem" className="h-full w-auto object-contain" />
           </div>
         )}
-        {popup.body && <p className="mt-3 whitespace-pre-line text-center text-base leading-snug text-ink-soft">{popup.body}</p>}
-        <div className="mt-4 flex items-center gap-3">
-          <div className="min-w-0 flex-1 text-center">
-            <h2 id="entry-popup-title" className="text-3xl font-extrabold leading-tight text-[#3f1d20]">
-              <Title text={popup.title || "חדש בליקי"} />
-            </h2>
-          </div>
-          {/* Liky stands small next to the text (a video or a picture without a background looks best). */}
-          <div className="relative h-36 w-32 shrink-0">
-            {/\.(mp4|webm)$/i.test(likyMedia) ? (
-              <video src={likyMedia} autoPlay muted loop playsInline className="absolute inset-0 size-full object-contain object-bottom" />
-            ) : (
-              <Image
-                src={likyMedia}
-                alt="ליקי"
-                fill
-                sizes="7rem"
-                priority
-                className="object-contain object-bottom"
-              />
-            )}
-          </div>
+        <h2 id="entry-popup-title" className="mt-5 text-2xl font-extrabold leading-tight text-[#3f1d20]">
+          <Title text={popup.title || "חדש בליקי"} />
+        </h2>
+        {popup.body && <p className="mt-1 whitespace-pre-line text-center text-sm leading-snug text-ink-soft">{popup.body}</p>}
+        {/* Liky stands on the picture (a video or a picture without a background looks best). */}
+        <div className={`relative z-10 mx-auto mt-2 h-36 w-40 ${popup.imageUrl ? "-mb-1" : ""}`}>
+          {/\.(mp4|webm)$/i.test(likyMedia) ? (
+            <video src={likyMedia} autoPlay muted loop playsInline className="absolute inset-0 size-full object-contain object-bottom" />
+          ) : (
+            <Image src={likyMedia} alt="ליקי" fill sizes="10rem" priority className="object-contain object-bottom" />
+          )}
         </div>
         {popup.imageUrl && (
-          <div className="relative mt-4 aspect-[16/10] overflow-hidden rounded-3xl bg-[#f3f1f1]">
+          <div className="relative aspect-[16/10] overflow-hidden rounded-3xl border border-[#3f1d20] bg-[#f3f1f1]">
             <Image src={popup.imageUrl} alt="" fill sizes="26rem" className="object-cover" />
           </div>
         )}

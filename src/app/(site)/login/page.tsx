@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { Alert } from "@/components/ui/Alert";
@@ -42,7 +43,27 @@ export default async function LoginPage({ searchParams }: { searchParams: Search
   );
 
   return (
-    <div className="mx-auto max-w-md px-4 py-12">
+    <div className="relative mx-auto max-w-md px-4 py-12">
+      {mode === "signup" && (
+        <Image
+          src="/brand/liky-box-bust.webp"
+          alt="ליקי פותחת קופסת הפתעה"
+          width={333}
+          height={400}
+          priority
+          className="pointer-events-none mx-auto -mb-4 h-auto w-36 lg:hidden"
+        />
+      )}
+      {mode === "signup" && (
+        <Image
+          src="/brand/liky-box.webp"
+          alt=""
+          aria-hidden
+          width={314}
+          height={900}
+          className="pointer-events-none absolute left-full top-40 ml-8 hidden h-[26rem] w-auto lg:block"
+        />
+      )}
       <div className="mb-8 text-center">
         <p className="eyebrow">{signupOpen ? "מועדון ליקי" : "כניסה לצוות ליקי"}</p>
         <h1 className="mt-2 text-3xl text-ink">

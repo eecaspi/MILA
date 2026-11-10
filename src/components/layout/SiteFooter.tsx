@@ -6,12 +6,12 @@ export function SiteFooter() {
   return (
     <footer className="mt-12 border-t sm:mt-24 border-line bg-accent-soft text-ink">
       <div className="mx-auto grid max-w-6xl gap-3 px-4 py-3 sm:gap-10 sm:py-12 md:grid-cols-3">
-        <div className="flex items-center gap-3 sm:block">
+        <div className="flex items-center justify-center gap-3 sm:block">
           <Logo variant="full" height={64} className="!h-12 !w-auto shrink-0 sm:!h-auto" />
-          <p className="max-w-xs text-[11px] leading-snug text-ink-soft sm:mt-4 sm:text-sm">{siteConfig.brand.tagline}</p>
+          <p className="hidden max-w-xs text-sm text-ink-soft sm:mt-4 sm:block">{siteConfig.brand.tagline}</p>
         </div>
 
-        <nav aria-label="ניווט תחתון">
+        <nav aria-label="ניווט תחתון" className="hidden sm:block">
           <p className="mb-1 text-sm font-display font-bold sm:mb-3 sm:text-base">לאן ממשיכים?</p>
           <ul className="flex flex-wrap gap-x-3 gap-y-0.5 text-xs sm:block sm:text-sm sm:space-y-2">
             {siteConfig.nav.map((item) => (
@@ -35,8 +35,8 @@ export function SiteFooter() {
           </ul>
         </nav>
 
-        <div className="text-[11px] leading-snug text-ink-soft sm:text-sm">
-          <p className="mb-0.5 text-xs font-display font-bold text-ink sm:mb-3 sm:text-base">שקיפות מלאה</p>
+        <div className="text-center text-[10px] leading-snug text-ink-soft sm:text-start sm:text-sm">
+          <p className="mb-0.5 hidden font-display font-bold text-ink sm:mb-3 sm:block sm:text-base">שקיפות מלאה</p>
           <p>
             האתר בשלב הרצה. העסקים במדריך מוצגים על סמך מידע פומבי ובלי קשר מסחרי. הצעות שמסומנות
             &quot;לדוגמה&quot; שייכות לעסקים פיקטיביים ואינן ניתנות למימוש.

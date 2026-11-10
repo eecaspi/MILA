@@ -52,7 +52,7 @@ export default async function LoginPage({ searchParams }: { searchParams: Search
         </h1>
         <p className="mt-2 text-ink-soft">
           {mode === "signup"
-            ? "דקה אחת, בלי עלות. אחרי ההרשמה קודי הקופון של העסקים מופיעים לך באתר."
+            ? "דקה אחת, ללא עלות, לאחר ההרשמה קודי הקופון של העסקים יופיעו עבורך באתר."
             : signupOpen
               ? "התחברי ואני אראה לך מה חדש."
               : "מועדון הלקוחות עדיין בעבודה. הכניסה כרגע לצוות בלבד."}

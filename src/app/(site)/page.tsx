@@ -55,7 +55,7 @@ export default async function HomePage() {
           <SectionHeading
             id="best"
             title="מה שווה עכשיו?"
-            subtitle="ההטבות הבולטות, החדשות והאחרונות לפני שהן נגמרות"
+            subtitle="הטבות שכדאי להכיר, מבצעים חדשים והזדמנויות לזמן מוגבל"
             href="/deals"
             linkLabel="בואי לראות הכול"
           />

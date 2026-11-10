@@ -41,7 +41,7 @@ export function CharacterSlide({
           {cta}
         </Link>
       </div>
-      <div className="relative h-full w-[48%] self-end sm:h-full sm:w-[56%] sm:self-auto">
+      <div className="relative h-full w-[48%] origin-top scale-[1.3] self-end max-sm:translate-y-1 sm:h-full sm:w-[56%] sm:scale-100 sm:self-auto">
         <Image
           src={image}
           alt={alt}

@@ -35,7 +35,7 @@ export function HowItWorks() {
                 width={421}
                 height={700}
                 sizes="6rem"
-                className="pointer-events-none absolute bottom-full right-3 z-0 h-24 w-auto translate-y-[46%] sm:right-5 sm:h-32 lg:h-36"
+                className="pointer-events-none absolute bottom-full right-10 z-20 h-24 w-auto translate-y-[46%] sm:right-24 sm:h-32 lg:h-36"
               />
             )}
             {s.n === "3" && (

@@ -19,8 +19,6 @@ function ClockIcon() {
   );
 }
 
-const kindLabel = { deal: "מבצע", coupon: "קופון" } as const;
-
 /**
  * Offer card: image, benefit, business, title, price (only when real), CTA.
  * `layout="row"` is the compact horizontal version used for "מה חדש".
@@ -76,9 +74,6 @@ export function DealCard({
         <OfferImage offer={offer} className="aspect-[4/3]" />
         <span className="absolute start-2 top-2 max-w-[75%] rounded-xl bg-accent px-2.5 py-1 text-base font-extrabold leading-tight text-on-accent shadow-[var(--shadow-soft)] sm:start-3 sm:top-3 sm:rounded-2xl sm:px-4 sm:py-2 sm:text-2xl">
           {offer.valueLabel}
-        </span>
-        <span className="absolute end-3 top-3 rounded-full bg-surface/90 px-2.5 py-1 text-xs font-semibold text-ink">
-          {kindLabel[offer.kind]}
         </span>
         {!isDemo && <FavoriteButton offerId={offer.id} className="absolute bottom-3 end-3 z-10" />}
         {badge && (

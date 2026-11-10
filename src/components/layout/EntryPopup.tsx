@@ -61,7 +61,7 @@ export function EntryPopup({ popup }: { popup: SitePopup }) {
         )}
         {popup.body && <p className="mt-3 whitespace-pre-line text-center text-base leading-snug text-ink-soft">{popup.body}</p>}
         <div className="mt-4 flex items-center gap-3">
-          <div className="min-w-0 flex-1 text-start">
+          <div className="min-w-0 flex-1 text-center">
             <h2 id="entry-popup-title" className="text-3xl font-extrabold leading-tight text-[#3f1d20]">
               <Title text={popup.title || "חדש בליקי"} />
             </h2>

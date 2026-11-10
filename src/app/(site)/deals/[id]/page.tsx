@@ -178,7 +178,7 @@ export default async function OfferPage({
           <dl className="grid gap-3 rounded-[var(--radius-card)] bg-surface p-5 text-sm shadow-[var(--shadow-card)]">
             {offer.redeemChannel && (
               <div className="flex justify-between gap-3">
-                <dt className="text-ink-soft">מימוש</dt>
+                <dt className="text-ink-soft">אופן מימוש ההטבה</dt>
                 <dd className="font-semibold text-ink">{redeemChannelLabel[offer.redeemChannel]}</dd>
               </div>
             )}
@@ -198,7 +198,7 @@ export default async function OfferPage({
               </div>
             )}
             <div className="flex justify-between gap-3">
-              <dt className="text-ink-soft">איפה</dt>
+              <dt className="text-ink-soft">מיקום המימוש</dt>
               <dd className="font-semibold text-ink">{offer.business.area}</dd>
             </div>
             {offer.business.website && (

@@ -22,10 +22,10 @@ export function HowItWorks() {
               <Image
                 src="/brand/liky-num-1.webp"
                 alt="ליקי ליד הספרה 1"
-                width={444}
-                height={800}
+                width={322}
+                height={570}
                 sizes="9rem"
-                className="pointer-events-none absolute bottom-0 left-full ml-2.5 hidden h-[150px] w-auto xl:block"
+                className="pointer-events-none absolute bottom-0 left-full ml-2.5 hidden h-[170px] w-auto xl:block"
               />
             )}
             {s.n === "2" && (
@@ -42,10 +42,10 @@ export function HowItWorks() {
               <Image
                 src="/brand/liky-num-3.webp"
                 alt="ליקי דוחפת את הספרה 3"
-                width={800}
-                height={583}
+                width={352}
+                height={568}
                 sizes="14rem"
-                className="pointer-events-none absolute bottom-0 right-full mr-1 hidden h-[122px] w-auto xl:block"
+                className="pointer-events-none absolute bottom-0 right-full mr-1 hidden h-[170px] w-auto xl:block"
               />
             )}
             <div

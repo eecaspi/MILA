@@ -28,7 +28,7 @@ export function CommunityInvite() {
           width={640}
           height={474}
           sizes="224px"
-          className="hidden h-auto w-44 shrink-0 self-end md:-mb-6 md:block lg:w-56"
+          className="-mt-2 mb-1 h-auto w-32 shrink-0 md:mb-0 md:w-44 md:self-end md:-mb-6 lg:w-56"
         />
         <div className="min-w-0 md:flex-1">
         <p className="eyebrow">הקהילה של ליקי</p>

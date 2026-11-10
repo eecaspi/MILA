@@ -102,8 +102,8 @@ export default async function HomePage() {
         <section aria-labelledby="biz">
           <SectionHeading
             id="biz"
-            title="העסקים שלנו"
-            subtitle="עסקים וארגונים שכדאי להכיר"
+            title="המותגים המועדפים על ליקי"
+            subtitle="מותגים ועסקים שכדאי לכן להכיר."
             href="/businesses"
             linkLabel="לכל העסקים"
           />

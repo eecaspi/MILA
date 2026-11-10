@@ -86,7 +86,7 @@ export function MailingListButton() {
           </button>
         </div>
         <p className="mb-3 text-sm text-ink-soft">
-          חברות בקהילה במייל מקבלות הטבות חדשות ישר לתיבת המייל, בלי ספאם.
+          חברות בקהילה במייל מקבלות הטבות חדשות ישר לתיבת המייל, ללא ספאם.
         </p>
         <MailingListForm />
       </dialog>

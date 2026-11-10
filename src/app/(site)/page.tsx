@@ -56,8 +56,6 @@ export default async function HomePage() {
             id="best"
             title="מה שווה עכשיו?"
             subtitle="הטבות שכדאי להכיר, מבצעים חדשים והזדמנויות לזמן מוגבל"
-            href="/deals"
-            linkLabel="בואי לראות הכול"
           />
           <NowTabs
             tabs={[
@@ -81,6 +79,11 @@ export default async function HomePage() {
                 ),
               }))}
           />
+          <p className="mt-5 text-center">
+            <Link href="/deals" className="btn-secondary !px-8 !py-3 text-lg">
+              בואי לראות הכול ←
+            </Link>
+          </p>
           {[...now.best, ...now.fresh, ...now.ending, ...now.soon].some((o) => o.status === "demo") && (
             <p className="mt-3 text-xs text-ink-soft">
               הצעות שמסומנות &quot;לדוגמה&quot; הן להמחשה בלבד. הצעות אמיתיות מסומנות &quot;הצעה

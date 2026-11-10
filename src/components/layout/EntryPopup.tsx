@@ -34,7 +34,7 @@ export function EntryPopup({ popup }: { popup: SitePopup }) {
   const close = () => ref.current?.close();
 
   // No file uploaded in the admin: Liky (without a background) looking at her phone.
-  const likyMedia = popup.likyUrl || "/brand/liky-phone.webm";
+  const likyMedia = popup.likyUrl || "/brand/liky-phone.webp";
   const external = /^https?:\/\//.test(popup.linkUrl);
   const btn = "mt-3 block w-full rounded-full bg-accent px-5 py-3 text-center text-base sm:mt-5 sm:px-6 sm:py-4 sm:text-xl font-bold text-on-accent hover:opacity-90";
 
@@ -68,7 +68,7 @@ export function EntryPopup({ popup }: { popup: SitePopup }) {
           {/\.(mp4|webm)$/i.test(likyMedia) ? (
             <video src={likyMedia} autoPlay muted loop playsInline className="absolute inset-0 size-full object-contain object-bottom" />
           ) : (
-            <Image src={likyMedia} alt="ליקי" fill sizes="10rem" priority className="object-contain object-bottom" />
+            <Image src={likyMedia} alt="ליקי" fill sizes="10rem" priority unoptimized className="object-contain object-bottom" />
           )}
         </div>
         {popup.imageUrl && (

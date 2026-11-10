@@ -30,11 +30,11 @@ export function CategoryTiles() {
   }
 
   const arrow =
-    "flex size-9 items-center justify-center rounded-full border border-ink/70 bg-surface text-ink transition-colors hover:bg-accent-soft";
+    "flex size-8 items-center md:size-9 justify-center rounded-full border border-ink/70 bg-surface text-ink transition-colors hover:bg-accent-soft";
 
   return (
     <div>
-      <div className="mb-3 hidden items-center justify-start gap-2 md:flex" dir="ltr">
+      <div className="mb-2 flex items-center justify-start gap-2 md:mb-3" dir="ltr">
         <button type="button" onClick={() => scroll(1)} aria-label="לקטגוריות הבאות" className={arrow}>
           <Chevron dir="next" />
         </button>
@@ -44,14 +44,14 @@ export function CategoryTiles() {
       </div>
       <ul
         ref={strip}
-        className="-mx-4 flex snap-x snap-mandatory gap-3 overflow-x-auto scroll-smooth px-4 pb-2 md:mx-0 md:px-0 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+        className="-mx-4 flex snap-x snap-mandatory gap-2 sm:gap-3 overflow-x-auto scroll-smooth px-4 pb-2 md:mx-0 md:px-0 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
       >
         {categories.map((c) => (
-          <li key={c.slug} className="w-[31%] shrink-0 snap-start sm:w-[22%] md:w-[17%] lg:w-[13.5%]">
+          <li key={c.slug} className="w-[23%] shrink-0 snap-start sm:w-[22%] md:w-[17%] lg:w-[13.5%]">
             <Link
               href={`/businesses?category=${c.slug}`}
               aria-label={c.name}
-              className="lift block overflow-hidden rounded-3xl border border-line bg-surface"
+              className="lift block overflow-hidden rounded-2xl sm:rounded-3xl border border-line bg-surface"
             >
               {c.image ? (
                 <Image
@@ -59,12 +59,12 @@ export function CategoryTiles() {
                   alt={c.name}
                   width={400}
                   height={400}
-                  sizes="(min-width: 1024px) 14vw, (min-width: 768px) 17vw, (min-width: 640px) 22vw, 31vw"
+                  sizes="(min-width: 1024px) 14vw, (min-width: 768px) 17vw, (min-width: 640px) 22vw, 23vw"
                   className="aspect-square w-full object-cover"
                 />
               ) : (
-                <span className="flex aspect-square flex-col items-center justify-center gap-2 font-display text-sm font-bold text-ink">
-                  <CategoryIcon slug={c.slug} className="size-8 text-accent" />
+                <span className="flex aspect-square flex-col items-center justify-center gap-1 px-1 text-center font-display text-[11px] font-bold leading-tight text-ink sm:gap-2 sm:text-sm">
+                  <CategoryIcon slug={c.slug} className="size-6 text-accent sm:size-8" />
                   {c.name}
                 </span>
               )}

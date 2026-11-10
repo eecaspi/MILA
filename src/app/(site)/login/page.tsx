@@ -72,8 +72,18 @@ export default async function LoginPage({ searchParams }: { searchParams: Search
       )}
 
       <div
-        className={`relative space-y-4 rounded-[var(--radius-card)] bg-surface p-6 shadow-[var(--shadow-card)] ${mode === "signup" ? "mt-28 pt-20" : ""}`}
+        className={`relative space-y-4 rounded-[var(--radius-card)] bg-surface p-6 shadow-[var(--shadow-card)] ${mode === "signup" ? "mt-28 pt-20" : "mt-36"}`}
       >
+        {mode === "login" && (
+          <Image
+            src="/brand/liky-boxes-stack.webp"
+            alt="ליקי עם ערימת קופסאות"
+            width={474}
+            height={900}
+            priority
+            className="pointer-events-none absolute bottom-full right-6 z-10 mb-0! h-44 w-auto"
+          />
+        )}
         {mode === "signup" && (
           <Image
             src="/brand/liky-sit.webp"

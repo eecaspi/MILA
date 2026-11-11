@@ -81,13 +81,13 @@ export function ChatSlide({
       </div>
       <div
         key={playing ? "on" : "off"}
-        className="absolute right-6 top-6 z-10 flex w-[46%] flex-col gap-1.5 sm:right-24 sm:top-14 sm:w-[36%] sm:gap-3"
+        className="absolute right-5 top-4 z-10 flex w-[42%] flex-col gap-1 sm:right-24 sm:top-14 sm:w-[36%] sm:gap-3"
       >
         {bubbles.map((b, i) => (
           <p
             key={i}
             style={{ animationName: `chat-bubble-${i}` }}
-            className={`chat-bubble w-fit max-w-full rounded-2xl px-3 py-1.5 text-[11px] leading-snug shadow-sm sm:px-5 sm:py-3 sm:text-xl ${
+            className={`chat-bubble w-fit max-w-full rounded-2xl px-2.5 py-1 text-[10px] leading-snug shadow-sm sm:px-5 sm:py-3 sm:text-xl ${
               i === 0
                 ? "self-start rounded-ss-sm bg-white font-bold text-accent sm:text-3xl"
                 : i % 2 === 1
@@ -101,7 +101,7 @@ export function ChatSlide({
         <Link
           href={href}
           style={{ animationName: `chat-bubble-${bubbles.length}` }}
-          className="chat-bubble btn-primary mt-1 w-fit self-start !px-4 !py-1.5 text-[11px] sm:mt-2 sm:!px-8 sm:!py-3 sm:text-xl"
+          className="chat-bubble btn-primary mt-1.5 w-fit self-start !px-5 !py-2 text-sm font-bold sm:mt-2 sm:!px-8 sm:!py-3 sm:text-xl"
         >
           {ctaLabel}
         </Link>

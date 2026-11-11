@@ -17,6 +17,8 @@ interface Row {
   headline: string | null;
   body: string | null;
   button_label: string | null;
+  button2_label?: string | null;
+  link2_url?: string | null;
   caption_pos: string | null;
   media_scale: number | null;
   mobile_url: string | null;
@@ -27,7 +29,7 @@ export default async function AdminBanners() {
   const supabase = await createClient();
   const { data, error } = await supabase
     .from("banners")
-    .select("id, media_url, media_type, title, link_url, sort_order, is_published, layout, headline, body, button_label, caption_pos, media_scale, mobile_url, mobile_scale")
+    .select("id, media_url, media_type, title, link_url, sort_order, is_published, layout, headline, body, button_label, button2_label, link2_url, caption_pos, media_scale, mobile_url, mobile_scale")
     .order("sort_order")
     .order("created_at", { ascending: false });
   const rows = (data ?? []) as Row[];

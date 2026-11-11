@@ -60,6 +60,8 @@ export interface BannerValues {
   headline: string | null;
   body: string | null;
   button_label: string | null;
+  button2_label: string | null;
+  link2_url: string | null;
   caption_pos: CaptionPos;
   media_scale: number;
   mobile_url: string;
@@ -119,6 +121,8 @@ export function parseBannerForm(fd: FormData, supabaseUrl: string): BannerParse 
   if (!LAYOUTS.some((l) => l.value === layoutRaw)) errors.layout = "סוג תצוגה לא מוכר";
   const link = safeLink(field(fd, "link_url", 300));
   if (link === undefined) errors.link_url = "הקישור צריך להתחיל ב־/ (עמוד באתר) או ב־https://";
+  const link2 = safeLink(field(fd, "link2_url", 300));
+  if (link2 === undefined) errors.link2_url = "הקישור של הכפתור השני צריך להתחיל ב־/ (עמוד באתר) או ב־https://";
   const sortRaw = field(fd, "sort_order", 6);
   const sort = sortRaw === "" ? 0 : Number(sortRaw);
   if (!Number.isInteger(sort) || sort < -999 || sort > 999) errors.sort_order = "מספר שלם בין -999 ל־999";
@@ -136,6 +140,8 @@ export function parseBannerForm(fd: FormData, supabaseUrl: string): BannerParse 
       headline: field(fd, "headline", 80) || null,
       body: field(fd, "body", 600) || null,
       button_label: field(fd, "button_label", 30) || null,
+      button2_label: field(fd, "button2_label", 30) || null,
+      link2_url: link2 ?? null,
       media_scale: toMediaScale(field(fd, "media_scale", 3) || 100),
       mobile_url,
       mobile_scale: toMediaScale(field(fd, "mobile_scale", 3) || 100),

@@ -15,6 +15,8 @@ export function BannerTextFields({
     body: string | null;
     button_label: string | null;
     link_url: string | null;
+    button2_label?: string | null;
+    link2_url?: string | null;
     caption_pos?: string | null;
     media_scale?: number | null;
     mobile_scale?: number | null;
@@ -73,6 +75,22 @@ export function BannerTextFields({
         <span className="mt-1 block text-xs text-ink-soft">
           לחיצה בשדה פותחת רשימה של עמודי האתר וההטבות. אפשר גם להדביק כתובת שמתחילה ב־https.
         </span>
+      </label>
+      <label className="block">
+        <span className="mb-1 block text-xs font-semibold text-ink-soft">כפתור שני (לא חובה, מוצג ליד הראשון בבאנר עם ליקי והטקסט לצידה): כיתוב</span>
+        <input name="button2_label" defaultValue={values?.button2_label ?? ""} maxLength={30} className={inputClass} />
+      </label>
+      <label className="block">
+        <span className="mb-1 block text-xs font-semibold text-ink-soft">קישור הכפתור השני</span>
+        <input
+          name="link2_url"
+          dir="ltr"
+          defaultValue={values?.link2_url ?? ""}
+          placeholder="בחרי מהרשימה או הדביקי כתובת"
+          list={listId}
+          autoComplete="off"
+          className={inputClass}
+        />
       </label>
       <label className="block">
         <span className="mb-1 block text-xs font-semibold text-ink-soft">מיקום הכיתוב והכפתור: צד</span>

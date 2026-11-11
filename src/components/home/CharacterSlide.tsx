@@ -13,6 +13,8 @@ export function CharacterSlide({
   text,
   href,
   cta,
+  cta2,
+  href2,
   imageFirst = false,
   priority = false,
 }: {
@@ -22,6 +24,9 @@ export function CharacterSlide({
   text: string;
   href: string;
   cta: string;
+  /** An optional second button, shown next to the first. */
+  cta2?: string;
+  href2?: string;
   /** Put the picture on the start side (right) and the words on the other. */
   imageFirst?: boolean;
   priority?: boolean;
@@ -37,9 +42,19 @@ export function CharacterSlide({
           {headline}
         </p>
         <p className="whitespace-pre-line text-[11px] leading-snug text-ink-soft sm:text-xl md:text-2xl">{text}</p>
-        <Link href={href} className="btn-primary mt-0.5 !px-3 !py-1 text-xs sm:!px-9 sm:!py-4 sm:text-xl">
-          {cta}
-        </Link>
+        <div className="mt-0.5 flex flex-wrap items-center gap-1.5 sm:gap-3">
+          <Link href={href} className="btn-primary !px-3 !py-1 text-xs sm:!px-9 sm:!py-4 sm:text-xl">
+            {cta}
+          </Link>
+          {cta2 && href2 ? (
+            <Link
+              href={href2}
+              className="btn-secondary border-2 border-accent !px-3 !py-1 text-xs sm:!px-9 sm:!py-4 sm:text-xl"
+            >
+              {cta2}
+            </Link>
+          ) : null}
+        </div>
       </div>
       <div className={`relative h-full w-[76%] shrink-0 self-end sm:m-0 sm:h-full sm:w-[50%] sm:self-end ${imageFirst ? "-me-[16%]" : "-ms-[16%]"}`}>
         <Image

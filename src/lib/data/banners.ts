@@ -18,6 +18,8 @@ export interface HomeBanner {
   text?: string;
   cta?: string;
   link?: string;
+  cta2?: string;
+  link2?: string;
 }
 
 /** The Liky slides, used only when the banners can't be read from the database at all. */
@@ -62,6 +64,8 @@ function toBanner(r: Row): HomeBanner {
     text: s("body"),
     cta: s("button_label"),
     link: s("link_url"),
+    cta2: s("button2_label"),
+    link2: s("link2_url"),
   };
 }
 
@@ -69,6 +73,14 @@ async function fetchBanners(): Promise<HomeBanner[]> {
   const supabase = createPublicClient();
   if (!supabase) return defaults;
   const order = { ascending: true };
+  const withSecond = await supabase
+    .from("banners")
+    .select("id, media_url, media_type, title, link_url, layout, headline, body, button_label, button2_label, link2_url, caption_pos, media_scale, mobile_url, mobile_scale")
+    .order("sort_order", order)
+    .order("created_at", { ascending: false })
+    .limit(12);
+  if (!withSecond.error && withSecond.data) return withSecond.data.map(toBanner);
+
   const full = await supabase
     .from("banners")
     .select("id, media_url, media_type, title, link_url, layout, headline, body, button_label, caption_pos, media_scale, mobile_url, mobile_scale")

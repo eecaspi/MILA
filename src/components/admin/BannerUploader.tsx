@@ -51,7 +51,7 @@ export function BannerUploader({ linkOptions }: { linkOptions: LinkOption[] }) {
       uploadedPaths.push(m.path);
       data.set("mobile_url", m.url);
     }
-    for (const k of ["layout", "headline", "body", "button_label", "title", "link_url", "sort_order", "caption_side", "caption_vert", "media_scale", "mobile_scale"]) {
+    for (const k of ["layout", "headline", "body", "button_label", "button2_label", "link2_url", "title", "link_url", "sort_order", "caption_side", "caption_vert", "media_scale", "mobile_scale"]) {
       data.set(k, String(fd.get(k) ?? ""));
     }
     const result = await createBanner(data);

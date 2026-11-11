@@ -57,6 +57,13 @@ test("brand pictures and layouts", () => {
     assert.equal(ok.values.headline, "היי");
     assert.equal(ok.values.button_label, "לחצי");
   }
+  const two = parseBannerForm(form({ media_url: file, media_type: "image", button2_label: "עוד", link2_url: "/deals" }), base);
+  assert.ok(two.ok);
+  if (two.ok) {
+    assert.equal(two.values.button2_label, "עוד");
+    assert.equal(two.values.link2_url, "/deals");
+  }
+  assert.equal(parseBannerForm(form({ media_url: file, media_type: "image", link2_url: "javascript:x" }), base).ok, false);
   assert.equal(parseBannerForm(form({ media_url: file, media_type: "image", layout: "wide" }), base).ok, false);
   const def = parseBannerForm(form({ media_url: file, media_type: "image" }), base);
   assert.ok(def.ok && def.values.layout === "photo");

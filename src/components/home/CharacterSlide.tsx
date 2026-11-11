@@ -38,18 +38,18 @@ export function CharacterSlide({
       }`}
     >
       <div className="relative z-10 my-auto max-h-full w-[44%] shrink-0 space-y-1 overflow-y-auto py-2 text-start [scrollbar-width:none] sm:my-0 sm:overflow-visible sm:py-0 sm:w-auto sm:max-w-[40%] md:max-w-[42%] sm:shrink-0 sm:space-y-5">
-        <p className="font-display text-base font-bold leading-tight text-ink sm:text-5xl md:text-6xl">
+        <p className="font-display text-lg font-bold leading-tight text-ink sm:text-5xl md:text-6xl">
           {headline}
         </p>
-        <p className="whitespace-pre-line text-[11px] leading-snug text-ink-soft sm:text-xl md:text-2xl">{text}</p>
-        <div className="mt-0.5 flex flex-wrap items-center gap-1.5 sm:flex-nowrap sm:whitespace-nowrap sm:gap-3">
-          <Link href={href} className={`btn-primary cta-pulse !px-3 !py-1 text-xs ${cta2 && href2 ? "sm:!px-6 sm:!py-3 sm:text-lg" : "sm:!px-9 sm:!py-4 sm:text-xl"}`}>
+        <p className="whitespace-pre-line text-xs leading-snug text-ink-soft sm:text-xl md:text-2xl">{text}</p>
+        <div className="mt-1 flex flex-wrap items-center gap-2 sm:flex-nowrap sm:whitespace-nowrap sm:gap-3">
+          <Link href={href} className={`btn-primary cta-pulse !px-4 !py-2 text-sm ${cta2 && href2 ? "sm:!px-6 sm:!py-3 sm:text-lg" : "sm:!px-9 sm:!py-4 sm:text-xl"}`}>
             {cta}
           </Link>
           {cta2 && href2 ? (
             <Link
               href={href2}
-              className="btn-secondary cta-pulse border-2 border-accent !px-3 !py-1 text-xs sm:!px-6 sm:!py-3 sm:text-lg"
+              className="btn-secondary cta-pulse border-2 border-accent !px-4 !py-2 text-sm sm:!px-6 sm:!py-3 sm:text-lg"
             >
               {cta2}
             </Link>

@@ -119,6 +119,8 @@ export function HeroCarousel({ banners }: { banners: HomeBanner[] }) {
                 text={b.text ?? ""}
                 href={href}
                 cta={b.cta ?? "לפרטים נוספים"}
+                cta2={b.cta2}
+                href2={b.link2}
                 imageFirst={b.layout === "character_reverse"}
                 priority={i === 0}
               />

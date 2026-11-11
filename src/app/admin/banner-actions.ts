@@ -60,10 +60,10 @@ export async function updateBanner(_prev: BannerState, fd: FormData): Promise<Ba
   merged.set("mobile_url", mobileReplaced ? (newMobile as string) : mobileRemoved ? "" : ((current.mobile_url as string) ?? ""));
   const parsed = parseBannerForm(merged, supabaseUrl);
   if (!parsed.ok) return { error: Object.values(parsed.errors)[0] };
-  const { mobile_url, mobile_scale, media_url, media_type, title, link_url, sort_order, is_published, layout, headline, body, button_label, caption_pos, media_scale } = parsed.values;
+  const { mobile_url, mobile_scale, media_url, media_type, title, link_url, sort_order, is_published, layout, headline, body, button_label, button2_label, link2_url, caption_pos, media_scale } = parsed.values;
   const { error } = await supabase
     .from("banners")
-    .update({ ...(replacing ? { media_url, media_type } : {}), title, link_url, sort_order, is_published, layout, headline, body, button_label, caption_pos, media_scale, mobile_url, mobile_scale })
+    .update({ ...(replacing ? { media_url, media_type } : {}), title, link_url, sort_order, is_published, layout, headline, body, button_label, button2_label, link2_url, caption_pos, media_scale, mobile_url, mobile_scale })
     .eq("id", id);
   if (error) return { error: "השמירה נכשלה. נסי שוב בעוד רגע." };
   if (replacing) {

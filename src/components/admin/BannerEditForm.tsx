@@ -18,6 +18,8 @@ interface Row {
   headline: string | null;
   body: string | null;
   button_label: string | null;
+  button2_label?: string | null;
+  link2_url?: string | null;
   caption_pos?: string | null;
   media_scale?: number | null;
   mobile_url?: string | null;

@@ -235,14 +235,41 @@
   }
 }
 
-@keyframes chat-bubble {
-  0% { opacity: 0; transform: translateY(14px) scale(0.94); }
-  6%, 86% { opacity: 1; transform: none; }
-  94%, 100% { opacity: 0; transform: none; }
+@keyframes chat-bubble-0 {
+  0%, 6.5% { opacity: 0; transform: translateY(14px) scale(0.94); }
+  10.5%, 90% { opacity: 1; transform: none; }
+  95%, 100% { opacity: 0; transform: none; }
+}
+@keyframes chat-bubble-1 {
+  0%, 18.5% { opacity: 0; transform: translateY(14px) scale(0.94); }
+  22.5%, 90% { opacity: 1; transform: none; }
+  95%, 100% { opacity: 0; transform: none; }
+}
+@keyframes chat-bubble-2 {
+  0%, 30.6% { opacity: 0; transform: translateY(14px) scale(0.94); }
+  34.6%, 90% { opacity: 1; transform: none; }
+  95%, 100% { opacity: 0; transform: none; }
+}
+@keyframes chat-bubble-3 {
+  0%, 42.7% { opacity: 0; transform: translateY(14px) scale(0.94); }
+  46.7%, 90% { opacity: 1; transform: none; }
+  95%, 100% { opacity: 0; transform: none; }
+}
+@keyframes chat-bubble-4 {
+  0%, 54.8% { opacity: 0; transform: translateY(14px) scale(0.94); }
+  58.8%, 90% { opacity: 1; transform: none; }
+  95%, 100% { opacity: 0; transform: none; }
+}
+@keyframes chat-bubble-5 {
+  0%, 66.9% { opacity: 0; transform: translateY(14px) scale(0.94); }
+  70.9%, 90% { opacity: 1; transform: none; }
+  95%, 100% { opacity: 0; transform: none; }
 }
 .chat-bubble {
   opacity: 0;
-  animation: chat-bubble 6.2s ease-out infinite;
+  animation-duration: 6.2s;
+  animation-timing-function: ease-out;
+  animation-iteration-count: infinite;
 }
 @media (prefers-reduced-motion: reduce) {
   .chat-bubble {

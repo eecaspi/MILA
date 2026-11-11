@@ -82,7 +82,7 @@ export function ChatSlide({
         {bubbles.map((b, i) => (
           <p
             key={i}
-            style={{ animationDelay: `${0.4 + i * 0.75}s` }}
+            style={{ animationName: `chat-bubble-${i}` }}
             className={`chat-bubble w-fit max-w-full rounded-2xl px-3 py-1.5 text-[11px] leading-snug shadow-sm sm:px-5 sm:py-3 sm:text-xl ${
               i === 0
                 ? "self-start rounded-ss-sm bg-white font-bold text-accent sm:text-3xl"

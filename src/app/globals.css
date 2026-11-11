@@ -271,8 +271,23 @@
   animation-timing-function: ease-out;
   animation-iteration-count: infinite;
 }
+@keyframes chat-cta-in {
+  from { opacity: 0; transform: translateY(14px) scale(0.94); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes chat-cta-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgb(185 28 28 / 0.45); }
+  60% { box-shadow: 0 0 0 10px rgb(185 28 28 / 0); }
+}
+.chat-cta {
+  opacity: 0;
+  animation:
+    chat-cta-in 0.5s ease-out forwards,
+    chat-cta-pulse 2s ease-out 1.2s infinite;
+}
 @media (prefers-reduced-motion: reduce) {
-  .chat-bubble {
+  .chat-bubble,
+  .chat-cta {
     animation: none;
     opacity: 1;
   }

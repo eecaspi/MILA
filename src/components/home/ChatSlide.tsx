@@ -81,15 +81,15 @@ export function ChatSlide({
       </div>
       <div
         key={playing ? "on" : "off"}
-        className="absolute right-8 top-8 z-10 flex w-[42%] flex-col gap-1 sm:right-36 sm:top-24 sm:w-[36%] sm:gap-3"
+        className="absolute right-8 top-8 z-10 flex w-[48%] flex-col gap-1.5 sm:right-[7%] sm:top-[9%] sm:w-[46%] sm:gap-[1.2vw]"
       >
         {bubbles.map((b, i) => (
           <div
             key={i}
             style={{ animationName: `chat-bubble-${i}` }}
-            className={`chat-bubble flex w-fit items-end gap-2 sm:gap-3 max-w-full rounded-2xl px-2.5 py-1 text-[10px] leading-snug shadow-sm sm:px-5 sm:py-3 sm:text-xl ${
+            className={`chat-bubble flex w-fit items-end gap-2 sm:gap-3 max-w-full rounded-2xl px-3 py-1.5 text-xs leading-snug shadow-sm sm:px-[1.6vw] sm:py-[1vw] sm:text-[clamp(1rem,1.9vw,2.4rem)] ${
               i === 0
-                ? "self-start rounded-ss-sm bg-white font-bold text-ink sm:text-3xl"
+                ? "self-start rounded-ss-sm bg-white text-sm font-bold text-ink sm:text-[clamp(1.25rem,2.6vw,3.2rem)]"
                 : i % 2 === 1
                   ? "relative -left-7 self-end rounded-se-sm bg-[#f6b9b4] text-ink sm:left-0"
                   : "self-start rounded-ss-sm bg-white text-ink"
@@ -98,10 +98,10 @@ export function ChatSlide({
             <span>{b}</span>
             <span
               aria-hidden="true"
-              className="ms-auto flex shrink-0 items-center gap-0.5 pb-px text-[7px] font-normal leading-none text-[#8696a0] sm:text-xs"
+              className="ms-auto flex shrink-0 items-center gap-0.5 pb-px text-[8px] font-normal leading-none text-[#8696a0] sm:text-[clamp(0.7rem,1.1vw,1.4rem)]"
             >
               10:24
-              <svg viewBox="0 0 16 11" className="h-[8px] w-[12px] sm:h-[12px] sm:w-[18px]" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+              <svg viewBox="0 0 16 11" className="h-[1em] w-[1.5em]" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M1 5.8 4.2 9 10.8 1.6" />
                 <path d="M7.2 8.6 7.6 9 14.4 1.6" />
               </svg>

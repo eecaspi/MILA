@@ -63,7 +63,7 @@ export function CharacterSlide({
           fill
           sizes="(min-width: 640px) 56vw, 100vw"
           priority={priority}
-          className={`object-contain object-bottom ${imageFirst ? "sm:object-left" : "sm:object-right"}`}
+          className={`object-contain object-bottom ${imageFirst ? "sm:object-left-bottom" : "sm:object-right-bottom"}`}
         />
       </div>
     </div>

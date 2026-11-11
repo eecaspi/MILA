@@ -37,12 +37,12 @@ export function CharacterSlide({
         imageFirst ? "flex-row-reverse" : "flex-row"
       }`}
     >
-      <div className={`relative z-10 mb-auto mt-4 max-h-full w-[50%] shrink-0 space-y-1 overflow-y-auto py-2 text-start [scrollbar-width:none] sm:my-0 sm:overflow-visible sm:py-0 sm:w-auto sm:max-w-[40%] md:max-w-[42%] sm:shrink-0 sm:space-y-5 ${imageFirst ? "ml-4" : "mr-4"} sm:m-0`}>
+      <div className={`relative z-10 mb-auto mt-4 max-h-full w-[54%] shrink-0 space-y-2 overflow-y-auto px-3 py-3 text-start [scrollbar-width:none] sm:my-0 sm:overflow-visible sm:p-0 sm:w-auto sm:max-w-[40%] md:max-w-[42%] sm:shrink-0 sm:space-y-5 ${imageFirst ? "ml-3 md:ml-16" : "mr-3 md:mr-16"} sm:m-0`}>
         <p className="font-display text-lg font-bold leading-tight text-ink sm:text-5xl md:text-6xl">
           {headline}
         </p>
         <p className="whitespace-pre-line text-xs leading-snug text-ink-soft sm:text-xl md:text-2xl">{text}</p>
-        <div className="mt-1 flex flex-wrap items-center gap-2 sm:flex-nowrap sm:whitespace-nowrap sm:gap-3">
+        <div className="mt-2 flex flex-wrap items-center gap-3 sm:flex-nowrap sm:whitespace-nowrap sm:gap-3">
           <Link href={href} className={`btn-primary cta-pulse !px-4 !py-2 text-sm ${cta2 && href2 ? "sm:!px-6 sm:!py-3 sm:text-lg" : "sm:!px-9 sm:!py-4 sm:text-xl"}`}>
             {cta}
           </Link>
@@ -56,7 +56,7 @@ export function CharacterSlide({
           ) : null}
         </div>
       </div>
-      <div className={`relative h-full w-[76%] shrink-0 self-end sm:m-0 sm:h-full sm:w-[50%] md:w-[54%] sm:self-end sm:translate-x-0 ${imageFirst ? "-me-[16%] -translate-x-[6%]" : "-ms-[16%] translate-x-[6%]"}`}>
+      <div className={`relative h-full w-[66%] shrink-0 self-end sm:m-0 sm:h-full sm:w-[50%] md:w-[54%] sm:self-end ${imageFirst ? "-me-[24%]" : "-ms-[24%]"}`}>
         <Image
           src={image}
           alt={alt}

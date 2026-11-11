@@ -56,7 +56,7 @@ export function CharacterSlide({
           ) : null}
         </div>
       </div>
-      <div className={`relative h-full w-[76%] shrink-0 self-end sm:m-0 sm:h-full sm:w-[50%] md:w-[54%] sm:self-end ${imageFirst ? "-me-[16%]" : "-ms-[16%]"}`}>
+      <div className={`relative h-full w-[76%] shrink-0 self-end sm:m-0 sm:h-full sm:w-[50%] md:w-[54%] sm:self-end sm:translate-x-0 ${imageFirst ? "-me-[16%] -translate-x-[6%]" : "-ms-[16%] translate-x-[6%]"}`}>
         <Image
           src={image}
           alt={alt}

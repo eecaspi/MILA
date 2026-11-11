@@ -102,7 +102,7 @@ export function HeroCarousel({ banners }: { banners: HomeBanner[] }) {
     <section
       aria-roledescription="carousel"
       aria-label="הבאנר הראשי"
-      className="relative w-full"
+      className="relative w-full max-sm:pb-9"
       onMouseEnter={() => setHovering(true)}
       onMouseLeave={() => setHovering(false)}
     >
@@ -259,7 +259,7 @@ export function HeroCarousel({ banners }: { banners: HomeBanner[] }) {
             <Chevron dir="next" />
           </button>
 
-          <div className="absolute inset-x-0 bottom-3 flex items-center justify-center gap-3">
+          <div className="absolute inset-x-0 bottom-3 flex items-center justify-center gap-3 max-sm:bottom-1">
             <ul className="flex items-center gap-2 rounded-full bg-surface/85 px-3 py-2">
               {Array.from({ length: total }, (_, i) => (
                 <li key={i}>

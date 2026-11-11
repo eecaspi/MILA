@@ -105,6 +105,7 @@ export function ChatSlide({
         >
           {ctaLabel}
         </Link>
+      </div>
     </div>
   );
 }

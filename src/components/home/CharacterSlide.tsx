@@ -43,13 +43,13 @@ export function CharacterSlide({
         </p>
         <p className="whitespace-pre-line text-[11px] leading-snug text-ink-soft sm:text-xl md:text-2xl">{text}</p>
         <div className="mt-0.5 flex flex-wrap items-center gap-1.5 sm:gap-3">
-          <Link href={href} className="btn-primary !px-3 !py-1 text-xs sm:!px-9 sm:!py-4 sm:text-xl">
+          <Link href={href} className="btn-primary cta-pulse !px-3 !py-1 text-xs sm:!px-9 sm:!py-4 sm:text-xl">
             {cta}
           </Link>
           {cta2 && href2 ? (
             <Link
               href={href2}
-              className="btn-secondary border-2 border-accent !px-3 !py-1 text-xs sm:!px-9 sm:!py-4 sm:text-xl"
+              className="btn-secondary cta-pulse border-2 border-accent !px-3 !py-1 text-xs sm:!px-9 sm:!py-4 sm:text-xl"
             >
               {cta2}
             </Link>

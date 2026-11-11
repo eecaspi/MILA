@@ -98,12 +98,12 @@ export function ChatSlide({
             <span>{b}</span>
             <span
               aria-hidden="true"
-              className="ms-auto flex shrink-0 items-center gap-0.5 pb-px text-[7px] font-normal leading-none text-ink-soft/80 sm:text-xs"
+              className="ms-auto flex shrink-0 items-center gap-0.5 pb-px text-[7px] font-normal leading-none text-[#8696a0] sm:text-xs"
             >
               10:24
-              <svg viewBox="0 0 16 11" className="h-[7px] w-[10px] sm:h-[10px] sm:w-[15px]" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M1 5.8 4.2 9 10.6 1.8" />
-                <path d="M5.8 7.8 6.2 8.2 12.8 1" />
+              <svg viewBox="0 0 16 11" className="h-[8px] w-[12px] sm:h-[12px] sm:w-[18px]" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M1 5.8 4.2 9 10.8 1.6" />
+                <path d="M7.2 8.6 7.6 9 14.4 1.6" />
               </svg>
             </span>
           </div>

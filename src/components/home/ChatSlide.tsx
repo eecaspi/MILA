@@ -31,7 +31,11 @@ export function ChatSlide({
 }) {
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const lines = text.split("\n").map((l) => l.trim()).filter(Boolean);
-  const bubbles = [headline, ...lines].filter(Boolean).slice(0, 6);
+  // The last line of the text is shown as a button that leads to the deals.
+  const ctaLabel = lines.length > 0 ? lines[lines.length - 1] : cta;
+  const bubbles = [headline, ...(lines.length > 0 ? lines.slice(0, -1) : [])]
+    .filter(Boolean)
+    .slice(0, 5);
   const isVideo = isVideoUrl(image);
 
   useEffect(() => {
@@ -94,13 +98,14 @@ export function ChatSlide({
             {b}
           </p>
         ))}
+        <Link
+          href={href}
+          style={{ animationName: `chat-bubble-${bubbles.length}` }}
+          className="chat-bubble btn-primary mt-1 w-fit self-start !px-4 !py-1.5 text-[11px] sm:mt-2 sm:!px-8 sm:!py-3 sm:text-xl"
+        >
+          {ctaLabel}
+        </Link>
       </div>
-      <Link
-        href={href}
-        className="btn-primary absolute bottom-8 left-6 z-20 !px-4 !py-1.5 text-xs sm:bottom-16 sm:left-20 sm:!px-8 sm:!py-3 sm:text-lg"
-      >
-        {cta}
-      </Link>
     </div>
   );
 }

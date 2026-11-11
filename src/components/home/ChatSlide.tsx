@@ -101,7 +101,7 @@ export function ChatSlide({
         <Link
           href={href}
           style={{ animationName: `chat-bubble-${bubbles.length}` }}
-          className="chat-bubble btn-primary mt-1.5 w-fit self-start !px-5 !py-2 text-sm font-bold sm:mt-3 sm:!px-10 sm:!py-4 sm:text-2xl"
+          className="chat-bubble btn-primary mt-1.5 w-max max-w-none self-start whitespace-nowrap !px-4 !py-1.5 text-xs font-bold sm:mt-3 sm:!px-8 sm:!py-3 sm:text-2xl"
         >
           {ctaLabel}
         </Link>

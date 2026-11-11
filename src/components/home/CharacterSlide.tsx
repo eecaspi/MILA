@@ -37,7 +37,7 @@ export function CharacterSlide({
         imageFirst ? "flex-row-reverse" : "flex-row"
       }`}
     >
-      <div className={`relative z-10 mb-auto mt-4 max-h-full w-[44%] shrink-0 space-y-1 overflow-y-auto py-2 text-start [scrollbar-width:none] sm:my-0 sm:overflow-visible sm:py-0 sm:w-auto sm:max-w-[40%] md:max-w-[42%] sm:shrink-0 sm:space-y-5 ${imageFirst ? "ml-4" : "mr-4"} sm:m-0`}>
+      <div className={`relative z-10 mb-auto mt-4 max-h-full w-[50%] shrink-0 space-y-1 overflow-y-auto py-2 text-start [scrollbar-width:none] sm:my-0 sm:overflow-visible sm:py-0 sm:w-auto sm:max-w-[40%] md:max-w-[42%] sm:shrink-0 sm:space-y-5 ${imageFirst ? "ml-4" : "mr-4"} sm:m-0`}>
         <p className="font-display text-lg font-bold leading-tight text-ink sm:text-5xl md:text-6xl">
           {headline}
         </p>

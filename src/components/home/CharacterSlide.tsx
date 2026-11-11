@@ -28,7 +28,7 @@ export function CharacterSlide({
 }) {
   return (
     <div
-      className={`relative flex size-full items-stretch gap-1 overflow-hidden bg-surface px-3 pt-0 pb-0 sm:items-center sm:justify-center sm:gap-2 sm:px-10 sm:py-4 md:px-20 ${
+      className={`relative flex size-full items-stretch gap-1 overflow-hidden bg-surface px-3 pt-0 pb-0 sm:items-center sm:justify-center sm:gap-2 sm:px-10 sm:py-0 md:px-20 ${
         imageFirst ? "flex-row-reverse" : "flex-row"
       }`}
     >
@@ -41,7 +41,7 @@ export function CharacterSlide({
           {cta}
         </Link>
       </div>
-      <div className={`relative h-full w-[76%] shrink-0 self-end sm:m-0 sm:h-full sm:w-[50%] sm:self-auto ${imageFirst ? "-me-[16%]" : "-ms-[16%]"}`}>
+      <div className={`relative h-full w-[76%] shrink-0 self-end sm:m-0 sm:h-full sm:w-[50%] sm:self-end ${imageFirst ? "-me-[16%]" : "-ms-[16%]"}`}>
         <Image
           src={image}
           alt={alt}

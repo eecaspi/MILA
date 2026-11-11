@@ -37,12 +37,12 @@ export function CharacterSlide({
         imageFirst ? "flex-row-reverse" : "flex-row"
       }`}
     >
-      <div className={`relative z-10 flex h-full max-h-full w-[58%] shrink-0 flex-col space-y-2 overflow-y-auto px-3 pb-10 pt-4 text-start [scrollbar-width:none] sm:my-0 sm:block sm:h-auto sm:overflow-visible sm:p-0 sm:w-auto sm:max-w-[40%] md:max-w-[42%] sm:shrink-0 sm:space-y-5 ${imageFirst ? "ml-3 md:ml-16" : "mr-3 md:mr-16"} sm:m-0`}>
+      <div className={`relative z-10 flex h-full max-h-full w-[58%] shrink-0 flex-col space-y-2 overflow-y-auto px-3 pb-3 pt-4 text-start [scrollbar-width:none] sm:my-0 sm:block sm:h-auto sm:overflow-visible sm:p-0 sm:w-auto sm:max-w-[40%] md:max-w-[42%] sm:shrink-0 sm:space-y-5 ${imageFirst ? "ml-3 md:ml-16" : "mr-3 md:mr-16"} sm:m-0`}>
         <p className="font-display text-2xl font-bold leading-tight text-ink sm:text-5xl md:text-6xl">
           {headline}
         </p>
         <p className="whitespace-pre-line text-[15px] leading-snug text-ink-soft sm:text-xl md:text-2xl">{text}</p>
-        <div className="mt-auto flex flex-wrap items-center gap-3.5 pt-3 sm:mt-2 sm:pt-0 sm:flex-nowrap sm:whitespace-nowrap sm:gap-3">
+        <div className="hidden items-center sm:mt-2 sm:flex sm:flex-nowrap sm:whitespace-nowrap sm:gap-3">
           <Link href={href} className={`btn-primary cta-pulse !px-4 !py-2.5 text-base ${cta2 && href2 ? "sm:!px-6 sm:!py-3 sm:text-lg" : "sm:!px-9 sm:!py-4 sm:text-xl"}`}>
             {cta}
           </Link>
@@ -56,6 +56,16 @@ export function CharacterSlide({
           ) : null}
         </div>
       </div>
+      <div className={`absolute bottom-3 z-20 flex flex-nowrap items-center gap-2 whitespace-nowrap sm:hidden ${imageFirst ? "left-3" : "right-3"}`}>
+        <Link href={href} className="btn-primary cta-pulse !px-3 !py-2 text-xs">
+          {cta}
+        </Link>
+        {cta2 && href2 ? (
+          <Link href={href2} className="btn-secondary cta-pulse border-2 border-accent !px-3 !py-2 text-xs">
+            {cta2}
+          </Link>
+        ) : null}
+      </div>
       <div className={`relative h-full w-[60%] shrink-0 self-end sm:m-0 sm:h-full sm:w-[50%] md:w-[54%] sm:self-end ${imageFirst ? "-me-[24%]" : "-ms-[24%]"}`}>
         <Image
           src={image}
@@ -63,7 +73,7 @@ export function CharacterSlide({
           fill
           sizes="(min-width: 640px) 56vw, 100vw"
           priority={priority}
-          className={`object-contain object-bottom max-sm:scale-[1.5] ${imageFirst ? "max-sm:origin-bottom-right" : "max-sm:origin-bottom-left"} ${imageFirst ? "sm:object-left-bottom" : "sm:object-right-bottom"}`}
+          className={`object-contain object-bottom max-sm:scale-[1.4] ${imageFirst ? "max-sm:origin-bottom-right" : "max-sm:origin-bottom-left"} ${imageFirst ? "sm:object-left-bottom" : "sm:object-right-bottom"}`}
         />
       </div>
     </div>

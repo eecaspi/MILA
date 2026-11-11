@@ -81,22 +81,32 @@ export function ChatSlide({
       </div>
       <div
         key={playing ? "on" : "off"}
-        className="absolute right-5 top-4 z-10 flex w-[42%] flex-col gap-1 sm:right-24 sm:top-14 sm:w-[36%] sm:gap-3"
+        className="absolute right-8 top-8 z-10 flex w-[42%] flex-col gap-1 sm:right-36 sm:top-24 sm:w-[36%] sm:gap-3"
       >
         {bubbles.map((b, i) => (
-          <p
+          <div
             key={i}
             style={{ animationName: `chat-bubble-${i}` }}
-            className={`chat-bubble w-fit max-w-full rounded-2xl px-2.5 py-1 text-[10px] leading-snug shadow-sm sm:px-5 sm:py-3 sm:text-xl ${
+            className={`chat-bubble flex w-fit items-end gap-2 sm:gap-3 max-w-full rounded-2xl px-2.5 py-1 text-[10px] leading-snug shadow-sm sm:px-5 sm:py-3 sm:text-xl ${
               i === 0
-                ? "self-start rounded-ss-sm bg-white font-bold text-accent sm:text-3xl"
+                ? "self-start rounded-ss-sm bg-white font-bold text-ink sm:text-3xl"
                 : i % 2 === 1
                   ? "relative -left-7 self-end rounded-se-sm bg-[#fbd9dc] text-ink sm:left-0"
                   : "self-start rounded-ss-sm bg-white text-ink"
             }`}
           >
-            {b}
-          </p>
+            <span>{b}</span>
+            <span
+              aria-hidden="true"
+              className="ms-auto flex shrink-0 items-center gap-0.5 pb-px text-[7px] font-normal leading-none text-ink-soft/80 sm:text-xs"
+            >
+              10:24
+              <svg viewBox="0 0 16 11" className="h-[7px] w-[10px] sm:h-[10px] sm:w-[15px]" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M1 5.8 4.2 9 10.6 1.8" />
+                <path d="M5.8 7.8 6.2 8.2 12.8 1" />
+              </svg>
+            </span>
+          </div>
         ))}
         <Link
           href={href}

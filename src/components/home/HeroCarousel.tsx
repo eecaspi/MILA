@@ -79,7 +79,11 @@ export function HeroCarousel({ banners }: { banners: HomeBanner[] }) {
     for (const list of [videoRefs.current, mobileVideoRefs.current]) {
       list.forEach((v, i) => {
         if (!v) return;
-        if (i === active) void v.play().catch(() => {});
+        if (i === active) {
+          // Each time its slide comes into view the clip starts again from the beginning.
+          v.currentTime = 0;
+          void v.play().catch(() => {});
+        }
         else v.pause();
       });
     }
@@ -141,7 +145,8 @@ export function HeroCarousel({ banners }: { banners: HomeBanner[] }) {
                 muted
                 loop
                 playsInline
-                preload="metadata"
+                preload={n === 0 ? "auto" : "metadata"}
+                autoPlay={n === 0}
                 className={`absolute inset-0 size-full ${shrunk(scale) ? "object-contain" : "object-cover object-top"}`}
                 style={shrunk(scale) ? { transform: `scale(${scale! / 90})` } : undefined}
               />

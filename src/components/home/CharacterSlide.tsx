@@ -42,7 +42,7 @@ export function CharacterSlide({
           {headline}
         </p>
         <p className="whitespace-pre-line text-[11px] leading-snug text-ink-soft sm:text-xl md:text-2xl">{text}</p>
-        <div className="mt-0.5 flex flex-nowrap items-center gap-1.5 whitespace-nowrap sm:gap-3">
+        <div className="mt-0.5 flex flex-wrap items-center gap-1.5 sm:flex-nowrap sm:whitespace-nowrap sm:gap-3">
           <Link href={href} className={`btn-primary cta-pulse !px-3 !py-1 text-xs ${cta2 && href2 ? "sm:!px-6 sm:!py-3 sm:text-lg" : "sm:!px-9 sm:!py-4 sm:text-xl"}`}>
             {cta}
           </Link>

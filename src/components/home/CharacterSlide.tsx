@@ -33,11 +33,11 @@ export function CharacterSlide({
 }) {
   return (
     <div
-      className={`relative flex size-full items-stretch gap-1 overflow-hidden bg-surface px-3 pt-0 pb-0 sm:items-center sm:justify-center sm:gap-2 sm:px-10 sm:py-0 md:px-20 ${
+      className={`relative flex size-full items-stretch gap-1 overflow-hidden bg-surface px-3 pt-0 pb-0 sm:items-center sm:justify-center sm:gap-2 sm:px-10 sm:py-0 md:px-12 ${
         imageFirst ? "flex-row-reverse" : "flex-row"
       }`}
     >
-      <div className="relative z-10 my-auto max-h-full w-[44%] shrink-0 space-y-1 overflow-y-auto py-2 text-start [scrollbar-width:none] sm:my-0 sm:overflow-visible sm:py-0 sm:w-auto sm:max-w-[40%] sm:shrink-0 sm:space-y-5">
+      <div className="relative z-10 my-auto max-h-full w-[44%] shrink-0 space-y-1 overflow-y-auto py-2 text-start [scrollbar-width:none] sm:my-0 sm:overflow-visible sm:py-0 sm:w-auto sm:max-w-[40%] md:max-w-[32%] sm:shrink-0 sm:space-y-5">
         <p className="font-display text-base font-bold leading-tight text-ink sm:text-5xl md:text-6xl">
           {headline}
         </p>
@@ -56,7 +56,7 @@ export function CharacterSlide({
           ) : null}
         </div>
       </div>
-      <div className={`relative h-full w-[76%] shrink-0 self-end sm:m-0 sm:h-full sm:w-[50%] sm:self-end ${imageFirst ? "-me-[16%]" : "-ms-[16%]"}`}>
+      <div className={`relative h-full w-[76%] shrink-0 self-end sm:m-0 sm:h-full sm:w-[50%] md:w-[58%] sm:self-end ${imageFirst ? "-me-[16%]" : "-ms-[16%]"}`}>
         <Image
           src={image}
           alt={alt}

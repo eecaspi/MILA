@@ -234,3 +234,19 @@
     display: none;
   }
 }
+
+@keyframes chat-bubble {
+  0% { opacity: 0; transform: translateY(14px) scale(0.94); }
+  6%, 86% { opacity: 1; transform: none; }
+  94%, 100% { opacity: 0; transform: none; }
+}
+.chat-bubble {
+  opacity: 0;
+  animation: chat-bubble 9s ease-out infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .chat-bubble {
+    animation: none;
+    opacity: 1;
+  }
+}

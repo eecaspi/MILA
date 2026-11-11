@@ -6,6 +6,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { isVideoUrl } from "@/lib/banners";
 import type { HomeBanner } from "@/lib/data/banners";
 import { CharacterSlide } from "./CharacterSlide";
+import { ChatSlide } from "./ChatSlide";
 import { FullImageSlide } from "./FullImageSlide";
 
 const IMAGE_MS = 6000;
@@ -119,6 +120,17 @@ export function HeroCarousel({ banners }: { banners: HomeBanner[] }) {
                 href={href}
                 cta={b.cta ?? "לפרטים נוספים"}
                 imageFirst={b.layout === "character_reverse"}
+                priority={i === 0}
+              />
+            ) : b.layout === "chat" ? (
+              <ChatSlide
+                image={b.url}
+                alt={b.title ?? ""}
+                headline={b.headline ?? b.title ?? ""}
+                text={b.text ?? ""}
+                href={href}
+                cta={b.cta ?? "לפרטים נוספים"}
+                playing={i === active}
                 priority={i === 0}
               />
             ) : b.layout === "cover" ? (

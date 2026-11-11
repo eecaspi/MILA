@@ -52,7 +52,7 @@ function toBanner(r: Row): HomeBanner {
     id: r.id as string,
     url: r.media_url as string,
     type: r.media_type === "video" ? "video" : "image",
-    layout: layout === "character" || layout === "character_reverse" || layout === "cover" ? layout : "photo",
+    layout: layout === "character" || layout === "character_reverse" || layout === "cover" || layout === "chat" ? layout : "photo",
     title: s("title"),
     pos: toCaptionPos(r.caption_pos),
     scale: toMediaScale(r.media_scale),

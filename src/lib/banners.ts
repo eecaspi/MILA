@@ -1,12 +1,13 @@
 /** Pure helpers for home banners (checked on the server, tested without a database). */
 
 export type BannerMedia = "image" | "video";
-export type BannerLayout = "photo" | "character" | "character_reverse" | "cover";
+export type BannerLayout = "photo" | "character" | "character_reverse" | "cover" | "chat";
 
 export const LAYOUTS: { value: BannerLayout; label: string }[] = [
   { value: "photo", label: "תמונה או סרטון (עם כותרת וכפתור)" },
   { value: "character", label: "תמונה בצד, כותרת וטקסט בצד" },
   { value: "character_reverse", label: "תמונה בצד השני, כותרת וטקסט" },
+  { value: "chat", label: "ליקי ושיחת וואטסאפ (כותרת ושורות טקסט שמופיעות אחת אחרי השנייה)" },
   { value: "cover", label: "תמונה עיצובית על כל הבאנר + כפתור" },
 ];
 

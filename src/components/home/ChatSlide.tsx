@@ -50,8 +50,8 @@ export function ChatSlide({
       className="absolute inset-0 overflow-hidden"
       style={{ background: "linear-gradient(to bottom, #f1eceb, #e9e7e8)" }}
     >
-      {/* The clip fills the banner on a phone; on a wide screen it takes the Liky side, fading into the rest. */}
-      <div className="absolute inset-0 sm:right-auto sm:w-[66%] sm:[mask-image:linear-gradient(to_right,black_82%,transparent)]">
+      {/* The clip fills the whole banner. */}
+      <div className="absolute inset-0">
         {isVideo ? (
           <video
             ref={videoRef}
@@ -62,14 +62,14 @@ export function ChatSlide({
             playsInline
             autoPlay
             preload="auto"
-            className="absolute inset-0 size-full object-cover sm:object-contain sm:object-bottom"
+            className="absolute inset-0 size-full object-cover object-[50%_35%]"
           />
         ) : (
           <Image
             src={image}
             alt={alt}
             fill
-            sizes="(min-width: 640px) 66vw, 100vw"
+            sizes="100vw"
             priority={priority}
             className="object-contain object-bottom"
           />
@@ -77,7 +77,7 @@ export function ChatSlide({
       </div>
       <div
         key={playing ? "on" : "off"}
-        className="absolute inset-y-0 end-3 z-10 flex w-[46%] flex-col justify-center gap-1.5 sm:end-10 sm:w-[38%] sm:gap-3"
+        className="absolute right-3 top-3 z-10 flex w-[46%] flex-col gap-1.5 sm:right-10 sm:top-8 sm:w-[36%] sm:gap-3"
       >
         {bubbles.map((b, i) => (
           <p

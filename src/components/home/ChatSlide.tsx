@@ -81,7 +81,7 @@ export function ChatSlide({
       </div>
       <div
         key={playing ? "on" : "off"}
-        className="absolute right-5 top-4 z-10 flex w-[42%] flex-col gap-1 sm:right-24 sm:top-14 sm:w-[36%] sm:gap-3"
+        className="absolute right-8 top-8 z-10 flex w-[42%] flex-col gap-1 sm:right-36 sm:top-24 sm:w-[36%] sm:gap-3"
       >
         {bubbles.map((b, i) => (
           <div

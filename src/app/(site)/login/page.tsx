@@ -149,6 +149,13 @@ export default async function LoginPage({ searchParams }: { searchParams: Search
             required
             disabled={disabled}
           />
+          {mode === "login" && (
+            <p className="-mt-2 text-sm">
+              <Link href="/login/forgot" className="font-semibold text-accent hover:underline">
+                שכחת סיסמה?
+              </Link>
+            </p>
+          )}
           {mode === "signup" && (
             <fieldset className="space-y-2">
               <legend className="mb-1 text-sm font-semibold text-ink">בואי נשמור על קשר</legend>

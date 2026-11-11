@@ -46,15 +46,43 @@ export function ChatSlide({
   }, [playing]);
 
   return (
-    <div className="absolute inset-0 flex items-stretch gap-1 overflow-hidden bg-[#f4eaec] px-3 sm:items-center sm:justify-center sm:gap-6 sm:px-10 md:px-20">
+    <div
+      className="absolute inset-0 overflow-hidden"
+      style={{ background: "linear-gradient(to bottom, #f1eceb, #e9e7e8)" }}
+    >
+      {/* The clip fills the banner on a phone; on a wide screen it takes the Liky side, fading into the rest. */}
+      <div className="absolute inset-0 sm:right-auto sm:w-[66%] sm:[mask-image:linear-gradient(to_right,black_82%,transparent)]">
+        {isVideo ? (
+          <video
+            ref={videoRef}
+            src={image}
+            aria-label={alt}
+            muted
+            loop
+            playsInline
+            autoPlay
+            preload="auto"
+            className="absolute inset-0 size-full object-cover sm:object-contain sm:object-bottom"
+          />
+        ) : (
+          <Image
+            src={image}
+            alt={alt}
+            fill
+            sizes="(min-width: 640px) 66vw, 100vw"
+            priority={priority}
+            className="object-contain object-bottom"
+          />
+        )}
+      </div>
       <div
         key={playing ? "on" : "off"}
-        className="relative z-10 my-auto flex w-[58%] shrink-0 flex-col gap-1.5 sm:w-[44%] sm:gap-3"
+        className="absolute inset-y-0 end-3 z-10 flex w-[46%] flex-col justify-center gap-1.5 sm:end-10 sm:w-[38%] sm:gap-3"
       >
         {bubbles.map((b, i) => (
           <p
             key={i}
-            style={{ animationDelay: `${0.6 + i * 0.9}s` }}
+            style={{ animationDelay: `${0.4 + i * 0.75}s` }}
             className={`chat-bubble w-fit max-w-full rounded-2xl px-3 py-1.5 text-[11px] leading-snug shadow-sm sm:px-5 sm:py-3 sm:text-xl ${
               i === 0
                 ? "self-start rounded-ss-sm bg-white font-bold text-accent sm:text-3xl"
@@ -66,30 +94,6 @@ export function ChatSlide({
             {b}
           </p>
         ))}
-      </div>
-      <div className="relative h-full w-[42%] shrink-0 self-end [mask-image:linear-gradient(to_right,transparent,black_14%,black_86%,transparent)] sm:w-[40%]">
-        {isVideo ? (
-          <video
-            ref={videoRef}
-            src={image}
-            aria-label={alt}
-            muted
-            loop
-            playsInline
-            autoPlay
-            preload="auto"
-            className="absolute inset-0 size-full object-contain object-bottom"
-          />
-        ) : (
-          <Image
-            src={image}
-            alt={alt}
-            fill
-            sizes="(min-width: 640px) 40vw, 42vw"
-            priority={priority}
-            className="object-contain object-bottom"
-          />
-        )}
       </div>
       <Link
         href={href}

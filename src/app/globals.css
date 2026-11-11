@@ -242,7 +242,7 @@
 }
 .chat-bubble {
   opacity: 0;
-  animation: chat-bubble 9s ease-out infinite;
+  animation: chat-bubble 6.2s ease-out infinite;
 }
 @media (prefers-reduced-motion: reduce) {
   .chat-bubble {

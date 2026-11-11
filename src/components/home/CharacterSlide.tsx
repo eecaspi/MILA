@@ -37,26 +37,26 @@ export function CharacterSlide({
         imageFirst ? "flex-row-reverse" : "flex-row"
       }`}
     >
-      <div className={`relative z-10 mb-auto mt-4 max-h-full w-[54%] shrink-0 space-y-2 overflow-y-auto px-3 py-3 text-start [scrollbar-width:none] sm:my-0 sm:overflow-visible sm:p-0 sm:w-auto sm:max-w-[40%] md:max-w-[42%] sm:shrink-0 sm:space-y-5 ${imageFirst ? "ml-3 md:ml-16" : "mr-3 md:mr-16"} sm:m-0`}>
-        <p className="font-display text-lg font-bold leading-tight text-ink sm:text-5xl md:text-6xl">
+      <div className={`relative z-10 mb-auto mt-4 max-h-full w-[58%] shrink-0 space-y-2 overflow-y-auto px-3 py-3 text-start [scrollbar-width:none] sm:my-0 sm:overflow-visible sm:p-0 sm:w-auto sm:max-w-[40%] md:max-w-[42%] sm:shrink-0 sm:space-y-5 ${imageFirst ? "ml-3 md:ml-16" : "mr-3 md:mr-16"} sm:m-0`}>
+        <p className="font-display text-2xl font-bold leading-tight text-ink sm:text-5xl md:text-6xl">
           {headline}
         </p>
-        <p className="whitespace-pre-line text-xs leading-snug text-ink-soft sm:text-xl md:text-2xl">{text}</p>
-        <div className="mt-2 flex flex-wrap items-center gap-3 sm:flex-nowrap sm:whitespace-nowrap sm:gap-3">
-          <Link href={href} className={`btn-primary cta-pulse !px-4 !py-2 text-sm ${cta2 && href2 ? "sm:!px-6 sm:!py-3 sm:text-lg" : "sm:!px-9 sm:!py-4 sm:text-xl"}`}>
+        <p className="whitespace-pre-line text-[15px] leading-snug text-ink-soft sm:text-xl md:text-2xl">{text}</p>
+        <div className="mt-5 flex flex-wrap items-center gap-3.5 sm:mt-2 sm:flex-nowrap sm:whitespace-nowrap sm:gap-3">
+          <Link href={href} className={`btn-primary cta-pulse !px-4 !py-2.5 text-base ${cta2 && href2 ? "sm:!px-6 sm:!py-3 sm:text-lg" : "sm:!px-9 sm:!py-4 sm:text-xl"}`}>
             {cta}
           </Link>
           {cta2 && href2 ? (
             <Link
               href={href2}
-              className="btn-secondary cta-pulse border-2 border-accent !px-4 !py-2 text-sm sm:!px-6 sm:!py-3 sm:text-lg"
+              className="btn-secondary cta-pulse border-2 border-accent !px-4 !py-2.5 text-base sm:!px-6 sm:!py-3 sm:text-lg"
             >
               {cta2}
             </Link>
           ) : null}
         </div>
       </div>
-      <div className={`relative h-full w-[66%] shrink-0 self-end sm:m-0 sm:h-full sm:w-[50%] md:w-[54%] sm:self-end ${imageFirst ? "-me-[24%]" : "-ms-[24%]"}`}>
+      <div className={`relative h-full w-[60%] shrink-0 self-end sm:m-0 sm:h-full sm:w-[50%] md:w-[54%] sm:self-end ${imageFirst ? "-me-[24%]" : "-ms-[24%]"}`}>
         <Image
           src={image}
           alt={alt}

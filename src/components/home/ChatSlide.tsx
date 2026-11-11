@@ -77,7 +77,7 @@ export function ChatSlide({
       </div>
       <div
         key={playing ? "on" : "off"}
-        className="absolute right-3 top-3 z-10 flex w-[46%] flex-col gap-1.5 sm:right-10 sm:top-8 sm:w-[36%] sm:gap-3"
+        className="absolute right-6 top-6 z-10 flex w-[46%] flex-col gap-1.5 sm:right-24 sm:top-14 sm:w-[36%] sm:gap-3"
       >
         {bubbles.map((b, i) => (
           <p
@@ -97,7 +97,7 @@ export function ChatSlide({
       </div>
       <Link
         href={href}
-        className="btn-primary absolute bottom-3 left-3 z-20 !px-4 !py-1.5 text-xs sm:bottom-5 sm:left-6 sm:!px-8 sm:!py-3 sm:text-lg"
+        className="btn-primary absolute bottom-8 left-6 z-20 !px-4 !py-1.5 text-xs sm:bottom-16 sm:left-20 sm:!px-8 sm:!py-3 sm:text-lg"
       >
         {cta}
       </Link>

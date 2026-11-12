@@ -1,3 +1,4 @@
+import { InviteWelcome } from "@/components/layout/InviteWelcome";
 import { EntryPopup } from "@/components/layout/EntryPopup";
 import { getPopup } from "@/lib/data/popup";
 import { Tracker } from "@/components/analytics/Tracker";
@@ -19,6 +20,7 @@ export default async function SiteLayout({ children }: { children: React.ReactNo
       <main id="main">{children}</main>
       <SiteFooter />
       <WhatsAppFloat />
+      <InviteWelcome />
       {popup && <EntryPopup popup={popup} />}
       <Tracker />
     </>

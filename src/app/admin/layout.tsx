@@ -14,6 +14,7 @@ const nav = [
   { href: "/admin/offers", label: "הטבות" },
   { href: "/admin/banners", label: "באנרים" },
   { href: "/admin/popup", label: "פופאפ" },
+  { href: "/admin/invites", label: "קישורי הזמנה" },
   { href: "/admin/rewards", label: "מועדון ונקודות" },
   { href: "/admin/members", label: "חברות" },
   { href: "/admin/subscribers", label: "נרשמות למייל" },

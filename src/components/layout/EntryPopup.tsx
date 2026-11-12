@@ -36,6 +36,8 @@ export function EntryPopup({ popup }: { popup: SitePopup }) {
 
   useEffect(() => {
     if (QUIET_PATHS.test(pathname)) return;
+    // Someone who arrived from an invitation link sees the personal welcome instead.
+    if (new URLSearchParams(window.location.search).has("for")) return;
     try {
       if (localStorage.getItem(SEEN_KEY) === popup.version) return;
     } catch {

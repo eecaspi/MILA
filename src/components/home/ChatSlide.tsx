@@ -92,7 +92,7 @@ export function ChatSlide({
               i === 0
                 ? "self-start rounded-ss-sm bg-white text-sm font-bold text-ink sm:text-[clamp(1.25rem,2.6vw,3.2rem)]"
                 : i % 2 === 1
-                  ? "relative -left-7 self-end rounded-se-sm bg-[#f6b9b4] text-ink sm:left-0"
+                  ? "relative -left-7 self-end rounded-se-sm bg-[#f6b9b4] text-ink sm:-left-[3.5vw]"
                   : "self-start rounded-ss-sm bg-white text-ink"
             }`}
           >

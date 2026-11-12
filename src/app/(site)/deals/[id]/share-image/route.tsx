@@ -106,7 +106,7 @@ const CHANNEL: Record<string, string> = {
 export async function GET(req: Request, { params }: { params: Promise<{ id: string }> }) {
   const offer = await getOfferById((await params).id);
   const origin = new URL(req.url).origin;
-  if (!offer) return Response.redirect(`${origin}/brand/og.jpg`, 302);
+  if (!offer) return Response.redirect(`${origin}/brand/og-liky.jpg`, 302);
 
   const category = getCategory(offer.business.category);
   const until = offer.validUntil

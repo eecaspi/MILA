@@ -55,7 +55,7 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
         openGraph: {
           title: `${offer.valueLabel} ב${offer.business.name}`,
           description: offer.title,
-          images: [{ url: offer.imageUrl ?? "/brand/og.jpg" }],
+          images: [{ url: offer.imageUrl ?? "/brand/og-liky.jpg" }],
         },
       }
     : { title: "ההטבה לא נמצאה" };

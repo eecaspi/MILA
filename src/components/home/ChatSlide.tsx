@@ -82,15 +82,15 @@ export function ChatSlide({
       </div>
       <div
         key={playing ? "on" : "off"}
-        className="absolute right-8 top-8 z-10 flex w-[48%] flex-col gap-1.5 sm:right-[7%] sm:top-[9%] sm:w-[46%] sm:gap-[1.2vw]"
+        className="absolute bottom-3 right-6 top-5 z-10 flex w-[54%] flex-col gap-2.5 sm:bottom-auto sm:right-[7%] sm:top-[9%] sm:w-[46%] sm:gap-[1.2vw]"
       >
         {bubbles.map((b, i) => (
           <div
             key={i}
             style={{ animationName: `chat-bubble-${i}` }}
-            className={`chat-bubble flex w-fit items-end gap-2 sm:gap-3 max-w-full rounded-2xl px-3 py-1.5 text-xs leading-snug shadow-sm sm:px-[1.6vw] sm:py-[1vw] sm:text-[clamp(1rem,1.9vw,2.4rem)] ${
+            className={`chat-bubble flex w-fit items-end gap-2 sm:gap-3 max-w-full rounded-2xl px-3.5 py-2 text-[13px] leading-snug shadow-sm sm:px-[1.6vw] sm:py-[1vw] sm:text-[clamp(1rem,1.9vw,2.4rem)] ${
               i === 0
-                ? "self-start rounded-ss-sm bg-white text-sm font-bold text-ink sm:text-[clamp(1.25rem,2.6vw,3.2rem)]"
+                ? "self-start rounded-ss-sm bg-white text-[15px] font-bold text-ink sm:text-[clamp(1.25rem,2.6vw,3.2rem)]"
                 : i % 2 === 1
                   ? "relative -left-7 self-end rounded-se-sm bg-[#f6b9b4] text-ink sm:-left-[3.5vw]"
                   : "self-start rounded-ss-sm bg-white text-ink"
@@ -114,7 +114,7 @@ export function ChatSlide({
         <Link
           href={href}
           style={{ animationDelay: `${0.4 + 0.75 * bubbles.length}s, ${0.4 + 0.75 * bubbles.length + 0.5}s` }}
-          className="chat-cta btn-primary mt-1.5 w-max max-w-none self-start whitespace-nowrap !px-5 !py-2.5 text-sm font-bold sm:mt-[1.2vw] sm:!px-[2.4vw] sm:!py-[1vw] sm:text-[clamp(1.1rem,2.1vw,2.6rem)]"
+          className="chat-cta btn-primary mt-auto w-max max-w-none self-start whitespace-nowrap !px-5 !py-2.5 text-sm font-bold sm:mt-[1.2vw] sm:!px-[2.4vw] sm:!py-[1vw] sm:text-[clamp(1.1rem,2.1vw,2.6rem)]"
         >
           {ctaLabel}
         </Link>

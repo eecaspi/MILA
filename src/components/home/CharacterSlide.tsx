@@ -38,11 +38,11 @@ export function CharacterSlide({
         imageFirst ? "flex-row-reverse" : "flex-row"
       }`}
     >
-      <div className={`relative z-10 flex h-full max-h-full w-[58%] shrink-0 flex-col space-y-2 overflow-y-auto px-3 pb-3 pt-4 text-start [scrollbar-width:none] sm:my-0 sm:block sm:h-auto sm:overflow-visible sm:p-0 sm:w-auto sm:max-w-[40%] md:max-w-[42%] sm:shrink-0 sm:space-y-5 ${imageFirst ? "ml-3 md:ml-16" : "mr-3 md:mr-16"} sm:m-0`}>
+      <div className={`relative z-10 flex h-full max-h-full w-[70%] shrink-0 flex-col space-y-2 overflow-y-auto px-3 pb-3 pt-4 text-start [scrollbar-width:none] sm:my-0 sm:block sm:h-auto sm:overflow-visible sm:p-0 sm:w-auto sm:max-w-[40%] md:max-w-[42%] sm:shrink-0 sm:space-y-5 ${imageFirst ? "ml-3 md:ml-16" : "mr-3 md:mr-16"} sm:m-0`}>
         <p className="font-display text-2xl font-bold leading-tight text-ink sm:text-5xl md:text-6xl">
           {headline}
         </p>
-        <p className="whitespace-pre-line text-[15px] leading-snug text-ink-soft sm:text-xl md:text-2xl">
+        <p className="whitespace-pre-line text-[13px] leading-snug text-ink-soft sm:text-xl md:text-2xl">
           <Emphasis text={text} />
         </p>
         <div className="hidden items-center sm:mt-2 sm:flex sm:flex-nowrap sm:whitespace-nowrap sm:gap-3">
@@ -60,16 +60,16 @@ export function CharacterSlide({
         </div>
       </div>
       <div className={`absolute bottom-3 z-20 flex flex-nowrap items-center gap-2 whitespace-nowrap sm:hidden ${imageFirst ? "left-3" : "right-3"}`}>
-        <Link href={href} className="btn-primary cta-pulse !px-3 !py-2 text-xs">
+        <Link href={href} className="btn-primary cta-pulse !bg-white !px-3 !py-2 text-xs">
           {cta}
         </Link>
         {cta2 && href2 ? (
-          <Link href={href2} className="btn-secondary cta-pulse border-2 border-accent !px-3 !py-2 text-xs">
+          <Link href={href2} className="btn-secondary cta-pulse border-2 border-accent !bg-white !px-3 !py-2 text-xs">
             {cta2}
           </Link>
         ) : null}
       </div>
-      <div className={`relative h-full w-[60%] shrink-0 self-end sm:m-0 sm:h-full sm:w-[50%] md:w-[54%] sm:self-end ${imageFirst ? "-me-[24%]" : "-ms-[24%]"}`}>
+      <div className={`relative h-full w-[56%] shrink-0 self-end sm:m-0 sm:h-full sm:w-[50%] md:w-[54%] sm:self-end ${imageFirst ? "-me-[28%]" : "-ms-[28%]"}`}>
         <Image
           src={image}
           alt={alt}

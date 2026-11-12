@@ -38,7 +38,7 @@ export function EntryPopup({ popup }: { popup: SitePopup }) {
     if (QUIET_PATHS.test(pathname)) return;
     // Someone who arrived from an invitation link sees the personal welcome instead.
     try {
-      if (new URLSearchParams(window.location.search).has("for") || localStorage.getItem("liky-invite-name")) return;
+      if (new URLSearchParams(window.location.search).has("for") || new URLSearchParams(window.location.search).has("invite") || localStorage.getItem("liky-invite-name")) return;
     } catch {
       // ignore
     }

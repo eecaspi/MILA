@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 
+const GENERAL_LINK = "https://liky.club/?invite=1";
+
 function linkFor(name: string) {
   return `https://liky.club/?for=${encodeURIComponent(name)}`;
 }
@@ -30,6 +32,16 @@ export function InviteLinkMaker() {
 
   return (
     <div className="max-w-2xl space-y-4">
+      <div className="rounded-xl border border-line bg-raised p-3">
+        <p className="font-semibold text-ink">קישור כללי, בלי שם</p>
+        <p className="mt-1 text-sm text-ink-soft">לשליחה למי שלא בטוחות שירצו להשתתף. מציג את ההודעה בלי להזכיר שם.</p>
+        <p dir="ltr" className="mt-1 break-all text-sm text-ink-soft">
+          {GENERAL_LINK}
+        </p>
+        <button type="button" onClick={() => copy("general", GENERAL_LINK)} className="btn-primary mt-2 !px-4 !py-1.5 text-sm">
+          {copied === "general" ? "הועתק ✓" : "העתקת הקישור הכללי"}
+        </button>
+      </div>
       <label className="block">
         <span className="mb-1 block text-sm font-semibold text-ink-soft">שמות הלקוחות או העסקים, שם בכל שורה (יופיעו בברכת הקבלה)</span>
         <textarea

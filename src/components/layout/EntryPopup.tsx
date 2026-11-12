@@ -3,6 +3,7 @@
 import { useEffect, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import type { SitePopup } from "@/lib/data/popup";
 
 /** The title with its number (50%, 20…) picked out in red. */
@@ -22,14 +23,35 @@ function Title({ text }: { text: string }) {
   );
 }
 
-/** Opens right after the site loads (every time the site is opened), and closes with the X. */
+const SEEN_KEY = "liky-popup-seen";
+/** Pages where a popup would get in the way of what the person came to do. */
+const QUIET_PATHS = /^\/(login|auth|reset-password|admin)(\/|$)/;
+
+/** Opens once per browser (and again only when the popup is edited in the back office), and closes with the X. */
+
 export function EntryPopup({ popup }: { popup: SitePopup }) {
   const ref = useRef<HTMLDialogElement>(null);
 
+  const pathname = usePathname();
+
   useEffect(() => {
-    const t = setTimeout(() => ref.current?.showModal(), 600);
+    if (QUIET_PATHS.test(pathname)) return;
+    try {
+      if (localStorage.getItem(SEEN_KEY) === popup.version) return;
+    } catch {
+      // Storage blocked: fall through and show it, once per page load.
+    }
+    const t = setTimeout(() => {
+      if (!ref.current || ref.current.open) return;
+      ref.current.showModal();
+      try {
+        localStorage.setItem(SEEN_KEY, popup.version);
+      } catch {
+        // ignore
+      }
+    }, 600);
     return () => clearTimeout(t);
-  }, []);
+  }, [pathname, popup.version]);
 
   const close = () => ref.current?.close();
 

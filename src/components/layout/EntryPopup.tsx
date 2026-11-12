@@ -94,7 +94,7 @@ export function EntryPopup({ popup }: { popup: SitePopup }) {
         {/* Liky stands on the picture (a video or a picture without a background looks best). */}
         <div className={`relative mx-auto mt-1 h-20 w-24 sm:mt-2 sm:h-36 sm:w-40 ${popup.imageUrl ? "-mb-4 sm:-mb-6" : ""}`}>
           {/\.(mp4|webm)$/i.test(likyMedia) ? (
-            <video src={likyMedia} autoPlay muted loop playsInline className="absolute inset-0 size-full object-contain object-bottom" />
+            <video src={likyMedia} aria-hidden autoPlay muted loop playsInline className="absolute inset-0 size-full object-contain object-bottom" />
           ) : (
             <Image src={likyMedia} alt="ליקי" fill sizes="10rem" priority unoptimized className="object-contain object-bottom" />
           )}

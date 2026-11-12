@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { Emphasis } from "./Emphasis";
 
 /**
  * A hero slide with the Liky character: a message and a button on one side, the picture on
@@ -41,7 +42,9 @@ export function CharacterSlide({
         <p className="font-display text-2xl font-bold leading-tight text-ink sm:text-5xl md:text-6xl">
           {headline}
         </p>
-        <p className="whitespace-pre-line text-[15px] leading-snug text-ink-soft sm:text-xl md:text-2xl">{text}</p>
+        <p className="whitespace-pre-line text-[15px] leading-snug text-ink-soft sm:text-xl md:text-2xl">
+          <Emphasis text={text} />
+        </p>
         <div className="hidden items-center sm:mt-2 sm:flex sm:flex-nowrap sm:whitespace-nowrap sm:gap-3">
           <Link href={href} className={`btn-primary cta-pulse !px-4 !py-2.5 text-base ${cta2 && href2 ? "sm:!px-6 sm:!py-3 sm:text-lg" : "sm:!px-9 sm:!py-4 sm:text-xl"}`}>
             {cta}

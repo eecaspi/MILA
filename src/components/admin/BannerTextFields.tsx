@@ -41,7 +41,7 @@ export function BannerTextFields({
         <input name="headline" defaultValue={values?.headline ?? ""} maxLength={80} className={inputClass} />
       </label>
       <label className="block sm:col-span-2">
-        <span className="mb-1 block text-xs font-semibold text-ink-soft">טקסט (עד 600 תווים; בטלפון הטקסט מוצג כולו, בגופן קטן)</span>
+        <span className="mb-1 block text-xs font-semibold text-ink-soft">טקסט (עד 600 תווים; בטלפון הטקסט מוצג כולו). להדגשה: לשים שני כוכביות משני צידי הטקסט, למשל **הצטרפי עכשיו!**</span>
         <textarea name="body" defaultValue={values?.body ?? ""} maxLength={600} rows={4} className={inputClass} />
       </label>
       <label className="block">

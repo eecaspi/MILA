@@ -70,10 +70,10 @@ export function InviteWelcome() {
           {name === GENERAL ? "הוזמנתם" : `${name}, הוזמנתם`} להיות מהראשונים לראות את ליקי
         </h2>
         <p className="mt-3 text-base leading-snug text-ink-soft sm:text-lg">האתר עדיין בבנייה, ואתם מקבלים הצצה מיוחדת לפני כולם.</p>
-        <div className="relative mx-auto mt-3 h-28 w-32 sm:h-36 sm:w-40">
+        <div className="relative mx-auto mt-3 -mb-3 h-28 w-32 sm:h-36 sm:w-40">
           <Image src="/brand/liky-phone.webp" alt="" fill sizes="10rem" unoptimized className="object-contain object-bottom" />
         </div>
-        <button type="button" onClick={close} className="btn-primary mt-4 w-full !py-3 text-lg font-bold sm:text-xl">
+        <button type="button" onClick={close} className="btn-primary relative z-10 w-full !py-3 text-lg font-bold sm:text-xl">
           כניסה לאתר
         </button>
       </div>

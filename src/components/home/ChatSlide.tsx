@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { Emphasis } from "./Emphasis";
 import { useEffect, useRef } from "react";
 import { isVideoUrl } from "@/lib/banners";
 
@@ -95,7 +96,9 @@ export function ChatSlide({
                   : "self-start rounded-ss-sm bg-white text-ink"
             }`}
           >
-            <span>{b}</span>
+            <span>
+              <Emphasis text={b} />
+            </span>
             <span
               aria-hidden="true"
               className="ms-auto flex shrink-0 items-center gap-0.5 pb-px text-[8px] font-normal leading-none text-[#8696a0] sm:text-[clamp(0.7rem,1.1vw,1.4rem)]"

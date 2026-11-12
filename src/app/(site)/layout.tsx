@@ -1,6 +1,7 @@
 import { InviteWelcome } from "@/components/layout/InviteWelcome";
 import { EntryPopup } from "@/components/layout/EntryPopup";
 import { getPopup } from "@/lib/data/popup";
+import { MotionGuard } from "@/components/layout/MotionGuard";
 import { Tracker } from "@/components/analytics/Tracker";
 import { SiteFooter } from "@/components/layout/SiteFooter";
 import { WhatsAppFloat } from "@/components/layout/WhatsAppFloat";
@@ -17,11 +18,12 @@ export default async function SiteLayout({ children }: { children: React.ReactNo
         דילוג לתוכן
       </a>
       <SiteHeader />
-      <main id="main">{children}</main>
+      <main id="main" tabIndex={-1} className="outline-none">{children}</main>
       <SiteFooter />
       <WhatsAppFloat />
       <InviteWelcome />
       {popup && <EntryPopup popup={popup} />}
+      <MotionGuard />
       <Tracker />
     </>
   );

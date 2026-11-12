@@ -3,7 +3,10 @@
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 
-const SEEN_KEY = "liky-invite-seen";
+/** Flip to false when the site opens to everyone. */
+const INVITE_ACTIVE = true;
+const NAME_KEY = "liky-invite-name";
+const SHOWN_KEY = "liky-invite-shown";
 
 /** A personal welcome for people who open the site from an invitation link: liky.club/?for=NAME. */
 export function InviteWelcome() {
@@ -11,20 +14,28 @@ export function InviteWelcome() {
   const [name, setName] = useState("");
 
   useEffect(() => {
+    if (!INVITE_ACTIVE) return;
     const raw = new URLSearchParams(window.location.search).get("for");
-    const clean = (raw ?? "").replace(/[<>]/g, "").trim().slice(0, 40);
-    if (!clean) return;
+    let clean = (raw ?? "").replace(/[<>]/g, "").trim().slice(0, 40);
     try {
-      if (localStorage.getItem(SEEN_KEY) === clean) return;
+      if (clean) localStorage.setItem(NAME_KEY, clean);
+      else clean = localStorage.getItem(NAME_KEY) ?? "";
     } catch {
-      // Storage blocked: show it anyway.
+      // Storage blocked: only the link itself works.
+    }
+    if (!clean) return;
+    // Once per visit: a new visit (a new tab or coming back later) shows it again.
+    try {
+      if (sessionStorage.getItem(SHOWN_KEY)) return;
+    } catch {
+      // ignore
     }
     setName(clean);
     const t = setTimeout(() => {
       if (!ref.current || ref.current.open) return;
       ref.current.showModal();
       try {
-        localStorage.setItem(SEEN_KEY, clean);
+        sessionStorage.setItem(SHOWN_KEY, "1");
       } catch {
         // ignore
       }

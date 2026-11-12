@@ -92,7 +92,7 @@ export function ChatSlide({
               i === 0
                 ? "self-start rounded-ss-sm bg-white text-sm font-bold text-ink sm:text-[clamp(1.25rem,2.6vw,3.2rem)]"
                 : i % 2 === 1
-                  ? "relative -left-7 self-end rounded-se-sm bg-[#f6b9b4] text-ink sm:left-0"
+                  ? "relative -left-7 self-end rounded-se-sm bg-[#f6b9b4] text-ink sm:-left-[3.5vw]"
                   : "self-start rounded-ss-sm bg-white text-ink"
             }`}
           >
@@ -114,7 +114,7 @@ export function ChatSlide({
         <Link
           href={href}
           style={{ animationDelay: `${0.4 + 0.75 * bubbles.length}s, ${0.4 + 0.75 * bubbles.length + 0.5}s` }}
-          className="chat-cta btn-primary mt-1.5 w-max max-w-none self-start whitespace-nowrap !px-5 !py-2.5 text-sm font-bold sm:mt-3 sm:!px-8 sm:!py-3 sm:text-2xl"
+          className="chat-cta btn-primary mt-1.5 w-max max-w-none self-start whitespace-nowrap !px-5 !py-2.5 text-sm font-bold sm:mt-[1.2vw] sm:!px-[2.4vw] sm:!py-[1vw] sm:text-[clamp(1.1rem,2.1vw,2.6rem)]"
         >
           {ctaLabel}
         </Link>

@@ -136,8 +136,8 @@ export function InstallAppButton({ className = "", strip = false }: { className?
             <p className="mt-3 text-sm font-bold">בספארי:</p>
             <ol className="mt-1 list-decimal space-y-1 ps-5 text-base">
               <li>
-                לוחצות על כפתור השיתוף <ShareIcon /> בתחתית המסך. אם אין כפתור כזה, לוחצות על שלוש הנקודות{" "}
-                <span aria-hidden>⋯</span> ליד שורת הכתובת ואז על &quot;שיתוף&quot;.
+                לוחצות על כפתור השיתוף <ShareIcon /> בתחתית המסך. אם אין כפתור כזה, לוחצות על התפריט (שלושה פסים{" "}
+                <span aria-hidden>≡</span> או שלוש נקודות <span aria-hidden>⋯</span>) ליד שורת הכתובת ואז על &quot;שיתוף&quot;.
               </li>
               <li>לוחצות על &quot;הצגת עוד&quot; <span aria-hidden>⌄</span> בשורה התחתונה, ואז על &quot;הוספה למסך הבית&quot;.</li>
               <li>לוחצות &quot;הוספה&quot;.</li>

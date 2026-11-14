@@ -22,6 +22,7 @@ export function InviteWelcome() {
     if (params.get("invite") === "off") {
       try {
         localStorage.removeItem(NAME_KEY);
+        localStorage.removeItem("liky-app-added");
         sessionStorage.removeItem(SHOWN_KEY);
       } catch {
         // ignore

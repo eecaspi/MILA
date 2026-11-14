@@ -44,28 +44,34 @@ export function InstallAppButton({ className = "", strip = false }: { className?
       window.matchMedia("(display-mode: standalone)").matches ||
       (navigator as Navigator & { standalone?: boolean }).standalone === true;
     if (standalone) return;
+    let added = false;
     try {
-      if (localStorage.getItem(ADDED_KEY)) return;
+      added = !!localStorage.getItem(ADDED_KEY);
     } catch {
       // ignore
+    }
+    const ua = navigator.userAgent;
+    const iOS = /iPad|iPhone|iPod/.test(ua) || (ua.includes("Mac") && navigator.maxTouchPoints > 1);
+    const android = /Android/i.test(ua);
+    // On Android the browser itself says whether the app is installed: it offers the install only when it is not.
+    // On iPhone nothing says so, so "כבר הוספתי" is remembered there.
+    if (iOS && added) return;
+    if (android && added) {
+      try {
+        localStorage.removeItem(ADDED_KEY);
+      } catch {
+        // ignore
+      }
     }
     const onPrompt = (e: Event) => {
       e.preventDefault();
       prompt.current = e as InstallPromptEvent;
     };
-    const onInstalled = () => {
-      try {
-        localStorage.setItem(ADDED_KEY, "1");
-      } catch {
-        // ignore
-      }
-      setPlatform("hidden");
-    };
+    const onInstalled = () => setPlatform("hidden");
     window.addEventListener("beforeinstallprompt", onPrompt);
     window.addEventListener("appinstalled", onInstalled);
-    const ua = navigator.userAgent;
-    if (/iPad|iPhone|iPod/.test(ua) || (ua.includes("Mac") && navigator.maxTouchPoints > 1)) setPlatform("ios");
-    else if (/Android/i.test(ua)) setPlatform("android");
+    if (iOS) setPlatform("ios");
+    else if (android) setPlatform("android");
     return () => {
       window.removeEventListener("beforeinstallprompt", onPrompt);
       window.removeEventListener("appinstalled", onInstalled);

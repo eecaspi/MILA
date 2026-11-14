@@ -66,8 +66,8 @@ export default async function AccountPage({ searchParams }: { searchParams: Sear
         </form>
       </header>
 
-      <div className="mb-6">
-        <InstallAppButton className="!px-4 !py-2 text-sm" />
+      <div className="mb-6 [&>div]:mt-0">
+        <InstallAppButton strip className="!px-5 !py-2.5 text-base" />
       </div>
 
       {notice === "profile_saved" && <Alert tone="success">הפרופיל עודכן.</Alert>}

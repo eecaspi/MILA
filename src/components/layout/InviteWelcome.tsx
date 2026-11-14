@@ -29,6 +29,8 @@ export function InviteWelcome() {
       }
       return;
     }
+    // Moved here from another browser by the install button: already welcomed there.
+    if (params.has("from")) return;
     const raw = params.get("for");
     let stored = "";
     if (raw !== null || params.has("invite")) {

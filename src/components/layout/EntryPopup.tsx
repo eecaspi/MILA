@@ -27,7 +27,7 @@ const SEEN_KEY = "liky-popup-seen";
 /** Pages where a popup would get in the way of what the person came to do. */
 const QUIET_PATHS = /^\/(login|auth|reset-password|admin)(\/|$)/;
 
-/** Opens once per browser (and again only when the popup is edited in the back office), and closes with the X. */
+/** Opens once per visit (each new visit, tab or return to the site shows it again), and closes with the X. */
 
 export function EntryPopup({ popup }: { popup: SitePopup }) {
   const ref = useRef<HTMLDialogElement>(null);
@@ -40,13 +40,13 @@ export function EntryPopup({ popup }: { popup: SitePopup }) {
     try {
       const q = new URLSearchParams(window.location.search);
       // ?invite=off: as a first-time visitor (forget that the popup was seen).
-      if (q.get("invite") === "off") localStorage.removeItem(SEEN_KEY);
+      if (q.get("invite") === "off") sessionStorage.removeItem(SEEN_KEY);
       else if (q.has("for") || q.has("invite")) return;
     } catch {
       // ignore
     }
     try {
-      if (localStorage.getItem(SEEN_KEY) === popup.version) return;
+      if (sessionStorage.getItem(SEEN_KEY) === popup.version) return;
     } catch {
       // Storage blocked: fall through and show it, once per page load.
     }
@@ -54,7 +54,7 @@ export function EntryPopup({ popup }: { popup: SitePopup }) {
       if (!ref.current || ref.current.open) return;
       ref.current.showModal();
       try {
-        localStorage.setItem(SEEN_KEY, popup.version);
+        sessionStorage.setItem(SEEN_KEY, popup.version);
       } catch {
         // ignore
       }

@@ -4,28 +4,79 @@ import { useEffect, useRef, useState } from "react";
 
 type Platform = "hidden" | "ios" | "android";
 
-/** "הוסיפי את ליקי לטלפון": explains how to put a shortcut on the home screen (nothing installs by itself). */
+interface InstallPromptEvent extends Event {
+  prompt: () => Promise<void>;
+  userChoice: Promise<{ outcome: "accepted" | "dismissed" }>;
+}
+
+const ADDED_KEY = "liky-app-added";
+
+/** "הוסיפי את ליקי לטלפון": installs the app on Android when the browser allows it; short steps on iPhone. */
 export function InstallAppButton({ className = "", strip = false }: { className?: string; strip?: boolean }) {
   const [platform, setPlatform] = useState<Platform>("hidden");
   const dialog = useRef<HTMLDialogElement>(null);
+  const prompt = useRef<InstallPromptEvent | null>(null);
 
   useEffect(() => {
     const standalone =
       window.matchMedia("(display-mode: standalone)").matches ||
       (navigator as Navigator & { standalone?: boolean }).standalone === true;
     if (standalone) return;
+    try {
+      if (localStorage.getItem(ADDED_KEY)) return;
+    } catch {
+      // ignore
+    }
+    const onPrompt = (e: Event) => {
+      e.preventDefault();
+      prompt.current = e as InstallPromptEvent;
+    };
+    const onInstalled = () => {
+      try {
+        localStorage.setItem(ADDED_KEY, "1");
+      } catch {
+        // ignore
+      }
+      setPlatform("hidden");
+    };
+    window.addEventListener("beforeinstallprompt", onPrompt);
+    window.addEventListener("appinstalled", onInstalled);
     const ua = navigator.userAgent;
     if (/iPad|iPhone|iPod/.test(ua) || (ua.includes("Mac") && navigator.maxTouchPoints > 1)) setPlatform("ios");
     else if (/Android/i.test(ua)) setPlatform("android");
+    return () => {
+      window.removeEventListener("beforeinstallprompt", onPrompt);
+      window.removeEventListener("appinstalled", onInstalled);
+    };
   }, []);
 
   if (platform === "hidden") return null;
+
+  const click = async () => {
+    if (platform === "android" && prompt.current) {
+      await prompt.current.prompt();
+      await prompt.current.userChoice;
+      prompt.current = null;
+    } else {
+      dialog.current?.showModal();
+    }
+  };
+
+  const alreadyAdded = () => {
+    try {
+      localStorage.setItem(ADDED_KEY, "1");
+    } catch {
+      // ignore
+    }
+    dialog.current?.close();
+    setPlatform("hidden");
+  };
 
   const button = (
     <>
       <button
         type="button"
-        onClick={() => dialog.current?.showModal()}
+        onClick={click}
         className={`btn-secondary inline-flex items-center gap-2 ${className}`}
       >
         <span aria-hidden>📲</span>
@@ -94,6 +145,9 @@ export function InstallAppButton({ className = "", strip = false }: { className?
         <p className="mt-3 text-sm text-ink-soft">האייקון של ליקי יופיע בין האפליקציות.</p>
         <button type="button" onClick={() => dialog.current?.close()} className="btn-primary mt-5 w-full !py-2.5">
           הבנתי
+        </button>
+        <button type="button" onClick={alreadyAdded} className="mt-3 w-full text-center text-sm text-ink-soft underline">
+          כבר הוספתי
         </button>
       </dialog>
     </>

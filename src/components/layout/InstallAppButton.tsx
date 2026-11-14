@@ -64,16 +64,26 @@ export function InstallAppButton({ className = "" }: { className?: string }) {
       <dialog
         ref={dialog}
         aria-labelledby="install-title"
-        className="m-auto w-[min(88vw,24rem)] rounded-3xl bg-surface p-6 text-ink shadow-2xl backdrop:bg-black/60"
+        className="m-auto w-[min(88vw,24rem)] max-h-[90dvh] overflow-y-auto rounded-3xl bg-surface p-6 text-ink shadow-2xl backdrop:bg-black/60"
       >
         <h2 id="install-title" className="text-xl font-extrabold">הוספת ליקי למסך הבית</h2>
-        <ol className="mt-3 list-decimal space-y-2 ps-5 text-base">
+        <p className="mt-3 text-sm font-bold">בספארי:</p>
+        <ol className="mt-1 list-decimal space-y-1 ps-5 text-base">
           <li>
-            לוחצות על כפתור השיתוף <span aria-hidden>⬆️</span> בתחתית הדפדפן (ספארי).
+            לוחצות על כפתור השיתוף <span aria-hidden>⬆️</span> בתחתית המסך.
           </li>
           <li>בוחרות &quot;הוספה למסך הבית&quot;.</li>
-          <li>לוחצות &quot;הוספה&quot;. האייקון של ליקי יופיע בין האפליקציות.</li>
+          <li>לוחצות &quot;הוספה&quot;.</li>
         </ol>
+        <p className="mt-3 text-sm font-bold">בכרום (גוגל):</p>
+        <ol className="mt-1 list-decimal space-y-1 ps-5 text-base">
+          <li>
+            לוחצות על כפתור השיתוף <span aria-hidden>⬆️</span> למעלה, ליד שורת הכתובת.
+          </li>
+          <li>בוחרות &quot;הוספה למסך הבית&quot;.</li>
+          <li>לוחצות &quot;הוספה&quot;.</li>
+        </ol>
+        <p className="mt-3 text-sm text-ink-soft">האייקון של ליקי יופיע בין האפליקציות.</p>
         <button type="button" onClick={() => dialog.current?.close()} className="btn-primary mt-5 w-full !py-2.5">
           הבנתי
         </button>

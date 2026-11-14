@@ -8,6 +8,7 @@ import { requireSession } from "@/lib/auth/session";
 import { formatDate } from "@/lib/format";
 import { getMemberRewards } from "@/lib/rewards/queries";
 import { createClient } from "@/lib/supabase/server";
+import { InstallAppButton } from "@/components/layout/InstallAppButton";
 import { signOut } from "../login/actions";
 
 export const metadata: Metadata = {
@@ -64,6 +65,10 @@ export default async function AccountPage({ searchParams }: { searchParams: Sear
           </button>
         </form>
       </header>
+
+      <div className="mb-6">
+        <InstallAppButton className="!px-4 !py-2 text-sm" />
+      </div>
 
       {notice === "profile_saved" && <Alert tone="success">הפרופיל עודכן.</Alert>}
 

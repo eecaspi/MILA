@@ -20,6 +20,8 @@ export const metadata: Metadata = {
   },
   description: siteConfig.brand.description,
   applicationName: siteConfig.brand.name,
+  icons: { apple: "/apple-touch-icon.png" },
+  appleWebApp: { capable: true, title: siteConfig.brand.name, statusBarStyle: "default" },
   openGraph: {
     title,
     description: siteConfig.brand.description,

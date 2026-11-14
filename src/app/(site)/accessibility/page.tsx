@@ -40,12 +40,12 @@ export default function Accessibility() {
       <Section title="רכזת נגישות ופניות">
         <p>
           נתקלת בקושי? רוצה לבקש התאמה או חלופה לתוכן? פני אל רכזת הנגישות, {legal.accessibilityCoordinator},
-          במייל <ContactEmail />. נשמח לקבל פירוט של הבעיה ושל הכתובת בעמוד, ונטפל בהקדם.
+          בטלפון <a href={`tel:${legal.accessibilityPhone.replace(/-/g, "")}`} className="ltr">{legal.accessibilityPhone}</a> או במייל <ContactEmail />. נשמח לקבל פירוט של הבעיה ושל הכתובת בעמוד, ונטפל בהקדם.
         </p>
       </Section>
 
       <Section title="תאריך עדכון">
-        <p>ההצהרה עודכנה בתאריך {legal.lastUpdated}.</p>
+        <p>ההצהרה עודכנה בתאריך 14 בנובמבר 2026.</p>
       </Section>
     </LegalPage>
   );

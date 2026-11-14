@@ -40,7 +40,8 @@ export const siteConfig = {
     /** Bump when terms/privacy text changes materially; stored with each sign-up consent. */
     termsVersion: "2026-11-05",
     lastUpdated: "5 בנובמבר 2026",
-    accessibilityCoordinator: "[שם רכזת הנגישות – להשלמה]",
+    accessibilityCoordinator: "אסתי כספי",
+    accessibilityPhone: "058-4949596",
   },
   nav: [
     { href: "/", label: "ראשי" },

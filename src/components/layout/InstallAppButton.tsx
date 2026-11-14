@@ -11,6 +11,28 @@ interface InstallPromptEvent extends Event {
 
 const ADDED_KEY = "liky-app-added";
 
+/** The iPhone share icon: a square with an arrow pointing up out of it. */
+function ShareIcon() {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      width="1.15em"
+      height="1.15em"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+      className="inline-block align-[-0.2em] text-[#007aff]"
+    >
+      <path d="M12 3v12" />
+      <path d="M8 7l4-4 4 4" />
+      <path d="M8 11H6a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-8a1 1 0 0 0-1-1h-2" />
+    </svg>
+  );
+}
+
 /** "הוסיפי את ליקי לטלפון": installs the app on Android when the browser allows it; short steps on iPhone. */
 export function InstallAppButton({ className = "", strip = false }: { className?: string; strip?: boolean }) {
   const [platform, setPlatform] = useState<Platform>("hidden");
@@ -108,7 +130,7 @@ export function InstallAppButton({ className = "", strip = false }: { className?
             <p className="mt-3 text-sm font-bold">בספארי:</p>
             <ol className="mt-1 list-decimal space-y-1 ps-5 text-base">
               <li>
-                לוחצות על כפתור השיתוף <span aria-hidden>⬆️</span> בתחתית המסך.
+                לוחצות על כפתור השיתוף <ShareIcon /> בתחתית המסך.
               </li>
               <li>בוחרות &quot;הוספה למסך הבית&quot;.</li>
               <li>לוחצות &quot;הוספה&quot;.</li>
@@ -116,7 +138,7 @@ export function InstallAppButton({ className = "", strip = false }: { className?
             <p className="mt-3 text-sm font-bold">בכרום (גוגל):</p>
             <ol className="mt-1 list-decimal space-y-1 ps-5 text-base">
               <li>
-                לוחצות על כפתור השיתוף <span aria-hidden>⬆️</span> למעלה, ליד שורת הכתובת.
+                לוחצות על כפתור השיתוף <ShareIcon /> למעלה, ליד שורת הכתובת.
               </li>
               <li>בוחרות &quot;הוספה למסך הבית&quot;.</li>
               <li>לוחצות &quot;הוספה&quot;.</li>

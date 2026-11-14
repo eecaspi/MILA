@@ -34,6 +34,14 @@ function ShareIcon() {
   );
 }
 
+function WhatsAppIcon() {
+  return (
+    <svg viewBox="0 0 24 24" width="1.2em" height="1.2em" aria-hidden="true" className="shrink-0 text-[#25d366]" fill="currentColor">
+      <path d="M12.04 2a9.9 9.9 0 0 0-8.46 15.03L2 22l5.1-1.34A9.9 9.9 0 1 0 12.04 2zm0 1.8a8.1 8.1 0 1 1-4.13 15.08l-.3-.17-3.03.8.81-2.95-.19-.31A8.1 8.1 0 0 1 12.04 3.8zM8.6 7.3c-.18 0-.47.07-.72.34-.25.27-.95.93-.95 2.27s.97 2.63 1.1 2.81c.14.18 1.9 3.04 4.7 4.14 2.32.92 2.8.74 3.3.69.5-.05 1.62-.66 1.85-1.3.23-.64.23-1.19.16-1.3-.07-.12-.25-.18-.52-.32-.27-.14-1.6-.79-1.85-.88-.25-.09-.43-.14-.61.14-.18.27-.7.88-.86 1.06-.16.18-.32.2-.59.07-.27-.14-1.15-.42-2.19-1.35-.81-.72-1.35-1.61-1.51-1.88-.16-.27-.02-.42.12-.55.12-.12.27-.32.41-.48.14-.16.18-.27.27-.45.09-.18.05-.34-.02-.48-.07-.14-.61-1.5-.84-2.05-.22-.53-.45-.46-.61-.47h-.52z" />
+    </svg>
+  );
+}
+
 /** "הוסיפי את ליקי לטלפון": installs the app on Android when the browser allows it; short steps on iPhone. */
 export function InstallAppButton({ className = "", strip = false }: { className?: string; strip?: boolean }) {
   const [platform, setPlatform] = useState<Platform>("hidden");
@@ -142,7 +150,9 @@ export function InstallAppButton({ className = "", strip = false }: { className?
       <dialog
         ref={dialog}
         aria-labelledby="install-title"
-        className="m-auto max-h-[90dvh] w-[min(88vw,24rem)] overflow-y-auto rounded-3xl bg-surface p-6 text-ink shadow-2xl backdrop:bg-black/60"
+        tabIndex={-1}
+        autoFocus
+        className="m-auto outline-none max-h-[90dvh] w-[min(88vw,24rem)] overflow-y-auto rounded-3xl bg-surface p-6 text-ink shadow-2xl backdrop:bg-black/60"
       >
         <h2 id="install-title" className="text-xl font-extrabold">הוספת ליקי למסך הבית</h2>
         {platform === "ios" ? (
@@ -158,7 +168,8 @@ export function InstallAppButton({ className = "", strip = false }: { className?
             {siteConfig.community.whatsappUrl && (
             <p className="mt-3 text-sm text-ink-soft">
               לא מצאת?{" "}
-              <a href={siteConfig.community.whatsappUrl} target="_blank" rel="noopener noreferrer" className="font-bold text-accent underline">
+              <a href={siteConfig.community.whatsappUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 font-bold text-accent underline">
+                <WhatsAppIcon />
                 כתבי לנו בוואטסאפ
               </a>{" "}
               ונעזור.

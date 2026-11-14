@@ -131,7 +131,7 @@ export function InstallAppButton({ className = "", strip = false }: { className?
       <p className="mt-1 text-xs text-ink-soft">
         {platform === "samsung"
           ? "לחוויה הכי טובה, נפתח את ליקי בכרום ושם תוסיפי."
-          : "כך ליקי תמיד בהישג יד, בנגיעה אחת."}
+          : "בכמה צעדים פשוטים, כדי שלא תפספסי אף הטבה."}
       </p>
     </>
   );

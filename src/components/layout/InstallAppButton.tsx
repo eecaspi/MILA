@@ -139,7 +139,7 @@ export function InstallAppButton({ className = "", strip = false }: { className?
                 לוחצות על כפתור השיתוף <ShareIcon /> בתחתית המסך. אם אין כפתור כזה, לוחצות על שלוש הנקודות{" "}
                 <span aria-hidden>⋯</span> ליד שורת הכתובת ואז על &quot;שיתוף&quot;.
               </li>
-              <li>גוללות למטה ברשימה ובוחרות &quot;הוספה למסך הבית&quot;.</li>
+              <li>לוחצות על &quot;הצגת עוד&quot; <span aria-hidden>⌄</span> בשורה התחתונה, ואז על &quot;הוספה למסך הבית&quot;.</li>
               <li>לוחצות &quot;הוספה&quot;.</li>
             </ol>
             <p className="mt-3 text-sm font-bold">בכרום (גוגל):</p>
@@ -147,7 +147,7 @@ export function InstallAppButton({ className = "", strip = false }: { className?
               <li>
                 לוחצות על כפתור השיתוף <ShareIcon /> למעלה, ליד שורת הכתובת.
               </li>
-              <li>בוחרות &quot;הוספה למסך הבית&quot;.</li>
+              <li>לוחצות על &quot;הצגת עוד&quot; <span aria-hidden>⌄</span> בשורה התחתונה, ואז על &quot;הוספה למסך הבית&quot;.</li>
               <li>לוחצות &quot;הוספה&quot;.</li>
             </ol>
           </>

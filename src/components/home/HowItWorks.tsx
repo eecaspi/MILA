@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { siteConfig } from "@/config/site";
+import { getSession } from "@/lib/auth/session";
 
 const steps = [
   { n: "1", title: "מצטרפות בחינם", text: "נרשמות בקלות, ללא אף התחייבות." },
@@ -10,7 +11,9 @@ const steps = [
 ] as const;
 
 /** Three plain steps that explain the club to someone who has never seen it. */
-export function HowItWorks() {
+export async function HowItWorks() {
+  // Someone who already joined does not need the explanation.
+  if (await getSession()) return null;
   return (
     <section aria-labelledby="how">
       <SectionHeading id="how" title="איך זה עובד?" subtitle="בשלושה צעדים בלבד." />

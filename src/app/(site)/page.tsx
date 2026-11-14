@@ -4,6 +4,7 @@ import { DealCard } from "@/components/deals/DealCard";
 import { CategoryTiles } from "@/components/home/CategoryTiles";
 import { CommunityInvite } from "@/components/home/CommunityInvite";
 import { HeroCarousel } from "@/components/home/HeroCarousel";
+import { InstallAppButton } from "@/components/layout/InstallAppButton";
 import { HowItWorks } from "@/components/home/HowItWorks";
 import { NowTabs } from "@/components/home/NowTabs";
 import { Reveal } from "@/components/ui/Reveal";
@@ -40,6 +41,7 @@ export default async function HomePage() {
           הטבות והנחות לקהילה, במקום אחד
         </p>
         <SearchBox suggestions={suggestions} raised />
+        <InstallAppButton strip className="!px-5 !py-2.5 text-base" />
       </div>
       <div className="h-10" />
 

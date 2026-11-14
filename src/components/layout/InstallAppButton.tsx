@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 
-type Platform = "hidden" | "ios" | "android";
+type Platform = "hidden" | "ios" | "android" | "samsung";
 
 interface InstallPromptEvent extends Event {
   prompt: () => Promise<void>;
@@ -71,7 +71,7 @@ export function InstallAppButton({ className = "", strip = false }: { className?
     window.addEventListener("beforeinstallprompt", onPrompt);
     window.addEventListener("appinstalled", onInstalled);
     if (iOS) setPlatform("ios");
-    else if (android) setPlatform("android");
+    else if (android) setPlatform(/SamsungBrowser/i.test(ua) ? "samsung" : "android");
     return () => {
       window.removeEventListener("beforeinstallprompt", onPrompt);
       window.removeEventListener("appinstalled", onInstalled);
@@ -80,8 +80,17 @@ export function InstallAppButton({ className = "", strip = false }: { className?
 
   if (platform === "hidden") return null;
 
+  const openInChrome = () => {
+    // Opens this same page in Chrome; if Chrome is missing, the phone goes to its page in Google Play.
+    const { host, pathname, search } = window.location;
+    const play = encodeURIComponent("https://play.google.com/store/apps/details?id=com.android.chrome");
+    window.location.href = `intent://${host}${pathname}${search}#Intent;scheme=https;package=com.android.chrome;S.browser_fallback_url=${play};end`;
+  };
+
   const click = async () => {
-    if (platform === "android" && prompt.current) {
+    if (platform === "samsung") {
+      openInChrome();
+    } else if (platform === "android" && prompt.current) {
       await prompt.current.prompt();
       await prompt.current.userChoice;
       prompt.current = null;
@@ -108,9 +117,13 @@ export function InstallAppButton({ className = "", strip = false }: { className?
         className={`btn-secondary inline-flex items-center gap-2 ${className}`}
       >
         <span aria-hidden>📲</span>
-        הוסיפי את ליקי לטלפון
+        {platform === "samsung" ? "הוסיפי את ליקי לטלפון (בכרום)" : "הוסיפי את ליקי לטלפון"}
       </button>
-      <p className="mt-1 text-xs text-ink-soft">בכמה צעדים קלים, ובלי להוריד כלום מהחנות.</p>
+      <p className="mt-1 text-xs text-ink-soft">
+        {platform === "samsung"
+          ? "לחוויה הכי טובה, נפתח את ליקי בכרום ושם תוסיפי."
+          : "בכמה צעדים קלים, ובלי להוריד כלום מהחנות."}
+      </p>
     </>
   );
 

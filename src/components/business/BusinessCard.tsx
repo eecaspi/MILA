@@ -1,4 +1,5 @@
 import type { Business } from "@/lib/types";
+import type { CardOffer } from "./BusinessFront";
 import { BusinessFront } from "./BusinessFront";
 import { BusinessMore, hasMoreToShow } from "./BusinessMore";
 
@@ -6,7 +7,7 @@ import { BusinessMore, hasMoreToShow } from "./BusinessMore";
  * Outside: picture, name, short description and tags.
  * Inside (hover on desktop, replacing the picture; "עוד על העסק" on phones): three product photos and the website.
  */
-export function BusinessCard({ business }: { business: Business }) {
+export function BusinessCard({ business, offers }: { business: Business; offers?: CardOffer[] }) {
   const more = hasMoreToShow(business);
 
   return (
@@ -15,7 +16,7 @@ export function BusinessCard({ business }: { business: Business }) {
         tabIndex={0}
         className="lift flex h-full flex-col overflow-hidden rounded-[var(--radius-card)] bg-surface shadow-[var(--shadow-card)] outline-none focus-visible:ring-2 focus-visible:ring-accent"
       >
-        <BusinessFront business={business} />
+        <BusinessFront business={business} offers={offers} />
 
         {/* Phones: tap to open the inside of the card. */}
         {more && (

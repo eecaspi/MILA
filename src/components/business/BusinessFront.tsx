@@ -1,9 +1,16 @@
+import Link from "next/link";
 import { StatusBadge } from "@/components/ui/StatusBadge";
 import type { Business } from "@/lib/types";
 import { BusinessImage } from "./BusinessImage";
 
+export interface CardOffer {
+  id: string;
+  title: string;
+  valueLabel: string;
+}
+
 /** What a visitor sees first: picture, name, a short description and tags. */
-export function BusinessFront({ business }: { business: Business }) {
+export function BusinessFront({ business, offers = [] }: { business: Business; offers?: CardOffer[] }) {
   return (
     <div className="flex flex-1 flex-col">
       <div className="relative aspect-[4/3] shrink-0 md:aspect-[16/10] overflow-hidden">
@@ -30,6 +37,24 @@ export function BusinessFront({ business }: { business: Business }) {
                 {tag}
               </li>
             ))}
+          </ul>
+        )}
+        {offers.length > 0 && (
+          <ul className="mt-3 space-y-1.5 sm:mt-4" aria-label="הטבות">
+            {offers.slice(0, 2).map((o) => (
+              <li key={o.id}>
+                <Link
+                  href={`/deals/${o.id}`}
+                  className="flex items-center gap-2 rounded-xl bg-accent-soft px-3 py-2 text-sm font-bold text-accent hover:bg-accent hover:text-on-accent"
+                >
+                  <span aria-hidden>🎁</span>
+                  <span className="line-clamp-2">{o.valueLabel || o.title}</span>
+                </Link>
+              </li>
+            ))}
+            {offers.length > 2 && (
+              <li className="px-1 text-xs text-ink-soft">ועוד {offers.length - 2} הטבות</li>
+            )}
           </ul>
         )}
       </div>

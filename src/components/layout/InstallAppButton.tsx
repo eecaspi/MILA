@@ -110,7 +110,7 @@ export function InstallAppButton({ className = "", strip = false }: { className?
         <span aria-hidden>📲</span>
         הוסיפי את ליקי לטלפון
       </button>
-      <p className="mt-1 text-xs text-ink-soft">בלחיצה אחת, ובלי להוריד כלום מהחנות.</p>
+      <p className="mt-1 text-xs text-ink-soft">בכמה צעדים קלים, ובלי להוריד כלום מהחנות.</p>
     </>
   );
 

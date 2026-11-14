@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { siteConfig } from "@/config/site";
 
 type Platform = "hidden" | "ios" | "android" | "samsung";
 
@@ -84,7 +85,7 @@ export function InstallAppButton({ className = "", strip = false }: { className?
     // Opens this same page in Chrome; if Chrome is missing, the phone goes to its page in Google Play.
     const { host, pathname, search } = window.location;
     const play = encodeURIComponent("https://play.google.com/store/apps/details?id=com.android.chrome");
-    window.location.href = `intent://${host}${pathname}${search}#Intent;scheme=https;package=com.android.chrome;S.browser_fallback_url=${play};end`;
+    window.location.href = `intent://${host}${pathname}${search ? `${search}&` : "?"}from=samsung#Intent;scheme=https;package=com.android.chrome;S.browser_fallback_url=${play};end`;
   };
 
   const click = async () => {
@@ -114,7 +115,7 @@ export function InstallAppButton({ className = "", strip = false }: { className?
       <button
         type="button"
         onClick={click}
-        className={`btn-secondary inline-flex items-center gap-2 ${className}`}
+        className={`${strip ? "btn-primary cta-pulse font-bold" : "btn-secondary"} inline-flex items-center gap-2 ${className}`}
       >
         <span aria-hidden>📲</span>
         {platform === "samsung" ? "הוסיפי את ליקי לטלפון (בכרום)" : "הוסיפי את ליקי לטלפון"}
@@ -130,8 +131,8 @@ export function InstallAppButton({ className = "", strip = false }: { className?
   return (
     <>
       {strip ? (
-        <div className="mx-auto mt-6 max-w-3xl rounded-2xl bg-accent-soft px-4 py-4 text-center">
-          <p className="mb-2 font-display text-base font-bold text-ink">ליקי תמיד איתך, על מסך הבית</p>
+        <div className="mx-auto mt-6 max-w-3xl rounded-2xl border-2 border-accent/40 bg-accent-soft px-4 py-5 text-center shadow-[var(--shadow-card)]">
+          <p className="mb-3 font-display text-xl font-extrabold text-ink">ליקי תמיד איתך, על מסך הבית</p>
           {button}
         </div>
       ) : (
@@ -154,7 +155,15 @@ export function InstallAppButton({ className = "", strip = false }: { className?
               <li>מחפשות &quot;הוספה למסך הבית&quot;. אם היא לא מופיעה, לוחצות &quot;הצגת עוד&quot; או גוללות למטה.</li>
               <li>לוחצות &quot;הוספה&quot;.</li>
             </ol>
-            <p className="mt-3 text-sm text-ink-soft">לא מצאת? כתבי לנו בכפתור הוואטסאפ הירוק ונעזור.</p>
+            {siteConfig.community.whatsappUrl && (
+            <p className="mt-3 text-sm text-ink-soft">
+              לא מצאת?{" "}
+              <a href={siteConfig.community.whatsappUrl} target="_blank" rel="noopener noreferrer" className="font-bold text-accent underline">
+                כתבי לנו בוואטסאפ
+              </a>{" "}
+              ונעזור.
+            </p>
+            )}
           </>
         ) : (
           <>

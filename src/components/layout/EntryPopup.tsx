@@ -41,7 +41,7 @@ export function EntryPopup({ popup }: { popup: SitePopup }) {
       const q = new URLSearchParams(window.location.search);
       // ?invite=off: as a first-time visitor (forget that the popup was seen).
       if (q.get("invite") === "off") sessionStorage.removeItem(SEEN_KEY);
-      else if (q.has("for") || q.has("invite")) return;
+      else if (q.has("for") || q.has("invite") || q.has("from")) return;
     } catch {
       // ignore
     }

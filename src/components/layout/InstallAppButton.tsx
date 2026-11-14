@@ -131,7 +131,7 @@ export function InstallAppButton({ className = "", strip = false }: { className?
       <p className="mt-1 text-xs text-ink-soft">
         {platform === "samsung"
           ? "לחוויה הכי טובה, נפתח את ליקי בכרום ושם תוסיפי."
-          : "בכמה צעדים קלים, ובלי להוריד כלום מהחנות."}
+          : "כך ליקי תמיד בהישג יד, בנגיעה אחת."}
       </p>
     </>
   );
@@ -140,7 +140,22 @@ export function InstallAppButton({ className = "", strip = false }: { className?
     <>
       {strip ? (
         <div className="mx-auto mt-6 max-w-3xl rounded-2xl border-2 border-accent/40 bg-accent-soft px-4 py-5 text-center shadow-[var(--shadow-card)]">
-          <p className="mb-3 font-display text-xl font-extrabold text-ink">ליקי תמיד איתך, על מסך הבית</p>
+          <div className="mb-3 flex items-center justify-center gap-3">
+            {/* A preview of the icon as it will sit among the phone's apps. */}
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/icon-192.png"
+              alt=""
+              width={56}
+              height={56}
+              className="size-14 rounded-[1.1rem] bg-surface shadow-[var(--shadow-card)] ring-1 ring-black/5"
+            />
+            <p className="text-start font-display text-xl font-extrabold leading-tight text-ink">
+              ליקי תמיד איתך,
+              <br />
+              על מסך הבית
+            </p>
+          </div>
           {button}
         </div>
       ) : (

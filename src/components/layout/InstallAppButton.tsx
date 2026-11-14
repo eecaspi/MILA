@@ -144,16 +144,14 @@ export function InstallAppButton({ className = "", strip = false }: { className?
             {/* A preview of the icon as it will sit among the phone's apps. */}
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src="/icon-192.png"
+              src="/icon-maskable-512.png"
               alt=""
-              width={56}
-              height={56}
-              className="size-14 rounded-[1.1rem] bg-surface shadow-[var(--shadow-card)] ring-1 ring-black/5"
+              width={48}
+              height={48}
+              className="size-12 shrink-0 rounded-[1.05rem] bg-surface shadow-[var(--shadow-card)] ring-1 ring-black/5"
             />
-            <p className="text-start font-display text-xl font-extrabold leading-tight text-ink">
-              ליקי תמיד איתך,
-              <br />
-              על מסך הבית
+            <p className="whitespace-nowrap text-start font-display text-lg font-extrabold leading-tight text-ink sm:text-xl">
+              ליקי תמיד איתך, על מסך הבית
             </p>
           </div>
           {button}

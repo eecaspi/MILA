@@ -146,23 +146,15 @@ export function InstallAppButton({ className = "", strip = false }: { className?
         <h2 id="install-title" className="text-xl font-extrabold">הוספת ליקי למסך הבית</h2>
         {platform === "ios" ? (
           <>
-            <p className="mt-3 text-sm font-bold">בספארי:</p>
-            <ol className="mt-1 list-decimal space-y-1 ps-5 text-base">
+            <ol className="mt-3 list-decimal space-y-2 ps-5 text-base">
               <li>
-                לוחצות על כפתור השיתוף <ShareIcon /> בתחתית המסך. אם אין כפתור כזה, לוחצות על התפריט (שלושה פסים{" "}
-                <span aria-hidden>≡</span> או שלוש נקודות <span aria-hidden>⋯</span>) ליד שורת הכתובת ואז על &quot;שיתוף&quot;.
+                לוחצות על כפתור השיתוף <ShareIcon /> (ריבוע עם חץ למעלה), או על התפריט ליד שורת הכתובת (שלושה פסים{" "}
+                <span aria-hidden>≡</span> או שלוש נקודות <span aria-hidden>⋯</span>) ואז על &quot;שיתוף&quot;.
               </li>
-              <li>לוחצות על &quot;הצגת עוד&quot; <span aria-hidden>⌄</span> בשורה התחתונה, ואז על &quot;הוספה למסך הבית&quot;.</li>
+              <li>מחפשות &quot;הוספה למסך הבית&quot;. אם היא לא מופיעה, לוחצות &quot;הצגת עוד&quot; או גוללות למטה.</li>
               <li>לוחצות &quot;הוספה&quot;.</li>
             </ol>
-            <p className="mt-3 text-sm font-bold">בכרום (גוגל):</p>
-            <ol className="mt-1 list-decimal space-y-1 ps-5 text-base">
-              <li>
-                לוחצות על כפתור השיתוף <ShareIcon /> למעלה, ליד שורת הכתובת.
-              </li>
-              <li>לוחצות על &quot;הצגת עוד&quot; <span aria-hidden>⌄</span> בשורה התחתונה, ואז על &quot;הוספה למסך הבית&quot;.</li>
-              <li>לוחצות &quot;הוספה&quot;.</li>
-            </ol>
+            <p className="mt-3 text-sm text-ink-soft">לא מצאת? כתבי לנו בכפתור הוואטסאפ הירוק ונעזור.</p>
           </>
         ) : (
           <>

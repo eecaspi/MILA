@@ -32,20 +32,9 @@ export function InviteWelcome() {
     let stored = "";
     if (raw !== null || params.has("invite")) {
       stored = (raw ?? "").replace(/[<>]/g, "").trim().slice(0, 40) || GENERAL;
-      try {
-        localStorage.setItem(NAME_KEY, stored);
-      } catch {
-        // Storage blocked: only the link itself works.
-      }
-    } else {
-      try {
-        stored = localStorage.getItem(NAME_KEY) ?? "";
-      } catch {
-        // ignore
-      }
     }
     if (!stored) return;
-    // Once per visit: a new visit (a new tab or coming back later) shows it again.
+    // Only people who arrive through the invitation link see it (nothing is remembered on the device).
     try {
       if (sessionStorage.getItem(SHOWN_KEY)) return;
     } catch {

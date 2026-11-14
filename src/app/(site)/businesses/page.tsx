@@ -1,7 +1,6 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { BusinessCard } from "@/components/business/BusinessCard";
-import { DemoNotice } from "@/components/ui/DemoNotice";
 import { FilterChips } from "@/components/ui/FilterChips";
 import { categories, isCategorySlug } from "@/data/categories";
 import { getBusinesses } from "@/lib/data/repository";
@@ -25,13 +24,6 @@ export default async function BusinessesPage({ searchParams }: { searchParams: S
         <h1 className="mt-1 text-3xl text-ink md:text-4xl">העסקים שלנו</h1>
         <p className="mt-2 text-ink-soft">עסקים, חנויות וארגונים שכדאי להכיר.</p>
       </header>
-
-      <div className="mb-6">
-        <DemoNotice>
-          הרישומים במדריך מבוססים על מידע פומבי ומוצגים <strong>להדגמה בלבד</strong>. אין לליקי קשר
-          מסחרי עם העסקים האלה, והפרטים טרם אומתו מולם.
-        </DemoNotice>
-      </div>
 
       <div className="mb-8">
         <FilterChips

@@ -35,13 +35,6 @@ export function SiteFooter() {
           </ul>
         </nav>
 
-        <div className="text-center text-[10px] leading-snug text-ink-soft sm:text-start sm:text-sm">
-          <p className="mb-0.5 hidden font-display font-bold text-ink sm:mb-3 sm:block sm:text-base">שקיפות מלאה</p>
-          <p>
-            האתר בשלב הרצה. העסקים במדריך מוצגים על סמך מידע פומבי ובלי קשר מסחרי. הצעות שמסומנות
-            &quot;לדוגמה&quot; שייכות לעסקים פיקטיביים ואינן ניתנות למימוש.
-          </p>
-        </div>
       </div>
       <div className="border-t border-accent/15 px-4 py-2 text-center text-[11px] sm:py-4 sm:text-xs text-ink-soft">
         <nav aria-label="עמודים משפטיים" className="mb-1 flex flex-wrap justify-center gap-x-3 gap-y-0.5 sm:mb-2 sm:gap-x-5 sm:gap-y-1">

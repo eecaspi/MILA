@@ -18,6 +18,16 @@ export function InviteWelcome() {
     if (!INVITE_ACTIVE) return;
     const params = new URLSearchParams(window.location.search);
     // ?for=NAME greets by name; ?invite=1 is the general link, with no name.
+    // ?invite=off clears the saved greeting from this device (for testing the plain site).
+    if (params.get("invite") === "off") {
+      try {
+        localStorage.removeItem(NAME_KEY);
+        sessionStorage.removeItem(SHOWN_KEY);
+      } catch {
+        // ignore
+      }
+      return;
+    }
     const raw = params.get("for");
     let stored = "";
     if (raw !== null || params.has("invite")) {

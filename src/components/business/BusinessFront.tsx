@@ -45,13 +45,15 @@ export function BusinessFront({ business, offers = [] }: { business: Business; o
               <li key={o.id}>
                 <Link
                   href={`/deals/${o.id}`}
-                  className="flex items-start gap-2 rounded-xl bg-accent-soft px-3 py-2 text-sm font-bold text-accent hover:bg-accent hover:text-on-accent"
+                  className="group flex items-center gap-3 rounded-xl border border-accent/25 bg-surface px-3 py-2.5 transition hover:border-accent hover:bg-accent-soft"
                 >
-                  <span aria-hidden>🎁</span>
-                  <span className="min-w-0">
-                    {o.valueLabel && <span className="block">{o.valueLabel}</span>}
-                    <span className="line-clamp-2 block text-[13px] font-medium">{o.title}</span>
-                  </span>
+                  {o.valueLabel && (
+                    <span className="max-w-[40%] shrink-0 rounded-lg bg-accent px-2.5 py-1 text-center text-sm font-extrabold leading-tight text-on-accent">
+                      {o.valueLabel}
+                    </span>
+                  )}
+                  <span className="line-clamp-2 min-w-0 flex-1 text-sm font-semibold leading-snug text-ink">{o.title}</span>
+                  <span aria-hidden className="shrink-0 text-accent transition group-hover:-translate-x-0.5">←</span>
                 </Link>
               </li>
             ))}

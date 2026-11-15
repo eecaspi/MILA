@@ -13,7 +13,9 @@ self.addEventListener("push", (event) => {
   event.waitUntil(
     self.registration.showNotification(title, {
       body: data.body || "יש הטבה חדשה באתר",
-      icon: "/icon-192.png",
+      // With a picture: it replaces the small logo on the side and also opens big when expanded (Android).
+      icon: data.image || "/icon-192.png",
+      ...(data.image ? { image: data.image } : {}),
       badge: "/icon-192.png",
       dir: "rtl",
       lang: "he",

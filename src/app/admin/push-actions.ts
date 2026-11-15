@@ -45,7 +45,7 @@ export async function sendNotification(_prev: PushSendResult, formData: FormData
     );
     results.forEach((r, idx) => {
       if (r === "sent") sent++;
-      else if (r === "gone") gone.push(batch[idx].id as string);
+      else if (r === "gone") gone.push(batch[idx]!.id as string);
       else failed++;
     });
   }

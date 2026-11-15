@@ -41,7 +41,7 @@ test("the VAPID token verifies with the public key", () => {
   const keys = { publicKey: b64u.encode(pub), privateKey: jwk.d as string, subject: "mailto:a@b.co" };
 
   const token = vapidJwt("https://push.example", keys, 1_000_000);
-  const [h, c, s] = token.split(".");
+  const [h, c, s] = token.split(".") as [string, string, string];
   const claims = JSON.parse(b64u.decode(c).toString());
   assert.equal(claims.aud, "https://push.example");
   assert.equal(claims.sub, "mailto:a@b.co");

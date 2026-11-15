@@ -1,6 +1,7 @@
 import { InviteWelcome } from "@/components/layout/InviteWelcome";
 import { EntryPopup } from "@/components/layout/EntryPopup";
 import { getPopup } from "@/lib/data/popup";
+import { PushOptIn } from "@/components/layout/PushOptIn";
 import { MotionGuard } from "@/components/layout/MotionGuard";
 import { Tracker } from "@/components/analytics/Tracker";
 import { SiteFooter } from "@/components/layout/SiteFooter";
@@ -24,6 +25,7 @@ export default async function SiteLayout({ children }: { children: React.ReactNo
       <InviteWelcome />
       {popup && <EntryPopup popup={popup} />}
       <MotionGuard />
+      <PushOptIn />
       <Tracker />
     </>
   );

@@ -148,18 +148,20 @@ export function InstallAppButton({ className = "", strip = false }: { className?
     <>
       {strip ? (
         <div className="relative mx-auto mt-6 max-w-3xl rounded-2xl border-2 border-accent/40 bg-accent-soft px-14 py-5 text-center shadow-[var(--shadow-card)]">
-          {/* A preview of the icon as it will sit among the phone's apps, at the side. */}
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src="/icon-maskable-512.png"
-            alt=""
-            width={48}
-            height={48}
-            className="absolute right-3 top-3 size-12 rounded-[1.05rem] bg-surface shadow-[var(--shadow-card)] ring-1 ring-black/5"
-          />
-          <p className="mb-3 whitespace-nowrap font-display text-base font-extrabold leading-tight text-ink sm:text-xl">
-            ליקי תמיד איתך, על מסך הבית
-          </p>
+          <div className="mb-3">
+            <p className="relative inline-block whitespace-nowrap font-display text-base font-extrabold leading-tight text-ink sm:text-xl">
+              {/* A preview of the icon as it will sit among the phone's apps, hanging beside the centered title. */}
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/icon-maskable-512.png"
+                alt=""
+                width={40}
+                height={40}
+                className="absolute right-full top-1/2 mr-2 size-10 -translate-y-1/2 rounded-[0.9rem] bg-surface shadow-[var(--shadow-card)] ring-1 ring-black/5"
+              />
+              ליקי תמיד איתך, על מסך הבית
+            </p>
+          </div>
           {button}
         </div>
       ) : (

@@ -74,7 +74,7 @@ export function PushOptIn() {
     <div
       role="region"
       aria-label="התראות"
-      className="fixed inset-x-4 top-28 z-40 mx-auto max-w-sm rounded-3xl border-[3px] border-accent bg-surface p-5 text-center shadow-[0_12px_40px_rgba(122,24,24,0.35)] ring-8 ring-accent/15"
+      className="fixed inset-x-4 top-1/2 z-40 mx-auto -translate-y-1/2 max-w-sm rounded-3xl border-[3px] border-accent bg-surface p-5 text-center shadow-[0_12px_40px_rgba(122,24,24,0.35)] ring-8 ring-accent/15"
     >
       <p className="font-display text-xl font-extrabold text-ink">רוצה לדעת כשיש הטבה חדשה?</p>
       <p className="mt-1 text-sm text-ink-soft">ליקי תדאג שתהיי הראשונה לדעת.</p>

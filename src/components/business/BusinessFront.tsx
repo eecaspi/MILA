@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { StatusBadge } from "@/components/ui/StatusBadge";
 import type { Business } from "@/lib/types";
+import { BranchesDialog } from "@/components/deals/BranchesDialog";
 import { BusinessImage } from "./BusinessImage";
 
 export interface CardOffer {
@@ -38,6 +39,23 @@ export function BusinessFront({ business, offers = [] }: { business: Business; o
               </li>
             ))}
           </ul>
+        )}
+        {(business.area || (business.branches && business.branches.length > 0)) && (
+          <p className="mt-3 flex flex-wrap items-center gap-x-1.5 gap-y-0.5 text-sm text-ink-soft sm:mt-4">
+            <svg viewBox="0 0 24 24" width="1.1em" height="1.1em" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="shrink-0 text-accent">
+              <path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z" />
+              <circle cx="12" cy="9.5" r="2.5" />
+            </svg>
+            <span className="font-semibold text-ink">מקום המימוש:</span>
+            {business.branches && business.branches.length > 0 ? (
+              <>
+                <span>{business.area || `${business.branches.length} סניפים`}</span>
+                <BranchesDialog branches={business.branches} name={business.name} />
+              </>
+            ) : (
+              <span>{business.area}</span>
+            )}
+          </p>
         )}
         {offers.length > 0 && (
           <ul className="mt-3 space-y-1.5 sm:mt-4" aria-label="הטבות">

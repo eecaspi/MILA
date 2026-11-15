@@ -71,21 +71,27 @@ export function PushOptIn() {
   };
 
   return (
-    <div
-      role="region"
-      aria-label="התראות"
-      className="fixed inset-x-4 top-1/2 z-40 mx-auto -translate-y-1/2 max-w-sm rounded-3xl border-[3px] border-accent bg-surface p-5 text-center shadow-[0_12px_40px_rgba(122,24,24,0.35)] ring-8 ring-accent/15"
-    >
-      <p className="font-display text-xl font-extrabold text-ink">רוצה לדעת כשיש הטבה חדשה?</p>
-      <p className="mt-1 text-sm text-ink-soft">ליקי תדאג שתהיי הראשונה לדעת.</p>
-      <div className="mt-3 flex items-center justify-center gap-3">
-        <button type="button" onClick={enable} disabled={busy} className="btn-primary cta-pulse !px-5 !py-2.5 text-base font-bold">
+    <div className="fixed inset-0 z-40 flex items-center justify-center bg-ink/60 p-6">
+      <div
+        role="dialog"
+        aria-modal="true"
+        aria-label="התראות"
+        className="w-full max-w-sm rounded-3xl bg-accent p-7 text-center text-on-accent shadow-[0_20px_60px_rgba(0,0,0,0.5)]"
+      >
+        <p className="font-display text-2xl font-extrabold">רוצה לדעת כשיש הטבה חדשה?</p>
+        <p className="mt-2 text-base opacity-90">ליקי תדאג שתהיי הראשונה לדעת.</p>
+        <button
+          type="button"
+          onClick={enable}
+          disabled={busy}
+          className="mt-5 w-full rounded-full bg-surface px-5 py-3 text-base font-extrabold text-accent disabled:opacity-60"
+        >
           קבלי התראה על הטבות חדשות
         </button>
+        <button type="button" onClick={dismiss} className="mt-3 text-sm underline opacity-90">
+          לא תודה
+        </button>
       </div>
-      <button type="button" onClick={dismiss} className="mt-2 text-sm text-ink-soft underline">
-        לא תודה
-      </button>
     </div>
   );
 }

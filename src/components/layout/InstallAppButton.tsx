@@ -147,22 +147,22 @@ export function InstallAppButton({ className = "", strip = false }: { className?
   return (
     <>
       {strip ? (
-        <div className="relative mx-auto mt-6 max-w-3xl rounded-2xl border-2 border-accent/40 bg-accent-soft px-14 py-5 text-center shadow-[var(--shadow-card)]">
-          <div className="mb-3">
-            <p className="relative inline-block whitespace-nowrap font-display text-base font-extrabold leading-tight text-ink sm:text-xl">
-              {/* A preview of the icon as it will sit among the phone's apps, hanging beside the centered title. */}
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src="/icon-maskable-512.png"
-                alt=""
-                width={40}
-                height={40}
-                className="absolute right-full top-1/2 mr-2 size-10 -translate-y-1/2 rounded-[0.9rem] bg-surface shadow-[var(--shadow-card)] ring-1 ring-black/5"
-              />
+        <div className="mx-auto mt-6 flex max-w-3xl items-center gap-4 rounded-2xl border-2 border-accent/40 bg-accent-soft p-4 shadow-[var(--shadow-card)]">
+          {/* A preview of the icon as it will sit among the phone's apps. */}
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/icon-maskable-512.png"
+            alt=""
+            width={64}
+            height={64}
+            className="size-16 shrink-0 rounded-[1.4rem] bg-surface shadow-[var(--shadow-card)] ring-1 ring-black/5"
+          />
+          <div className="min-w-0 flex-1 text-center">
+            <p className="mb-2 font-display text-base font-extrabold leading-snug text-ink sm:text-xl">
               ליקי תמיד איתך, על מסך הבית
             </p>
+            {button}
           </div>
-          {button}
         </div>
       ) : (
         button

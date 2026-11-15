@@ -12,3 +12,6 @@ create policy "admins read push subscriptions" on push_subscriptions for select
 drop policy if exists "admins delete push subscriptions" on push_subscriptions;
 create policy "admins delete push subscriptions" on push_subscriptions for delete
   using (is_admin());
+drop policy if exists "anyone can add a push subscription" on push_subscriptions;
+create policy "anyone can add a push subscription" on push_subscriptions for insert
+  to anon, authenticated with check (true);

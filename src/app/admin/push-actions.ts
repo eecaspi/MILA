@@ -2,7 +2,8 @@
 
 import { revalidatePath } from "next/cache";
 import { requireAdmin } from "@/lib/auth/session";
-import { safeLink } from "@/lib/banners";
+import { bannerStoragePath, safeLink } from "@/lib/banners";
+import { supabaseUrl } from "@/lib/supabase/env";
 import { createClient } from "@/lib/supabase/server";
 import { isShabbat, sendPush, vapidKeysFromEnv } from "@/lib/push/webpush";
 
@@ -20,6 +21,10 @@ export async function sendNotification(_prev: PushSendResult, formData: FormData
   const body = String(formData.get("body") ?? "").replace(/[<>]/g, "").trim().slice(0, 160);
   const rawUrl = String(formData.get("url") ?? "").trim();
   const link = rawUrl ? safeLink(rawUrl) : "/deals";
+  const rawImage = String(formData.get("image") ?? "").trim();
+  // Only pictures uploaded to our own storage.
+  const image = rawImage && bannerStoragePath(rawImage, supabaseUrl) ? rawImage : undefined;
+  if (rawImage && !image) return { error: "התמונה לא תקינה. נסי להעלות אותה שוב." };
   if (!title || !body) return { error: "צריך כותרת ותוכן." };
   if (link === undefined) return { error: "הקישור צריך להתחיל ב-/ (עמוד באתר) או ב-https." };
 
@@ -38,7 +43,7 @@ export async function sendNotification(_prev: PushSendResult, formData: FormData
       batch.map((s) =>
         sendPush(
           { endpoint: s.endpoint as string, p256dh: s.p256dh as string, auth: s.auth as string },
-          { title, body, url: link ?? "/deals" },
+          { title, body, url: link ?? "/deals", ...(image ? { image } : {}) },
           keys,
         ),
       ),

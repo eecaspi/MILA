@@ -105,7 +105,7 @@ export type PushResult = "sent" | "gone" | "failed";
 /** Sends one notification. "gone" means the device unsubscribed: delete it. */
 export async function sendPush(
   sub: PushSubscriptionRecord,
-  message: { title: string; body: string; url?: string },
+  message: { title: string; body: string; url?: string; image?: string },
   keys: VapidKeys,
 ): Promise<PushResult> {
   try {

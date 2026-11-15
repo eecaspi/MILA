@@ -43,6 +43,11 @@ export const siteConfig = {
     accessibilityCoordinator: "אסתי כספי",
     accessibilityPhone: "058-4949596",
   },
+  /**
+   * Search-engine visibility. Keep false during early access: Google and others are told not to
+   * list the site. Set to true on launch day (robots.txt, the sitemap and the page tags all follow).
+   */
+  searchIndexing: false as boolean,
   nav: [
     { href: "/", label: "ראשי" },
     { href: "/deals", label: "ליקי מצאה לך" },

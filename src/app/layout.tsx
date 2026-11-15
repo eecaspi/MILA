@@ -13,6 +13,7 @@ const heebo = Heebo({
 const title = `${siteConfig.brand.nameEn} ${siteConfig.brand.name} | ${siteConfig.brand.slogan}`;
 
 export const metadata: Metadata = {
+  robots: siteConfig.searchIndexing ? undefined : { index: false, follow: false, nocache: true },
   metadataBase: new URL(siteConfig.url),
   title: {
     default: title,

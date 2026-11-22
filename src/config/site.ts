@@ -22,7 +22,7 @@ export const siteConfig = {
   },
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000",
   contact: {
-    email: "hello@example.com",
+    email: "liky.club@gmail.com",
   },
   /**
    * Details the legal pages (/terms, /privacy, /accessibility, /disclosure) read.
@@ -34,7 +34,7 @@ export const siteConfig = {
     operatorName: "אסתר תחיה סוכנות ודיגיטל בע״מ",
     /** Company registration number (ח.פ.). */
     companyId: "516941044",
-    contactEmail: "hello@example.com",
+    contactEmail: "liky.club@gmail.com",
     /** City whose courts have jurisdiction (to be set with the lawyer). */
     courtCity: "[עיר – להשלמה]",
     /** Bump when terms/privacy text changes materially; stored with each sign-up consent. */

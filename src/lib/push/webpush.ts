@@ -134,7 +134,7 @@ export function vapidKeysFromEnv(): VapidKeys | null {
   const publicKey = process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY;
   const privateKey = process.env.VAPID_PRIVATE_KEY;
   if (!publicKey || !privateKey) return null;
-  return { publicKey, privateKey, subject: process.env.VAPID_SUBJECT ?? "mailto:hello@liky.club" };
+  return { publicKey, privateKey, subject: process.env.VAPID_SUBJECT ?? "mailto:liky.club@gmail.com" };
 }
 
 /**

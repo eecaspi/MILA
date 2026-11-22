@@ -25,7 +25,7 @@ export function BusinessFront({ business, offers = [] }: { business: Business; o
         </span>
       </div>
 
-      <div className="flex-1 p-3 sm:p-5">
+      <div className="flex flex-1 flex-col p-3 sm:p-5">
         <h3 className="text-lg leading-tight text-ink sm:text-xl">{business.name}</h3>
         <p className="mt-1 line-clamp-2 text-sm text-ink-soft sm:mt-2 sm:line-clamp-none sm:text-[15px]">{business.shortDescription}</p>
         {business.tags.length > 0 && (
@@ -58,7 +58,7 @@ export function BusinessFront({ business, offers = [] }: { business: Business; o
           </p>
         )}
         {offers.length > 0 && (
-          <ul className="mt-3 space-y-1.5 sm:mt-4" aria-label="הטבות">
+          <ul className="mt-auto space-y-1.5 pt-3 sm:pt-4" aria-label="הטבות">
             {offers.slice(0, 2).map((o) => (
               <li key={o.id}>
                 <Link

@@ -30,7 +30,7 @@ export const siteConfig = {
    * and every page updates. While `draft` is true each legal page shows a "טיוטה" notice.
    */
   legal: {
-    draft: true as boolean,
+    draft: false as boolean,
     operatorName: "אסתר תחיה סוכנות ודיגיטל בע״מ",
     /** Company registration number (ח.פ.). */
     companyId: "516941044",

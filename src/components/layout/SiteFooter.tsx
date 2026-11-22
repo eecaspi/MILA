@@ -47,11 +47,7 @@ export function SiteFooter() {
       <div className="border-t border-accent/15 bg-surface px-4 py-3 sm:py-4">
         <div className="mx-auto flex max-w-6xl flex-col items-center justify-center gap-2 text-center sm:flex-row sm:gap-4">
           <p className="text-xs text-ink-soft sm:text-sm">
-            האתר נגיש לכולן.{" "}
-            <Link href="/accessibility" className="font-semibold text-accent underline underline-offset-2">
-              להצהרת הנגישות
-            </Link>
-            . נתקלת בקושי?{" "}
+            האתר נגיש לכולן. נתקלת בקושי?{" "}
             <Link href="/report-problem?page=accessibility" className="font-semibold text-accent underline underline-offset-2">
               פני אלינו בטופס
             </Link>

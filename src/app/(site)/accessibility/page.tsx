@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { ContactEmail, LegalPage, Section } from "@/components/legal/LegalPage";
 import { siteConfig } from "@/config/site";
 
@@ -7,7 +8,7 @@ export const metadata: Metadata = {
   description: `הצהרת הנגישות של ${siteConfig.brand.name}.`,
 };
 
-const { legal, brand } = siteConfig;
+const { brand } = siteConfig;
 
 export default function Accessibility() {
   return (
@@ -46,8 +47,9 @@ export default function Accessibility() {
 
       <Section title="רכזת נגישות ופניות">
         <p>
-          נתקלת בקושי? רוצה לבקש התאמה או חלופה לתוכן? פני אל רכזת הנגישות, {legal.accessibilityCoordinator},
-          בטלפון <a href={`tel:${legal.accessibilityPhone.replace(/-/g, "")}`} className="ltr">{legal.accessibilityPhone}</a> או במייל <ContactEmail />. נשמח לקבל פירוט של הבעיה ושל הכתובת בעמוד, ונטפל בהקדם.
+          נתקלת בקושי? רוצה לבקש התאמה או חלופה לתוכן? פני אל רכזת הנגישות דרך{" "}
+          <Link href="/report-problem?page=accessibility">טופס הפנייה</Link> או במייל <ContactEmail />. נשמח לקבל פירוט של
+          הבעיה ושל הכתובת בעמוד, ונטפל בהקדם.
         </p>
       </Section>
 

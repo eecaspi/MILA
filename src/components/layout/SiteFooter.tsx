@@ -2,7 +2,6 @@ import Link from "next/link";
 import { Logo } from "@/components/brand/Logo";
 import { siteConfig } from "@/config/site";
 
-const legal = siteConfig.legal;
 
 export function SiteFooter() {
   return (
@@ -58,10 +57,10 @@ export function SiteFooter() {
             הצהרת נגישות
           </Link>
           <p className="text-xs text-ink-soft sm:text-sm">
-            האתר נגיש לכולן. נתקלת בקושי? פני אל רכזת הנגישות, {legal.accessibilityCoordinator},{" "}
-            <a href={`tel:${legal.accessibilityPhone.replace(/-/g, "")}`} className="font-semibold text-accent underline underline-offset-2">
-              {legal.accessibilityPhone}
-            </a>
+            האתר נגיש לכולן. נתקלת בקושי?{" "}
+            <Link href="/report-problem?page=accessibility" className="font-semibold text-accent underline underline-offset-2">
+              פני אלינו בטופס
+            </Link>
           </p>
         </div>
       </div>

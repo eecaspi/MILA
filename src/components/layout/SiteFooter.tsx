@@ -46,18 +46,12 @@ export function SiteFooter() {
       </div>
       <div className="border-t border-accent/15 bg-surface px-4 py-3 sm:py-4">
         <div className="mx-auto flex max-w-6xl flex-col items-center justify-center gap-2 text-center sm:flex-row sm:gap-4">
-          <Link
-            href="/accessibility"
-            className="inline-flex items-center gap-2 rounded-full border-2 border-accent px-4 py-1.5 text-sm font-bold text-accent transition hover:bg-accent hover:text-on-accent"
-          >
-            <svg aria-hidden viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <circle cx="12" cy="4.5" r="1.8" />
-              <path d="M5 8.5h14M12 8.5v5.5m0 0-3 6.5m3-6.5 3 6.5" />
-            </svg>
-            הצהרת נגישות
-          </Link>
           <p className="text-xs text-ink-soft sm:text-sm">
-            האתר נגיש לכולן. נתקלת בקושי?{" "}
+            האתר נגיש לכולן.{" "}
+            <Link href="/accessibility" className="font-semibold text-accent underline underline-offset-2">
+              להצהרת הנגישות
+            </Link>
+            . נתקלת בקושי?{" "}
             <Link href="/report-problem?page=accessibility" className="font-semibold text-accent underline underline-offset-2">
               פני אלינו בטופס
             </Link>

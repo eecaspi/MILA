@@ -300,3 +300,25 @@
     opacity: 1;
   }
 }
+
+/* Accessibility menu preferences (set on <html> by AccessibilityMenu). */
+html.a11y-still *,
+html.a11y-still *::before,
+html.a11y-still *::after {
+  animation: none !important;
+  transition: none !important;
+  scroll-behavior: auto !important;
+}
+html.a11y-links a {
+  text-decoration: underline !important;
+  text-underline-offset: 3px;
+}
+html.a11y-contrast {
+  --color-ink: #000000;
+  --color-ink-soft: #1f1f1f;
+  --color-accent: #9a0007;
+  --color-accent-bright: #7a0005;
+  --color-accent-soft: #ffffff;
+  --color-raised: #ffffff;
+  --color-line: #4a4a4a;
+}

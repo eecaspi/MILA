@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const DISMISSED_KEY = "liky-push-dismissed";
 const PUBLIC_KEY = process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY ?? "";
@@ -21,6 +21,7 @@ function keyBytes(base64url: string): Uint8Array<ArrayBuffer> {
 export function PushOptIn() {
   const [visible, setVisible] = useState(false);
   const [busy, setBusy] = useState(false);
+  const box = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (!PUBLIC_KEY) return;
@@ -36,6 +37,29 @@ export function PushOptIn() {
     }
     if (Notification.permission === "default") setVisible(true);
   }, []);
+
+  useEffect(() => {
+    if (!visible) return;
+    const el = box.current;
+    el?.querySelector<HTMLElement>("button")?.focus();
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") return setVisible(false);
+      if (e.key !== "Tab" || !el) return;
+      const items = Array.from(el.querySelectorAll<HTMLElement>("button:not([disabled])"));
+      if (items.length === 0) return;
+      const first = items[0]!;
+      const last = items[items.length - 1]!;
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    };
+    document.addEventListener("keydown", onKey);
+    return () => document.removeEventListener("keydown", onKey);
+  }, [visible]);
 
   if (!visible) return null;
 
@@ -74,6 +98,7 @@ export function PushOptIn() {
   return (
     <div className="fixed inset-0 z-40 flex items-center justify-center bg-ink/25 p-6 backdrop-blur-sm">
       <div
+        ref={box}
         role="dialog"
         aria-modal="true"
         aria-label="התראות"

@@ -58,7 +58,7 @@ export function SiteFooter() {
             הצהרת נגישות
           </Link>
           <p className="text-xs text-ink-soft sm:text-sm">
-            אנחנו פועלות להנגשת האתר לכולן. נתקלת בקושי? פני אל רכזת הנגישות, {legal.accessibilityCoordinator},{" "}
+            האתר נגיש לכולן. נתקלת בקושי? פני אל רכזת הנגישות, {legal.accessibilityCoordinator},{" "}
             <a href={`tel:${legal.accessibilityPhone.replace(/-/g, "")}`} className="font-semibold text-accent underline underline-offset-2">
               {legal.accessibilityPhone}
             </a>

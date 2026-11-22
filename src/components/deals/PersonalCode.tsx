@@ -93,6 +93,9 @@ export function PersonalCode({ offerId, signedIn, claim, problem, wantsWhatsApp,
           )}
         </div>
       )}
+      <p className="mt-4 border-t border-line pt-3 text-xs text-ink-soft">
+        ההטבה והקופון הם של בית העסק ובאחריותו. ליקי אינה צד לעסקה ואינה אחראית לכיבוד הקופון או לתנאיו.
+      </p>
     </div>
   );
 }

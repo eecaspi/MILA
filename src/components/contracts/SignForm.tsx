@@ -11,7 +11,7 @@ export function SignForm({ token, defaultName }: { token: string; defaultName: s
   const input = "w-full rounded-xl border border-line bg-surface px-3 py-2.5 text-base text-ink";
   return (
     <form action={action} className="space-y-5">
-      <h2 className="text-lg font-bold text-ink">נספח א': פרטי העסק וההטבה</h2>
+      <h2 className="text-lg font-bold text-ink">נספח א&apos;: פרטי העסק וההטבה</h2>
       <div className="space-y-3">
         {FIELD_KEYS.map((key) => (
           <label key={key} className="block">

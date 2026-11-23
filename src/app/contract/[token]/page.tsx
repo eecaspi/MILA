@@ -43,14 +43,14 @@ export default async function ContractPage({ params }: { params: Promise<{ token
       <div className="rounded-2xl bg-surface p-5 shadow-[var(--shadow-card)] sm:p-7">
         <ContractText terms={terms} />
         <section className="mt-6 border-t border-line pt-4">
-          <h2 className="text-lg font-bold text-ink">נספח א': שיעור העמלה</h2>
+          <h2 className="text-lg font-bold text-ink">נספח א&apos;: שיעור העמלה</h2>
           <p className="mt-2 text-ink">שיעור העמלה לליקי: {terms.commissionPercent}% מערך מכירה מיוחסת.</p>
         </section>
       </div>
 
       {signed && fields ? (
         <div className="space-y-4 rounded-2xl bg-surface p-5 shadow-[var(--shadow-card)] sm:p-7">
-          <h2 className="text-lg font-bold text-ink">נספח א': פרטי העסק וההטבה</h2>
+          <h2 className="text-lg font-bold text-ink">נספח א&apos;: פרטי העסק וההטבה</h2>
           <dl className="space-y-2 text-sm">
             {FIELD_KEYS.map((key) => (
               <div key={key} className="grid gap-1 sm:grid-cols-[14rem_1fr]">

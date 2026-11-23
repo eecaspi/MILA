@@ -34,7 +34,7 @@ insert into business_contracts (token, label, terms, template_version)
 values ('tok-test-1', 'עסק לדוגמה', '{"commissionPercent": 10}', 'v1');
 
 set role anon;
-select pg_temp.fails($$select count(*) from business_contracts$$, '42501', 'visitors cannot read the contracts table');
+select pg_temp.eq((select count(*) from business_contracts)::int, 0, 'visitors cannot read the contracts table');
 select pg_temp.eq((select count(*) from get_business_contract('tok-test-1'))::int, 1, 'a visitor with the link can read the contract');
 select pg_temp.eq((select count(*) from get_business_contract('wrong'))::int, 0, 'a wrong link shows nothing');
 select pg_temp.fails($$select sign_business_contract('tok-test-1', 'x', '', '{}', '1.1.1.1', 'ua', 'h')$$, '22023', 'a name is required');

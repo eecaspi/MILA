@@ -60,7 +60,7 @@ export const siteConfig = {
      * WhatsApp community/group invite link. Leave null until the groups are open:
      * the site then shows a "coming soon" state instead of a dead link.
      */
-    whatsappUrl: "https://chat.whatsapp.com/KgTRTaqAQbe77y0hZapU1y" as string | null,
+    whatsappUrl: null as string | null,
   },
   features: {
     /**
@@ -74,7 +74,7 @@ export const siteConfig = {
      * "מועדון הלקוחות · בעבודה" and only the team signs in (accounts are created
      * by an admin). The sign-up action refuses on the server while this is false.
      */
-    memberSignup: true as boolean,
+    memberSignup: false as boolean,
     /**
      * Personal one-day coupon codes: a signed-in member can claim a code on an offer
      * (max 3 live codes, each valid 24 hours). The public codes above stay hidden.

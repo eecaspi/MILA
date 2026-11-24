@@ -2,6 +2,7 @@
 
 import { useActionState } from "react";
 import { signContract, type SignState } from "@/app/contract/[token]/actions";
+import { SignaturePad } from "@/components/contracts/SignaturePad";
 import { FIELD_KEYS, FIELD_LABELS } from "@/lib/contracts/template";
 
 const LONG = new Set(["offer", "restrictions", "places", "redemption"]);
@@ -44,13 +45,14 @@ export function SignForm({ token, defaultName }: { token: string; defaultName: s
           <input name="signerRole" maxLength={80} className={input} />
         </label>
       </div>
+      <SignaturePad name="signature" />
       <label className="flex items-start gap-3 text-sm text-ink">
         <input type="checkbox" name="authority" value="yes" required className="mt-1 accent-[var(--color-accent)]" />
         <span>אני מוסמכת לחתום על ההסכם בשם העסק.</span>
       </label>
       <label className="flex items-start gap-3 text-sm text-ink">
         <input type="checkbox" name="agree" value="yes" required className="mt-1 accent-[var(--color-accent)]" />
-        <span>קראתי את ההסכם ואת הנספח, ואני מסכימה לכל האמור בהם. הקלדת השם והלחיצה על &quot;חתימה&quot; מהוות חתימה אלקטרונית על ההסכם.</span>
+        <span>קראתי את ההסכם ואת הנספח, ואני מסכימה לכל האמור בהם. הקלדת השם (וציור החתימה, אם צוירה) והלחיצה על &quot;חתימה&quot; מהוות חתימה אלקטרונית על ההסכם.</span>
       </label>
 
       {state.error && (

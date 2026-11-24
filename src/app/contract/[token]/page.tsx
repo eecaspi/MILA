@@ -29,6 +29,11 @@ export default async function ContractPage({ params }: { params: Promise<{ token
   if (!terms) notFound();
   const signed = row.status === "signed";
   const fields = signed ? parseFields(row.signed_fields) : null;
+  const rawSignature = signed ? (row.signed_fields as Record<string, unknown> | null)?._signature : null;
+  const signatureImage =
+    typeof rawSignature === "string" && /^data:image\/png;base64,[A-Za-z0-9+/=]+$/.test(rawSignature)
+      ? rawSignature
+      : null;
 
   return (
     <main className="mx-auto max-w-3xl space-y-6 px-4 py-8" dir="rtl">
@@ -68,6 +73,10 @@ export default async function ContractPage({ params }: { params: Promise<{ token
               : ""}
             .
           </p>
+          {signatureImage && (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img src={signatureImage} alt="החתימה" className="h-24 w-auto rounded border border-line bg-white" />
+          )}
           <p className="break-all text-xs text-ink-soft" dir="ltr">
             Version {row.template_version} · {row.content_hash}
           </p>

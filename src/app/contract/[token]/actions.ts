@@ -35,18 +35,22 @@ export async function signContract(token: string, _prev: SignState, formData: Fo
   if (get("agree") !== "yes") return { error: "צריך לאשר שקראת ומסכימה." };
   if (get("authority") !== "yes") return { error: "צריך לאשר שאת מוסמכת לחתום בשם העסק." };
 
+  const rawSig = get("signature");
+  const signature =
+    /^data:image\/png;base64,[A-Za-z0-9+/=]+$/.test(rawSig) && rawSig.length < 200_000 ? rawSig : "";
+
   const h = await headers();
   const ip = (h.get("x-forwarded-for") ?? "").split(",")[0]?.trim() ?? "";
   const ua = h.get("user-agent") ?? "";
   const hash = createHash("sha256")
-    .update(`${CONTRACT_VERSION}\n${contractPlainText(terms, fields)}\n${signerName}\n${signerRole}`)
+    .update(`${CONTRACT_VERSION}\n${contractPlainText(terms, fields)}\n${signerName}\n${signerRole}\n${signature}`)
     .digest("hex");
 
   const { data: ok, error } = await supabase.rpc("sign_business_contract", {
     p_token: token,
     p_signer_name: signerName,
     p_signer_role: signerRole,
-    p_fields: fields,
+    p_fields: signature ? { ...fields, _signature: signature } : fields,
     p_ip: ip,
     p_user_agent: ua,
     p_hash: hash,

@@ -67,17 +67,19 @@ export default async function ContractPage({ params }: { params: Promise<{ token
         )}
       </header>
 
-      <div className="rounded-3xl bg-surface p-5 shadow-[var(--shadow-card)] sm:p-9">
+      <div className="rounded-[2rem] border-2 border-accent/30 bg-surface p-1.5 shadow-[var(--shadow-card)] sm:p-2">
+       <div className="rounded-3xl border border-accent/20 p-5 sm:p-9">
         <ContractText terms={terms} />
         <section className="mt-8 rounded-2xl bg-accent-soft p-5">
           <h2 className="text-base font-bold text-ink">נספח א&apos;: שיעור העמלה</h2>
           <p className="mt-1 text-2xl font-extrabold text-accent">{terms.commissionPercent}%</p>
           <p className="text-sm text-ink">מערך מכירה מיוחסת, לפי האמור בהסכם.</p>
         </section>
+       </div>
       </div>
 
       {signed && fields ? (
-        <div className="space-y-4 rounded-3xl bg-surface p-5 shadow-[var(--shadow-card)] sm:p-9">
+        <div className="space-y-4 rounded-[2rem] border-2 border-accent/30 bg-surface p-6 shadow-[var(--shadow-card)] sm:p-10">
           <h2 className="text-lg font-bold text-ink">נספח א&apos;: פרטי העסק וההטבה</h2>
           <dl className="space-y-2 text-sm">
             {FIELD_KEYS.map((key) => (
@@ -106,7 +108,7 @@ export default async function ContractPage({ params }: { params: Promise<{ token
           <PrintButton />
         </div>
       ) : (
-        <div className="rounded-3xl bg-surface p-5 shadow-[var(--shadow-card)] sm:p-9">
+        <div className="rounded-[2rem] border-2 border-accent/30 bg-surface p-6 shadow-[var(--shadow-card)] sm:p-10">
           <SignForm token={token} defaultName={row.label} />
         </div>
       )}

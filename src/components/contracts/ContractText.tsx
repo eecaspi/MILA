@@ -2,7 +2,7 @@ import { contractSections, type ContractTerms } from "@/lib/contracts/template";
 
 function split(title: string): { num: string; text: string } {
   const m = title.match(/^(\d+)\.\s*(.*)$/);
-  return m ? { num: m[1], text: m[2] } : { num: "", text: title };
+  return m ? { num: m[1] ?? "", text: m[2] ?? "" } : { num: "", text: title };
 }
 
 export function ContractText({ terms }: { terms: ContractTerms }) {

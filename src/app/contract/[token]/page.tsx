@@ -20,10 +20,18 @@ export const metadata: Metadata = {
 export const dynamic = "force-dynamic";
 
 export default async function ContractPage({ params }: { params: Promise<{ token: string }> }) {
-  const { token } = await params;
-  if (!/^[a-f0-9]{64}$/.test(token)) notFound();
+  const { token: rawToken } = await params;
+  let decoded = rawToken;
+  try {
+    decoded = decodeURIComponent(rawToken);
+  } catch {
+    decoded = rawToken;
+  }
+  const token = decoded.toLowerCase().match(/[a-f0-9]{64}/)?.[0];
+  if (!token) notFound();
   const supabase = await createClient();
-  const { data } = await supabase.rpc("get_business_contract", { p_token: token });
+  const { data, error } = await supabase.rpc("get_business_contract", { p_token: token });
+  if (error) throw new Error("contract lookup failed");
   const row = Array.isArray(data) ? data[0] : null;
   if (!row) notFound();
   const terms = parseTerms(row.terms);

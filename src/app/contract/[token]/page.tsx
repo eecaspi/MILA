@@ -47,7 +47,8 @@ export default async function ContractPage({ params }: { params: Promise<{ token
           className="mx-auto h-14 w-auto"
         />
         <p className="eyebrow mt-4">הסכם שיתוף פעולה</p>
-        <h1 className="mt-1 text-2xl text-ink sm:text-3xl">ליקי ו{row.label}</h1>
+        <h1 className="mt-1 text-2xl text-ink sm:text-3xl">מועדון הצרכנות ליקי</h1>
+        <p className="mt-1 text-sm font-semibold text-ink-soft">עבור {row.label}</p>
         <p className="mx-auto mt-3 max-w-md text-sm text-ink-soft">
           {signed
             ? "ההסכם נחתם. אפשר להדפיס או לשמור עותק."

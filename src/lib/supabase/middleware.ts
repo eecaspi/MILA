@@ -1,6 +1,31 @@
 import { createServerClient, type CookieOptions } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
+import { siteConfig } from "@/config/site";
 import { isSupabaseConfigured, supabaseAnonKey, supabaseUrl } from "./env";
+
+const OPEN_PREFIXES = [
+  "/login",
+  "/auth",
+  "/admin",
+  "/api",
+  "/contract",
+  "/reset-password",
+  "/coming-soon",
+  "/terms",
+  "/privacy",
+  "/accessibility",
+  "/report-problem",
+  "/manifest",
+  "/robots",
+  "/sitemap",
+  "/icon",
+  "/sw.js",
+  "/brand",
+];
+
+function isOpenPath(pathname: string) {
+  return OPEN_PREFIXES.some((p) => pathname === p || pathname.startsWith(`${p}/`) || pathname.startsWith(`${p}.`));
+}
 
 /** Refreshes the Supabase auth session cookie on every request. */
 export async function updateSession(request: NextRequest) {
@@ -23,7 +48,25 @@ export async function updateSession(request: NextRequest) {
   });
 
   // Touching auth triggers the refresh. Do not remove.
-  await supabase.auth.getUser();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!siteConfig.features.publicSite && !isOpenPath(request.nextUrl.pathname)) {
+    let isAdmin = false;
+    if (user) {
+      const { data: profile } = await supabase.from("profiles").select("role").eq("id", user.id).single();
+      isAdmin = profile?.role === "admin";
+    }
+    if (!isAdmin) {
+      const url = request.nextUrl.clone();
+      url.pathname = "/coming-soon";
+      url.search = "";
+      const blocked = NextResponse.rewrite(url, { status: 503, headers: { "Retry-After": "86400" } });
+      response.cookies.getAll().forEach((c) => blocked.cookies.set(c));
+      return blocked;
+    }
+  }
 
   return response;
 }

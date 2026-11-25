@@ -64,6 +64,12 @@ export const siteConfig = {
   },
   features: {
     /**
+     * Whether the site is open to the public. While false, only signed-in admins see
+     * the site; everyone else gets the "coming soon" page (a few pages stay open: login,
+     * business contracts, legal pages). Set to true at launch.
+     */
+    publicSite: false as boolean,
+    /**
      * Showcase stage: offers show their benefit (e.g. "20% הנחה") but never the
      * coupon code. Codes stay in the database for later and are stripped from
      * page data while this is false.

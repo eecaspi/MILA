@@ -46,4 +46,13 @@ select pg_temp.eq((select count(*)::int from auth.users where email = 'member@ex
 insert into auth.users (id, email) values ('aaaa0000-0000-0000-0000-00000000000d', 'member@example.com');
 select pg_temp.eq((select count(*)::int from profiles where email = 'member@example.com'), 1, 'same email can join again');
 
+insert into admin_audit_log (actor_id, action, target_user_id, details)
+values ('aaaa0000-0000-0000-0000-00000000000a', 'members.note', 'aaaa0000-0000-0000-0000-00000000000d', '{}'::jsonb);
+set role authenticated;
+select set_config('request.jwt.claim.sub', 'aaaa0000-0000-0000-0000-00000000000a', false);
+select admin_delete_member('aaaa0000-0000-0000-0000-00000000000d');
+reset role;
+select pg_temp.eq((select count(*)::int from profiles where email = 'member@example.com'), 0, 'member with audit history can be deleted');
+select pg_temp.eq((select count(*)::int from admin_audit_log where action = 'members.note' and target_user_id is not null), 0, 'audit rows no longer point at the deleted member');
+
 \echo 'ALL MEMBER DELETE DB TESTS PASSED'

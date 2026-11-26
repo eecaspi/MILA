@@ -15,6 +15,12 @@ type Member = {
 };
 
 const labels: Record<string, string> = { whatsapp: "וואטסאפ", email: "אימייל" };
+const RESULTS: Record<string, string> = {
+  deleted: "החשבון נמחק. אפשר להירשם שוב עם אותו מייל.",
+  history: "אי אפשר למחוק: לחשבון הזה יש היסטוריה במערכת (נקודות, פעולות ניהול או בית עסק).",
+  admin: "אי אפשר למחוק מנהלת או את החשבון שלך.",
+  failed: "המחיקה נכשלה. נסי שוב, ואם זה חוזר, שלחי לי את ההודעה.",
+};
 const filters = [
   { value: "", label: "כולן" },
   { value: "whatsapp", label: "וואטסאפ" },
@@ -24,10 +30,10 @@ const filters = [
 export default async function Members({
   searchParams,
 }: {
-  searchParams: Promise<{ channel?: string }>;
+  searchParams: Promise<{ channel?: string; result?: string }>;
 }) {
   await requireAdmin();
-  const { channel = "" } = await searchParams;
+  const { channel = "", result = "" } = await searchParams;
   const supabase = await createClient();
   const { data } = await supabase
     .from("profiles")
@@ -46,6 +52,11 @@ export default async function Members({
           הורדה כקובץ (CSV)
         </a>
       </div>
+      {RESULTS[result] && (
+        <p role="status" className="rounded-xl bg-accent-soft px-4 py-3 text-sm font-semibold text-ink">
+          {RESULTS[result]}
+        </p>
+      )}
       <p className="text-sm text-ink-soft">
         לשליחת דיוור שיווקי במייל, להשתמש רק במי שמסומן &quot;אישרה דיוור: כן&quot;.
       </p>

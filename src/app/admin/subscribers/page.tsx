@@ -1,6 +1,8 @@
+import { RowDelete } from "@/components/admin/RowDelete";
 import { requireAdmin } from "@/lib/auth/session";
 import { formatDate } from "@/lib/format";
 import { createClient } from "@/lib/supabase/server";
+import { deleteSubscriber } from "./actions";
 
 export default async function Subscribers() {
   await requireAdmin();
@@ -22,6 +24,12 @@ export default async function Subscribers() {
             <span className="font-bold text-ink">{m.name}</span>
             <a href={`mailto:${m.email}`} className="ltr text-accent">{m.email}</a>
             <span className="text-xs text-ink-soft">{formatDate(m.created_at)}</span>
+            <RowDelete
+              action={deleteSubscriber}
+              id={m.id}
+              name={m.name}
+              warning="היא תוסר מרשימת הדיוור. אפשר להוסיף אותה שוב אם תירשם."
+            />
           </li>
         ))}
       </ul>

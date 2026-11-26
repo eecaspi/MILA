@@ -12,7 +12,7 @@ export const siteConfig = {
     slogan: "יש לי קישור בשבילך.",
     tagline: "ההטבות, המבצעים וההמלצות הכי שוות – במקום אחד, במיוחד בשבילך.",
     description:
-      "ליקי – החברה שתמיד יודעת איפה יש משהו שווה: מבצעים, הטבות, עסקים מומלצים וקהילה של נשים בוואטסאפ.",
+      "ליקי – החברה שתמיד יודעת איפה יש משהו שווה: מבצעים, הטבות, עסקים מומלצים וקהילה בוואטסאפ.",
   },
   locale: {
     lang: "he",
@@ -38,8 +38,8 @@ export const siteConfig = {
     /** City whose courts have jurisdiction (to be set with the lawyer). */
     courtCity: "[עיר – להשלמה]",
     /** Bump when terms/privacy text changes materially; stored with each sign-up consent. */
-    termsVersion: "2026-11-05",
-    lastUpdated: "5 בנובמבר 2026",
+    termsVersion: "2026-11-26",
+    lastUpdated: "26 בנובמבר 2026",
     accessibilityCoordinator: "אסתי כספי",
     accessibilityPhone: "058-4949596",
   },

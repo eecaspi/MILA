@@ -6,7 +6,7 @@ import { CommunityInvite } from "@/components/home/CommunityInvite";
 
 export const metadata: Metadata = {
   title: "החברות של ליקי",
-  description: "קהילת הנשים של ליקי: הטבות חדשות והמלצות ישר לוואטסאפ.",
+  description: "הקהילה של ליקי: הטבות חדשות והמלצות ישר לוואטסאפ.",
 };
 
 export default async function CommunityPage() {

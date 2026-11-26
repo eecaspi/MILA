@@ -1,3 +1,5 @@
+import { RowDelete } from "@/components/admin/RowDelete";
+import { deleteMember } from "@/app/admin/members/actions";
 import Link from "next/link";
 import { ActionResult } from "@/components/admin/ActionResult";
 import { StatTile } from "@/components/admin/StatTile";
@@ -251,6 +253,14 @@ export default async function AdminRewardsPage({ searchParams }: { searchParams:
                       >
                         פרטים ←
                       </Link>
+                      <div className="mt-2 text-start">
+                        <RowDelete
+                          action={deleteMember}
+                          id={m.id}
+                          name={m.display_name ?? m.email ?? "החברה"}
+                          warning="החשבון יימחק וכל הנתונים שלה באתר יימחקו. היא תוכל להירשם שוב עם אותו מייל. אי אפשר לבטל."
+                        />
+                      </div>
                     </td>
                   </tr>
                 );

@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { DealCard } from "@/components/deals/DealCard";
 import { DemoNotice } from "@/components/ui/DemoNotice";
-import { FilterChips } from "@/components/ui/FilterChips";
+import { FilterGroup } from "@/components/ui/FilterGroup";
 import { categories, getCategory, isCategorySlug } from "@/data/categories";
 import { siteConfig } from "@/config/site";
 import { getSession } from "@/lib/auth/session";
@@ -80,11 +80,11 @@ export default async function DealsPage({ searchParams }: { searchParams: Search
   const total = offers.length + (showBusinesses ? matchingBusinesses.length : 0);
 
   const filters = (
-        <div className="space-y-3">
-          <FilterChips
+        <div>
+          <FilterGroup
             basePath="/deals"
             param="category"
-            label="מה בא לך למצוא היום?"
+            label="קטגוריה"
             current={category}
             otherParams={{ kind, channel, q, sort }}
             options={[
@@ -94,7 +94,7 @@ export default async function DealsPage({ searchParams }: { searchParams: Search
                 .map((c) => ({ value: c.slug, label: c.name })),
             ]}
           />
-          <FilterChips
+          <FilterGroup
             basePath="/deals"
             param="kind"
             label="סוג הטבה"
@@ -106,7 +106,7 @@ export default async function DealsPage({ searchParams }: { searchParams: Search
               { value: "coupon", label: "קופונים" },
             ]}
           />
-          <FilterChips
+          <FilterGroup
             basePath="/deals"
             param="sort"
             label="מיון"
@@ -119,7 +119,7 @@ export default async function DealsPage({ searchParams }: { searchParams: Search
             ]}
           />
           {hasChannels && (
-            <FilterChips
+            <FilterGroup
               basePath="/deals"
               param="channel"
               label="איפה ממשים"

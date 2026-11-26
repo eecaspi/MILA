@@ -68,7 +68,8 @@ export async function updateSession(request: NextRequest) {
       });
       return response;
     }
-    if (request.cookies.get(GUEST_COOKIE)?.value === "1") return response;
+    if (q.get("invite") === "off") request.cookies.delete(GUEST_COOKIE);
+    else if (request.cookies.get(GUEST_COOKIE)?.value === "1") return response;
     let isAdmin = false;
     if (user) {
       const { data: profile } = await supabase.from("profiles").select("role").eq("id", user.id).single();
@@ -79,6 +80,7 @@ export async function updateSession(request: NextRequest) {
       url.pathname = "/coming-soon";
       url.search = "";
       const blocked = NextResponse.rewrite(url, { status: 503, headers: { "Retry-After": "86400" } });
+      if (q.get("invite") === "off") blocked.cookies.delete(GUEST_COOKIE);
       response.cookies.getAll().forEach((c) => blocked.cookies.set(c));
       return blocked;
     }

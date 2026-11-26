@@ -61,7 +61,7 @@ export async function updateSession(request: NextRequest) {
     if (invite) {
       response.cookies.set(GUEST_COOKIE, "1", {
         path: "/",
-        maxAge: 60 * 60 * 24 * 30,
+        maxAge: 60 * 60 * 3,
         httpOnly: true,
         sameSite: "lax",
         secure: true,

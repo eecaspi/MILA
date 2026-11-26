@@ -3,6 +3,9 @@ import { NextResponse, type NextRequest } from "next/server";
 import { siteConfig } from "@/config/site";
 import { isSupabaseConfigured, supabaseAnonKey, supabaseUrl } from "./env";
 
+/** Set when someone arrives through a personal invitation link (/?for=NAME or /?invite=1). */
+const GUEST_COOKIE = "liky-guest";
+
 const OPEN_PREFIXES = [
   "/login",
   "/auth",
@@ -53,6 +56,19 @@ export async function updateSession(request: NextRequest) {
   } = await supabase.auth.getUser();
 
   if (!siteConfig.features.publicSite && !isOpenPath(request.nextUrl.pathname)) {
+    const q = request.nextUrl.searchParams;
+    const invite = q.has("for") || (q.has("invite") && q.get("invite") !== "off");
+    if (invite) {
+      response.cookies.set(GUEST_COOKIE, "1", {
+        path: "/",
+        maxAge: 60 * 60 * 24 * 30,
+        httpOnly: true,
+        sameSite: "lax",
+        secure: true,
+      });
+      return response;
+    }
+    if (request.cookies.get(GUEST_COOKIE)?.value === "1") return response;
     let isAdmin = false;
     if (user) {
       const { data: profile } = await supabase.from("profiles").select("role").eq("id", user.id).single();

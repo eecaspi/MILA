@@ -20,7 +20,7 @@ export default async function AboutPage() {
           <p className="eyebrow">קצת עלינו</p>
           <h1 className="mt-1 text-3xl text-ink md:text-5xl">{siteConfig.brand.slogan}</h1>
           <p className="mt-4 max-w-xl text-lg text-ink-soft">
-            ליקי היא פלטפורמה דיגיטלית למבצעים והטבות, הפונה בעיקר לנשים בציבור החרדי והדתי ופתוחה לכולן.
+            ליקי היא פלטפורמה דיגיטלית למבצעים והטבות, הפונה לציבור החרדי והדתי ופתוחה לכולם.
           </p>
         </div>
         <Logo variant="full" height={200} className="mx-auto" />

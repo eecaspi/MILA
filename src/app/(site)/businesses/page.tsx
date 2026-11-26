@@ -1,7 +1,7 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { BusinessCard } from "@/components/business/BusinessCard";
-import { FilterChips } from "@/components/ui/FilterChips";
+import { FilterGroup } from "@/components/ui/FilterGroup";
 import { categories, isCategorySlug } from "@/data/categories";
 import { getBusinesses, getOffers } from "@/lib/data/repository";
 
@@ -31,11 +31,11 @@ export default async function BusinessesPage({ searchParams }: { searchParams: S
         <p className="mt-2 text-ink-soft">עסקים, חנויות וארגונים שכדאי להכיר.</p>
       </header>
 
-      <div className="mb-8">
-        <FilterChips
+      <div className="mb-8 rounded-[var(--radius-card)] bg-surface px-4 shadow-[var(--shadow-card)] sm:px-6">
+        <FilterGroup
           basePath="/businesses"
           param="category"
-          label="מה בא לך למצוא היום?"
+          label="קטגוריה"
           current={category}
           options={[
             { value: undefined, label: "הכול" },

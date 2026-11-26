@@ -1,6 +1,8 @@
 import Link from "next/link";
+import { RowDelete } from "@/components/admin/RowDelete";
 import { requireAdmin } from "@/lib/auth/session";
 import { createClient } from "@/lib/supabase/server";
+import { deleteMember } from "./actions";
 
 type Member = {
   id: string;
@@ -8,6 +10,7 @@ type Member = {
   email: string | null;
   community_channel: string | null;
   marketing_consent: boolean;
+  role: string;
   created_at: string;
 };
 
@@ -28,7 +31,7 @@ export default async function Members({
   const supabase = await createClient();
   const { data } = await supabase
     .from("profiles")
-    .select("id, display_name, email, community_channel, marketing_consent, created_at")
+    .select("id, display_name, email, community_channel, marketing_consent, role, created_at")
     .order("created_at", { ascending: false })
     .limit(1000);
   const all = (data ?? []) as Member[];
@@ -90,6 +93,9 @@ export default async function Members({
                 <th className="p-3 text-start font-semibold">ערוץ</th>
                 <th className="p-3 text-start font-semibold">אישרה דיוור</th>
                 <th className="p-3 text-start font-semibold">הצטרפה</th>
+                <th className="p-3 text-start font-semibold">
+                  <span className="sr-only">מחיקה</span>
+                </th>
               </tr>
             </thead>
             <tbody className="divide-y divide-line">
@@ -100,6 +106,16 @@ export default async function Members({
                   <td className="p-3">{labels[m.community_channel ?? ""] ?? "לא נבחר"}</td>
                   <td className="p-3">{m.marketing_consent ? "כן" : "לא"}</td>
                   <td className="p-3 text-ink-soft">{m.created_at.slice(0, 10)}</td>
+                  <td className="p-3">
+                    {m.role === "admin" ? null : (
+                      <RowDelete
+                        action={deleteMember}
+                        id={m.id}
+                        name={m.display_name ?? m.email ?? "החברה"}
+                        warning="החשבון יימחק וכל הנתונים שלה באתר יימחקו. היא תוכל להירשם שוב עם אותו מייל. אי אפשר לבטל."
+                      />
+                    )}
+                  </td>
                 </tr>
               ))}
             </tbody>

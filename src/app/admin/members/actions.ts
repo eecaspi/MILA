@@ -13,6 +13,7 @@ export async function deleteMember(formData: FormData): Promise<void> {
   const { error } = await supabase.rpc("admin_delete_member", { p_user: id });
   revalidatePath("/admin/members");
   if (!error) redirect("/admin/members?result=deleted");
+  if (error.message.includes("business")) redirect("/admin/members?result=business");
   if (error.code === "23503") redirect("/admin/members?result=history");
   if (error.code === "22023") redirect("/admin/members?result=admin");
   redirect("/admin/members?result=failed");
